@@ -1,0 +1,75 @@
+---
+const images = Array.from({ length: 86 }, (_, i) => `/images/${String(i + 1).padStart(2, '0')}.webp`);
+const half = Math.ceil(images.length / 2);
+const row1 = images.slice(0, half);
+const row2 = images.slice(half);
+---
+
+<div class="img-slider-wrap">
+  <div class="img-track-row">
+    <div class="img-track img-track--fwd">
+      {[...row1, ...row1].map((src, i) => (
+        <img src={src} alt="" loading="lazy" decoding="async" />
+      ))}
+    </div>
+  </div>
+  <div class="img-track-row">
+    <div class="img-track img-track--rev">
+      {[...row2, ...row2].map((src, i) => (
+        <img src={src} alt="" loading="lazy" decoding="async" />
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .img-slider-wrap {
+    background: #F0EDE6;
+    border-bottom: 1px solid #D4CFC6;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow: hidden;
+  }
+
+  .img-track-row {
+    overflow: hidden;
+  }
+
+  .img-track {
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+  }
+
+  .img-track--fwd {
+    animation: slide-fwd 60s linear infinite;
+  }
+
+  .img-track--rev {
+    animation: slide-rev 60s linear infinite;
+  }
+
+  .img-slider-wrap:hover .img-track {
+    animation-play-state: paused;
+  }
+
+  .img-track img {
+    height: 220px;
+    width: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+  }
+
+  @keyframes slide-fwd {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes slide-rev {
+    from { transform: translateX(-50%); }
+    to   { transform: translateX(0); }
+  }
+</style>

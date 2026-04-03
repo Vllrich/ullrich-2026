@@ -4,26 +4,28 @@
 /* Cormorant: editorial serif, extreme contrast, refined */
 
 @theme {
-  --color-paper:   #F2EFE8;
-  --color-ink:     #0E0D0B;
-  --color-warm:    #C8B89A;
-  --color-dim:     #6B6456;
-  --color-ghost:   #2A2820;
-  --color-rule:    #2E2C28;
+  --color-paper: #f2efe8;
+  --color-ink: #0e0d0b;
+  --color-warm: #c8b89a;
+  --color-dim: #6b6456;
+  --color-ghost: #2a2820;
+  --color-rule: #2e2c28;
 
-  --font-display:  "Syne", system-ui, sans-serif;
-  --font-sans:     "Inter", system-ui, sans-serif;
+  --font-display: "Open Sans", system-ui, sans-serif;
+  --font-sans: "Open Sans", system-ui, sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 html {
-  background: #F0EDE6;
-  color: #0E0D0B;
+  background: #f0ede6;
+  color: #0e0d0b;
   font-family: var(--font-sans);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -37,9 +39,15 @@ html {
   color: var(--color-ink);
 }
 
-::-webkit-scrollbar { width: 1px; }
-::-webkit-scrollbar-track { background: var(--color-ink); }
-::-webkit-scrollbar-thumb { background: var(--color-rule); }
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-rule);
+}
 
 /* ─── Catalogue number style ─── */
 .cat {
@@ -55,18 +63,31 @@ html {
 .fade-up {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 1.1s cubic-bezier(0.25, 0, 0, 1),
-              transform 1.1s cubic-bezier(0.25, 0, 0, 1);
+  transition:
+    opacity 1.1s cubic-bezier(0.25, 0, 0, 1),
+    transform 1.1s cubic-bezier(0.25, 0, 0, 1);
 }
-.fade-up.in { opacity: 1; transform: translateY(0); }
+.fade-up.in {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .fade-in {
   opacity: 0;
   transition: opacity 1.4s cubic-bezier(0.25, 0, 0, 1);
 }
-.fade-in.in { opacity: 1; }
+.fade-in.in {
+  opacity: 1;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-up, .fade-in { transition: none; opacity: 1; transform: none; }
-  html { scroll-behavior: auto; }
+  .fade-up,
+  .fade-in {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

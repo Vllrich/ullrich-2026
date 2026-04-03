@@ -15,35 +15,12 @@
 
   <section class="hero">
 
-    <!-- Left: text -->
-    <div class="hero-left">
-      <div class="hero-eyebrow fade-in" data-delay="100">
-        <span>CTO</span>
-        <span class="eyebrow-sep">·</span>
-        <span>Product</span>
-        <span class="eyebrow-sep">·</span>
-        <span>AI</span>
-        <span class="eyebrow-sep">·</span>
-        <span>Creative Technology</span>
-      </div>
+    <!-- WebGL fluid sim (hidden source canvas) -->
+    <canvas id="fluid-canvas"></canvas>
+    <!-- ASCII display canvas — full width background -->
+    <canvas id="ascii-canvas"></canvas>
 
-      <p class="hero-body fade-up" data-delay="440">
-        Twenty years building technology in places where it really had to work —
-        AI platforms, real-time systems, live performances in front of thousands.
-      </p>
-
-      <div class="hero-meta fade-in" data-delay="600">
-        <span>Berlin, DE</span>
-        <span class="meta-sep">—</span>
-        <span>LU · 2026</span>
-      </div>
-    </div>
-
-    <!-- Right: WebGL fluid simulation + ASCII overlay -->
-    <div class="hero-right fade-in" data-delay="0">
-      <canvas id="fluid-canvas" style="display:none"></canvas>
-      <canvas id="ascii-canvas"></canvas>
-    </div>
+    <!-- Text on top (removed to WhatIDo section) -->
 
   </section>
 
@@ -52,7 +29,6 @@
 <style>
   .site-wrap { background: #F0EDE6; }
 
-  /* ── Nav ── */
   .site-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -64,21 +40,16 @@
     background: #F0EDE6;
     border-bottom: 1px solid #D4CFC6;
   }
-
   .nav-logo {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 800;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     color: #0E0D0B;
   }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-  }
+  .nav-links { display: flex; gap: 2.5rem; }
   .nav-links a {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
@@ -89,133 +60,119 @@
   }
   .nav-links a:hover { color: #0E0D0B; }
 
-  /* ── Hero split ── */
+  /* Hero: stacking context for all layers */
   .hero {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 640px;
-    padding-top: 56px; /* nav height */
-    border-bottom: 1px solid #D4CFC6;
-    overflow: hidden;
-  }
-
-  /* LEFT — black */
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 3.5rem;
-    background: #0E0D0B;
-    border-right: none;
-  }
-
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #9A9288;
-  }
-  .eyebrow-sep { color: #4A4840; }
-
-  .hero-name {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(3.5rem, 7.5vw, 7.5rem);
-    line-height: 0.88;
-    letter-spacing: -0.045em;
-    color: #0E0D0B;
-    text-transform: uppercase;
-    margin: 0 0 3rem;
-  }
-
-  .name-line { display: block; }
-
-  .hero-body {
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 0.88rem;
-    line-height: 1.85;
-    color: #7A7870;
-    max-width: 40ch;
-    margin-bottom: 2.5rem;
-    letter-spacing: 0.01em;
-  }
-
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: 'Inter', sans-serif;
-    font-weight: 300;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #5A5850;
-  }
-  .meta-sep { color: #3A3830; }
-
-  /* RIGHT: Lottie fills the cell exactly */
-  .hero-right {
-    margin: 0;
-    overflow: hidden;
     position: relative;
+    height: 640px;
+    margin-top: 56px;
+    overflow: hidden;
+    border-bottom: 1px solid #D4CFC6;
     background: #F0EDE6;
   }
 
-  #fluid-canvas { display: none; }
+  /* WebGL source — hidden, small */
+  #fluid-canvas {
+    display: none;
+  }
 
+  /* ASCII canvas — full bleed background layer */
   #ascii-canvas {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     display: block;
+  }
+
+  /* Text layer */
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3.5rem;
+    max-width: 50%;
     pointer-events: none;
   }
 
-  /* ── Responsive ── */
-  @media (max-width: 860px) {
-    .hero {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 50vw;
-    }
-    .hero-left {
-      border-right: none;
-      border-bottom: 1px solid #2A2820;
-      padding: 2.5rem 1.75rem;
-      justify-content: flex-start;
-      padding-top: 3rem;
-    }
-    .hero-right { min-height: 50vw; }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+  }
+  .hero-eyebrow span:not(.sep) {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #D4CFC6;
+    background: #0E0D0B;
+    padding: 0.3em 0.65em;
+  }
+  .hero-body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: #C4BFB6;
+    max-width: 38ch;
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+    background: #0E0D0B;
+    padding: 0.4em 0.65em;
+    display: inline;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hero-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+    background: #0E0D0B;
+    padding: 0.3em 0.65em;
+  }
+  .sep { display: none; }
+
+  @media (max-width: 760px) {
     .site-nav { padding: 1.25rem 1.75rem; }
     .nav-links { gap: 1.5rem; }
+    .hero { height: 520px; }
+    .hero-content { max-width: 100%; padding: 2rem 1.75rem; }
+    .hero-gradient {
+      background: linear-gradient(
+        to top,
+        #0E0D0B 0%,
+        rgba(14,13,11,0.7) 50%,
+        rgba(14,13,11,0.15) 100%
+      );
+    }
   }
 </style>
 
 <script>
 const canvas = document.getElementById('fluid-canvas') as HTMLCanvasElement;
-if (!canvas) throw new Error('no canvas');
+const ascii  = document.getElementById('ascii-canvas')  as HTMLCanvasElement;
 
 const gl = canvas.getContext('webgl2', { antialias: false, alpha: false });
-if (!gl) { (canvas as HTMLElement).style.display = 'none'; throw new Error('no webgl2'); }
-
+if (!gl) { console.warn('no webgl2'); }
+else {
 gl.getExtension('EXT_color_buffer_float');
 gl.getExtension('OES_texture_float_linear');
 
-// ── helpers ──────────────────────────────────────────────────────────────────
 function compileShader(type: number, src: string) {
   const s = gl.createShader(type)!;
   gl.shaderSource(s, src); gl.compileShader(s);
-  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); }
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
   return s;
 }
 function makeProgram(vert: string, frag: string) {
@@ -223,7 +180,6 @@ function makeProgram(vert: string, frag: string) {
   gl.attachShader(p, compileShader(gl.VERTEX_SHADER, vert));
   gl.attachShader(p, compileShader(gl.FRAGMENT_SHADER, frag));
   gl.linkProgram(p);
-  if (!gl.getProgramParameter(p, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(p)); }
   return p;
 }
 function makeFBO(w: number, h: number) {
@@ -241,14 +197,10 @@ function makeFBO(w: number, h: number) {
   return { tex, fb, w, h };
 }
 function doubleFBO(w: number, h: number) {
-  let a = makeFBO(w, h), b = makeFBO(w, h);
-  return {
-    read: a, write: b,
-    swap() { [this.read, this.write] = [this.write, this.read]; }
-  };
+  let a = makeFBO(w,h), b = makeFBO(w,h);
+  return { read: a, write: b, swap() { [this.read,this.write]=[this.write,this.read]; } };
 }
 
-// ── shaders ──────────────────────────────────────────────────────────────────
 const VERT = `#version 300 es
 layout(location=0) in vec2 a_pos;
 out vec2 v_uv;
@@ -257,13 +209,13 @@ void main(){v_uv=a_pos*.5+.5;gl_Position=vec4(a_pos,0,1);}`;
 const ADVECT = `#version 300 es
 precision highp float;
 in vec2 v_uv;
-uniform sampler2D u_vel, u_src;
+uniform sampler2D u_vel,u_src;
 uniform vec2 u_texel;
-uniform float u_dt, u_dissipation;
+uniform float u_dt,u_dissipation;
 out vec4 out_color;
 void main(){
-  vec2 pos = v_uv - u_dt * texture(u_vel, v_uv).xy * u_texel;
-  out_color = u_dissipation * texture(u_src, pos);
+  vec2 pos=v_uv-u_dt*texture(u_vel,v_uv).xy*u_texel;
+  out_color=u_dissipation*texture(u_src,pos);
 }`;
 
 const SPLAT = `#version 300 es
@@ -276,11 +228,11 @@ uniform float u_radius;
 uniform bool u_isVel;
 out vec4 out_color;
 void main(){
-  float d = length(v_uv - u_point);
-  float s = exp(-d*d / u_radius);
-  vec4 base = texture(u_src, v_uv);
-  if(u_isVel) out_color = base + vec4(u_color.xy * s, 0, 1);
-  else         out_color = base + vec4(u_color * s, 1);
+  float d=length(v_uv-u_point);
+  float s=exp(-d*d/u_radius);
+  vec4 base=texture(u_src,v_uv);
+  if(u_isVel) out_color=base+vec4(u_color.xy*s,0,1);
+  else         out_color=base+vec4(u_color*s,1);
 }`;
 
 const DIVERGENCE = `#version 300 es
@@ -300,7 +252,7 @@ void main(){
 const PRESSURE = `#version 300 es
 precision highp float;
 in vec2 v_uv;
-uniform sampler2D u_pressure, u_div;
+uniform sampler2D u_pressure,u_div;
 uniform vec2 u_texel;
 out vec4 out_color;
 void main(){
@@ -315,7 +267,7 @@ void main(){
 const GRADIENT = `#version 300 es
 precision highp float;
 in vec2 v_uv;
-uniform sampler2D u_pressure, u_vel;
+uniform sampler2D u_pressure,u_vel;
 uniform vec2 u_texel;
 out vec4 out_color;
 void main(){
@@ -332,273 +284,177 @@ precision highp float;
 in vec2 v_uv;
 uniform sampler2D u_dye;
 out vec4 out_color;
-// Site colours
-// background: #F0EDE6  → (0.941, 0.929, 0.902)
-// dark ink:   #0E0D0B  → (0.055, 0.051, 0.043)
-// mid tone:   #7A7870  → (0.478, 0.471, 0.439)
 void main(){
-  vec3 dye = clamp(texture(u_dye, v_uv).rgb, 0.0, 1.0);
-  float lum = dot(dye, vec3(0.333));
-  // map 0→bg, 1→dark ink, blend through mid tone
-  vec3 bg   = vec3(0.941, 0.929, 0.902);
-  vec3 mid  = vec3(0.478, 0.471, 0.439);
-  vec3 ink  = vec3(0.055, 0.051, 0.043);
-  vec3 col  = mix(bg, mid, smoothstep(0.0, 0.5, lum));
-       col  = mix(col, ink, smoothstep(0.4, 1.0, lum));
-  out_color = vec4(col, 1.0);
+  vec3 dye=clamp(texture(u_dye,v_uv).rgb,0.,1.);
+  float lum=dot(dye,vec3(.333));
+  vec3 bg =vec3(.941,.929,.902);
+  vec3 mid=vec3(.478,.471,.439);
+  vec3 ink=vec3(.055,.051,.043);
+  vec3 col=mix(bg,mid,smoothstep(0.,.5,lum));
+      col =mix(col,ink,smoothstep(.4,1.,lum));
+  out_color=vec4(col,1.);
 }`;
 
-// ── setup ────────────────────────────────────────────────────────────────────
-const SIM = 128, DYE = 256;
+const SIM=128, DYE=256;
 const progs = {
-  advect:     makeProgram(VERT, ADVECT),
-  splat:      makeProgram(VERT, SPLAT),
-  divergence: makeProgram(VERT, DIVERGENCE),
-  pressure:   makeProgram(VERT, PRESSURE),
-  gradient:   makeProgram(VERT, GRADIENT),
-  display:    makeProgram(VERT, DISPLAY),
+  advect:     makeProgram(VERT,ADVECT),
+  splat:      makeProgram(VERT,SPLAT),
+  divergence: makeProgram(VERT,DIVERGENCE),
+  pressure:   makeProgram(VERT,PRESSURE),
+  gradient:   makeProgram(VERT,GRADIENT),
+  display:    makeProgram(VERT,DISPLAY),
 };
 
-// fullscreen quad + VAO (required in WebGL2)
 const vao = gl.createVertexArray()!;
 gl.bindVertexArray(vao);
 const buf = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-// attrib location is always 0 — set once on the VAO
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
 gl.enableVertexAttribArray(0);
-gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
 gl.bindVertexArray(null);
 
-function bindQuad(prog: WebGLProgram) {
-  gl.useProgram(prog);
-  gl.bindVertexArray(vao);
-}
-
-const vel = doubleFBO(SIM, SIM);
-const dye = doubleFBO(DYE, DYE);
-const div = makeFBO(SIM, SIM);
-const prs = doubleFBO(SIM, SIM);
-
-// ── pass helpers ─────────────────────────────────────────────────────────────
+function bindQuad(prog: WebGLProgram) { gl.useProgram(prog); gl.bindVertexArray(vao); }
 function setTex(prog: WebGLProgram, name: string, unit: number, tex: WebGLTexture) {
-  gl.activeTexture(gl.TEXTURE0 + unit);
-  gl.bindTexture(gl.TEXTURE_2D, tex);
-  gl.uniform1i(gl.getUniformLocation(prog, name), unit);
+  gl.activeTexture(gl.TEXTURE0+unit);
+  gl.bindTexture(gl.TEXTURE_2D,tex);
+  gl.uniform1i(gl.getUniformLocation(prog,name),unit);
 }
 
-function runAdvect(src: ReturnType<typeof doubleFBO>, velFBO: ReturnType<typeof doubleFBO>, dt: number, dissipation: number) {
-  const p = progs.advect;
-  bindQuad(p);
-  setTex(p, 'u_vel', 0, velFBO.read.tex);
-  setTex(p, 'u_src', 1, src.read.tex);
-  // texel for vel lookup (always SIM-based)
-  gl.uniform2f(gl.getUniformLocation(p, 'u_texel'), 1/velFBO.read.w, 1/velFBO.read.h);
-  gl.uniform1f(gl.getUniformLocation(p, 'u_dt'), dt);
-  gl.uniform1f(gl.getUniformLocation(p, 'u_dissipation'), dissipation);
-  gl.bindFramebuffer(gl.FRAMEBUFFER, src.write.fb);
-  gl.viewport(0, 0, src.write.w, src.write.h);
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+const vel=doubleFBO(SIM,SIM), dye=doubleFBO(DYE,DYE);
+const div=makeFBO(SIM,SIM),   prs=doubleFBO(SIM,SIM);
+
+function runAdvect(src: ReturnType<typeof doubleFBO>, velFBO: ReturnType<typeof doubleFBO>, dt: number, dis: number) {
+  const p=progs.advect; bindQuad(p);
+  setTex(p,'u_vel',0,velFBO.read.tex);
+  setTex(p,'u_src',1,src.read.tex);
+  gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/velFBO.read.w,1/velFBO.read.h);
+  gl.uniform1f(gl.getUniformLocation(p,'u_dt'),dt);
+  gl.uniform1f(gl.getUniformLocation(p,'u_dissipation'),dis);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,src.write.fb);
+  gl.viewport(0,0,src.write.w,src.write.h);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
   gl.bindVertexArray(null);
   src.swap();
 }
 
-function splat(x: number, y: number, vx: number, vy: number, color: [number,number,number]) {
-  // velocity splat
-  {
-    const p = progs.splat;
-    bindQuad(p);
-    setTex(p, 'u_src', 0, vel.read.tex);
-    gl.uniform2f(gl.getUniformLocation(p, 'u_point'), x, y);
-    gl.uniform3f(gl.getUniformLocation(p, 'u_color'), vx, vy, 0);
-    gl.uniform1f(gl.getUniformLocation(p, 'u_radius'), 0.004);
-    gl.uniform1i(gl.getUniformLocation(p, 'u_isVel'), 1);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, vel.write.fb);
-    gl.viewport(0, 0, SIM, SIM);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
-    vel.swap();
-  }
-  // dye splat
-  {
-    const p = progs.splat;
-    bindQuad(p);
-    setTex(p, 'u_src', 0, dye.read.tex);
-    gl.uniform2f(gl.getUniformLocation(p, 'u_point'), x, y);
-    gl.uniform3f(gl.getUniformLocation(p, 'u_color'), ...color);
-    gl.uniform1f(gl.getUniformLocation(p, 'u_radius'), 0.012);
-    gl.uniform1i(gl.getUniformLocation(p, 'u_isVel'), 0);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, dye.write.fb);
-    gl.viewport(0, 0, DYE, DYE);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
-    dye.swap();
-  }
+type RGB = [number,number,number];
+function splat(x:number,y:number,vx:number,vy:number,color:RGB) {
+  const p=progs.splat;
+  bindQuad(p); setTex(p,'u_src',0,vel.read.tex);
+  gl.uniform2f(gl.getUniformLocation(p,'u_point'),x,y);
+  gl.uniform3f(gl.getUniformLocation(p,'u_color'),vx,vy,0);
+  gl.uniform1f(gl.getUniformLocation(p,'u_radius'),0.004);
+  gl.uniform1i(gl.getUniformLocation(p,'u_isVel'),1);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,vel.write.fb);
+  gl.viewport(0,0,SIM,SIM); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); vel.swap();
+
+  bindQuad(p); setTex(p,'u_src',0,dye.read.tex);
+  gl.uniform2f(gl.getUniformLocation(p,'u_point'),x,y);
+  gl.uniform3f(gl.getUniformLocation(p,'u_color'),...color);
+  gl.uniform1f(gl.getUniformLocation(p,'u_radius'),0.012);
+  gl.uniform1i(gl.getUniformLocation(p,'u_isVel'),0);
+  gl.bindFramebuffer(gl.FRAMEBUFFER,dye.write.fb);
+  gl.viewport(0,0,DYE,DYE); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); dye.swap();
 }
 
-// ── initial splats ────────────────────────────────────────────────────────────
-const COLORS: [number,number,number][] = [
-  [1.0, 1.0, 1.0],   // maps to ink in display shader
-  [0.6, 0.6, 0.6],   // maps to mid-tone
-  [0.3, 0.3, 0.3],   // lighter smoke
-];
-for (let i = 0; i < 12; i++) {
-  const x = Math.random(), y = Math.random();
-  const angle = Math.random() * Math.PI * 2;
-  const force = 200 + Math.random() * 400;
-  splat(x, y, Math.cos(angle)*force, Math.sin(angle)*force, COLORS[i % COLORS.length]);
+const COLORS:RGB[] = [[1,1,1],[.6,.6,.6],[.3,.3,.3]];
+for(let i=0;i<12;i++){
+  const angle=Math.random()*Math.PI*2, force=200+Math.random()*400;
+  splat(Math.random(),Math.random(),Math.cos(angle)*force,Math.sin(angle)*force,COLORS[i%3]);
 }
 
-// ── ASCII overlay ─────────────────────────────────────────────────────────────
-const ascii = document.getElementById('ascii-canvas') as HTMLCanvasElement;
+// ASCII renderer
 const ctx2d = ascii.getContext('2d')!;
-
 const CHARS = ' .,:;i1tfLCGO08@#';
 const CELL  = 11;
-const BG_R = 240, BG_G = 237, BG_B = 230;
+const readW=120, readH=80;
+const off=document.createElement('canvas'); off.width=readW; off.height=readH;
+const offCtx=off.getContext('2d')!;
+canvas.width=readW; canvas.height=readH;
 
-const readW = 120, readH = 80;
-const offscreen = document.createElement('canvas');
-offscreen.width = readW; offscreen.height = readH;
-const offCtx = offscreen.getContext('2d')!;
-
-// keep WebGL canvas fixed small — pixel source only
-canvas.width = readW; canvas.height = readH;
+const BG_R=240, BG_G=237, BG_B=230;
 
 function drawAscii() {
-  const aw = ascii.clientWidth, ah = ascii.clientHeight;
-  if (ascii.width !== aw || ascii.height !== ah) {
-    ascii.width = aw; ascii.height = ah;
-  }
-  offCtx.drawImage(canvas, 0, 0, readW, readH);
-  const pixels = offCtx.getImageData(0, 0, readW, readH).data;
-  const cols = Math.floor(aw / CELL);
-  const rows = Math.floor(ah / CELL);
-  ctx2d.fillStyle = `rgb(${BG_R},${BG_G},${BG_B})`;
-  ctx2d.fillRect(0, 0, aw, ah);
-  ctx2d.font = `${CELL}px "Courier New", monospace`;
-  ctx2d.textBaseline = 'top';
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const px = Math.floor((col / cols) * readW);
-      const py = readH - 1 - Math.floor((row / rows) * readH);
-      const idx = (py * readW + px) * 4;
-      const r = pixels[idx], g = pixels[idx+1], b = pixels[idx+2];
-      const lum = 1 - (0.299*r + 0.587*g + 0.114*b) / 255;
-      const ch = CHARS[Math.min(CHARS.length - 1, Math.floor(lum * CHARS.length))];
-      if (ch === ' ') continue;
-      const ir = Math.round(BG_R + (13  - BG_R) * lum);
-      const ig = Math.round(BG_G + (13  - BG_G) * lum);
-      const ib = Math.round(BG_B + (11  - BG_B) * lum);
-      ctx2d.fillStyle = `rgb(${ir},${ig},${ib})`;
-      ctx2d.fillText(ch, col * CELL, row * CELL);
+  const aw=ascii.clientWidth, ah=ascii.clientHeight;
+  if(ascii.width!==aw||ascii.height!==ah){ascii.width=aw;ascii.height=ah;}
+  offCtx.drawImage(canvas,0,0,readW,readH);
+  const px=offCtx.getImageData(0,0,readW,readH).data;
+  const cols=Math.floor(aw/CELL), rows=Math.floor(ah/CELL);
+  ctx2d.fillStyle=`rgb(${BG_R},${BG_G},${BG_B})`;
+  ctx2d.fillRect(0,0,aw,ah);
+  ctx2d.font=`${CELL}px "Courier New",monospace`;
+  ctx2d.textBaseline='top';
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+      const sx=Math.floor((c/cols)*readW);
+      const sy=readH-1-Math.floor((r/rows)*readH);
+      const i=(sy*readW+sx)*4;
+      const lum=1-(0.299*px[i]+0.587*px[i+1]+0.114*px[i+2])/255;
+      const ch=CHARS[Math.min(CHARS.length-1,Math.floor(lum*CHARS.length))];
+      if(ch===' ')continue;
+      const ir=Math.round(BG_R+(13-BG_R)*lum);
+      const ig=Math.round(BG_G+(13-BG_G)*lum);
+      const ib=Math.round(BG_B+(11-BG_B)*lum);
+      ctx2d.fillStyle=`rgb(${ir},${ig},${ib})`;
+      ctx2d.fillText(ch,c*CELL,r*CELL);
     }
   }
 }
 
-// ── pointer interaction ───────────────────────────────────────────────────────
-let pointer = { x: 0.5, y: 0.5, dx: 0, dy: 0, down: false };
-const eventTarget = ascii.parentElement!;
-eventTarget.addEventListener('pointermove', e => {
-  const r = eventTarget.getBoundingClientRect();
-  const nx = (e.clientX - r.left) / r.width;
-  const ny = 1 - (e.clientY - r.top) / r.height;
-  pointer.dx = (nx - pointer.x) * 5;
-  pointer.dy = (ny - pointer.y) * 5;
-  pointer.x = nx; pointer.y = ny;
-  if (pointer.down) {
-    const c = COLORS[Math.floor(Math.random() * COLORS.length)];
-    splat(pointer.x, pointer.y, pointer.dx * 600, pointer.dy * 600, c);
-  }
+// pointer
+let ptr={x:.5,y:.5,dx:0,dy:0,down:false};
+const heroEl = ascii.parentElement!;
+heroEl.addEventListener('pointermove',e=>{
+  const rect=heroEl.getBoundingClientRect();
+  const nx=(e.clientX-rect.left)/rect.width;
+  const ny=(e.clientY-rect.top)/rect.height;
+  ptr.dx=(nx-ptr.x)*5; ptr.dy=(ny-ptr.y)*5;
+  ptr.x=nx; ptr.y=ny;
+  if(ptr.down) splat(ptr.x,ptr.y,ptr.dx*600,ptr.dy*600,COLORS[Math.floor(Math.random()*3)]);
 });
-eventTarget.addEventListener('pointerdown', e => {
-  pointer.down = true;
-  const r = eventTarget.getBoundingClientRect();
-  pointer.x = (e.clientX - r.left) / r.width;
-  pointer.y = 1 - (e.clientY - r.top) / r.height;
+heroEl.addEventListener('pointerdown',e=>{
+  ptr.down=true;
+  const rect=heroEl.getBoundingClientRect();
+  ptr.x=(e.clientX-rect.left)/rect.width;
+  ptr.y=(e.clientY-rect.top)/rect.height;
 });
-eventTarget.addEventListener('pointerup', () => { pointer.down = false; });
+heroEl.addEventListener('pointerup',()=>{ptr.down=false;});
 
-// ── auto-wander ───────────────────────────────────────────────────────────────
-// Emit gentle random splats to keep it alive when idle
-let wanderTimer = 0;
-
-// ── render loop ───────────────────────────────────────────────────────────────
-let last = 0;
-function frame(t: number) {
+let last=0, wanderT=0;
+function frame(t:number){
   requestAnimationFrame(frame);
-  const dt = Math.min((t - last) / 1000, 0.033);
-  last = t;
-
-  // auto wander: small splats every ~1.5s
-  wanderTimer += dt;
-  if (wanderTimer > 1.5) {
-    wanderTimer = 0;
-    const x = 0.2 + Math.random() * 0.6;
-    const y = 0.2 + Math.random() * 0.6;
-    const angle = Math.random() * Math.PI * 2;
-    const force = 100 + Math.random() * 200;
-    splat(x, y, Math.cos(angle)*force, Math.sin(angle)*force, COLORS[Math.floor(Math.random()*COLORS.length)]);
+  const dt=Math.min((t-last)/1000,.033); last=t;
+  wanderT+=dt;
+  if(wanderT>1.5){
+    wanderT=0;
+    const angle=Math.random()*Math.PI*2, force=100+Math.random()*200;
+    splat(.2+Math.random()*.6,.2+Math.random()*.6,Math.cos(angle)*force,Math.sin(angle)*force,COLORS[Math.floor(Math.random()*3)]);
   }
-
-  // advect velocity
-  runAdvect(vel, vel, dt, 0.98);
-  // advect dye
-  runAdvect(dye, vel, dt, 0.995);
-
-  // divergence
-  {
-    const p = progs.divergence;
-    bindQuad(p);
-    setTex(p, 'u_vel', 0, vel.read.tex);
-    gl.uniform2f(gl.getUniformLocation(p, 'u_texel'), 1/SIM, 1/SIM);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, div.fb);
-    gl.viewport(0, 0, SIM, SIM);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
+  runAdvect(vel,vel,dt,.98);
+  runAdvect(dye,vel,dt,.995);
+  { const p=progs.divergence; bindQuad(p); setTex(p,'u_vel',0,vel.read.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,div.fb); gl.viewport(0,0,SIM,SIM);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); }
+  for(let i=0;i<20;i++){
+    const p=progs.pressure; bindQuad(p);
+    setTex(p,'u_pressure',0,prs.read.tex); setTex(p,'u_div',1,div.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,prs.write.fb); gl.viewport(0,0,SIM,SIM);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); prs.swap();
   }
-
-  // pressure solve (20 iterations)
-  for (let i = 0; i < 20; i++) {
-    const p = progs.pressure;
-    bindQuad(p);
-    setTex(p, 'u_pressure', 0, prs.read.tex);
-    setTex(p, 'u_div', 1, div.tex);
-    gl.uniform2f(gl.getUniformLocation(p, 'u_texel'), 1/SIM, 1/SIM);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, prs.write.fb);
-    gl.viewport(0, 0, SIM, SIM);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
-    prs.swap();
-  }
-
-  // gradient subtract
-  {
-    const p = progs.gradient;
-    bindQuad(p);
-    setTex(p, 'u_pressure', 0, prs.read.tex);
-    setTex(p, 'u_vel', 1, vel.read.tex);
-    gl.uniform2f(gl.getUniformLocation(p, 'u_texel'), 1/SIM, 1/SIM);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, vel.write.fb);
-    gl.viewport(0, 0, SIM, SIM);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
-    vel.swap();
-  }
-
-  // display to WebGL canvas (source for ASCII sampling)
-  {
-    const p = progs.display;
-    bindQuad(p);
-    setTex(p, 'u_dye', 0, dye.read.tex);
-    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.bindVertexArray(null);
-  }
-
+  { const p=progs.gradient; bindQuad(p);
+    setTex(p,'u_pressure',0,prs.read.tex); setTex(p,'u_vel',1,vel.read.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,vel.write.fb); gl.viewport(0,0,SIM,SIM);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); vel.swap(); }
+  { const p=progs.display; bindQuad(p);
+    setTex(p,'u_dye',0,dye.read.tex);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.viewport(0,0,canvas.width,canvas.height);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); }
   drawAscii();
 }
-
 requestAnimationFrame(frame);
+}
 </script>

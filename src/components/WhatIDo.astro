@@ -20,28 +20,48 @@ const pillars = [
 
 <section id="what-i-do" class="wid-section">
 
-  <div class="wid-header">
-    <span class="section-label">— What I Do</span>
-  </div>
+  <div class="wid-layout">
 
-  <div class="wid-lead fade-up" data-delay="0">
-    <p>
-      The hardest problems are never purely technical — they live between what's possible,
-      what's right for the user, and what the team can actually sustain.
-      <strong>Twenty years across engineering, product, and creative direction</strong>
-      has given me a useful perspective on
-      <strong>where things tend to go wrong.</strong>
-    </p>
-  </div>
-
-  <div class="wid-grid">
-    {pillars.map((p, i) => (
-      <div class="pillar fade-up" data-delay={String(i * 90)}>
-        <span class="pillar-num">{p.n}</span>
-        <h3 class="pillar-title">{p.title}</h3>
-        <p class="pillar-sub">{p.sub}</p>
+    <!-- Left: hero intro -->
+    <div class="wid-intro">
+      <div class="wid-header">
+        <span class="section-label">— What I Do</span>
       </div>
-    ))}
+      <div class="hero-eyebrow fade-in" data-delay="100">
+        <span>CTO</span>
+        <span>Product</span>
+        <span>AI</span>
+        <span>Creative Technology</span>
+      </div>
+      <p class="hero-body fade-up" data-delay="200">
+        Twenty years building technology in places where it really had to work —
+        AI platforms, real-time systems, live performances in front of thousands.
+      </p>
+    </div>
+
+    <!-- Right: pillars -->
+    <div class="wid-right">
+      <div class="wid-lead fade-up" data-delay="0">
+        <p>
+          The hardest problems are never purely technical — they live between what's possible,
+          what's right for the user, and what the team can actually sustain.
+          <strong>Twenty years across engineering, product, and creative direction</strong>
+          has given me a useful perspective on
+          <strong>where things tend to go wrong.</strong>
+        </p>
+      </div>
+
+      <div class="wid-grid">
+        {pillars.map((p, i) => (
+          <div class="pillar fade-up" data-delay={String(i * 90)}>
+            <span class="pillar-num">{p.n}</span>
+            <h3 class="pillar-title">{p.title}</h3>
+            <p class="pillar-sub">{p.sub}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
   </div>
 
 </section>
@@ -53,12 +73,29 @@ const pillars = [
     border-bottom: 1px solid #D4CFC6;
   }
 
+  /* Two-column layout */
+  .wid-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  /* Left column */
+  .wid-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 6rem;
+  }
+
   .wid-header {
-    margin-bottom: 3rem;
+    margin-bottom: 0.5rem;
   }
 
   .section-label {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     font-size: 0.68rem;
     letter-spacing: 0.2em;
@@ -66,13 +103,44 @@ const pillars = [
     color: #9A9288;
   }
 
+  .hero-eyebrow {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .hero-eyebrow span {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #D4CFC6;
+    background: #0E0D0B;
+    padding: 0.3em 0.65em;
+  }
+
+  .hero-body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: #6B6456;
+    letter-spacing: 0.01em;
+  }
+
+  /* Right column */
+  .wid-right {
+    display: flex;
+    flex-direction: column;
+  }
+
   .wid-lead {
-    max-width: 64ch;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
   }
 
   .wid-lead p {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: clamp(0.95rem, 1.5vw, 1.1rem);
     line-height: 1.85;
@@ -100,7 +168,7 @@ const pillars = [
   .pillar:not(:first-child) { padding-left: 2.5rem; }
 
   .pillar-num {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 800;
     font-size: 0.65rem;
     letter-spacing: 0.2em;
@@ -110,7 +178,7 @@ const pillars = [
   }
 
   .pillar-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 800;
     font-size: clamp(1.2rem, 2.2vw, 1.75rem);
     letter-spacing: -0.03em;
@@ -122,12 +190,21 @@ const pillars = [
   }
 
   .pillar-sub {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 0.82rem;
     line-height: 1.75;
     color: #9A9288;
     white-space: pre-line;
+  }
+
+  @media (max-width: 900px) {
+    .wid-layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .wid-intro { position: static; }
+    .hero-eyebrow { flex-direction: row; flex-wrap: wrap; }
   }
 
   @media (max-width: 760px) {

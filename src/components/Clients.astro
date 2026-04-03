@@ -1,0 +1,73 @@
+---
+const brands = ['CORPUS.MUSIC', 'MICROPSI INDUSTRIES', 'BMW', 'SONY', 'PORSCHE', 'ARRI MEDIA', 'THEATER DORTMUND', 'OPER DORTMUND', 'ECM RECORDS', 'SILEX INVESTMENT'];
+---
+
+<div class="clients-wrap">
+  <div class="clients-label">
+    <span>— Clients &amp; Collaborators</span>
+  </div>
+  <div class="clients-strip" aria-hidden="true">
+    <div class="clients-track">
+      {[...brands, ...brands, ...brands].map((b) => (
+        <span class="brand-item">
+          {b}
+          <span class="brand-sep">·</span>
+        </span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .clients-wrap {
+    background: #F0EDE6;
+    border-bottom: 1px solid #D4CFC6;
+    padding: 2rem 0;
+  }
+
+  .clients-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #C4BFB6;
+    padding: 0 3.5rem 1rem;
+  }
+
+  .clients-strip { overflow: hidden; }
+
+  .clients-track {
+    display: flex;
+    white-space: nowrap;
+    animation: clients-scroll 28s linear infinite;
+    width: max-content;
+  }
+
+  .clients-strip:hover .clients-track {
+    animation-play-state: paused;
+  }
+
+  .brand-item {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    color: #0E0D0B;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 0 0.1rem;
+  }
+
+  .brand-sep {
+    color: #D4CFC6;
+    font-weight: 400;
+    margin-right: 1.2rem;
+  }
+
+  @keyframes clients-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.333%); }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+const items = ['Engineering', 'Product', 'AI', 'Creative Direction', 'Craft', 'Architecture', 'Systems'];
+---
+
+<div class="velocity-strip" aria-hidden="true">
+  <div class="velocity-track">
+    {[...items, ...items, ...items].map((item, i) => (
+      <span class="velocity-item">
+        {item}
+        <span class="velocity-sep">—</span>
+      </span>
+    ))}
+  </div>
+</div>
+
+<style>
+  .velocity-strip {
+    overflow: hidden;
+    border-bottom: 1px solid #D4CFC6;
+    padding: 1rem 0;
+    background: #F0EDE6;
+  }
+
+  .velocity-track {
+    display: flex;
+    white-space: nowrap;
+    animation: scroll-left 22s linear infinite;
+    width: max-content;
+  }
+
+  .velocity-strip:hover .velocity-track {
+    animation-play-state: paused;
+  }
+
+  .velocity-item {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0E0D0B;
+    padding: 0 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+
+  .velocity-sep {
+    color: #C4BFB6;
+    font-weight: 400;
+    margin-right: 1.2rem;
+  }
+
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-33.333%); }
+  }
+</style>

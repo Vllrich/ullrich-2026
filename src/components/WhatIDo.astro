@@ -1,0 +1,147 @@
+---
+const pillars = [
+  {
+    n: '01',
+    title: 'Technical Leadership\n& Architecture',
+    sub: 'Systems that survive\ncontact with reality.',
+  },
+  {
+    n: '02',
+    title: 'Product\nOwnership',
+    sub: 'Technology without\nproduct judgment is\nexpensive noise.',
+  },
+  {
+    n: '03',
+    title: 'AI Strategy\n& Integration',
+    sub: 'Knowing what AI should replace, what it should augment, and what must stay human.',
+  },
+];
+---
+
+<section id="what-i-do" class="wid-section">
+
+  <div class="wid-header">
+    <span class="section-label">— What I Do</span>
+  </div>
+
+  <div class="wid-lead fade-up" data-delay="0">
+    <p>
+      The hardest problems are never purely technical — they live between what's possible,
+      what's right for the user, and what the team can actually sustain.
+      <strong>Twenty years across engineering, product, and creative direction</strong>
+      has given me a useful perspective on
+      <strong>where things tend to go wrong.</strong>
+    </p>
+  </div>
+
+  <div class="wid-grid">
+    {pillars.map((p, i) => (
+      <div class="pillar fade-up" data-delay={String(i * 90)}>
+        <span class="pillar-num">{p.n}</span>
+        <h3 class="pillar-title">{p.title}</h3>
+        <p class="pillar-sub">{p.sub}</p>
+      </div>
+    ))}
+  </div>
+
+</section>
+
+<style>
+  .wid-section {
+    background: #F0EDE6;
+    padding: 6rem 3.5rem;
+    border-bottom: 1px solid #D4CFC6;
+  }
+
+  .wid-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+  }
+
+  .wid-lead {
+    max-width: 64ch;
+    margin-bottom: 5rem;
+  }
+
+  .wid-lead p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    line-height: 1.85;
+    color: #6B6456;
+    letter-spacing: 0.01em;
+  }
+
+  .wid-lead strong {
+    font-weight: 500;
+    color: #0E0D0B;
+  }
+
+  /* ── Grid: brutalist horizontal rule dividers ── */
+  .wid-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 2px solid #0E0D0B;
+  }
+
+  .pillar {
+    padding: 2.5rem 2.5rem 2.5rem 0;
+    border-right: 1px solid #D4CFC6;
+  }
+  .pillar:last-child { border-right: none; padding-right: 0; }
+  .pillar:not(:first-child) { padding-left: 2.5rem; }
+
+  .pillar-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: #C4BFB6;
+    display: block;
+    margin-bottom: 1.4rem;
+  }
+
+  .pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #0E0D0B;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    white-space: pre-line;
+  }
+
+  .pillar-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    color: #9A9288;
+    white-space: pre-line;
+  }
+
+  @media (max-width: 760px) {
+    .wid-section { padding: 4rem 1.75rem; }
+    .wid-grid {
+      grid-template-columns: 1fr;
+      border-top: 2px solid #0E0D0B;
+    }
+    .pillar {
+      border-right: none;
+      border-bottom: 1px solid #D4CFC6;
+      padding: 2rem 0;
+    }
+    .pillar:last-child { border-bottom: none; }
+    .pillar:not(:first-child) { padding-left: 0; }
+  }
+</style>

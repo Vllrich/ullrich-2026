@@ -1,0 +1,163 @@
+---
+const projects = [
+  { n: '01', title: 'CORPUS',          desc: 'AI music platform',                        cat: 'AI · Music',       year: '2024' },
+  { n: '02', title: 'Micropsi MIRAI',  desc: 'ML-guided robotics vision system',          cat: 'ML · Robotics',    year: '2023' },
+  { n: '03', title: 'SILEX VR',        desc: 'VR automotive experience · Porsche',        cat: 'VR · Automotive',  year: '2023' },
+  { n: '04', title: 'Theater Dortmund',desc: 'Live video systems · no rollback, no take 2', cat: 'Performance',    year: '2022' },
+  { n: '05', title: 'Einstein on Beach',desc: 'Spatial audio · real-time visual instruments', cat: 'Installation', year: '2021' },
+  { n: '06', title: 'Sound of Porsche',desc: 'DSP tools · granular synthesis · branding', cat: 'Audio · Brand',    year: '2020' },
+];
+---
+
+<section id="work" class="work-section">
+  <div class="work-header">
+    <span class="section-label">— Selected Track Record</span>
+    <p class="work-intro fade-up" data-delay="60">
+      My technical leadership didn't start in a boardroom. It started on stages,
+      in studios, and inside machines — where software runs live in front of 2,000 people
+      with no second take.
+    </p>
+  </div>
+
+  <ol class="tracklist">
+    {projects.map((p, i) => (
+      <li>
+        <a href="#" class="track fade-up" data-delay={String(i * 60)}>
+          <div class="track-left">
+            <span class="track-num">{p.n}</span>
+            <span class="track-title">{p.title}</span>
+          </div>
+          <div class="track-right">
+            <span class="track-desc">{p.desc}</span>
+            <span class="track-cat">{p.cat}</span>
+            <span class="track-year">{p.year}</span>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .work-section {
+    padding: 6rem 3.5rem;
+    background: #F0EDE6;
+    border-top: 1px solid #D4CFC6;
+  }
+
+  .work-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 4rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+    padding-top: 0.15rem;
+  }
+
+  .work-intro {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: #6B6456;
+    max-width: 56ch;
+  }
+
+  .tracklist { list-style: none; border-top: 2px solid #0E0D0B; }
+
+  .track {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 1.35rem 0;
+    border-bottom: 1px solid #D4CFC6;
+    text-decoration: none;
+    gap: 2rem;
+    transition: border-color 0.4s;
+  }
+  .track:hover { border-bottom-color: #9A9288; }
+
+  .track-left {
+    display: flex;
+    align-items: baseline;
+    gap: 1.75rem;
+    min-width: 0;
+  }
+
+  .track-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: #C4BFB6;
+    flex-shrink: 0;
+  }
+
+  .track-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 2.5vw, 1.9rem);
+    letter-spacing: -0.025em;
+    color: #0E0D0B;
+    text-transform: uppercase;
+    transition: color 0.35s;
+    white-space: nowrap;
+  }
+  .track:hover .track-title { color: #6B6456; }
+
+  .track-right {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    flex-shrink: 0;
+  }
+
+  .track-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    letter-spacing: 0.01em;
+    color: #9A9288;
+  }
+
+  .track-cat {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #C4BFB6;
+    min-width: 8rem;
+    text-align: right;
+  }
+
+  .track-year {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #C4BFB6;
+    min-width: 2.5rem;
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .work-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .track-cat, .track-year { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    .work-section { padding: 4rem 1.75rem; }
+    .track-right { display: none; }
+    .track-title { white-space: normal; }
+  }
+</style>

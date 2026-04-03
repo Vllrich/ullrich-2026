@@ -1,0 +1,225 @@
+---
+---
+
+<div class="site-wrap">
+
+  <header class="site-nav">
+    <span class="nav-logo">LARS ULLRICH</span>
+    <nav class="nav-links">
+      <a href="#what-i-do">What I Do</a>
+      <a href="#perspective">Perspective</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+
+    <!-- Left: text -->
+    <div class="hero-left">
+      <div class="hero-eyebrow fade-in" data-delay="100">
+        <span>CTO</span>
+        <span class="eyebrow-sep">·</span>
+        <span>Product</span>
+        <span class="eyebrow-sep">·</span>
+        <span>AI</span>
+        <span class="eyebrow-sep">·</span>
+        <span>Creative Technology</span>
+      </div>
+
+      <p class="hero-body fade-up" data-delay="440">
+        Twenty years building technology in places where it really had to work —
+        AI platforms, real-time systems, live performances in front of thousands.
+      </p>
+
+      <div class="hero-meta fade-in" data-delay="600">
+        <span>Berlin, DE</span>
+        <span class="meta-sep">—</span>
+        <span>LU · 2026</span>
+      </div>
+    </div>
+
+    <!-- Right: Lottie animation -->
+    <div class="hero-right fade-in" data-delay="0">
+      <canvas id="lottie-canvas"></canvas>
+    </div>
+
+  </section>
+
+</div>
+
+<style>
+  .site-wrap { background: #F0EDE6; }
+
+  /* ── Nav ── */
+  .site-nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 3.5rem;
+    background: #F0EDE6;
+    border-bottom: 1px solid #D4CFC6;
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: #0E0D0B;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+  }
+  .nav-links a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9A9288;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #0E0D0B; }
+
+  /* ── Hero split ── */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 640px;
+    padding-top: 56px; /* nav height */
+    border-bottom: 1px solid #D4CFC6;
+    overflow: hidden;
+  }
+
+  /* LEFT — black */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3.5rem;
+    background: #0E0D0B;
+    border-right: none;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+  }
+  .eyebrow-sep { color: #4A4840; }
+
+  .hero-name {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 7.5vw, 7.5rem);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    color: #0E0D0B;
+    text-transform: uppercase;
+    margin: 0 0 3rem;
+  }
+
+  .name-line { display: block; }
+
+  .hero-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: #7A7870;
+    max-width: 40ch;
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5A5850;
+  }
+  .meta-sep { color: #3A3830; }
+
+  /* RIGHT: Lottie fills the cell exactly */
+  .hero-right {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    background: #F0EDE6;
+  }
+
+  #lottie-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: grayscale(100%) contrast(1.05);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .hero {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 50vw;
+    }
+    .hero-left {
+      border-right: none;
+      border-bottom: 1px solid #2A2820;
+      padding: 2.5rem 1.75rem;
+      justify-content: flex-start;
+      padding-top: 3rem;
+    }
+    .hero-right { min-height: 50vw; }
+    .site-nav { padding: 1.25rem 1.75rem; }
+    .nav-links { gap: 1.5rem; }
+  }
+</style>
+
+<script>
+  import { DotLottie } from '@lottiefiles/dotlottie-web';
+
+  const canvas = document.getElementById('lottie-canvas') as HTMLCanvasElement;
+
+  if (canvas) {
+    const container = canvas.parentElement!;
+
+    const lottie = new DotLottie({
+      canvas,
+      src: '/anims/hero-opt.lottie',
+      autoplay: true,
+      loop: true,
+    });
+
+    // Keep canvas pixel dimensions in sync with container
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      canvas.width  = Math.round(width  * devicePixelRatio);
+      canvas.height = Math.round(height * devicePixelRatio);
+      lottie.resize();
+    });
+    ro.observe(container);
+  }
+</script>

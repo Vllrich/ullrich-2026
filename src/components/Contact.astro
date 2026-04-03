@@ -1,0 +1,177 @@
+---
+---
+
+<section id="contact" class="contact-section">
+
+  <div class="contact-inner">
+    <div class="contact-left">
+      <span class="section-label">— Let's Talk</span>
+    </div>
+
+    <div class="contact-body">
+      <p class="contact-intro fade-up" data-delay="0">
+        Tell me what you're building.<br/>
+        If it's complex, cross-disciplinary,<br/>
+        and high-stakes — that's where I do my best work.
+      </p>
+
+      <a href="mailto:contact@larsullrich.de" class="contact-email fade-up" data-delay="160">
+        contact@larsullrich.de
+      </a>
+
+      <p class="contact-note fade-in" data-delay="300">
+        Currently taking on select engagements — CTO/CPO advisory,
+        AI strategy, and complex technical builds.
+        I respond within 24 hours.
+      </p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <span class="footer-logo">LARS ULLRICH</span>
+    <p class="footer-desc">
+      Building technology at the intersection of engineering,<br/>
+      product, and creative vision.
+    </p>
+    <div class="footer-meta">
+      <div class="footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">X / Twitter</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Impressum</a>
+      </div>
+      <span class="footer-copy">© 2026 Lars Ullrich. All rights reserved.</span>
+    </div>
+  </footer>
+
+</section>
+
+<style>
+  .contact-section {
+    background: #F0EDE6;
+    border-top: 1px solid #D4CFC6;
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 0 4rem;
+    padding: 6rem 3.5rem;
+    border-bottom: 1px solid #D4CFC6;
+  }
+
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+    padding-top: 0.15rem;
+  }
+
+  .contact-intro {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #0E0D0B;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-email {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+    letter-spacing: 0.02em;
+    color: #6B6456;
+    text-decoration: none;
+    border-bottom: 1px solid #D4CFC6;
+    padding-bottom: 0.1em;
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    transition: color 0.35s, border-color 0.35s;
+  }
+  .contact-email:hover { color: #0E0D0B; border-bottom-color: #9A9288; }
+
+  .contact-note {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: #9A9288;
+    max-width: 44ch;
+  }
+
+  /* ── Footer ── */
+  .site-footer {
+    padding: 3rem 3.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 2rem 4rem;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: #0E0D0B;
+  }
+
+  .footer-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.72rem;
+    line-height: 1.7;
+    color: #9A9288;
+    letter-spacing: 0.01em;
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.75rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .footer-links a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9A9288;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: #0E0D0B; }
+
+  .footer-copy {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: #C4BFB6;
+  }
+
+  @media (max-width: 900px) {
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .site-footer { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-meta { align-items: flex-start; }
+  }
+
+  @media (max-width: 640px) {
+    .contact-inner { padding: 4rem 1.75rem; }
+    .site-footer { padding: 2.5rem 1.75rem; }
+    .footer-links { flex-wrap: wrap; gap: 1.25rem; }
+  }
+</style>

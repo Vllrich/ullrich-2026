@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+interface Props { title?: string }
+const { title = 'Lars Ullrich' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content="Creative Coder · CTO · Digital Artist — Berlin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <slot />
+
+  <script>
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            const el = e.target as HTMLElement;
+            const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+            setTimeout(() => el.classList.add('in'), delay);
+            io.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.fade-up, .fade-in').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+---
+const items = [
+  {
+    code: 'LIVE / OR NOTHING',
+    body: "Software that ran in front of audiences — opera, theater, large-scale installations. No staging environment, no rollback. You fix it before the curtain or you don't.",
+  },
+  {
+    code: 'TWO / SIDES',
+    body: 'Twenty years split between writing code and directing creative work. Neither felt like a detour — each made the other more useful.',
+  },
+  {
+    code: 'BEFORE / THE WAVE',
+    body: "Training models on performance data and building generative systems before the current AI moment. The problems haven't changed much, just the tools.",
+  },
+  {
+    code: 'SMALL / TEAMS',
+    body: "Most of this was built with small teams and tight budgets. That's where you find out what actually matters — and what you can safely skip.",
+  },
+];
+---
+
+<section id="perspective" class="persp-section">
+
+  <div class="persp-header">
+    <span class="persp-label">— Perspective</span>
+    <p class="persp-lead fade-up" data-delay="100">
+      Some of the most interesting work I've done<br/>
+      didn't fit neatly into one discipline.
+    </p>
+  </div>
+
+  <div class="persp-grid">
+    {items.map((item, i) => (
+      <div class="persp-item fade-up" data-delay={String(i * 80)}>
+        <h3 class="persp-code">{item.code}</h3>
+        <p class="persp-body">{item.body}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Large statement line -->
+  <div class="persp-statement fade-up" data-delay="350">
+    <p>AI changes how we build.<br/>
+    <strong>It doesn't change who's responsible for what ships.</strong></p>
+  </div>
+
+</section>
+
+<style>
+  /* Dark inverted section — the visual contrast moment */
+  .persp-section {
+    background: #0E0D0B;
+    color: #F0EDE6;
+    padding: 6rem 3.5rem;
+  }
+
+  .persp-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 5rem;
+    gap: 4rem;
+  }
+
+  .persp-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #5A5650;
+    flex-shrink: 0;
+    padding-top: 0.2rem;
+  }
+
+  .persp-lead {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 3.5rem);
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: #F0EDE6;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* ── 2×2 grid of perspective items ── */
+  .persp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid #2A2820;
+    border-left: 1px solid #2A2820;
+    margin-bottom: 5rem;
+  }
+
+  .persp-item {
+    padding: 2.5rem;
+    border-bottom: 1px solid #2A2820;
+    border-right: 1px solid #2A2820;
+  }
+
+  .persp-code {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: #F0EDE6;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+
+  .persp-body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: #5A5650;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Bottom statement — large type ── */
+  .persp-statement {
+    border-top: 1px solid #2A2820;
+    padding-top: 3rem;
+  }
+
+  .persp-statement p {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.4rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: #5A5650;
+    text-transform: uppercase;
+  }
+
+  .persp-statement strong {
+    color: #F0EDE6;
+    font-weight: 800;
+  }
+
+  @media (max-width: 760px) {
+    .persp-section { padding: 4rem 1.75rem; }
+    .persp-header { flex-direction: column; gap: 1.5rem; }
+    .persp-lead { text-align: left; }
+    .persp-grid { grid-template-columns: 1fr; }
+    .persp-item { padding: 2rem 0; }
+  }
+</style>

@@ -5,7 +5,7 @@ const images = Array.from({ length: 86 }, (_, i) => `/images/${String(i + 1).pad
 <div class="slider-section">
   <div id="image_track" data-mouse-down-at="0" data-prev-percentage="0">
     {images.map((src, i) => (
-      <img class="image" src={src} alt="" draggable="false" loading={i < 5 ? 'eager' : 'lazy'} decoding="async" />
+      <img class="image" src={src} alt="" draggable="false" loading="eager" decoding="async" />
     ))}
   </div>
 </div>

@@ -1,75 +1,108 @@
 ---
 const images = Array.from({ length: 86 }, (_, i) => `/images/${String(i + 1).padStart(2, '0')}.webp`);
-const half = Math.ceil(images.length / 2);
-const row1 = images.slice(0, half);
-const row2 = images.slice(half);
 ---
 
-<div class="img-slider-wrap">
-  <div class="img-track-row">
-    <div class="img-track img-track--fwd">
-      {[...row1, ...row1].map((src, i) => (
-        <img src={src} alt="" loading="lazy" decoding="async" />
-      ))}
-    </div>
-  </div>
-  <div class="img-track-row">
-    <div class="img-track img-track--rev">
-      {[...row2, ...row2].map((src, i) => (
-        <img src={src} alt="" loading="lazy" decoding="async" />
-      ))}
-    </div>
+<div class="slider-section">
+  <div id="image_track" data-mouse-down-at="0" data-prev-percentage="0">
+    {images.map((src, i) => (
+      <img class="image" src={src} alt="" draggable="false" loading={i < 5 ? 'eager' : 'lazy'} decoding="async" />
+    ))}
   </div>
 </div>
 
 <style>
-  .img-slider-wrap {
+  .slider-section {
     background: #F0EDE6;
     border-bottom: 1px solid #D4CFC6;
-    padding: 2rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    height: 27vmin;
+    position: relative;
     overflow: hidden;
+    cursor: grab;
   }
 
-  .img-track-row {
-    overflow: hidden;
-  }
+  .slider-section:active { cursor: grabbing; }
 
-  .img-track {
+  #image_track {
     display: flex;
-    gap: 0.75rem;
-    width: max-content;
+    gap: 4vmin;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(0px) translateY(-50%);
+    user-select: none;
   }
 
-  .img-track--fwd {
-    animation: slide-fwd 60s linear infinite;
-  }
-
-  .img-track--rev {
-    animation: slide-rev 60s linear infinite;
-  }
-
-  .img-slider-wrap:hover .img-track {
-    animation-play-state: paused;
-  }
-
-  .img-track img {
-    height: 220px;
-    width: auto;
+  #image_track > .image {
+    width: 37vmin;
+    height: 21vmin;
     object-fit: cover;
-    display: block;
-    border-radius: 2px;
-  }
-
-  @keyframes slide-fwd {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  @keyframes slide-rev {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
+    object-position: 100% center;
+    filter: brightness(0.75);
+    border-radius: 10px;
   }
 </style>
+
+<script>
+  const track = document.getElementById("image_track") as HTMLElement;
+
+  const AUTO_SPEED = 18; // px/s
+  const LERP = 0.08;     // drag easing (0=instant, lower=more lag)
+
+  let isDragging = false;
+  let startX = 0;
+  let prevX = 0;
+  let targetX = 0;  // where we want to be
+  let renderedX = 0; // where we currently are (lerped)
+  let lastTime = 0;
+
+  const getMinX = () => -(track.scrollWidth - window.innerWidth * 0.5);
+  const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+  const applyPosition = (x: number) => {
+    const pct = track.scrollWidth > 0 ? (x / track.scrollWidth) * 100 : 0;
+    track.style.transform = `translateX(${x}px) translateY(-50%)`;
+    for (const img of track.getElementsByClassName("image")) {
+      (img as HTMLElement).style.objectPosition = `${100 + pct}% center`;
+    }
+  };
+
+  const tick = (time: number) => {
+    if (lastTime) {
+      const dt = Math.min((time - lastTime) / 1000, 0.05);
+
+      if (!isDragging) {
+        targetX = clamp(targetX - AUTO_SPEED * dt, getMinX(), 0);
+        if (targetX <= getMinX()) targetX = 0;
+      }
+
+      renderedX = lerp(renderedX, targetX, LERP);
+      if (Math.abs(renderedX - targetX) > 0.05) applyPosition(renderedX);
+      else applyPosition(targetX);
+    }
+    lastTime = time;
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  window.onmousedown = (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    prevX = targetX;
+  };
+  window.ontouchstart = (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    prevX = targetX;
+  };
+  window.onmouseup = () => { isDragging = false; };
+  window.ontouchend = () => { isDragging = false; };
+  window.onmousemove = (e) => {
+    if (!isDragging) return;
+    targetX = clamp(prevX + (e.clientX - startX), getMinX(), 0);
+  };
+  window.ontouchmove = (e) => {
+    if (!isDragging) return;
+    targetX = clamp(prevX + (e.touches[0].clientX - startX), getMinX(), 0);
+  };
+</script>

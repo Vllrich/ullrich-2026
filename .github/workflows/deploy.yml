@@ -1,0 +1,61 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build application
+        run: npm run build
+
+      - name: Build Docker image
+        run: |
+          docker build -t ullrich-2026:latest .
+          docker save ullrich-2026:latest | gzip > website.tar.gz
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          port: 22
+          source: "website.tar.gz,docker-compose.prod.yml"
+          target: "/opt/ullrich-2026"
+          timeout: 60s
+          command_timeout: 10m
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          port: 22
+          timeout: 60s
+          command_timeout: 10m
+          script: |
+            cd /opt/ullrich-2026
+            docker load < website.tar.gz
+            cp docker-compose.prod.yml docker-compose.yml
+            docker compose down --remove-orphans
+            docker compose up -d
+            docker system prune -f
+            sleep 5
+            docker compose ps

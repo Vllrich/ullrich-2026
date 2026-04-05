@@ -16,6 +16,7 @@
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",
     "@astrojs/tailwind": "^6.0.2",
+    "@emailjs/browser": "^4.4.1",
     "@lottiefiles/dotlottie-web": "^0.69.0",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.3",

@@ -1,0 +1,7 @@
+services:
+  app:
+    image: ullrich-2026:latest
+    container_name: ullrich-2026
+    ports:
+      - "4000:80"
+    restart: unless-stopped

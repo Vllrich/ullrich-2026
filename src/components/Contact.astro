@@ -1,4 +1,7 @@
 ---
+const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 ---
 
 <section id="contact" class="contact-section">
@@ -10,9 +13,9 @@
 
     <div class="contact-body">
       <p class="contact-intro fade-up" data-delay="0">
-        Tell me what you're building.<br/>
-        If it's complex, cross-disciplinary,<br/>
-        and high-stakes — that's where I do my best work.
+        If you're building something early-stage,<br/>
+        technically ambitious, and a little unusual —<br/>
+        that's where I do my best work.
       </p>
 
       <a href="mailto:contact@larsullrich.de" class="contact-email fade-up" data-delay="160">
@@ -20,18 +23,54 @@
       </a>
 
       <p class="contact-note fade-in" data-delay="300">
-        Currently taking on select engagements — CTO/CPO advisory,
-        AI strategy, and complex technical builds.
-        I respond within 24 hours.
+        Currently open to CTO and technical co-founder conversations, AI strategy advisory, and select engineering builds. I respond within 24 hours.
       </p>
+
+      <form id="contact-form" class="contact-form fade-up" data-delay="400" novalidate
+        data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
+        data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
+        data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="Your full name" required />
+            <span class="form-error" id="err-name"></span>
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" placeholder="your.email@example.com" required />
+            <span class="form-error" id="err-email"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" name="subject" placeholder="What's the project?" required />
+          <span class="form-error" id="err-subject"></span>
+        </div>
+        <div class="form-group">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" rows="4" placeholder="What are you trying to solve?" required></textarea>
+          <span class="form-error" id="err-message"></span>
+        </div>
+        <button type="submit" id="cf-submit" class="cf-btn">
+          <span class="btn-label">Send Message</span>
+          <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
+            <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+          </svg>
+        </button>
+        <p class="cf-feedback" id="cf-error" style="display:none">
+          Something went wrong. Email directly: <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>
+        </p>
+      </form>
     </div>
   </div>
 
   <footer class="site-footer">
     <span class="footer-logo">LARS ULLRICH</span>
     <p class="footer-desc">
-      Building technology at the intersection of engineering,<br/>
-      product, and creative vision.
+      Code, sound, and twenty years of building things that had to work.
     </p>
     <div class="footer-meta">
       <div class="footer-links">
@@ -174,4 +213,207 @@
     .site-footer { padding: 2.5rem 1.75rem; }
     .footer-links { flex-wrap: wrap; gap: 1.25rem; }
   }
+
+  /* ── Contact Form ── */
+  .contact-form {
+    margin-top: 3rem;
+    max-width: 52ch;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #9A9288;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: #0E0D0B;
+    background: transparent;
+    border: 1px solid #D4CFC6;
+    padding: 0.65rem 0.85rem;
+    outline: none;
+    transition: border-color 0.25s, background 0.25s;
+    resize: none;
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #C4BFB6;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #9A9288;
+    background: rgba(0,0,0,0.02);
+  }
+
+  .form-group input.is-invalid,
+  .form-group textarea.is-invalid {
+    border-color: #c0392b;
+  }
+
+  .form-error {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.62rem;
+    color: #c0392b;
+    min-height: 1em;
+  }
+
+  .cf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #0E0D0B;
+    border: 1px solid #0E0D0B;
+    background: transparent;
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+    align-self: flex-start;
+  }
+
+  .cf-btn:hover:not(:disabled) {
+    background: #0E0D0B;
+    color: #F0EDE6;
+  }
+
+  .cf-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .cf-btn.is-success {
+    border-color: #27ae60;
+    color: #27ae60;
+  }
+
+  .cf-btn.is-error {
+    border-color: #c0392b;
+    color: #c0392b;
+  }
+
+  .btn-spinner {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    animation: spin 0.8s linear infinite;
+  }
+
+  .cf-btn.is-loading .btn-spinner { display: block; }
+  .cf-btn.is-loading .btn-label { opacity: 0.6; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .cf-feedback {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
+    color: #c0392b;
+  }
+
+  .cf-feedback a { color: inherit; }
+
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; }
+    .cf-btn { align-self: stretch; }
+  }
 </style>
+
+<script>
+  import emailjs from '@emailjs/browser';
+
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const { ejsKey, ejsService, ejsTemplate } = (form as any).dataset;
+  emailjs.init(ejsKey);
+
+  const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement;
+  const btnLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
+  const errorBox = document.getElementById('cf-error') as HTMLElement;
+
+  function setError(fieldId: string, errId: string, msg: string) {
+    const el = document.getElementById(fieldId) as HTMLElement;
+    const err = document.getElementById(errId) as HTMLElement;
+    if (msg) { el.classList.add('is-invalid'); err.textContent = msg; }
+    else { el.classList.remove('is-invalid'); err.textContent = ''; }
+  }
+
+  function validate(data: Record<string, string>) {
+    let ok = true;
+    if (!data.name.trim()) { setError('cf-name','err-name','Name is required'); ok=false; } else setError('cf-name','err-name','');
+    if (!data.email.trim()) { setError('cf-email','err-email','Email is required'); ok=false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setError('cf-email','err-email','Please enter a valid email'); ok=false; }
+    else setError('cf-email','err-email','');
+    if (!data.subject.trim()) { setError('cf-subject','err-subject','Subject is required'); ok=false; } else setError('cf-subject','err-subject','');
+    if (!data.message.trim()) { setError('cf-message','err-message','Message is required'); ok=false; }
+    else if (data.message.length < 10) { setError('cf-message','err-message','At least 10 characters'); ok=false; }
+    else setError('cf-message','err-message','');
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = {
+      name: (document.getElementById('cf-name') as HTMLInputElement).value,
+      email: (document.getElementById('cf-email') as HTMLInputElement).value,
+      subject: (document.getElementById('cf-subject') as HTMLInputElement).value,
+      message: (document.getElementById('cf-message') as HTMLTextAreaElement).value,
+    };
+    if (!validate(data)) return;
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('is-loading');
+    btnLabel.textContent = 'Sending...';
+    errorBox.style.display = 'none';
+
+    try {
+      const res = await emailjs.send(ejsService, ejsTemplate, {
+        to_name: 'Lars Ullrich',
+        from_name: data.name,
+        from_email: data.email,
+        message: `Subject: ${data.subject}\n\n${data.message}`,
+        to_email: 'mail@larsullrich.de',
+      });
+      if (res.status === 200) {
+        submitBtn.classList.remove('is-loading');
+        submitBtn.classList.add('is-success');
+        btnLabel.textContent = 'Message Sent';
+        form.reset();
+        setTimeout(() => { submitBtn.classList.remove('is-success'); btnLabel.textContent = 'Send Message'; submitBtn.disabled = false; }, 3000);
+      } else { throw new Error(); }
+    } catch {
+      submitBtn.classList.remove('is-loading');
+      submitBtn.classList.add('is-error');
+      btnLabel.textContent = 'Try Again';
+      errorBox.style.display = 'block';
+      submitBtn.disabled = false;
+      setTimeout(() => { submitBtn.classList.remove('is-error'); btnLabel.textContent = 'Send Message'; }, 5000);
+    }
+  });
+</script>

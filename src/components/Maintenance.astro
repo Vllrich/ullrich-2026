@@ -22,7 +22,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     <h2 class="mnt-heading">
       Something's<br/>brewing.<br/>Say hello.
     </h2>
-    <a href="mailto:contact@larsullrich.de" class="mnt-email">contact@larsullrich.de</a>
+    <p class="mnt-what">CTO · Creative Technologist · AI & Real-Time Systems</p>
     <p class="mnt-note">
       The site is temporarily offline for maintenance.<br/>
       Leave a message and I'll get back to you within 24 hours.
@@ -158,18 +158,14 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     margin: 0 0 2.5rem;
   }
 
-  .mnt-email {
-    font-weight: 300;
-    font-size: 0.95rem;
-    color: #6B6456;
-    text-decoration: none;
-    border-bottom: 1px solid #D4CFC6;
-    padding-bottom: 0.1em;
-    display: inline-block;
+  .mnt-what {
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #9A9288;
     margin-bottom: 1.25rem;
-    transition: color 0.3s, border-color 0.3s;
   }
-  .mnt-email:hover { color: #0E0D0B; border-bottom-color: #9A9288; }
 
   .mnt-note {
     font-weight: 300;

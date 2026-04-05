@@ -12,21 +12,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build application
-        run: npm run build
-
       - name: Build Docker image
         run: |
-          docker build -t ullrich-2026:latest .
+          docker build \
+            --build-arg PUBLIC_EMAILJS_PUBLIC_KEY=${{ secrets.PUBLIC_EMAILJS_PUBLIC_KEY }} \
+            --build-arg PUBLIC_EMAILJS_SERVICE_ID=${{ secrets.PUBLIC_EMAILJS_SERVICE_ID }} \
+            --build-arg PUBLIC_EMAILJS_TEMPLATE_ID=${{ secrets.PUBLIC_EMAILJS_TEMPLATE_ID }} \
+            --build-arg PUBLIC_MAINTENANCE_MODE=${{ vars.PUBLIC_MAINTENANCE_MODE }} \
+            -t ullrich-2026:latest .
           docker save ullrich-2026:latest | gzip > website.tar.gz
 
       - name: Copy files to server
@@ -36,7 +29,7 @@ jobs:
           username: root
           key: ${{ secrets.HETZNER_SSH_KEY }}
           port: 22
-          source: "website.tar.gz,docker-compose.prod.yml"
+          source: "website.tar.gz,docker-compose.prod.yml,nginx-vhost.conf"
           target: "/opt/ullrich-2026"
           timeout: 60s
           command_timeout: 10m
@@ -57,5 +50,11 @@ jobs:
             docker compose down --remove-orphans
             docker compose up -d
             docker system prune -f
+
+            # Configure host nginx vhost
+            cp nginx-vhost.conf /etc/nginx/sites-available/larsullrich.de
+            ln -sf /etc/nginx/sites-available/larsullrich.de /etc/nginx/sites-enabled/larsullrich.de
+            nginx -t && systemctl reload nginx
+
             sleep 5
             docker compose ps

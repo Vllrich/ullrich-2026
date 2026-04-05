@@ -1,0 +1,657 @@
+---
+const EMAILJS_PUBLIC_KEY  = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
+const EMAILJS_SERVICE_ID  = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+---
+
+<div class="mnt-wrap">
+
+  <!-- Left: ASCII fluid animation -->
+  <div class="mnt-left">
+    <div class="mnt-brand">LARS ULLRICH</div>
+    <div class="mnt-fluid">
+      <canvas id="mnt-fluid-canvas"></canvas>
+      <canvas id="mnt-ascii-canvas"></canvas>
+    </div>
+    <p class="mnt-tagline">Back soon.</p>
+  </div>
+
+  <!-- Right: contact panel -->
+  <div class="mnt-right">
+    <span class="mnt-label">— Get in Touch</span>
+    <h2 class="mnt-heading">
+      Something's<br/>brewing.<br/>Say hello.
+    </h2>
+    <a href="mailto:contact@larsullrich.de" class="mnt-email">contact@larsullrich.de</a>
+    <p class="mnt-note">
+      The site is temporarily offline for maintenance.<br/>
+      Leave a message and I'll get back to you within 24 hours.
+    </p>
+
+    <form
+      id="mnt-contact-form"
+      class="mnt-form"
+      novalidate
+      data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
+      data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
+      data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
+    >
+      <div class="mnt-form-row">
+        <div class="mnt-form-group">
+          <label for="mnt-name">Name</label>
+          <input type="text" id="mnt-name" name="name" placeholder="Your full name" required />
+          <span class="mnt-err" id="mnt-err-name"></span>
+        </div>
+        <div class="mnt-form-group">
+          <label for="mnt-email">Email</label>
+          <input type="email" id="mnt-email" name="email" placeholder="your.email@example.com" required />
+          <span class="mnt-err" id="mnt-err-email"></span>
+        </div>
+      </div>
+      <div class="mnt-form-group">
+        <label for="mnt-subject">Subject</label>
+        <input type="text" id="mnt-subject" name="subject" placeholder="What's the project?" required />
+        <span class="mnt-err" id="mnt-err-subject"></span>
+      </div>
+      <div class="mnt-form-group">
+        <label for="mnt-message">Message</label>
+        <textarea id="mnt-message" name="message" rows="4" placeholder="What are you trying to solve?" required></textarea>
+        <span class="mnt-err" id="mnt-err-message"></span>
+      </div>
+      <button type="submit" id="mnt-submit" class="mnt-btn">
+        <span class="mnt-btn-label">Send Message</span>
+        <svg class="mnt-btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
+          <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+        </svg>
+      </button>
+      <p class="mnt-feedback" id="mnt-form-error" style="display:none">
+        Something went wrong. Email directly: <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<style>
+  .mnt-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100dvh;
+    background: #F0EDE6;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  /* ── Left column ── */
+  .mnt-left {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #D4CFC6;
+    overflow: hidden;
+  }
+
+  .mnt-brand {
+    position: absolute;
+    top: 2rem;
+    left: 2.5rem;
+    z-index: 10;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: #0E0D0B;
+    mix-blend-mode: multiply;
+  }
+
+  .mnt-fluid {
+    position: relative;
+    flex: 1;
+  }
+
+  #mnt-fluid-canvas { display: none; }
+
+  #mnt-ascii-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .mnt-tagline {
+    position: absolute;
+    bottom: 2rem;
+    left: 2.5rem;
+    z-index: 10;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9A9288;
+  }
+
+  /* ── Right column ── */
+  .mnt-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem;
+    overflow-y: auto;
+  }
+
+  .mnt-label {
+    font-weight: 400;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A9288;
+    margin-bottom: 2rem;
+  }
+
+  .mnt-heading {
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #0E0D0B;
+    text-transform: uppercase;
+    margin: 0 0 2.5rem;
+  }
+
+  .mnt-email {
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: #6B6456;
+    text-decoration: none;
+    border-bottom: 1px solid #D4CFC6;
+    padding-bottom: 0.1em;
+    display: inline-block;
+    margin-bottom: 1.25rem;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .mnt-email:hover { color: #0E0D0B; border-bottom-color: #9A9288; }
+
+  .mnt-note {
+    font-weight: 300;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: #9A9288;
+    max-width: 44ch;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Form ── */
+  .mnt-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 52ch;
+  }
+
+  .mnt-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .mnt-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mnt-form-group label {
+    font-weight: 400;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #9A9288;
+  }
+
+  .mnt-form-group input,
+  .mnt-form-group textarea {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: #0E0D0B;
+    background: transparent;
+    border: 1px solid #D4CFC6;
+    padding: 0.65rem 0.85rem;
+    outline: none;
+    transition: border-color 0.25s, background 0.25s;
+    resize: none;
+  }
+
+  .mnt-form-group input::placeholder,
+  .mnt-form-group textarea::placeholder { color: #C4BFB6; }
+
+  .mnt-form-group input:focus,
+  .mnt-form-group textarea:focus {
+    border-color: #9A9288;
+    background: rgba(0,0,0,0.02);
+  }
+
+  .mnt-form-group input.is-invalid,
+  .mnt-form-group textarea.is-invalid { border-color: #c0392b; }
+
+  .mnt-err {
+    font-size: 0.62rem;
+    color: #c0392b;
+    min-height: 1em;
+  }
+
+  .mnt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #0E0D0B;
+    border: 1px solid #0E0D0B;
+    background: transparent;
+    padding: 0.85rem 2rem;
+    cursor: pointer;
+    transition: background 0.25s, color 0.25s;
+    align-self: flex-start;
+  }
+  .mnt-btn:hover:not(:disabled) { background: #0E0D0B; color: #F0EDE6; }
+  .mnt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .mnt-btn.is-success { border-color: #27ae60; color: #27ae60; }
+  .mnt-btn.is-error   { border-color: #c0392b; color: #c0392b; }
+
+  .mnt-btn-spinner {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    animation: mnt-spin 0.8s linear infinite;
+  }
+  .mnt-btn.is-loading .mnt-btn-spinner { display: block; }
+  .mnt-btn.is-loading .mnt-btn-label   { opacity: 0.6; }
+
+  @keyframes mnt-spin { to { transform: rotate(360deg); } }
+
+  .mnt-feedback { font-size: 0.72rem; color: #c0392b; }
+  .mnt-feedback a { color: inherit; }
+
+  /* ── Responsive ── */
+  @media (max-width: 860px) {
+    .mnt-wrap { grid-template-columns: 1fr; }
+    .mnt-left { min-height: 45dvh; border-right: none; border-bottom: 1px solid #D4CFC6; }
+    .mnt-right { padding: 3rem 2rem; }
+  }
+
+  @media (max-width: 500px) {
+    .mnt-form-row { grid-template-columns: 1fr; }
+    .mnt-btn { align-self: stretch; }
+  }
+</style>
+
+<script>
+// ── Fluid simulation (same as Cover.astro) ──────────────────────────────────
+const canvas = document.getElementById('mnt-fluid-canvas') as HTMLCanvasElement;
+const ascii  = document.getElementById('mnt-ascii-canvas')  as HTMLCanvasElement;
+
+const gl = canvas.getContext('webgl2', { antialias: false, alpha: false });
+if (gl) {
+  gl.getExtension('EXT_color_buffer_float');
+  gl.getExtension('OES_texture_float_linear');
+
+  function compileShader(type: number, src: string) {
+    const s = gl.createShader(type)!;
+    gl.shaderSource(s, src); gl.compileShader(s);
+    return s;
+  }
+  function makeProgram(vert: string, frag: string) {
+    const p = gl.createProgram()!;
+    gl.attachShader(p, compileShader(gl.VERTEX_SHADER, vert));
+    gl.attachShader(p, compileShader(gl.FRAGMENT_SHADER, frag));
+    gl.linkProgram(p); return p;
+  }
+  function makeFBO(w: number, h: number) {
+    const tex = gl.createTexture()!;
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, w, h, 0, gl.RGBA, gl.FLOAT, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    const fb = gl.createFramebuffer()!;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fb);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    return { tex, fb, w, h };
+  }
+  function doubleFBO(w: number, h: number) {
+    let a = makeFBO(w,h), b = makeFBO(w,h);
+    return { read: a, write: b, swap() { [this.read,this.write]=[this.write,this.read]; } };
+  }
+
+  const VERT = `#version 300 es
+layout(location=0) in vec2 a_pos;
+out vec2 v_uv;
+void main(){v_uv=a_pos*.5+.5;gl_Position=vec4(a_pos,0,1);}`;
+
+  const ADVECT = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_vel,u_src;
+uniform vec2 u_texel;
+uniform float u_dt,u_dissipation;
+out vec4 out_color;
+void main(){
+  vec2 pos=v_uv-u_dt*texture(u_vel,v_uv).xy*u_texel;
+  out_color=u_dissipation*texture(u_src,pos);
+}`;
+
+  const SPLAT = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_src;
+uniform vec2 u_point;
+uniform vec3 u_color;
+uniform float u_radius;
+uniform bool u_isVel;
+out vec4 out_color;
+void main(){
+  float d=length(v_uv-u_point);
+  float s=exp(-d*d/u_radius);
+  vec4 base=texture(u_src,v_uv);
+  if(u_isVel) out_color=base+vec4(u_color.xy*s,0,1);
+  else         out_color=base+vec4(u_color*s,1);
+}`;
+
+  const DIVERGENCE = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_vel;
+uniform vec2 u_texel;
+out vec4 out_color;
+void main(){
+  float L=texture(u_vel,v_uv-vec2(u_texel.x,0)).x;
+  float R=texture(u_vel,v_uv+vec2(u_texel.x,0)).x;
+  float B=texture(u_vel,v_uv-vec2(0,u_texel.y)).y;
+  float T=texture(u_vel,v_uv+vec2(0,u_texel.y)).y;
+  out_color=vec4(.5*(R-L+T-B),0,0,1);
+}`;
+
+  const PRESSURE = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_pressure,u_div;
+uniform vec2 u_texel;
+out vec4 out_color;
+void main(){
+  float L=texture(u_pressure,v_uv-vec2(u_texel.x,0)).x;
+  float R=texture(u_pressure,v_uv+vec2(u_texel.x,0)).x;
+  float B=texture(u_pressure,v_uv-vec2(0,u_texel.y)).x;
+  float T=texture(u_pressure,v_uv+vec2(0,u_texel.y)).x;
+  float div=texture(u_div,v_uv).x;
+  out_color=vec4((L+R+B+T-div)*.25,0,0,1);
+}`;
+
+  const GRADIENT = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_pressure,u_vel;
+uniform vec2 u_texel;
+out vec4 out_color;
+void main(){
+  float L=texture(u_pressure,v_uv-vec2(u_texel.x,0)).x;
+  float R=texture(u_pressure,v_uv+vec2(u_texel.x,0)).x;
+  float B=texture(u_pressure,v_uv-vec2(0,u_texel.y)).x;
+  float T=texture(u_pressure,v_uv+vec2(0,u_texel.y)).x;
+  vec2 vel=texture(u_vel,v_uv).xy;
+  out_color=vec4(vel-vec2(R-L,T-B)*.5,0,1);
+}`;
+
+  const DISPLAY = `#version 300 es
+precision highp float;
+in vec2 v_uv;
+uniform sampler2D u_dye;
+out vec4 out_color;
+void main(){
+  vec3 dye=clamp(texture(u_dye,v_uv).rgb,0.,1.);
+  float lum=dot(dye,vec3(.333));
+  vec3 bg =vec3(.941,.929,.902);
+  vec3 mid=vec3(.478,.471,.439);
+  vec3 ink=vec3(.055,.051,.043);
+  vec3 col=mix(bg,mid,smoothstep(0.,.5,lum));
+      col =mix(col,ink,smoothstep(.4,1.,lum));
+  out_color=vec4(col,1.);
+}`;
+
+  const SIM=128, DYE=256;
+  const progs = {
+    advect:     makeProgram(VERT,ADVECT),
+    splat:      makeProgram(VERT,SPLAT),
+    divergence: makeProgram(VERT,DIVERGENCE),
+    pressure:   makeProgram(VERT,PRESSURE),
+    gradient:   makeProgram(VERT,GRADIENT),
+    display:    makeProgram(VERT,DISPLAY),
+  };
+
+  const vao = gl.createVertexArray()!;
+  gl.bindVertexArray(vao);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+  gl.bindVertexArray(null);
+
+  function bindQuad(prog: WebGLProgram) { gl.useProgram(prog); gl.bindVertexArray(vao); }
+  function setTex(prog: WebGLProgram, name: string, unit: number, tex: WebGLTexture) {
+    gl.activeTexture(gl.TEXTURE0+unit);
+    gl.bindTexture(gl.TEXTURE_2D,tex);
+    gl.uniform1i(gl.getUniformLocation(prog,name),unit);
+  }
+
+  const vel=doubleFBO(SIM,SIM), dye=doubleFBO(DYE,DYE);
+  const div=makeFBO(SIM,SIM),   prs=doubleFBO(SIM,SIM);
+
+  function runAdvect(src: ReturnType<typeof doubleFBO>, velFBO: ReturnType<typeof doubleFBO>, dt: number, dis: number) {
+    const p=progs.advect; bindQuad(p);
+    setTex(p,'u_vel',0,velFBO.read.tex);
+    setTex(p,'u_src',1,src.read.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/velFBO.read.w,1/velFBO.read.h);
+    gl.uniform1f(gl.getUniformLocation(p,'u_dt'),dt);
+    gl.uniform1f(gl.getUniformLocation(p,'u_dissipation'),dis);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,src.write.fb);
+    gl.viewport(0,0,src.write.w,src.write.h);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    gl.bindVertexArray(null);
+    src.swap();
+  }
+
+  type RGB = [number,number,number];
+  function splat(x:number,y:number,vx:number,vy:number,color:RGB) {
+    const p=progs.splat;
+    bindQuad(p); setTex(p,'u_src',0,vel.read.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_point'),x,y);
+    gl.uniform3f(gl.getUniformLocation(p,'u_color'),vx,vy,0);
+    gl.uniform1f(gl.getUniformLocation(p,'u_radius'),0.004);
+    gl.uniform1i(gl.getUniformLocation(p,'u_isVel'),1);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,vel.write.fb);
+    gl.viewport(0,0,SIM,SIM); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); vel.swap();
+
+    bindQuad(p); setTex(p,'u_src',0,dye.read.tex);
+    gl.uniform2f(gl.getUniformLocation(p,'u_point'),x,y);
+    gl.uniform3f(gl.getUniformLocation(p,'u_color'),...color);
+    gl.uniform1f(gl.getUniformLocation(p,'u_radius'),0.012);
+    gl.uniform1i(gl.getUniformLocation(p,'u_isVel'),0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,dye.write.fb);
+    gl.viewport(0,0,DYE,DYE); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); dye.swap();
+  }
+
+  const COLORS:RGB[] = [[1,1,1],[.6,.6,.6],[.3,.3,.3]];
+  for(let i=0;i<12;i++){
+    const angle=Math.random()*Math.PI*2, force=200+Math.random()*400;
+    splat(Math.random(),Math.random(),Math.cos(angle)*force,Math.sin(angle)*force,COLORS[i%3]);
+  }
+
+  const ctx2d = ascii.getContext('2d')!;
+  const CHARS = ' .,:;i1tfLCGO08@#';
+  const CELL  = 11;
+  const readW=120, readH=80;
+  const off=document.createElement('canvas'); off.width=readW; off.height=readH;
+  const offCtx=off.getContext('2d')!;
+  canvas.width=readW; canvas.height=readH;
+  const BG_R=240, BG_G=237, BG_B=230;
+
+  function drawAscii() {
+    const aw=ascii.clientWidth, ah=ascii.clientHeight;
+    if(ascii.width!==aw||ascii.height!==ah){ascii.width=aw;ascii.height=ah;}
+    offCtx.drawImage(canvas,0,0,readW,readH);
+    const px=offCtx.getImageData(0,0,readW,readH).data;
+    const cols=Math.floor(aw/CELL), rows=Math.floor(ah/CELL);
+    ctx2d.fillStyle=`rgb(${BG_R},${BG_G},${BG_B})`;
+    ctx2d.fillRect(0,0,aw,ah);
+    ctx2d.font=`${CELL}px "Courier New",monospace`;
+    ctx2d.textBaseline='top';
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const sx=Math.floor((c/cols)*readW);
+        const sy=readH-1-Math.floor((r/rows)*readH);
+        const i=(sy*readW+sx)*4;
+        const lum=1-(0.299*px[i]+0.587*px[i+1]+0.114*px[i+2])/255;
+        const ch=CHARS[Math.min(CHARS.length-1,Math.floor(lum*CHARS.length))];
+        if(ch===' ')continue;
+        const ir=Math.round(BG_R+(13-BG_R)*lum);
+        const ig=Math.round(BG_G+(13-BG_G)*lum);
+        const ib=Math.round(BG_B+(11-BG_B)*lum);
+        ctx2d.fillStyle=`rgb(${ir},${ig},${ib})`;
+        ctx2d.fillText(ch,c*CELL,r*CELL);
+      }
+    }
+  }
+
+  let ptr={x:.5,y:.5,dx:0,dy:0,down:false};
+  const fluidEl = ascii.parentElement!;
+  fluidEl.addEventListener('pointermove',e=>{
+    const rect=fluidEl.getBoundingClientRect();
+    const nx=(e.clientX-rect.left)/rect.width;
+    const ny=(e.clientY-rect.top)/rect.height;
+    ptr.dx=(nx-ptr.x)*5; ptr.dy=(ny-ptr.y)*5;
+    ptr.x=nx; ptr.y=ny;
+    if(ptr.down) splat(ptr.x,ptr.y,ptr.dx*600,ptr.dy*600,COLORS[Math.floor(Math.random()*3)]);
+  });
+  fluidEl.addEventListener('pointerdown',e=>{
+    ptr.down=true;
+    const rect=fluidEl.getBoundingClientRect();
+    ptr.x=(e.clientX-rect.left)/rect.width;
+    ptr.y=(e.clientY-rect.top)/rect.height;
+  });
+  fluidEl.addEventListener('pointerup',()=>{ptr.down=false;});
+
+  let last=0, wanderT=0;
+  function frame(t:number){
+    requestAnimationFrame(frame);
+    const dt=Math.min((t-last)/1000,.033); last=t;
+    wanderT+=dt;
+    if(wanderT>1.5){
+      wanderT=0;
+      const angle=Math.random()*Math.PI*2, force=100+Math.random()*200;
+      splat(.2+Math.random()*.6,.2+Math.random()*.6,Math.cos(angle)*force,Math.sin(angle)*force,COLORS[Math.floor(Math.random()*3)]);
+    }
+    runAdvect(vel,vel,dt,.98);
+    runAdvect(dye,vel,dt,.995);
+    { const p=progs.divergence; bindQuad(p); setTex(p,'u_vel',0,vel.read.tex);
+      gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,div.fb); gl.viewport(0,0,SIM,SIM);
+      gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); }
+    for(let i=0;i<20;i++){
+      const p=progs.pressure; bindQuad(p);
+      setTex(p,'u_pressure',0,prs.read.tex); setTex(p,'u_div',1,div.tex);
+      gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,prs.write.fb); gl.viewport(0,0,SIM,SIM);
+      gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); prs.swap();
+    }
+    { const p=progs.gradient; bindQuad(p);
+      setTex(p,'u_pressure',0,prs.read.tex); setTex(p,'u_vel',1,vel.read.tex);
+      gl.uniform2f(gl.getUniformLocation(p,'u_texel'),1/SIM,1/SIM);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,vel.write.fb); gl.viewport(0,0,SIM,SIM);
+      gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); vel.swap(); }
+    { const p=progs.display; bindQuad(p);
+      setTex(p,'u_dye',0,dye.read.tex);
+      gl.bindFramebuffer(gl.FRAMEBUFFER,null); gl.viewport(0,0,canvas.width,canvas.height);
+      gl.drawArrays(gl.TRIANGLE_STRIP,0,4); gl.bindVertexArray(null); }
+    drawAscii();
+  }
+  requestAnimationFrame(frame);
+}
+
+// ── Contact form ─────────────────────────────────────────────────────────────
+import emailjs from '@emailjs/browser';
+
+const form = document.getElementById('mnt-contact-form') as HTMLFormElement;
+const { ejsKey, ejsService, ejsTemplate } = (form as any).dataset;
+emailjs.init(ejsKey);
+
+const submitBtn  = document.getElementById('mnt-submit') as HTMLButtonElement;
+const btnLabel   = submitBtn.querySelector('.mnt-btn-label') as HTMLElement;
+const errorBox   = document.getElementById('mnt-form-error') as HTMLElement;
+
+function setErr(fieldId: string, errId: string, msg: string) {
+  const el  = document.getElementById(fieldId) as HTMLElement;
+  const err = document.getElementById(errId)   as HTMLElement;
+  if (msg) { el.classList.add('is-invalid'); err.textContent = msg; }
+  else      { el.classList.remove('is-invalid'); err.textContent = ''; }
+}
+
+function validate(d: Record<string,string>) {
+  let ok = true;
+  if (!d.name.trim())    { setErr('mnt-name','mnt-err-name','Name is required'); ok=false; }      else setErr('mnt-name','mnt-err-name','');
+  if (!d.email.trim())   { setErr('mnt-email','mnt-err-email','Email is required'); ok=false; }
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { setErr('mnt-email','mnt-err-email','Please enter a valid email'); ok=false; }
+  else setErr('mnt-email','mnt-err-email','');
+  if (!d.subject.trim()) { setErr('mnt-subject','mnt-err-subject','Subject is required'); ok=false; } else setErr('mnt-subject','mnt-err-subject','');
+  if (!d.message.trim()) { setErr('mnt-message','mnt-err-message','Message is required'); ok=false; }
+  else if (d.message.length < 10) { setErr('mnt-message','mnt-err-message','At least 10 characters'); ok=false; }
+  else setErr('mnt-message','mnt-err-message','');
+  return ok;
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const d = {
+    name:    (document.getElementById('mnt-name')    as HTMLInputElement).value,
+    email:   (document.getElementById('mnt-email')   as HTMLInputElement).value,
+    subject: (document.getElementById('mnt-subject') as HTMLInputElement).value,
+    message: (document.getElementById('mnt-message') as HTMLTextAreaElement).value,
+  };
+  if (!validate(d)) return;
+
+  submitBtn.disabled = true;
+  submitBtn.classList.add('is-loading');
+  btnLabel.textContent = 'Sending...';
+  errorBox.style.display = 'none';
+
+  try {
+    const res = await emailjs.send(ejsService, ejsTemplate, {
+      to_name:    'Lars Ullrich',
+      from_name:  d.name,
+      from_email: d.email,
+      message:    `Subject: ${d.subject}\n\n${d.message}`,
+      to_email:   'mail@larsullrich.de',
+    });
+    if (res.status === 200) {
+      submitBtn.classList.remove('is-loading');
+      submitBtn.classList.add('is-success');
+      btnLabel.textContent = 'Message Sent';
+      form.reset();
+      setTimeout(() => { submitBtn.classList.remove('is-success'); btnLabel.textContent = 'Send Message'; submitBtn.disabled = false; }, 3000);
+    } else { throw new Error(); }
+  } catch {
+    submitBtn.classList.remove('is-loading');
+    submitBtn.classList.add('is-error');
+    btnLabel.textContent = 'Try Again';
+    errorBox.style.display = 'block';
+    submitBtn.disabled = false;
+    setTimeout(() => { submitBtn.classList.remove('is-error'); btnLabel.textContent = 'Send Message'; }, 5000);
+  }
+});
+</script>

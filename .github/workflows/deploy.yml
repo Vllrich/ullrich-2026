@@ -49,12 +49,18 @@ jobs:
             cp docker-compose.prod.yml docker-compose.yml
             docker compose down --remove-orphans
             docker compose up -d
-            docker system prune -f
 
-            # Configure host nginx vhost
-            cp nginx-vhost.conf /etc/nginx/sites-available/larsullrich.de
-            ln -sf /etc/nginx/sites-available/larsullrich.de /etc/nginx/sites-enabled/larsullrich.de
-            nginx -t && systemctl reload nginx
+            # Connect to the larsullrich nginx network so it can proxy to us
+            sleep 3
+            docker network connect larsullrich_default ullrich-2026 || true
+
+            # Update nginx upstream to point to our container and reload
+            docker exec larsullrich-nginx sh -c \
+              "sed -i 's|server app:3000|server ullrich-2026:80|g' /etc/nginx/conf.d/default.conf; \
+               sed -i 's|server ullrich-2026:80.*|server ullrich-2026:80;|g' /etc/nginx/conf.d/default.conf; \
+               nginx -t && nginx -s reload"
+
+            docker system prune -f
 
             sleep 5
             docker compose ps

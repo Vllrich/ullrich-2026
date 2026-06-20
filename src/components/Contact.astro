@@ -2,31 +2,37 @@
 const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
+
+const socials = [
+  { label: 'GitHub',    href: 'https://github.com/larsullrich' },
+  { label: 'Instagram', href: 'https://instagram.com/larsullrich' },
+  { label: 'LinkedIn',  href: 'https://linkedin.com/in/larsullrich' },
+];
 ---
 
 <section id="contact" class="contact-section">
 
   <div class="contact-inner">
     <div class="contact-left">
-      <span class="section-label">— Let's Talk</span>
-    </div>
+      <h2 class="contact-display fade-up" data-delay="0">
+        Let's<br/>Talk.
+      </h2>
 
-    <div class="contact-body">
-      <p class="contact-intro fade-up" data-delay="0">
-        If you're building something early-stage,<br/>
-        technically ambitious, and a little unusual —<br/>
-        that's where I do my best work.
+      <p class="contact-intro fade-up" data-delay="120">
+        Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so — and if I'm not, I'll tell you that too.
       </p>
 
-      <a href="mailto:contact@larsullrich.de" class="contact-email fade-up" data-delay="160">
+      <a href="mailto:contact@larsullrich.de" class="contact-email fade-up" data-delay="200">
         contact@larsullrich.de
       </a>
 
-      <p class="contact-note fade-in" data-delay="300">
-        Currently open to CTO and technical co-founder conversations, AI strategy advisory, and select engineering builds. I respond within 24 hours.
+      <p class="contact-note fade-in" data-delay="320">
+        Currently open to fractional CTO/CAIO engagements, AI strategy advisory, and select production builds. I respond within 24 hours.
       </p>
+    </div>
 
-      <form id="contact-form" class="contact-form fade-up" data-delay="400" novalidate
+    <div class="contact-right fade-up" data-delay="200">
+      <form id="contact-form" class="contact-form" novalidate
         data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
         data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
         data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
@@ -34,28 +40,28 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
         <div class="form-row">
           <div class="form-group">
             <label for="cf-name">Name</label>
-            <input type="text" id="cf-name" name="name" placeholder="Your full name" required />
+            <input type="text" id="cf-name" name="name" placeholder="Your full name" required autocomplete="name" />
             <span class="form-error" id="err-name"></span>
           </div>
           <div class="form-group">
             <label for="cf-email">Email</label>
-            <input type="email" id="cf-email" name="email" placeholder="your.email@example.com" required />
+            <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email" />
             <span class="form-error" id="err-email"></span>
           </div>
         </div>
         <div class="form-group">
           <label for="cf-subject">Subject</label>
-          <input type="text" id="cf-subject" name="subject" placeholder="What's the project?" required />
+          <input type="text" id="cf-subject" name="subject" placeholder="What is this about?" required />
           <span class="form-error" id="err-subject"></span>
         </div>
         <div class="form-group">
           <label for="cf-message">Message</label>
-          <textarea id="cf-message" name="message" rows="4" placeholder="What are you trying to solve?" required></textarea>
+          <textarea id="cf-message" name="message" rows="5" placeholder="What are you building, and where is it stuck?" required></textarea>
           <span class="form-error" id="err-message"></span>
         </div>
         <button type="submit" id="cf-submit" class="cf-btn">
           <span class="btn-label">Send Message</span>
-          <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
             <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
           </svg>
@@ -68,257 +74,172 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   </div>
 
   <footer class="site-footer">
-    <span class="footer-logo">LARS ULLRICH</span>
-    <p class="footer-desc">
-      Code, sound, and twenty years of building things that had to work.
-    </p>
-    <div class="footer-meta">
-      <div class="footer-links">
-        <a href="#">GitHub</a>
-        <a href="#">X / Twitter</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Impressum</a>
-      </div>
-      <span class="footer-copy">© 2026 Lars Ullrich. All rights reserved.</span>
+    <div class="footer-brand">
+      <span class="footer-logo">LARS ULLRICH</span>
+      <p class="footer-desc">Production-grade AI. Built to ship, scale, and stay reliable.</p>
     </div>
+
+    <nav class="footer-links" aria-label="Footer navigation">
+      {socials.map(s => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
+      ))}
+      <a href="/impressum">Impressum</a>
+    </nav>
+
+    <span class="footer-copy">&copy; 2026 Lars Ullrich. All rights reserved.</span>
   </footer>
 
 </section>
 
 <style>
   .contact-section {
-    background: #F0EDE6;
-    border-top: 1px solid #D4CFC6;
+    background: var(--white, oklch(99% 0 0));
+    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
   }
 
+  /* ── Main layout ── */
   .contact-inner {
     display: grid;
-    grid-template-columns: 1fr 2.2fr;
-    gap: 0 4rem;
-    padding: 6rem 3.5rem;
-    border-bottom: 1px solid #D4CFC6;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 6rem);
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+    align-items: start;
   }
 
-  .section-label {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
+  /* ── Left column ── */
+  .contact-display {
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.0;
+    color: var(--ink, oklch(10% 0.012 258));
     text-transform: uppercase;
-    color: #9A9288;
-    padding-top: 0.15rem;
+    margin-bottom: 1.75rem;
+    text-wrap: balance;
   }
 
   .contact-intro {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 3.5vw, 3rem);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: #0E0D0B;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--dim, oklch(28% 0.010 258));
+    max-width: 44ch;
+    margin-bottom: 2rem;
   }
 
   .contact-email {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
-    letter-spacing: 0.02em;
-    color: #6B6456;
+    font-size: clamp(0.88rem, 1.4vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--cobalt, oklch(52% 0.22 265));
     text-decoration: none;
-    border-bottom: 1px solid #D4CFC6;
+    border-bottom: 1px solid oklch(52% 0.22 265 / 0.3);
     padding-bottom: 0.1em;
     display: inline-block;
-    margin-bottom: 2.5rem;
-    transition: color 0.35s, border-color 0.35s;
+    margin-bottom: 2rem;
+    transition: color 0.2s, border-color 0.2s;
   }
-  .contact-email:hover { color: #0E0D0B; border-bottom-color: #9A9288; }
+  .contact-email:hover {
+    color: var(--cobalt-dim, oklch(38% 0.18 265));
+    border-bottom-color: var(--cobalt, oklch(52% 0.22 265));
+  }
 
   .contact-note {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.8rem;
-    line-height: 1.8;
-    color: #9A9288;
-    max-width: 44ch;
+    font-size: 0.85rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--ghost, oklch(50% 0.006 260));
+    max-width: 42ch;
   }
 
-  /* ── Footer ── */
-  .site-footer {
-    padding: 3rem 3.5rem;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 2rem 4rem;
-    align-items: center;
-  }
-
-  .footer-logo {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    color: #0E0D0B;
-  }
-
-  .footer-desc {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.72rem;
-    line-height: 1.7;
-    color: #9A9288;
-    letter-spacing: 0.01em;
-  }
-
-  .footer-meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.75rem;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 1.75rem;
-  }
-
-  .footer-links a {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.65rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #9A9288;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  .footer-links a:hover { color: #0E0D0B; }
-
-  .footer-copy {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: #C4BFB6;
-  }
-
-  @media (max-width: 900px) {
-    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .site-footer { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-meta { align-items: flex-start; }
-  }
-
-  @media (max-width: 640px) {
-    .contact-inner { padding: 4rem 1.75rem; }
-    .site-footer { padding: 2.5rem 1.75rem; }
-    .footer-links { flex-wrap: wrap; gap: 1.25rem; }
-  }
-
-  /* ── Contact Form ── */
+  /* ── Form ── */
   .contact-form {
-    margin-top: 3rem;
-    max-width: 52ch;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.1rem;
   }
 
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    gap: 1.1rem;
   }
 
   .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .form-group label {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 0.62rem;
+    font-size: 0.6rem;
+    font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #9A9288;
+    color: var(--dim, oklch(28% 0.010 258));
   }
 
   .form-group input,
   .form-group textarea {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 300;
-    color: #0E0D0B;
-    background: transparent;
-    border: 1px solid #D4CFC6;
-    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--ink, oklch(10% 0.012 258));
+    background: var(--surface, oklch(96.5% 0.003 260));
+    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    padding: 0.7rem 0.9rem;
     outline: none;
-    transition: border-color 0.25s, background 0.25s;
+    transition: border-color 0.2s, background 0.2s;
     resize: none;
+    font-family: inherit;
   }
 
   .form-group input::placeholder,
   .form-group textarea::placeholder {
-    color: #C4BFB6;
+    color: var(--ghost, oklch(50% 0.006 260));
   }
 
   .form-group input:focus,
   .form-group textarea:focus {
-    border-color: #9A9288;
-    background: rgba(0,0,0,0.02);
+    border-color: var(--cobalt, oklch(52% 0.22 265));
+    background: var(--white, oklch(99% 0 0));
   }
 
   .form-group input.is-invalid,
-  .form-group textarea.is-invalid {
-    border-color: #c0392b;
-  }
+  .form-group textarea.is-invalid { border-color: oklch(55% 0.2 25); }
 
   .form-error {
-    font-family: 'Open Sans', sans-serif;
     font-size: 0.62rem;
-    color: #c0392b;
+    color: oklch(50% 0.2 25);
     min-height: 1em;
   }
 
+  /* ── Submit button ── */
   .cf-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
+    font-family: inherit;
+    font-weight: 700;
     font-size: 0.68rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #0E0D0B;
-    border: 1px solid #0E0D0B;
-    background: transparent;
-    padding: 0.85rem 2rem;
+    color: var(--white, oklch(99% 0 0));
+    background: var(--cobalt, oklch(52% 0.22 265));
+    border: 1px solid var(--cobalt, oklch(52% 0.22 265));
+    padding: 0.9rem 2rem;
     cursor: pointer;
-    transition: background 0.25s, color 0.25s;
+    transition: background 0.2s, border-color 0.2s;
     align-self: flex-start;
   }
-
   .cf-btn:hover:not(:disabled) {
-    background: #0E0D0B;
-    color: #F0EDE6;
+    background: var(--cobalt-dim, oklch(38% 0.18 265));
+    border-color: var(--cobalt-dim, oklch(38% 0.18 265));
   }
-
-  .cf-btn:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-
-  .cf-btn.is-success {
-    border-color: #27ae60;
-    color: #27ae60;
-  }
-
-  .cf-btn.is-error {
-    border-color: #c0392b;
-    color: #c0392b;
-  }
+  .cf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .cf-btn.is-success { background: oklch(55% 0.15 145); border-color: oklch(55% 0.15 145); }
+  .cf-btn.is-error   { background: oklch(55% 0.2 25); border-color: oklch(55% 0.2 25); }
 
   .btn-spinner {
     display: none;
@@ -326,23 +247,82 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     height: 1rem;
     animation: spin 0.8s linear infinite;
   }
-
   .cf-btn.is-loading .btn-spinner { display: block; }
   .cf-btn.is-loading .btn-label { opacity: 0.6; }
-
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .cf-feedback {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.72rem;
-    color: #c0392b;
+    font-size: 0.75rem;
+    color: oklch(50% 0.2 25);
   }
-
   .cf-feedback a { color: inherit; }
 
+  /* ── Footer ── */
+  .site-footer {
+    padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .footer-logo {
+    font-weight: 800;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--ink, oklch(10% 0.012 258));
+  }
+
+  .footer-desc {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--ghost, oklch(50% 0.006 260));
+    line-height: 1.6;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim, oklch(28% 0.010 258));
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--ink, oklch(10% 0.012 258)); }
+
+  .footer-copy {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ghost, oklch(50% 0.006 260));
+    white-space: nowrap;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .contact-inner { grid-template-columns: 1fr; }
+    .site-footer { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
   @media (max-width: 640px) {
     .form-row { grid-template-columns: 1fr; }
     .cf-btn { align-self: stretch; }
+    .footer-links { gap: 1.25rem; }
   }
 </style>
 
@@ -358,19 +338,21 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   const errorBox = document.getElementById('cf-error') as HTMLElement;
 
   function setError(fieldId: string, errId: string, msg: string) {
-    const el = document.getElementById(fieldId) as HTMLElement;
-    const err = document.getElementById(errId) as HTMLElement;
+    const el  = document.getElementById(fieldId) as HTMLElement;
+    const err = document.getElementById(errId)   as HTMLElement;
     if (msg) { el.classList.add('is-invalid'); err.textContent = msg; }
-    else { el.classList.remove('is-invalid'); err.textContent = ''; }
+    else      { el.classList.remove('is-invalid'); err.textContent = ''; }
   }
 
-  function validate(data: Record<string, string>) {
+  function validate(data: Record<string,string>) {
     let ok = true;
-    if (!data.name.trim()) { setError('cf-name','err-name','Name is required'); ok=false; } else setError('cf-name','err-name','');
-    if (!data.email.trim()) { setError('cf-email','err-email','Email is required'); ok=false; }
+    if (!data.name.trim())    { setError('cf-name','err-name','Name is required'); ok=false; }
+    else setError('cf-name','err-name','');
+    if (!data.email.trim())   { setError('cf-email','err-email','Email is required'); ok=false; }
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setError('cf-email','err-email','Please enter a valid email'); ok=false; }
     else setError('cf-email','err-email','');
-    if (!data.subject.trim()) { setError('cf-subject','err-subject','Subject is required'); ok=false; } else setError('cf-subject','err-subject','');
+    if (!data.subject.trim()) { setError('cf-subject','err-subject','Subject is required'); ok=false; }
+    else setError('cf-subject','err-subject','');
     if (!data.message.trim()) { setError('cf-message','err-message','Message is required'); ok=false; }
     else if (data.message.length < 10) { setError('cf-message','err-message','At least 10 characters'); ok=false; }
     else setError('cf-message','err-message','');
@@ -380,8 +362,8 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const data = {
-      name: (document.getElementById('cf-name') as HTMLInputElement).value,
-      email: (document.getElementById('cf-email') as HTMLInputElement).value,
+      name:    (document.getElementById('cf-name')    as HTMLInputElement).value,
+      email:   (document.getElementById('cf-email')   as HTMLInputElement).value,
       subject: (document.getElementById('cf-subject') as HTMLInputElement).value,
       message: (document.getElementById('cf-message') as HTMLTextAreaElement).value,
     };
@@ -394,18 +376,22 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 
     try {
       const res = await emailjs.send(ejsService, ejsTemplate, {
-        to_name: 'Lars Ullrich',
-        from_name: data.name,
+        to_name:    'Lars Ullrich',
+        from_name:  data.name,
         from_email: data.email,
-        message: `Subject: ${data.subject}\n\n${data.message}`,
-        to_email: 'mail@larsullrich.de',
+        message:    `Subject: ${data.subject}\n\n${data.message}`,
+        to_email:   'mail@larsullrich.de',
       });
       if (res.status === 200) {
         submitBtn.classList.remove('is-loading');
         submitBtn.classList.add('is-success');
         btnLabel.textContent = 'Message Sent';
         form.reset();
-        setTimeout(() => { submitBtn.classList.remove('is-success'); btnLabel.textContent = 'Send Message'; submitBtn.disabled = false; }, 3000);
+        setTimeout(() => {
+          submitBtn.classList.remove('is-success');
+          btnLabel.textContent = 'Send Message';
+          submitBtn.disabled = false;
+        }, 3000);
       } else { throw new Error(); }
     } catch {
       submitBtn.classList.remove('is-loading');
@@ -413,7 +399,10 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
       btnLabel.textContent = 'Try Again';
       errorBox.style.display = 'block';
       submitBtn.disabled = false;
-      setTimeout(() => { submitBtn.classList.remove('is-error'); btnLabel.textContent = 'Send Message'; }, 5000);
+      setTimeout(() => {
+        submitBtn.classList.remove('is-error');
+        btnLabel.textContent = 'Send Message';
+      }, 5000);
     }
   });
 </script>

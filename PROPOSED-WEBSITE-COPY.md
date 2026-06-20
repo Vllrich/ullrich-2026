@@ -1,182 +1,125 @@
-# Proposed Website Copy — Lars Ullrich
+# Website Copy (PRIMARY) - Lars Ullrich / ullrich-2026
 
-> A story told across the scroll. Each section is a chapter, not a sales pitch.
+> PRIMARY source of truth = the PIVOT positioning (this file).
+> The previous creative-only story is preserved in WEBSITE-COPY-creative-BACKUP.md for comparison.
 
----
+**Positioning:** Production-grade AI + Fractional CTO/CAIO, sharpened by a creative-technologist edge.
+**Direction:** Ship It (production/reliability) as spine + Build & Automate (custom systems) as delivery + Trusted AI (governance) as trust layer.
+**Tone:** sober-senior with selective creative accents.
+**Audience:** startups and growing SMEs (DACH/EU, international welcome).
+**Brand:** personal brand larsullrich.de + descriptor "Production-grade AI & Fractional CTO". No logos. References stay subtle.
 
-## Cover / Hero
-
-No text overlay — the ASCII fluid sim speaks for itself. The story begins below.
-
----
-
-## Velocity Strip
-
-```
-Code — Sound — Light — Stage — System — Machine — Craft
-```
+> Mapping note: this Astro site has fewer sections than the copy plan, so sections are mapped:
+> Cover(hero anim) / Velocity / WhatIDo=What I Do / Perspective=Method / Services(NEW) / Clients / ImageSlider / Work=Selected Work / About / Contact.
 
 ---
 
-## Chapter 1 — "What I Do" section
+## SEO / Meta (Layout.astro)
 
-**Section label:** `— The Short Version`
-
-**Eyebrow tags:**
-```
-CTO
-Creative Technologist
-AI · Real-Time Systems
-Berlin
-```
-
-**Left column (hero body):**
-
-```
-I started on stages. Now I run engineering at startups. The through-line is the same: making complex systems work under pressure, with no room to fake it.
-```
-
-**Right column (lead paragraph):**
-
-```
-I spent the first half of my career writing software that ran live — real-time visuals synchronised to an opera score, signal processing tools for touring electronic musicians, video systems for theater productions where the curtain goes up whether your code is ready or not.
-
-That background shaped everything that came after. For the past six years I've been a CTO and technical co-founder at venture-backed startups — building adaptive music engines with machine learning at their core, porting robotics vision systems from prototype to production, leading teams of eight to fifteen engineers through product launches and the quiet chaos that follows. I was training models on performance data and shipping generative systems before the current AI wave — which means I understand the technology from the inside, not from a pitch deck.
-```
-
-**Three beats:**
-
-**01 — Then**
-```
-Opera houses, festival stages, the Chaos Computer Club. Code that had to work the moment the lights went down.
-```
-
-**02 — Now**
-```
-CTO at early-stage companies where technology is the product. Architecture decisions, engineering culture, AI integration — and the hundred daily calls that determine whether a team ships or stalls.
-```
-
-**03 — Always**
-```
-A deep instinct for where technology and human experience meet — and a low tolerance for systems that ignore either one.
-```
+- Title: Lars Ullrich - Production-grade AI & Fractional CTO
+- Description: I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Fractional CTO/CAIO and hands-on build, with two decades of real-time and creative engineering.
 
 ---
 
-## Chapter 2 — "Perspective" section (dark)
+## Cover / Hero (Cover.astro)
 
-**Lead (large type):**
-
-```
-For twenty years I've been building at the place where sound, image, and code converge — turning digital systems into experiences people actually feel.
-```
-
-**Grid items — four chapters, told plainly:**
-
-**WHERE / IT STARTS**
-```
-I've always worked in the space between disciplines — too technical for the art world, too expressive for the engineering world, and that tension is exactly where the interesting work lives. Sound, real-time graphics, interactive systems, and software architecture aren't separate practices for me. They're different faces of the same material.
-```
-
-**ON / STAGE**
-```
-For ten years I made work that lived and died in front of audiences — video direction for operas, live visuals at electronic music venues, generative installations at media art festivals across Europe and North America. You learn a different kind of rigour when there's no rollback and a thousand people are watching.
-```
-
-**AI / BEFORE AI**
-```
-I led the development of an adaptive music platform — machine learning models that shaped sound in real time based on how people actually listened. I took a neural-network-driven robotics vision system from prototype to production, processing millions of nodes in real time. This was 2020–2023. The models were smaller, the hype was quieter, and the engineering problems were the same ones everyone is now discovering for the first time.
-```
-
-**INTO / THE ENGINE ROOM**
-```
-The transition from stages to startups felt natural. A company in its first two years has the same energy as a live performance — you're building the thing while it's already running. I brought an unusual toolkit: real-time systems thinking, a habit of shipping with very little, and the ability to see a product from the audience's seat, not just the architecture diagram.
-```
-
-**Bottom statement:**
-```
-The stages got smaller.
-**The systems got larger. The instinct stayed the same.**
-```
+- ASCII fluid animation stays. No heavy text overlay - the animation carries the opener.
+- Nav descriptor under wordmark idea (optional): "Production-grade AI & Fractional CTO"
+- Nav links: What I Do / Method / Services / Work / Contact
 
 ---
 
-## Clients Strip
+## Velocity strip (Velocity.astro)
 
-```
-SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MUSIC · THEATER DORTMUND · OPER DORTMUND · ECM RECORDS · AMP SOUND BRANDING · BERLINER FESTSPIELE · SILEX INVESTMENT
-```
+- diagnose - architect - build - harden - ship
 
 ---
 
-## Work — Selected Projects
+## What I Do (WhatIDo.astro)
 
-**Intro:**
-```
-A partial list — from startup engineering back to opera stages.
-```
+- Section label: "- What I Do"
+- Eyebrow tags: Fractional CTO/CAIO | AI Systems | Real-Time | Berlin
+- Hero body (left): "Turning AI from prototype into production. The hard part is not the demo - it is the system you can run with confidence."
+- Lead (right):
+  - p1: "I work as a fractional CTO/CAIO and hands-on builder for teams adopting AI. From the first use case to a production system, I own the technical decisions that make AI dependable, cost-aware, and genuinely useful."
+  - p2: "Twenty years building software where failure was never an option - real-time audio, live performance, GPU pipelines, industrial robotics - taught me one rule: it has to work the first time, every time. I was training models and shipping generative systems before the current wave, which means I understand the technology from the inside, not from a pitch deck."
 
-| # | Title | Description | Category | Year |
-|---|-------|-------------|----------|------|
-| 01 | Micropsi MIRAI | Ported ML-guided robotics vision system from web to native production code. 2M+ nodes in real time. Engineering team of 12. | ML · Robotics | 2023 |
-| 02 | CORPUS / Pixtunes | Adaptive music platform — ML models shaping sound from user behaviour. Led technology and product as CTO. Team of 8. | AI · Music | 2021–22 |
-| 03 | Korg Motion App | GPU-based interactive visual engine for Korg's motion instrument. Shipped globally. | Graphics · Product | 2020 |
-| 04 | Sound of Porsche | DSP systems and granular synthesis tools for AMP's worldwide Porsche sound installations | Audio · Brand | 2019 |
-| 05 | Einstein on the Beach | Video direction, interaction design, and real-time visual systems for Philip Glass / Robert Wilson | Opera | 2017 |
-| 06 | Theater Dortmund | Live video systems for Hamlet (Kay Voges) and touring productions across Europe | Theatre | 2017–19 |
+### 3 beats (pillars)
+- 01 Find the right use case - "Not every problem needs AI, and not every AI needs a custom model. I help you pick the few use cases that pay for themselves."
+- 02 Build the system - "RAG, agents, automation, and clean integrations - architected for reliability, observability, and cost control from day one."
+- 03 Own the outcome - "As an embedded technical lead I carry the result, not just the deliverable - architecture, team, delivery, and what happens after launch."
 
 ---
 
-## About
+## Method (Perspective.astro - dark contrast section)
 
-**Lead:**
-```
-A CTO with an unusual origin story — twenty years across art, sound, and engineering, now building technology companies in Berlin.
-```
-
-**Prose:**
-```
-I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was spent making audiovisual work — real-time graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages across Europe. The second decade brought that into startups: leading engineering teams, owning product and architecture, shipping AI-driven systems, and building the kind of technical foundations that let small companies move faster than they should be able to. I've led teams of up to fifteen engineers and I'm most useful in the first two years of a company's life, when every technical decision still matters.
-```
-
-**Disciplines:**
-```
-Technical Leadership / CTO
-AI Systems & Machine Learning
-Real-Time Graphics & GPU
-Audio Engineering & DSP
-Product Architecture
-Spatial Computing & Immersive Tech
-```
-
-**Meta:**
-```
-Berlin, DE
-52°31′ N · 13°23′ E
-
-Open to
-CTO / Technical co-founder
-Early-stage advisory
-Teams where technology is the product
-```
+- Section label: "- Method"
+- Lead (large): "Signal to system. A calm path from idea to production - the same discipline I learned where there was no second take."
+- 4 items:
+  - TUNE / IN - "Understand the real problem, the data, and the constraints before touching a model. Most AI failures are framing failures."
+  - COMPOSE / THE ARCHITECTURE - "Choose the right tools - often RAG and agents over custom models - and design for reliability, cost, and the team that inherits it."
+  - SHIP / AND HARDEN - "Get it live, then make it dependable: monitoring, guardrails, human-in-the-loop, and clear ownership."
+  - ADOPT / RESPONSIBLY - "Governance that fits your size - data protection, EU AI Act readiness, and transparent decisions, without slowing you down."
+- Statement: "The stages got smaller. The systems got larger. The instinct stayed the same."
 
 ---
 
-## Contact
+## Services (Services.astro - NEW)
 
-**Intro (large type):**
-```
-If you're building something early-stage,
-technically ambitious, and a little unusual —
-that's where I do my best work.
-```
+- Section label: "- Services"
+- Intro: "Three ways to work together - from a focused audit to embedded leadership."
+- Engagement models:
+  - AI Readiness & Production Audit | Strategy | Fixed scope - "A focused review of your AI ambitions, data, and stack. You get a prioritized use-case shortlist, an honest build/buy/skip call, and a clear path to production." (Use-case mapping / Build vs RAG vs buy / Risk & EU AI Act check / Cost model)
+  - AI Build Sprint | AI / Build | Project - "Hands-on delivery of one high-value AI system - a RAG assistant, an agent workflow, or an automation - built to run in production, not just to demo." (RAG & agents / Python & TypeScript / APIs & integrations / Monitoring & guardrails)
+  - Fractional CTO / CAIO | Leadership | Monthly - "Embedded senior technical leadership without the full-time hire. Architecture, AI strategy, team, and delivery - I own the outcome alongside you." (Architecture & roadmap / Team & vendor selection / Delivery ownership / Board-level reporting)
 
-**Note:**
-```
-Currently open to CTO and technical co-founder conversations, AI strategy advisory, and select engineering builds. I respond within 24 hours.
-```
+---
 
-**Footer:**
-```
-Code, sound, and twenty years of building things that had to work.
-```
+## Clients & Collaborators (Clients.astro)
+
+- Keep text-only, no logos (subtle reference per brief).
+- Label: "- Selected Collaborators"
+- Brands (unchanged): SONY, PORSCHE, BMW, ARRI MEDIA, KORG, MICROPSI INDUSTRIES, CORPUS.MUSIC, THEATER DORTMUND, OPER DORTMUND, ECM RECORDS, AMP SOUND BRANDING, BERLINER FESTSPIELE, SILEX INVESTMENT
+
+---
+
+## Selected Work (Work.astro)
+
+- Section label: "- Selected Work"
+- Intro: "A few systems that had to work in the real world - on stage, on the factory floor, and in production."
+
+| # | Project | Type | Role | Year |
+|---|---------|------|------|------|
+| 01 | MIRAI (Micropsi Industries) | Industrial robotics AI | Systems Engineer | 2023 |
+| 02 | CORPUS | AI music platform | CTO / Architecture | 2021-22 |
+| 03 | The Sound of Porsche | Brand sound system | Lead Technologist | 2019 |
+| 04 | ECM - Flow | Interactive installation | Systems Architect | 2018 |
+| 05 | Einstein on the Beach | Opera (Glass / Wilson) | Creative Developer | 2017 |
+| 06 | Hemispheres | Audiovisual installation | Visual Developer | 2016 |
+
+- MIRAI: "ML backbone for industrial robots - GPU-optimized pipelines and real-time control where downtime is not an option."
+- CORPUS: "AI platform for real-time, context-aware music with transparent artist attribution. Architecture, infrastructure, delivery."
+- Sound of Porsche: "Real-time audio systems for global brand installations - built to run unattended, night after night."
+- ECM - Flow: "Audiovisual installation for ECM Records - 20 works rendered and animated live from the catalogue."
+- Einstein on the Beach: "Real-time video and interaction design for the Glass/Wilson opera at Oper Dortmund."
+- Hemispheres: "Generative audiovisual installation exploring synchronization - art as a stress test for real-time systems."
+
+---
+
+## About (About.astro)
+
+- Lead: "A CTO and AI builder with an unusual origin story - twenty years across art, sound, and engineering, now helping companies ship AI that actually works."
+- Prose: "I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time audiovisual work - graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages. The second decade brought that into startups: leading engineering teams, owning product and architecture, and shipping AI-driven systems. Today I work as a fractional CTO/CAIO and hands-on builder - the kind of technical foundation that lets small companies move faster than they should be able to, without breaking in production."
+- Disciplines: Fractional CTO / CAIO | AI Systems & Machine Learning | RAG, Agents & Automation | Real-Time Graphics & GPU | Audio Engineering & DSP | Product Architecture
+- Meta / Open to: AI readiness & production audits | AI build sprints | Fractional CTO / CAIO
+
+---
+
+## Contact (Contact.astro)
+
+- Section label: "- Let's Talk"
+- Intro: "Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so - and if I'm not, I'll tell you that too."
+- Note: "Currently open to fractional CTO/CAIO engagements, AI strategy advisory, and select production builds. I respond within 24 hours."
+- Placeholders: Your full name / your.email@example.com / What is this about? / What are you building, and where is it stuck?
+- Footer desc: "Production-grade AI. Built to ship, scale, and stay reliable."
+- Footer links: GitHub / Instagram / LinkedIn / Impressum

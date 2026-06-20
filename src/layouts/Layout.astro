@@ -9,15 +9,22 @@ const { title = 'Lars Ullrich' } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
-  <meta name="description" content="Creative Coder · CTO · Digital Artist — Berlin" />
+  <meta name="description" content="I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Fractional CTO/CAIO and hands-on build, with two decades of real-time and creative engineering." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <slot />
+  <div class="page">
+    <slot />
+  </div>
 
   <script>
+    // Mark document as JS-ready so fade animations opt in.
+    // Must happen BEFORE querySelectorAll so elements are already visible
+    // by default and only transition from that point forward.
+    document.documentElement.classList.add('js-ready');
+
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -29,7 +36,7 @@ const { title = 'Lars Ullrich' } = Astro.props;
           }
         }
       },
-      { threshold: 0.08 }
+      { threshold: 0.06, rootMargin: '0px 0px -40px 0px' }
     );
     document.querySelectorAll('.fade-up, .fade-in').forEach(el => io.observe(el));
   </script>

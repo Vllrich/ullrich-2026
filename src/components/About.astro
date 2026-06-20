@@ -1,46 +1,42 @@
 ---
 const disciplines = [
-  'Technical Leadership / CTO',
+  'Fractional CTO / CAIO',
   'AI Systems & Machine Learning',
+  'RAG, Agents & Automation',
   'Real-Time Graphics & GPU',
   'Audio Engineering & DSP',
   'Product Architecture',
-  'Spatial Computing & Immersive Tech',
 ];
 ---
 
 <section id="about" class="about-section">
   <div class="about-grid">
 
-    <div class="about-label">
-      <span class="cat fade-in" style="color: #9A9288;">About</span>
-    </div>
-
     <div class="about-body">
       <p class="about-lead fade-up" data-delay="100">
-        A CTO with an unusual origin story — twenty years across art, sound, and engineering, now building technology companies in Berlin.
+        A CTO and AI builder with an unusual origin story — twenty years across art, sound, and engineering, now helping companies ship AI that actually works.
       </p>
 
       <p class="about-prose fade-up" data-delay="240">
-        I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was spent making audiovisual work — real-time graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages across Europe. The second decade brought that into startups: leading engineering teams, owning product and architecture, shipping AI-driven systems, and building the kind of technical foundations that let small companies move faster than they should be able to. I've led teams of up to fifteen engineers and I'm most useful in the first two years of a company's life, when every technical decision still matters.
+        I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time audiovisual work — graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages. The second decade brought that into startups: leading engineering teams, owning product and architecture, and shipping AI-driven systems. Today I work as a fractional CTO/CAIO and hands-on builder — the kind of technical foundation that lets small companies move faster than they should be able to, without breaking in production.
       </p>
 
-      <div class="about-disciplines fade-up" data-delay="380">
-        <span class="cat" style="color: #C4BFB6; display: block; margin-bottom: 1rem;">Disciplines</span>
+      <div class="about-disciplines fade-up" data-delay="360">
+        <p class="about-disciplines-label">Disciplines</p>
         <ul class="disciplines-list">
-          {disciplines.map(d => <li class="cat" style="color: #9A9288;">{d}</li>)}
+          {disciplines.map(d => <li>{d}</li>)}
         </ul>
       </div>
     </div>
 
-    <div class="about-meta fade-in" data-delay="500">
+    <div class="about-meta fade-in" data-delay="480">
       <dl class="meta-list">
         <dd>Berlin, DE</dd>
-        <dd>52°31′ N · 13°23′ E</dd>
+        <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
         <dd class="meta-sep">Open to</dd>
-        <dd>CTO / Technical co-founder</dd>
-        <dd>Early-stage advisory</dd>
-        <dd>Teams where technology is the product</dd>
+        <dd>AI readiness &amp; production audits</dd>
+        <dd>AI build sprints</dd>
+        <dd>Fractional CTO / CAIO</dd>
       </dl>
     </div>
 
@@ -49,69 +45,96 @@ const disciplines = [
 
 <style>
   .about-section {
-    padding: 6rem 3.5rem;
-    border-top: 1px solid #D4CFC6;
-    background: #F0EDE6;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
+    background: var(--white, oklch(99% 0 0));
   }
 
   .about-grid {
     display: grid;
-    grid-template-columns: 1fr 2.2fr 1fr;
-    gap: 0 4rem;
+    grid-template-columns: 2.6fr 1fr;
+    gap: 0 clamp(3rem, 5vw, 6rem);
+    align-items: start;
   }
 
-  .about-label { padding-top: 0.1rem; }
-
   .about-lead {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 500;
-    font-size: clamp(1.2rem, 2.4vw, 1.75rem);
-    line-height: 1.45;
+    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.4;
     letter-spacing: -0.02em;
-    color: #0E0D0B;
+    color: var(--ink, oklch(10% 0.012 258));
     margin-bottom: 1.75rem;
+    max-width: 44ch;
+    text-wrap: balance;
   }
 
   .about-prose {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.83rem;
+    font-size: 1rem;
+    font-weight: 400;
     line-height: 1.9;
-    letter-spacing: 0.01em;
-    color: #9A9288;
+    color: var(--dim, oklch(28% 0.010 258));
     margin-bottom: 2.5rem;
-    max-width: 44ch;
+    max-width: 58ch;
+  }
+
+  .about-disciplines-label {
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 0.9rem;
+    display: block;
   }
 
   .disciplines-list {
     list-style: none;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.65rem 2.5rem;
+    gap: 0.55rem 2rem;
   }
 
-  .about-meta { text-align: right; }
+  .disciplines-list li {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--dim, oklch(28% 0.010 258));
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Meta sidebar ── */
+  .about-meta {
+    text-align: right;
+    padding-top: 0.25rem;
+  }
 
   .meta-list {
     list-style: none;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #9A9288;
+    color: var(--ghost, oklch(50% 0.006 260));
     line-height: 2.2;
   }
   .meta-list dd { margin: 0; }
-  .meta-sep { margin-top: 1.5rem !important; color: #C4BFB6; }
+
+  /* coordinates in a slightly more visible ghost tone */
+  .meta-coords {
+    color: var(--rule, oklch(87% 0.005 260));
+    letter-spacing: 0.08em;
+  }
+
+  .meta-sep {
+    margin-top: 1.5rem;
+    color: var(--cobalt, oklch(52% 0.22 265));
+    font-weight: 600;
+  }
 
   @media (max-width: 900px) {
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .about-meta { text-align: left; }
   }
-
   @media (max-width: 640px) {
-    .about-section { padding: 4rem 1.75rem; }
     .disciplines-list { grid-template-columns: 1fr; }
   }
 </style>

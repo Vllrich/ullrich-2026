@@ -1,226 +1,126 @@
 ---
-const pillars = [
+const beats = [
   {
-    n: '01',
-    title: 'Then',
-    sub: 'Opera houses, festival stages, the Chaos Computer Club. Code that had to work the moment the lights went down.',
+    title: 'Find the right use case',
+    body: 'Not every problem needs AI, and not every AI needs a custom model. I help you pick the few use cases that pay for themselves.',
   },
   {
-    n: '02',
-    title: 'Now',
-    sub: 'CTO at early-stage companies where technology is the product. Architecture decisions, engineering culture, AI integration — and the hundred daily calls that determine whether a team ships or stalls.',
+    title: 'Build the system',
+    body: 'RAG, agents, automation, and clean integrations — architected for reliability, observability, and cost control from day one.',
   },
   {
-    n: '03',
-    title: 'Always',
-    sub: 'A deep instinct for where technology and human experience meet — and a low tolerance for systems that ignore either one.',
+    title: 'Own the outcome',
+    body: 'As an embedded technical lead I carry the result, not just the deliverable — architecture, team, delivery, and what happens after launch.',
   },
 ];
 ---
 
 <section id="what-i-do" class="wid-section">
 
-  <div class="wid-layout">
+  <div class="wid-intro fade-up" data-delay="80">
+    <p class="wid-statement">
+      I work as a fractional CTO/CAIO and hands-on builder for teams adopting AI. From the first use case to a production system, I own the technical decisions that make AI dependable, cost-aware, and genuinely useful.
+    </p>
+    <p class="wid-sub">
+      Twenty years building software where failure was never an option — real-time audio, live performance, GPU pipelines, industrial robotics — taught me one rule: it has to work the first time, every time. <strong>I was training models and shipping generative systems before the current wave</strong> — which means I understand the technology from the inside, not from a pitch deck.
+    </p>
+  </div>
 
-    <!-- Left: hero intro -->
-    <div class="wid-intro">
-      <div class="wid-header">
-        <span class="section-label">— The Short Version</span>
+  <div class="wid-beats">
+    {beats.map((b, i) => (
+      <div class="beat fade-up" data-delay={String(160 + i * 80)}>
+        <h3 class="beat-title">{b.title}</h3>
+        <p class="beat-body">{b.body}</p>
       </div>
-      <div class="hero-eyebrow fade-in" data-delay="100">
-        <span>CTO</span>
-        <span>Creative Technologist</span>
-        <span>AI · Real-Time Systems</span>
-        <span>Berlin</span>
-      </div>
-      <p class="hero-body fade-up" data-delay="200">
-        I started on stages. Now I run engineering at startups. The through-line is the same: making complex systems work under pressure, with no room to fake it.
-      </p>
-    </div>
-
-    <!-- Right: pillars -->
-    <div class="wid-right">
-      <div class="wid-lead fade-up" data-delay="0">
-        <p>
-          I spent the first half of my career writing software that ran live — real-time visuals synchronised to an opera score, signal processing tools for touring electronic musicians, video systems for theater productions where the curtain goes up whether your code is ready or not.
-        </p>
-        <p class="wid-lead-p2">
-          For the past six years I've been a CTO and technical co-founder at venture-backed startups — building adaptive music engines with machine learning at their core, porting robotics vision systems from prototype to production, leading teams through product launches and the quiet chaos that follows. <strong>I was training models on performance data and shipping generative systems before the current AI wave</strong> — which means I understand the technology from the inside, not from a pitch deck.
-        </p>
-      </div>
-
-      <div class="wid-grid">
-        {pillars.map((p, i) => (
-          <div class="pillar fade-up" data-delay={String(i * 90)}>
-            <span class="pillar-num">{p.n}</span>
-            <h3 class="pillar-title">{p.title}</h3>
-            <p class="pillar-sub">{p.sub}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-
+    ))}
   </div>
 
 </section>
 
 <style>
   .wid-section {
-    background: #F0EDE6;
-    padding: 6rem 3.5rem;
-    border-bottom: 1px solid #D4CFC6;
+    background: var(--white, oklch(99% 0 0));
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
   }
 
-  /* Two-column layout */
-  .wid-layout {
+  /* ── Full-width intro ── */
+  .wid-intro {
+    border-top: 2px solid var(--ink, oklch(10% 0.012 258));
+    padding-top: clamp(2.5rem, 4vw, 3.5rem);
+    margin-bottom: clamp(3rem, 5vw, 5rem);
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 5rem;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
     align-items: start;
   }
 
-  /* Left column */
-  .wid-intro {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    position: sticky;
-    top: 6rem;
-  }
-
-  .wid-header {
-    margin-bottom: 0.5rem;
-  }
-
-  .section-label {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #9A9288;
-  }
-
-  .hero-eyebrow {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.35rem;
-  }
-  .hero-eyebrow span {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #D4CFC6;
-    background: #0E0D0B;
-    padding: 0.3em 0.65em;
-  }
-
-  .hero-body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.82rem;
-    line-height: 1.85;
-    color: #6B6456;
-    letter-spacing: 0.01em;
-  }
-
-  /* Right column */
-  .wid-right {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .wid-lead {
-    margin-bottom: 4rem;
-  }
-
-  .wid-lead p {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-    line-height: 1.85;
-    color: #6B6456;
-    letter-spacing: 0.01em;
-  }
-
-  .wid-lead-p2 {
-    margin-top: 1.25rem;
-  }
-
-  .wid-lead strong {
+  .wid-statement {
+    font-size: clamp(1.1rem, 1.7vw, 1.25rem);
     font-weight: 500;
-    color: #0E0D0B;
+    line-height: 1.7;
+    color: var(--ink, oklch(10% 0.012 258));
+    max-width: 52ch;
   }
 
-  /* ── Grid: brutalist horizontal rule dividers ── */
-  .wid-grid {
+  .wid-sub {
+    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--dim, oklch(28% 0.010 258));
+    max-width: 52ch;
+  }
+
+  .wid-sub strong {
+    font-weight: 700;
+    color: var(--ink, oklch(10% 0.012 258));
+  }
+
+  /* ── Three beats — horizontal row ── */
+  .wid-beats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-top: 2px solid #0E0D0B;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
   }
 
-  .pillar {
-    padding: 2.5rem 2.5rem 2.5rem 0;
-    border-right: 1px solid #D4CFC6;
+  .beat {
+    padding: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 2.5vw, 2.5rem);
+    border-right: 1px solid var(--rule, oklch(87% 0.005 260));
   }
-  .pillar:last-child { border-right: none; padding-right: 0; }
-  .pillar:not(:first-child) { padding-left: 2.5rem; }
+  .beat:first-child { padding-left: 0; }
+  .beat:last-child  { border-right: none; padding-right: 0; }
 
-  .pillar-num {
-    font-family: 'Open Sans', sans-serif;
+  .beat-title {
+    font-size: clamp(1.15rem, 2vw, 1.6rem);
     font-weight: 800;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: #C4BFB6;
-    display: block;
-    margin-bottom: 1.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink, oklch(10% 0.012 258));
+    margin-bottom: 1rem;
+    text-wrap: balance;
   }
 
-  .pillar-title {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.2rem, 2.2vw, 1.75rem);
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: #0E0D0B;
-    text-transform: uppercase;
-    margin-bottom: 1.2rem;
-    white-space: pre-line;
+  .beat-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--dim, oklch(28% 0.010 258));
+    max-width: 36ch;
   }
 
-  .pillar-sub {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
-    font-size: 0.82rem;
-    line-height: 1.75;
-    color: #9A9288;
-    white-space: pre-line;
-  }
-
-  @media (max-width: 900px) {
-    .wid-layout {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .wid-intro { position: static; }
-    .hero-eyebrow { flex-direction: row; flex-wrap: wrap; }
+  @media (max-width: 1000px) {
+    .wid-intro { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 760px) {
-    .wid-section { padding: 4rem 1.75rem; }
-    .wid-grid {
+    .wid-beats {
       grid-template-columns: 1fr;
-      border-top: 2px solid #0E0D0B;
     }
-    .pillar {
+    .beat {
       border-right: none;
-      border-bottom: 1px solid #D4CFC6;
+      border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
       padding: 2rem 0;
     }
-    .pillar:last-child { border-bottom: none; }
-    .pillar:not(:first-child) { padding-left: 0; }
+    .beat:last-child { border-bottom: none; }
   }
 </style>

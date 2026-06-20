@@ -1,0 +1,168 @@
+---
+const services = [
+  {
+    title: 'AI Readiness & Production Audit',
+    cat: 'Strategy',
+    format: 'Fixed scope',
+    desc: 'A focused review of your AI ambitions, data, and stack. You get a prioritized use-case shortlist, an honest build/buy/skip call, and a clear path to production.',
+    tags: ['Use-case mapping', 'Build vs RAG vs buy', 'Risk & EU AI Act check', 'Cost model'],
+  },
+  {
+    title: 'AI Build Sprint',
+    cat: 'AI / Build',
+    format: 'Project',
+    desc: 'Hands-on delivery of one high-value AI system — a RAG assistant, an agent workflow, or an automation — built to run in production, not just to demo.',
+    tags: ['RAG & agents', 'Python & TypeScript', 'APIs & integrations', 'Monitoring & guardrails'],
+  },
+  {
+    title: 'Fractional CTO / CAIO',
+    cat: 'Leadership',
+    format: 'Monthly',
+    desc: 'Embedded senior technical leadership without the full-time hire. Architecture, AI strategy, team, and delivery — I own the outcome alongside you.',
+    tags: ['Architecture & roadmap', 'Team & vendor selection', 'Delivery ownership', 'Board-level reporting'],
+  },
+];
+---
+
+<section id="services" class="svc-section">
+
+  <div class="svc-header">
+    <h2 class="svc-display fade-up" data-delay="0">Three ways to<br/>work together.</h2>
+    <p class="svc-sub fade-up" data-delay="80">From a focused audit to embedded leadership.</p>
+  </div>
+
+  <ol class="svc-list">
+    {services.map((s, i) => (
+      <li class="svc fade-up" data-delay={String(120 + i * 70)}>
+        <div class="svc-row">
+          <div class="svc-left">
+            <h3 class="svc-title">{s.title}</h3>
+            <p class="svc-desc">{s.desc}</p>
+            <ul class="svc-tags">
+              {s.tags.map((t) => <li>{t}</li>)}
+            </ul>
+          </div>
+          <div class="svc-right">
+            <span class="svc-cat">{s.cat}</span>
+            <span class="svc-format">{s.format}</span>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ol>
+
+</section>
+
+<style>
+  .svc-section {
+    background: var(--white, oklch(99% 0 0));
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+  }
+
+  .svc-header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .svc-display {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink, oklch(10% 0.012 258));
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin-bottom: 1rem;
+  }
+
+  .svc-sub {
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    font-weight: 400;
+    color: var(--dim, oklch(28% 0.010 258));
+  }
+
+  /* ── List ── */
+  .svc-list {
+    list-style: none;
+    border-top: 2px solid var(--ink, oklch(10% 0.012 258));
+  }
+
+  .svc {
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+    padding: clamp(2rem, 4vw, 3rem) 0;
+  }
+
+  .svc-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem 4rem;
+    align-items: start;
+  }
+
+  .svc-title {
+    font-size: clamp(1.3rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--ink, oklch(10% 0.012 258));
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .svc-desc {
+    font-size: clamp(1rem, 1.3vw, 1.05rem);
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--dim, oklch(28% 0.010 258));
+    max-width: 58ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .svc-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .svc-tags li {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dim, oklch(28% 0.010 258));
+    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    padding: 0.3em 0.7em;
+  }
+
+  .svc-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-end;
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+    min-width: 8rem;
+    text-align: right;
+  }
+
+  .svc-cat {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cobalt, oklch(52% 0.22 265));
+  }
+
+  .svc-format {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  @media (max-width: 760px) {
+    .svc-row { grid-template-columns: 1fr; }
+    .svc-right { flex-direction: row; align-items: center; text-align: left; gap: 1rem; }
+  }
+</style>

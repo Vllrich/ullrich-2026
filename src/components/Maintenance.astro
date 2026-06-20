@@ -22,7 +22,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     <h2 class="mnt-heading">
       Something's<br/>brewing.<br/>Say hello.
     </h2>
-    <p class="mnt-what">CTO · Creative Technologist · AI & Real-Time Systems</p>
+    <p class="mnt-what">Fractional CTO/CAIO · Production-grade AI · Real-Time Systems</p>
     <p class="mnt-note">
       The site is temporarily offline for maintenance.<br/>
       Leave a message and I'll get back to you within 24 hours.
@@ -77,17 +77,16 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
   .mnt-wrap {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 100dvh;
-    background: #F0EDE6;
-    font-family: 'Open Sans', sans-serif;
+    height: 100dvh;
+    background: var(--white, oklch(99% 0 0));
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
   }
 
-  /* ── Left column ── */
   .mnt-left {
     position: relative;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #D4CFC6;
+    border-right: 1px solid var(--rule, oklch(87% 0.005 260));
     overflow: hidden;
   }
 
@@ -99,8 +98,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     font-weight: 800;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
-    color: #0E0D0B;
-    mix-blend-mode: multiply;
+    color: var(--ink, oklch(10% 0.012 258));
   }
 
   .mnt-fluid {
@@ -123,141 +121,135 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
     bottom: 2rem;
     left: 2.5rem;
     z-index: 10;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 0.7rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #9A9288;
+    color: var(--ghost, oklch(50% 0.006 260));
   }
 
-  /* ── Right column ── */
   .mnt-right {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 5rem 4rem;
+    padding: 3rem 3.5rem;
     overflow-y: auto;
   }
 
   .mnt-label {
     font-weight: 400;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #9A9288;
-    margin-bottom: 2rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 1.25rem;
   }
 
   .mnt-heading {
-    font-weight: 700;
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
     letter-spacing: -0.03em;
     line-height: 1.05;
-    color: #0E0D0B;
+    color: var(--ink, oklch(10% 0.012 258));
     text-transform: uppercase;
-    margin: 0 0 2.5rem;
+    margin: 0 0 1.5rem;
   }
 
   .mnt-what {
     font-weight: 400;
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #9A9288;
-    margin-bottom: 1.25rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 0.75rem;
   }
 
   .mnt-note {
-    font-weight: 300;
-    font-size: 0.8rem;
-    line-height: 1.8;
-    color: #9A9288;
+    font-weight: 400;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    color: var(--dim, oklch(28% 0.010 258));
     max-width: 44ch;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
   }
 
-  /* ── Form ── */
   .mnt-form {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
     max-width: 52ch;
   }
 
   .mnt-form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .mnt-form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .mnt-form-group label {
-    font-weight: 400;
-    font-size: 0.62rem;
+    font-weight: 600;
+    font-size: 0.6rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #9A9288;
+    color: var(--dim, oklch(28% 0.010 258));
   }
 
   .mnt-form-group input,
   .mnt-form-group textarea {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 300;
-    color: #0E0D0B;
-    background: transparent;
-    border: 1px solid #D4CFC6;
-    padding: 0.65rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--ink, oklch(10% 0.012 258));
+    background: var(--surface, oklch(96.5% 0.003 260));
+    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    padding: 0.6rem 0.85rem;
     outline: none;
-    transition: border-color 0.25s, background 0.25s;
+    transition: border-color 0.2s, background 0.2s;
     resize: none;
   }
 
   .mnt-form-group input::placeholder,
-  .mnt-form-group textarea::placeholder { color: #C4BFB6; }
+  .mnt-form-group textarea::placeholder { color: var(--ghost, oklch(50% 0.006 260)); }
 
   .mnt-form-group input:focus,
   .mnt-form-group textarea:focus {
-    border-color: #9A9288;
-    background: rgba(0,0,0,0.02);
+    border-color: var(--cobalt, oklch(52% 0.22 265));
+    background: var(--white, oklch(99% 0 0));
   }
 
   .mnt-form-group input.is-invalid,
-  .mnt-form-group textarea.is-invalid { border-color: #c0392b; }
+  .mnt-form-group textarea.is-invalid { border-color: oklch(55% 0.2 25); }
 
-  .mnt-err {
-    font-size: 0.62rem;
-    color: #c0392b;
-    min-height: 1em;
-  }
+  .mnt-err { font-size: 0.62rem; color: oklch(50% 0.2 25); min-height: 1em; }
 
   .mnt-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 600;
+    font-family: inherit;
+    font-weight: 700;
     font-size: 0.68rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: #0E0D0B;
-    border: 1px solid #0E0D0B;
-    background: transparent;
-    padding: 0.85rem 2rem;
+    color: var(--white, oklch(99% 0 0));
+    background: var(--cobalt, oklch(52% 0.22 265));
+    border: 1px solid var(--cobalt, oklch(52% 0.22 265));
+    padding: 0.8rem 1.75rem;
     cursor: pointer;
-    transition: background 0.25s, color 0.25s;
+    transition: background 0.2s, border-color 0.2s;
     align-self: flex-start;
   }
-  .mnt-btn:hover:not(:disabled) { background: #0E0D0B; color: #F0EDE6; }
-  .mnt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .mnt-btn.is-success { border-color: #27ae60; color: #27ae60; }
-  .mnt-btn.is-error   { border-color: #c0392b; color: #c0392b; }
+  .mnt-btn:hover:not(:disabled) { background: var(--cobalt-dim, oklch(38% 0.18 265)); border-color: var(--cobalt-dim, oklch(38% 0.18 265)); }
+  .mnt-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .mnt-btn.is-success { background: oklch(55% 0.15 145); border-color: oklch(55% 0.15 145); }
+  .mnt-btn.is-error   { background: oklch(55% 0.2 25); border-color: oklch(55% 0.2 25); }
 
   .mnt-btn-spinner {
     display: none;
@@ -270,14 +262,13 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 
   @keyframes mnt-spin { to { transform: rotate(360deg); } }
 
-  .mnt-feedback { font-size: 0.72rem; color: #c0392b; }
+  .mnt-feedback { font-size: 0.72rem; color: oklch(50% 0.2 25); }
   .mnt-feedback a { color: inherit; }
 
-  /* ── Responsive ── */
   @media (max-width: 860px) {
-    .mnt-wrap { grid-template-columns: 1fr; }
-    .mnt-left { min-height: 45dvh; border-right: none; border-bottom: 1px solid #D4CFC6; }
-    .mnt-right { padding: 3rem 2rem; }
+    .mnt-wrap { grid-template-columns: 1fr; height: auto; max-height: none; }
+    .mnt-left { min-height: 40dvh; border-right: none; border-bottom: 1px solid var(--rule, oklch(87% 0.005 260)); }
+    .mnt-right { padding: 2.5rem 1.5rem; }
   }
 
   @media (max-width: 500px) {
@@ -412,11 +403,11 @@ out vec4 out_color;
 void main(){
   vec3 dye=clamp(texture(u_dye,v_uv).rgb,0.,1.);
   float lum=dot(dye,vec3(.333));
-  vec3 bg =vec3(.941,.929,.902);
-  vec3 mid=vec3(.478,.471,.439);
-  vec3 ink=vec3(.055,.051,.043);
-  vec3 col=mix(bg,mid,smoothstep(0.,.5,lum));
-      col =mix(col,ink,smoothstep(.4,1.,lum));
+  vec3 bg     = vec3(0.99,  0.99,  0.997);
+  vec3 cobalt = vec3(0.17,  0.32,  0.80);
+  vec3 ink    = vec3(0.07,  0.07,  0.09);
+  vec3 col    = mix(bg, cobalt, smoothstep(0.05, 0.55, lum));
+       col    = mix(col, ink,   smoothstep(0.65, 1.0,  lum));
   out_color=vec4(col,1.);
 }`;
 
@@ -496,7 +487,8 @@ void main(){
   const off=document.createElement('canvas'); off.width=readW; off.height=readH;
   const offCtx=off.getContext('2d')!;
   canvas.width=readW; canvas.height=readH;
-  const BG_R=240, BG_G=237, BG_B=230;
+  const BG_R=252, BG_G=252, BG_B=255;
+  const HI_R=44,  HI_G=82,  HI_B=204;
 
   function drawAscii() {
     const aw=ascii.clientWidth, ah=ascii.clientHeight;
@@ -516,9 +508,9 @@ void main(){
         const lum=1-(0.299*px[i]+0.587*px[i+1]+0.114*px[i+2])/255;
         const ch=CHARS[Math.min(CHARS.length-1,Math.floor(lum*CHARS.length))];
         if(ch===' ')continue;
-        const ir=Math.round(BG_R+(13-BG_R)*lum);
-        const ig=Math.round(BG_G+(13-BG_G)*lum);
-        const ib=Math.round(BG_B+(11-BG_B)*lum);
+        const ir=Math.round(BG_R+(HI_R-BG_R)*lum);
+        const ig=Math.round(BG_G+(HI_G-BG_G)*lum);
+        const ib=Math.round(BG_B+(HI_B-BG_B)*lum);
         ctx2d.fillStyle=`rgb(${ir},${ig},${ib})`;
         ctx2d.fillText(ch,c*CELL,r*CELL);
       }

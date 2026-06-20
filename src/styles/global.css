@@ -1,93 +1,154 @@
 @import "tailwindcss";
 
-/* ─── ECM-inspired type system ─── */
-/* Cormorant: editorial serif, extreme contrast, refined */
+/* ── Design tokens ── */
+:root {
+  --font-display: "Darker Grotesque", system-ui, sans-serif;
+  --font-sans:    "Darker Grotesque", system-ui, sans-serif;
 
-@theme {
-  --color-paper: #f2efe8;
-  --color-ink: #0e0d0b;
-  --color-warm: #c8b89a;
-  --color-dim: #6b6456;
-  --color-ghost: #2a2820;
-  --color-rule: #2e2c28;
+  /* Light OKLCH palette — clean, high contrast */
+  --white:        oklch(99% 0 0);            /* body background */
+  --surface:      oklch(96.5% 0.003 260);    /* slightly tinted panel */
+  --ink:          oklch(10% 0.012 258);      /* near-black — strong contrast */
+  --dim:          oklch(28% 0.010 258);      /* secondary text — still very dark */
+  --ghost:        oklch(50% 0.006 260);      /* tertiary / metadata */
+  --rule:         oklch(87% 0.005 260);      /* dividers */
+  --cobalt:       oklch(52% 0.22 265);       /* deep cobalt accent */
+  --cobalt-light: oklch(96% 0.05 265);       /* cobalt tint for subtle bg */
+  --cobalt-dim:   oklch(38% 0.18 265);       /* darker cobalt for hover */
 
-  --font-display: "Open Sans", system-ui, sans-serif;
-  --font-sans: "Open Sans", system-ui, sans-serif;
+  /* Semantic tokens */
+  --color-bg:      var(--white);
+  --color-surface: var(--surface);
+  --color-ink:     var(--ink);
+  --color-dim:     var(--dim);
+  --color-ghost:   var(--ghost);
+  --color-rule:    var(--rule);
+  --color-accent:  var(--cobalt);
+  --color-paper:   var(--white);
+
+  /* Legacy palette aliases — map to new light equivalents */
+  --bright-snow:    var(--white);
+  --platinum:       var(--surface);
+  --alabaster-grey: var(--rule);
+  --pale-slate:     var(--ghost);
+  --pale-slate-2:   oklch(72% 0.004 260);
+  --slate-grey:     var(--ghost);
+  --iron-grey:      var(--dim);
+  --gunmetal:       var(--dim);
+  --carbon-black:   var(--ink);
+
+  /* Section vars */
+  --color-dark-bg:   var(--surface);
+  --color-dark-ink:  var(--ink);
+  --color-dark-dim:  var(--dim);
+  --color-dark-rule: var(--rule);
 }
 
-*,
-*::before,
-*::after {
+/* ── Page wrapper — 1200px max-width, centered ── */
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  background: var(--white, oklch(99% 0 0));
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ── Base ── */
 html {
-  background: #f0ede6;
-  color: #0e0d0b;
+  background: var(--color-bg);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
-/* ECM: selection should feel like a fingerprint on paper */
+body {
+  background: var(--white, oklch(99% 0 0));
+  font-family: var(--font-sans);
+}
+
+/* ── Selection ── */
 ::selection {
-  background: var(--color-warm);
-  color: var(--color-ink);
+  background: var(--cobalt);
+  color: var(--white);
 }
 
-::-webkit-scrollbar {
-  width: 1px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-ink);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-rule);
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 1px; }
+::-webkit-scrollbar-track  { background: var(--surface); }
+::-webkit-scrollbar-thumb  { background: var(--rule); }
+
+/* ── Focus ── */
+:focus-visible {
+  outline: 2px solid var(--cobalt);
+  outline-offset: 3px;
 }
 
-/* ─── Catalogue number style ─── */
+/* ── Metadata label ── */
 .cat {
   font-family: var(--font-sans);
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-dim);
-  font-weight: 300;
+  color: var(--color-ghost);
+  font-weight: 400;
 }
 
-/* ─── Reveal on scroll ─── */
+/* ─────────────────────────────────────────────────────────────────
+   Scroll reveal — content is VISIBLE by default.
+   The animation is purely additive: an enhancement for JS environments.
+   Elements never start hidden; they start visible (opacity:1, no transform).
+   JS adds .js-ready to <html> before the observer runs, which opts
+   elements into the entrance animation. This way no-JS / slow-JS / hidden
+   tabs never show blank sections.
+───────────────────────────────────────────────────────────────── */
+
 .fade-up {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 1.1s cubic-bezier(0.25, 0, 0, 1),
-    transform 1.1s cubic-bezier(0.25, 0, 0, 1);
-}
-.fade-up.in {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .fade-in {
-  opacity: 0;
-  transition: opacity 1.4s cubic-bezier(0.25, 0, 0, 1);
+  opacity: 1;
 }
-.fade-in.in {
+
+html.js-ready .fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js-ready .fade-in {
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.js-ready .fade-up.in {
+  opacity: 1;
+  transform: none;
+}
+
+html.js-ready .fade-in.in {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-up,
-  .fade-in {
+  html.js-ready .fade-up,
+  html.js-ready .fade-in {
     transition: none;
     opacity: 1;
     transform: none;
   }
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
 }

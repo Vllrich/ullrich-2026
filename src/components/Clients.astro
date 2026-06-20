@@ -3,15 +3,13 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
 ---
 
 <div class="clients-wrap">
-  <div class="clients-label">
-    <span>— Clients &amp; Collaborators</span>
-  </div>
+  <p class="clients-label">Selected Collaborators</p>
   <div class="clients-strip" aria-hidden="true">
     <div class="clients-track">
       {[...brands, ...brands, ...brands].map((b) => (
         <span class="brand-item">
           {b}
-          <span class="brand-sep">·</span>
+          <span class="brand-sep" aria-hidden="true">·</span>
         </span>
       ))}
     </div>
@@ -20,19 +18,18 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
 
 <style>
   .clients-wrap {
-    background: #F0EDE6;
-    border-bottom: 1px solid #D4CFC6;
-    padding: 2rem 0;
+    background: var(--white, oklch(99% 0 0));
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+    padding: 1.75rem 0;
   }
 
   .clients-label {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 0.65rem;
+    font-size: 0.55rem;
+    font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: #C4BFB6;
-    padding: 0 3.5rem 1rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+    padding: 0 clamp(1.5rem, 4vw, 3.5rem) 0.9rem;
   }
 
   .clients-strip { overflow: hidden; }
@@ -40,7 +37,7 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
   .clients-track {
     display: flex;
     white-space: nowrap;
-    animation: clients-scroll 28s linear infinite;
+    animation: clients-scroll 32s linear infinite;
     width: max-content;
   }
 
@@ -49,25 +46,28 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
   }
 
   .brand-item {
-    font-family: 'Open Sans', sans-serif;
+    font-size: 0.72rem;
     font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.16em;
-    color: #0E0D0B;
+    letter-spacing: 0.14em;
+    color: var(--dim, oklch(28% 0.010 258));
     display: flex;
     align-items: center;
-    gap: 1.4rem;
+    gap: 1.25rem;
     padding: 0 0.1rem;
   }
 
   .brand-sep {
-    color: #D4CFC6;
+    color: var(--rule, oklch(87% 0.005 260));
     font-weight: 400;
-    margin-right: 1.2rem;
+    margin-right: 1rem;
   }
 
   @keyframes clients-scroll {
     from { transform: translateX(0); }
     to   { transform: translateX(-33.333%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clients-track { animation: none; }
   }
 </style>

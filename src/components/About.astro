@@ -7,6 +7,15 @@ const disciplines = [
   'Audio Engineering & DSP',
   'Product Architecture',
 ];
+
+const stack = [
+  { cat: 'Languages',       items: 'Python, TypeScript, JavaScript, C, C++, C#, Java, Rust, Lua, GLSL' },
+  { cat: 'AI / ML',         items: 'PyTorch, LangChain, LlamaIndex, OpenAI API, Anthropic Claude, RAG pipelines, Hugging Face' },
+  { cat: 'Infrastructure',  items: 'Docker, GitHub Actions, PostgreSQL, Redis, pgvector / Pinecone, Supabase, Hetzner' },
+  { cat: 'Scale & Ops',     items: 'Nginx, Kubernetes, Terraform, Cloudflare, Kafka, RabbitMQ, AWS, GCP' },
+  { cat: 'Web & Real-time', items: 'React, Next.js, Astro, WebGL2, Web Audio API' },
+  { cat: 'Creative Tech',   items: 'TouchDesigner, vvvv, Max/MSP, Unity, Processing, JUCE, OpenFrameworks' },
+];
 ---
 
 <section id="about" class="about-section">
@@ -18,13 +27,25 @@ const disciplines = [
       </p>
 
       <p class="about-prose fade-up" data-delay="240">
-        I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time audiovisual work — graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages. The second decade brought that into startups: leading engineering teams, owning product and architecture, and shipping AI-driven systems. Today I work as a fractional CTO/CAIO and hands-on builder — the kind of technical foundation that lets small companies move faster than they should be able to, without breaking in production.
+        I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time audiovisual work - graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages. The second decade brought that into startups: leading engineering teams, owning product and architecture, and shipping AI-driven systems. Today I work as a fractional CTO/CAIO for teams that need senior technical depth without a full-time hire - architecture and strategy, but also the implementation.
       </p>
 
       <div class="about-disciplines fade-up" data-delay="360">
         <ul class="disciplines-list">
           {disciplines.map(d => <li>{d}</li>)}
         </ul>
+      </div>
+
+      <div class="about-stack fade-up" data-delay="440">
+        <span class="about-stack-label">Stack</span>
+        <dl class="stack-list">
+          {stack.map(s => (
+            <div class="stack-row">
+              <dt class="stack-cat">{s.cat}</dt>
+              <dd class="stack-items">{s.items}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
 
@@ -91,6 +112,56 @@ const disciplines = [
     letter-spacing: 0.01em;
   }
 
+  /* ── Stack ── */
+  .about-stack {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .about-stack-label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 1.1rem;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .stack-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0 1.5rem;
+    align-items: baseline;
+  }
+
+  .stack-cat {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink, oklch(10% 0.012 258));
+  }
+
+  .stack-items {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--dim, oklch(28% 0.010 258));
+  }
+
+  @media (max-width: 640px) {
+    .stack-row { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+
   /* ── Meta sidebar ── */
   .about-meta {
     text-align: right;
@@ -108,7 +179,7 @@ const disciplines = [
   .meta-list dt,
   .meta-list dd { margin: 0; }
 
-  /* dt labels are for screen readers only; "Open to" is the exception — it acts as a visible separator */
+  /* dt labels are for screen readers only; "Open to" is the exception - it acts as a visible separator */
   .meta-term {
     position: absolute;
     width: 1px;

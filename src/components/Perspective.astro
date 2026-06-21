@@ -23,7 +23,7 @@ const items = [
 
   <div class="method-header fade-up" data-delay="0">
     <p class="method-lead">
-      Signal to system —<br/>
+      Signal to system -<br/>
       a calm path from idea<br/>
       to production.
     </p>
@@ -87,9 +87,9 @@ const items = [
   }
 
   .method-sub {
-    font-size: 0.85rem;
+    font-size: var(--text-note-size, 0.875rem);
     font-weight: 400;
-    line-height: 1.75;
+    line-height: var(--text-note-lh, 1.8);
     color: var(--dim, oklch(28% 0.010 258));
   }
 
@@ -134,9 +134,9 @@ const items = [
   }
 
   .method-body {
-    font-size: 1rem;
+    font-size: var(--text-body-size, 1rem);
     font-weight: 400;
-    line-height: 1.85;
+    line-height: var(--text-body-lh, 1.875);
     color: var(--dim, oklch(28% 0.010 258));
   }
 
@@ -151,7 +151,7 @@ const items = [
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.15;
-    color: var(--rule, oklch(87% 0.005 260));
+    color: var(--ghost, oklch(50% 0.006 260));
     text-transform: uppercase;
   }
 

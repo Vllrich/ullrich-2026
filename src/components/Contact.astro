@@ -120,9 +120,9 @@ const socials = [
   }
 
   .contact-intro {
-    font-size: clamp(1rem, 1.4vw, 1.1rem);
+    font-size: var(--text-body-size, 1rem);
     font-weight: 400;
-    line-height: 1.8;
+    line-height: var(--text-body-lh, 1.875);
     color: var(--dim, oklch(28% 0.010 258));
     max-width: 44ch;
     margin-bottom: 2rem;
@@ -146,10 +146,10 @@ const socials = [
   }
 
   .contact-note {
-    font-size: 0.85rem;
+    font-size: var(--text-note-size, 0.875rem);
     font-weight: 400;
-    line-height: 1.85;
-    color: var(--ghost, oklch(50% 0.006 260));
+    line-height: var(--text-note-lh, 1.8);
+    color: var(--dim, oklch(28% 0.010 258));
     max-width: 42ch;
   }
 

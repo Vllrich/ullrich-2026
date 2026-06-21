@@ -1,6 +1,6 @@
 # larsullrich.de
 
-Personal website — Astro + WebGL ASCII fluid simulation.
+Personal website - Astro + WebGL ASCII fluid simulation.
 
 ## Stack
 
@@ -36,21 +36,21 @@ Push to `master` triggers the GitHub Actions workflow which:
 
 ### Required GitHub Secrets
 
-| Name | Description |
-|------|-------------|
-| `HETZNER_HOST` | Server IP address |
-| `HETZNER_SSH_KEY` | Private SSH key with access to the server |
-| `PUBLIC_EMAILJS_PUBLIC_KEY` | EmailJS public key |
-| `PUBLIC_EMAILJS_SERVICE_ID` | EmailJS service ID |
-| `PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID |
+| Name                         | Description                               |
+| ---------------------------- | ----------------------------------------- |
+| `HETZNER_HOST`               | Server IP address                         |
+| `HETZNER_SSH_KEY`            | Private SSH key with access to the server |
+| `PUBLIC_EMAILJS_PUBLIC_KEY`  | EmailJS public key                        |
+| `PUBLIC_EMAILJS_SERVICE_ID`  | EmailJS service ID                        |
+| `PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID                       |
 
 ### Required GitHub Variables
 
-| Name | Description |
-|------|-------------|
+| Name                      | Description                                                           |
+| ------------------------- | --------------------------------------------------------------------- |
 | `PUBLIC_MAINTENANCE_MODE` | `true` to enable maintenance mode, `false` (or unset) for normal site |
 
-### First Deploy — SSL
+### First Deploy - SSL
 
 After the first successful deploy, SSH into the server and run:
 

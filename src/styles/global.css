@@ -3,56 +3,56 @@
 /* ── Design tokens ── */
 :root {
   --font-display: "Darker Grotesque", system-ui, sans-serif;
-  --font-sans:    "Hanken Grotesk", system-ui, sans-serif;
+  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
 
   /* Typography scale */
   --text-body-size: 1rem;
-  --text-body-lh:   1.875;
+  --text-body-lh: 1.875;
   --text-lead-size: clamp(1rem, 1.5vw, 1.125rem);
-  --text-lead-lh:   1.7;
+  --text-lead-lh: 1.7;
   --text-note-size: 0.875rem;
-  --text-note-lh:   1.8;
+  --text-note-lh: 1.8;
 
-  /* Light OKLCH palette — clean, high contrast */
-  --white:        oklch(99% 0 0);            /* body background */
-  --surface:      oklch(96.5% 0.003 260);    /* slightly tinted panel */
-  --ink:          oklch(10% 0.012 258);      /* near-black — strong contrast */
-  --dim:          oklch(28% 0.010 258);      /* secondary text — still very dark */
-  --ghost:        oklch(50% 0.006 260);      /* tertiary / metadata */
-  --rule:         oklch(87% 0.005 260);      /* dividers */
-  --cobalt:       oklch(52% 0.22 265);       /* deep cobalt accent */
-  --cobalt-light: oklch(96% 0.05 265);       /* cobalt tint for subtle bg */
-  --cobalt-dim:   oklch(38% 0.18 265);       /* darker cobalt for hover */
+  /* Light OKLCH palette - clean, high contrast */
+  --white: oklch(99% 0 0); /* body background */
+  --surface: oklch(96.5% 0.003 260); /* slightly tinted panel */
+  --ink: oklch(10% 0.012 258); /* near-black - strong contrast */
+  --dim: oklch(28% 0.01 258); /* secondary text - still very dark */
+  --ghost: oklch(50% 0.006 260); /* tertiary / metadata */
+  --rule: oklch(87% 0.005 260); /* dividers */
+  --cobalt: oklch(52% 0.22 265); /* deep cobalt accent */
+  --cobalt-light: oklch(96% 0.05 265); /* cobalt tint for subtle bg */
+  --cobalt-dim: oklch(38% 0.18 265); /* darker cobalt for hover */
 
   /* Semantic tokens */
-  --color-bg:      var(--white);
+  --color-bg: var(--white);
   --color-surface: var(--surface);
-  --color-ink:     var(--ink);
-  --color-dim:     var(--dim);
-  --color-ghost:   var(--ghost);
-  --color-rule:    var(--rule);
-  --color-accent:  var(--cobalt);
-  --color-paper:   var(--white);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-ghost: var(--ghost);
+  --color-rule: var(--rule);
+  --color-accent: var(--cobalt);
+  --color-paper: var(--white);
 
-  /* Legacy palette aliases — map to new light equivalents */
-  --bright-snow:    var(--white);
-  --platinum:       var(--surface);
+  /* Legacy palette aliases - map to new light equivalents */
+  --bright-snow: var(--white);
+  --platinum: var(--surface);
   --alabaster-grey: var(--rule);
-  --pale-slate:     var(--ghost);
-  --pale-slate-2:   oklch(72% 0.004 260);
-  --slate-grey:     var(--ghost);
-  --iron-grey:      var(--dim);
-  --gunmetal:       var(--dim);
-  --carbon-black:   var(--ink);
+  --pale-slate: var(--ghost);
+  --pale-slate-2: oklch(72% 0.004 260);
+  --slate-grey: var(--ghost);
+  --iron-grey: var(--dim);
+  --gunmetal: var(--dim);
+  --carbon-black: var(--ink);
 
   /* Section vars */
-  --color-dark-bg:   var(--surface);
-  --color-dark-ink:  var(--ink);
-  --color-dark-dim:  var(--dim);
+  --color-dark-bg: var(--surface);
+  --color-dark-ink: var(--ink);
+  --color-dark-dim: var(--dim);
   --color-dark-rule: var(--rule);
 }
 
-/* ── Page wrapper — 1200px max-width, centered ── */
+/* ── Page wrapper - 1200px max-width, centered ── */
 .page {
   max-width: 1200px;
   margin: 0 auto;
@@ -61,7 +61,9 @@
 }
 
 /* ── Reset ── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -91,9 +93,15 @@ body {
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar        { width: 1px; }
-::-webkit-scrollbar-track  { background: var(--surface); }
-::-webkit-scrollbar-thumb  { background: var(--rule); }
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--rule);
+}
 
 /* ── Focus ── */
 :focus-visible {
@@ -112,7 +120,7 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   Scroll reveal — content is VISIBLE by default.
+   Scroll reveal - content is VISIBLE by default.
    The animation is purely additive: an enhancement for JS environments.
    Elements never start hidden; they start visible (opacity:1, no transform).
    JS adds .js-ready to <html> before the observer runs, which opts
@@ -158,5 +166,7 @@ html.js-ready .fade-in.in {
     opacity: 1;
     transform: none;
   }
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }

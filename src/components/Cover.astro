@@ -6,11 +6,11 @@
   <header class="site-nav">
     <a href="#" class="nav-logo">
       LARS ULLRICH
-      <span class="nav-descriptor">Production-grade AI &amp; Fractional CTO</span>
+      <span class="nav-descriptor">Production-grade AI &middot; Full-Stack Engineer &amp; Fractional CTO</span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Main navigation">
       <a href="#what-i-do">What I Do</a>
-      <a href="#perspective">Method</a>
+      <a href="#method">Method</a>
       <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
@@ -34,11 +34,11 @@
         Turning prototype into production.
       </h1>
       <p class="hero-body">
-        I help startups and growing companies move AI from prototype to production. The work is technical: architecture, implementation, and the reliability engineering that keeps a system running after launch. Twenty years building software where downtime had consequences.
+        I help startups and growing companies get AI into production - and keep it there. The work is technical: architecture, implementation, and the reliability engineering that keeps a system running after launch. Twenty years building software where downtime had consequences.
       </p>
       <div class="hero-ctas">
         <a href="#contact" class="hero-cta-primary">Start a conversation</a>
-        <a href="#perspective" class="hero-cta-secondary">See how I work</a>
+        <a href="#method" class="hero-cta-secondary">See how I work</a>
       </div>
     </div>
     <div class="hero-canvas">
@@ -427,13 +427,9 @@ out vec4 out_color;
 void main(){
   vec3 dye=clamp(texture(u_dye,v_uv).rgb,0.,1.);
   float lum=dot(dye,vec3(.333));
-  /* white bg → cobalt blue → near-black */
-  vec3 bg     = vec3(0.99,  0.99,  0.997);
-  vec3 cobalt = vec3(0.17,  0.32,  0.80);
-  vec3 ink    = vec3(0.07,  0.07,  0.09);
-  vec3 col    = mix(bg, cobalt, smoothstep(0.05, 0.55, lum));
-       col    = mix(col, ink,   smoothstep(0.65, 1.0,  lum));
-  out_color=vec4(col,1.);
+  /* pure greyscale: white bg → black */
+  float g = 1.0 - smoothstep(0.0, 1.0, lum);
+  out_color=vec4(vec3(g),1.);
 }`;
 
 const SIM=128, DYE=256;
@@ -509,40 +505,55 @@ for(let i=0;i<SEED;i++){
 }
 
 const ctx2d = ascii.getContext('2d')!;
-const CHARS = ' .,:;i1tfLCGO08@#';
 const CELL  = 11;
-const readW=120, readH=80;
-const off=document.createElement('canvas'); off.width=readW; off.height=readH;
-const offCtx=off.getContext('2d')!;
-canvas.width=readW; canvas.height=readH;
+const readW = 120, readH = 80;
+const off = document.createElement('canvas'); off.width = readW; off.height = readH;
+const offCtx = off.getContext('2d')!;
+canvas.width = readW; canvas.height = readH;
 
-/* White bg → cobalt blue characters at mid-lum → near-black at full */
-const BG_R=252, BG_G=252, BG_B=255;
-const HI_R=44, HI_G=82, HI_B=204;   /* cobalt blue */
+/* White bg → near-black: pure black-and-white gradient */
+const BG_R = 252, BG_G = 252, BG_B = 252;
+const HI_R = 12,  HI_G = 12,  HI_B = 12;
+
+/* Binary cell state: each cell persists a 0 or 1 between frames.
+   Bits flip randomly at a rate proportional to the local fluid luminance —
+   active (bright) regions flicker; calm regions hold steady. */
+const MAX_COLS = 240, MAX_ROWS = 140;
+const cellBits = new Uint8Array(MAX_COLS * MAX_ROWS);
+for (let i = 0; i < cellBits.length; i++) cellBits[i] = Math.random() < 0.5 ? 0 : 1;
+
+/* Luminance threshold below which cells stay blank (clean background). */
+const LUM_THRESHOLD = 0.07;
+/* Flip probability multiplier: lum * FLIP_RATE = P(bit flips this frame). */
+const FLIP_RATE = 0.14;
 
 function drawAscii() {
-  const aw=ascii.clientWidth, ah=ascii.clientHeight;
-  if(ascii.width!==aw||ascii.height!==ah){ascii.width=aw;ascii.height=ah;}
-  offCtx.drawImage(canvas,0,0,readW,readH);
-  const px=offCtx.getImageData(0,0,readW,readH).data;
-  const cols=Math.floor(aw/CELL), rows=Math.floor(ah/CELL);
-  ctx2d.fillStyle=`rgb(${BG_R},${BG_G},${BG_B})`;
-  ctx2d.fillRect(0,0,aw,ah);
-  ctx2d.font=`${CELL}px "Courier New",monospace`;
-  ctx2d.textBaseline='top';
-  for(let r=0;r<rows;r++){
-    for(let c=0;c<cols;c++){
-      const sx=Math.floor((c/cols)*readW);
-      const sy=readH-1-Math.floor((r/rows)*readH);
-      const i=(sy*readW+sx)*4;
-      const lum=1-(0.299*px[i]+0.587*px[i+1]+0.114*px[i+2])/255;
-      const ch=CHARS[Math.min(CHARS.length-1,Math.floor(lum*CHARS.length))];
-      if(ch===' ')continue;
-      const ir=Math.round(BG_R+(HI_R-BG_R)*lum);
-      const ig=Math.round(BG_G+(HI_G-BG_G)*lum);
-      const ib=Math.round(BG_B+(HI_B-BG_B)*lum);
-      ctx2d.fillStyle=`rgb(${ir},${ig},${ib})`;
-      ctx2d.fillText(ch,c*CELL,r*CELL);
+  const aw = ascii.clientWidth, ah = ascii.clientHeight;
+  if (ascii.width !== aw || ascii.height !== ah) { ascii.width = aw; ascii.height = ah; }
+  offCtx.drawImage(canvas, 0, 0, readW, readH);
+  const px = offCtx.getImageData(0, 0, readW, readH).data;
+  const cols = Math.min(Math.floor(aw / CELL), MAX_COLS);
+  const rows = Math.min(Math.floor(ah / CELL), MAX_ROWS);
+  ctx2d.fillStyle = `rgb(${BG_R},${BG_G},${BG_B})`;
+  ctx2d.fillRect(0, 0, aw, ah);
+  ctx2d.font = `${CELL}px "Courier New",monospace`;
+  ctx2d.textBaseline = 'top';
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const sx = Math.floor((c / cols) * readW);
+      const sy = readH - 1 - Math.floor((r / rows) * readH);
+      const pi = (sy * readW + sx) * 4;
+      const lum = 1 - (0.299 * px[pi] + 0.587 * px[pi + 1] + 0.114 * px[pi + 2]) / 255;
+      if (lum < LUM_THRESHOLD) continue;
+      /* Stochastically flip the stored bit; rate scales with fluid density */
+      const cellIdx = r * MAX_COLS + c;
+      if (Math.random() < lum * FLIP_RATE) cellBits[cellIdx] ^= 1;
+      const ch = cellBits[cellIdx] ? '1' : '0';
+      const ir = Math.round(BG_R + (HI_R - BG_R) * lum);
+      const ig = Math.round(BG_G + (HI_G - BG_G) * lum);
+      const ib = Math.round(BG_B + (HI_B - BG_B) * lum);
+      ctx2d.fillStyle = `rgb(${ir},${ig},${ib})`;
+      ctx2d.fillText(ch, c * CELL, r * CELL);
     }
   }
 }

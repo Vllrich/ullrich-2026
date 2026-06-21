@@ -1,9 +1,9 @@
 ---
 const scorecard = [
-  { dim: 'Problem framing',      weight: '35%', score: 7.4 },
-  { dim: 'Stack & architecture', weight: '30%', score: 5.8 },
-  { dim: 'Production readiness', weight: '25%', score: 4.2 },
-  { dim: 'Governance',           weight: '10%', score: 3.1 },
+  { dim: 'Problem framing',      weight: '35%', score: 7 },
+  { dim: 'Stack & architecture', weight: '30%', score: 6 },
+  { dim: 'Production readiness', weight: '25%', score: 4 },
+  { dim: 'Governance',           weight: '10%', score: 3 },
 ];
 
 const items = [
@@ -26,7 +26,7 @@ const items = [
 ];
 ---
 
-<section id="perspective" class="method-section">
+<section id="method" class="method-section">
 
   <div class="method-header fade-up" data-delay="0">
     <p class="method-lead">
@@ -35,7 +35,7 @@ const items = [
       not a guess.
     </p>
     <div class="method-meta">
-      <p class="method-sub">The same discipline I learned where there was no second take.</p>
+      <p class="method-sub">What it takes to move from a working demo to a system you can run.</p>
     </div>
   </div>
 
@@ -52,7 +52,7 @@ const items = [
   </ol>
 
   <div class="sc-wrap fade-up" data-delay="300">
-    <p class="sc-context">Where clients typically score on first engagement - four dimensions that account for nearly every production AI failure.</p>
+    <p class="sc-context">A typical first engagement, scored across the four dimensions where production AI usually breaks. Most teams arrive strong on framing and weak on production readiness.</p>
     <div class="sc-row">
       {scorecard.map((s, i) => (
         <div class="sc-col" style={`flex: ${parseInt(s.weight)}`}>
@@ -61,7 +61,7 @@ const items = [
           <div class="sc-bar-wrap">
             <div class="sc-bar-fill" style={`--fill: ${(s.score / 10 * 100).toFixed(1)}%`}></div>
           </div>
-          <span class="sc-score">{s.score.toFixed(2)}<span class="sc-denom"> / 10</span></span>
+          <span class="sc-score">{s.score}<span class="sc-denom"> / 10</span></span>
         </div>
       ))}
     </div>

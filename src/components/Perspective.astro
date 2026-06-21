@@ -52,6 +52,7 @@ const items = [
   </ol>
 
   <div class="sc-wrap fade-up" data-delay="300">
+    <h3 class="sc-title">Readiness scorecard</h3>
     <p class="sc-context">A typical first engagement, scored across the four dimensions where production AI usually breaks. Most teams arrive strong on framing and weak on production readiness.</p>
     <div class="sc-row">
       {scorecard.map((s, i) => (
@@ -79,7 +80,7 @@ const items = [
     background: var(--surface, oklch(96.5% 0.003 260));
     color: var(--ink, oklch(10% 0.012 258));
     padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
-    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
   }
 
   /* ── Header ── */
@@ -120,7 +121,6 @@ const items = [
   /* ── Numbered list ── */
   .method-list {
     list-style: none;
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
     margin-bottom: clamp(3rem, 6vw, 5rem);
   }
 
@@ -131,6 +131,10 @@ const items = [
     padding: clamp(1.75rem, 3vw, 2.5rem) 0;
     border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
     align-items: baseline;
+  }
+
+  .method-item:last-child {
+    border-bottom: none;
   }
 
   .method-num {
@@ -186,9 +190,17 @@ const items = [
 
   /* ── Scorecard ── */
   .sc-wrap {
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
     padding-top: clamp(2rem, 4vw, 3rem);
     margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .sc-title {
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 0.75rem;
   }
 
   .sc-context {

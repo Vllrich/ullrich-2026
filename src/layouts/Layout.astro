@@ -1,7 +1,107 @@
 ---
 import '../styles/global.css';
-interface Props { title?: string }
-const { title = 'Lars Ullrich' } = Astro.props;
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const DEFAULT_DESCRIPTION =
+  'I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering.';
+
+const {
+  title = 'Lars Ullrich - Production-grade AI, Full-Stack Engineer & Fractional CTO',
+  description = DEFAULT_DESCRIPTION,
+  canonical,
+} = Astro.props;
+
+const canonicalURL = canonical
+  ? new URL(canonical, Astro.site)
+  : new URL(Astro.url.pathname, Astro.site);
+
+const ogImageURL = new URL('/og-image.png', Astro.site);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://larsullrich.de/#person',
+      name: 'Lars Ullrich',
+      jobTitle: 'Fractional CTO / CAIO & Full-Stack AI Engineer',
+      url: 'https://larsullrich.de',
+      email: 'contact@larsullrich.de',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Berlin',
+        addressCountry: 'DE',
+      },
+      sameAs: [
+        'https://github.com/larsullrich',
+        'https://www.linkedin.com/in/larsullrich',
+        'https://instagram.com/larsullrich',
+      ],
+      knowsAbout: [
+        'AI systems & ML',
+        'RAG / agents / automation',
+        'Real-time graphics & GPU',
+        'Audio engineering & DSP',
+        'Product architecture',
+      ],
+      description: DEFAULT_DESCRIPTION,
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://larsullrich.de/#website',
+      url: 'https://larsullrich.de',
+      name: 'Lars Ullrich',
+      inLanguage: 'en',
+    },
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://larsullrich.de/#service',
+      name: 'Lars Ullrich — Production-grade AI & Fractional CTO',
+      url: 'https://larsullrich.de',
+      areaServed: ['DE', 'EU', 'Worldwide'],
+      provider: { '@id': 'https://larsullrich.de/#person' },
+      description: DEFAULT_DESCRIPTION,
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services',
+        itemListElement: [
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Readiness & Production Audit',
+              description:
+                'Strategy and fixed-scope audit to assess AI and engineering readiness for production. Delivered as a structured engagement with clear deliverables.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Build Sprint',
+              description:
+                'Full-stack AI build engagement on a per-project basis — from prototype to production-ready system, fast.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Fractional CTO / CAIO',
+              description:
+                'Ongoing technical leadership on a monthly retainer — covering AI strategy, architecture decisions, and engineering team guidance.',
+            },
+          },
+        ],
+      },
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -9,15 +109,29 @@ const { title = 'Lars Ullrich' } = Astro.props;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
-  <meta name="description" content="I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering." />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Lars Ullrich" />
+  <meta name="geo.region" content="DE-BE" />
+  <meta name="geo.placename" content="Berlin" />
+  <meta name="theme-color" content="#fafafa" />
+  <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
-  <meta property="og:title" content="Lars Ullrich - Production-grade AI, Full-Stack Engineer &amp; Fractional CTO" />
-  <meta property="og:description" content="I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable." />
-  <meta property="og:image" content="/og-image.png" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Lars Ullrich" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageURL} />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageURL} />
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
 <body>
   <div class="page">

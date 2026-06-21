@@ -3,7 +3,7 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
 ---
 
 <div class="clients-wrap">
-  <p class="clients-label">Who I've worked with</p>
+  <h2 class="clients-label">Who I've worked with</h2>
   <div class="clients-strip" aria-hidden="true">
     <div class="clients-track">
       {[...brands, ...brands, ...brands].map((b) => (
@@ -29,6 +29,7 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
     letter-spacing: 0.02em;
     color: var(--ghost, oklch(50% 0.006 260));
     padding: 0 clamp(1.5rem, 4vw, 3.5rem) 0.9rem;
+    margin: 0;
   }
 
   .clients-strip { overflow: hidden; }

@@ -1,0 +1,183 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Legal Notice - Lars Ullrich"
+  description="Legal notice (Impressum) for larsullrich.de — Lars Ullrich, Berlin."
+  canonical="/impressum"
+>
+  <main class="impressum">
+    <div class="container">
+
+      <a href="/" class="back-link">← Back to home</a>
+
+      <h1>Legal Notice</h1>
+
+      <!-- ─────────────────────────────────────────────── -->
+      <!-- § 5 DDG                                         -->
+      <!-- ─────────────────────────────────────────────── -->
+      <section>
+        <h2>Information pursuant to § 5 DDG</h2>
+        <p>
+          Lars Ullrich<br />
+          <!-- TODO: Lars to add street address + postal code (legally required for a public Impressum) -->
+          <span class="placeholder">[Street and house number]</span><br />
+          <span class="placeholder">[Postal code]</span> Berlin<br />
+          Germany
+        </p>
+      </section>
+
+      <!-- ─────────────────────────────────────────────── -->
+      <!-- Contact                                         -->
+      <!-- ─────────────────────────────────────────────── -->
+      <section>
+        <h2>Contact</h2>
+        <p>
+          Email: <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a><br />
+          <!-- TODO: Lars to add phone number if desired (not strictly required but common) -->
+          Phone: <span class="placeholder">[Phone number]</span>
+        </p>
+      </section>
+
+      <!-- ─────────────────────────────────────────────── -->
+      <!-- Responsible for content — § 18 Abs. 2 MStV     -->
+      <!-- ─────────────────────────────────────────────── -->
+      <section>
+        <h2>Responsible for content pursuant to § 18 (2) MStV</h2>
+        <p>
+          Lars Ullrich<br />
+          <!-- TODO: Lars to add street address + postal code here as well -->
+          <span class="placeholder">[Street and house number]</span><br />
+          <span class="placeholder">[Postal code]</span> Berlin<br />
+          Germany
+        </p>
+      </section>
+
+      <!-- ─────────────────────────────────────────────── -->
+      <!-- Liability                                       -->
+      <!-- ─────────────────────────────────────────────── -->
+      <section>
+        <h2>Liability for content</h2>
+        <p>
+          As a service provider I am responsible for my own content on these pages in accordance
+          with general law pursuant to § 7 (1) TMG. Pursuant to §§ 8 to 10 TMG, however, I am
+          not obliged to monitor transmitted or stored third-party information or to investigate
+          circumstances that indicate illegal activity. Obligations to remove or block the use of
+          information under general law remain unaffected. Liability in this regard is only possible
+          from the time of knowledge of a specific infringement. Upon becoming aware of any such
+          violations I will remove the relevant content immediately.
+        </p>
+      </section>
+
+      <section>
+        <h2>Liability for links</h2>
+        <p>
+          This site contains links to external third-party websites over whose content I have no
+          control. I therefore cannot accept any liability for that external content. The respective
+          provider or operator of each linked page is always responsible for its content. Linked
+          pages were checked for possible legal violations at the time of linking; no unlawful
+          content was apparent at that time. Permanent monitoring of linked pages is not reasonable
+          without concrete evidence of a violation. Upon becoming aware of any infringement I will
+          remove the relevant links immediately.
+        </p>
+      </section>
+
+      <section>
+        <h2>Copyright</h2>
+        <p>
+          The content and works on these pages created by the site operator are subject to German
+          copyright law. Reproduction, editing, distribution, or any form of commercial use beyond
+          the scope of copyright law requires the written consent of the respective author or
+          creator. Downloads and copies of this site are permitted for private, non-commercial use
+          only. Where content on this site was not created by the operator, third-party copyrights
+          are respected and identified as such. If you become aware of a copyright infringement
+          please contact me — upon notification I will remove the relevant content immediately.
+        </p>
+      </section>
+
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .impressum {
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .container {
+    max-width: 70ch;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--cobalt, oklch(52% 0.22 265));
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s ease;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--ink, oklch(10% 0.012 258));
+    line-height: 1.1;
+    margin: 0 0 2.5rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+  }
+
+  section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: var(--ink, oklch(10% 0.012 258));
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 0 0 0.875rem;
+  }
+
+  p {
+    color: var(--dim, oklch(28% 0.010 258));
+    font-size: 1rem;
+    line-height: 1.875;
+    margin: 0;
+  }
+
+  a {
+    color: var(--cobalt, oklch(52% 0.22 265));
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .placeholder {
+    color: var(--ghost, oklch(50% 0.006 260));
+    font-style: italic;
+    background: oklch(96% 0.005 260);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+</style>

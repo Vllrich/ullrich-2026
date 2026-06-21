@@ -1,0 +1,130 @@
+---
+const faqs = [
+  {
+    q: 'What does a fractional CTO / CAIO actually do?',
+    a: 'A fractional CTO or CAIO provides senior technical leadership on a part-time or project basis — architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical throughout, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the overhead of a full-time hire.',
+  },
+  {
+    q: 'Do you only advise, or do you also write the code?',
+    a: 'The engagement includes code. Lars works inside the repository with the team — not from the outside. Depending on the engagement type, the work spans implementation, architecture reviews, and production debugging. Strategy when you need it, and the engineering when you need that too.',
+  },
+  {
+    q: 'How do you decide whether a company actually needs AI?',
+    a: 'Not every problem needs AI, and not every AI needs a custom model. The starting point is always the use case: what problem are you actually solving, and does AI change the outcome in a meaningful way? Most AI failures are framing failures — the technology is rarely the hard part. The Readiness & Production Audit is designed to answer this question before any build work begins.',
+  },
+  {
+    q: 'What is the "EU AI Act check" in the readiness audit?',
+    a: 'The EU AI Act check is part of the Readiness & Production Audit. It assesses whether a proposed AI system falls under the Act\'s scope, which risk category it belongs to, and what compliance obligations that creates. The audit also covers data protection and governance considerations, scaled to the company\'s size and the system\'s intended use.',
+  },
+  {
+    q: 'Which engagement should I start with?',
+    a: 'If you are unsure whether AI is the right move or where to start, the Readiness & Production Audit is the right first step: fixed scope, a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model. If you already know what you want to build, a Build Sprint ships one system to production — application, infrastructure, and the AI inside it.',
+  },
+  {
+    q: 'Where are you based, and do you work remotely?',
+    a: 'Lars is based in Berlin, Germany, where he has lived since 2007. He works with startups and growing companies regardless of location. You can reach him at contact@larsullrich.de — he responds within 24 hours.',
+  },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a,
+    },
+  })),
+};
+---
+
+<section id="faq" class="faq-section">
+
+  <div class="faq-header fade-up" data-delay="0">
+    <h2 class="faq-display">Questions,<br/>answered.</h2>
+  </div>
+
+  <dl class="faq-list">
+    {faqs.map((f, i) => (
+      <div class="faq-item fade-up" data-delay={String(80 + i * 70)}>
+        <dt class="faq-q">
+          <h3 class="faq-q-text">{f.q}</h3>
+        </dt>
+        <dd class="faq-a">{f.a}</dd>
+      </div>
+    ))}
+  </dl>
+
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faq-section {
+    background: var(--white, oklch(99% 0 0));
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+    border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+  }
+
+  .faq-header {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .faq-display {
+    font-family: var(--font-display, inherit);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--ink, oklch(10% 0.012 258));
+    text-transform: uppercase;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  /* ── List ── */
+  .faq-list {
+    border-top: 2px solid var(--ink, oklch(10% 0.012 258));
+  }
+
+  .faq-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(3rem, 5vw, 6rem);
+    align-items: start;
+    padding: clamp(2rem, 3.5vw, 2.75rem) 0;
+    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .faq-q {
+    margin: 0;
+  }
+
+  .faq-q-text {
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--ink, oklch(10% 0.012 258));
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .faq-a {
+    margin: 0;
+    font-size: var(--text-body-size, 1rem);
+    font-weight: 400;
+    line-height: var(--text-body-lh, 1.875);
+    color: var(--dim, oklch(28% 0.010 258));
+    max-width: 58ch;
+  }
+
+  @media (max-width: 760px) {
+    .faq-item {
+      grid-template-columns: 1fr;
+      gap: 1rem 0;
+    }
+  }
+</style>

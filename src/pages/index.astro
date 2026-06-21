@@ -7,6 +7,7 @@ import Perspective from '../components/Perspective.astro';
 import Services    from '../components/Services.astro';
 import Clients     from '../components/Clients.astro';
 import About       from '../components/About.astro';
+import FAQ         from '../components/FAQ.astro';
 import Contact     from '../components/Contact.astro';
 
 const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
@@ -23,6 +24,7 @@ const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
       <Services />
       <Clients />
       <About />
+      <FAQ />
       <Contact />
     </>
   )}

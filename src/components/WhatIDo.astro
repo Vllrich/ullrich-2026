@@ -80,12 +80,12 @@ const beats = [
   .wid-beats {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
   }
 
   .beat {
     padding: clamp(2rem, 3.5vw, 3rem) clamp(1.5rem, 2.5vw, 2.5rem);
-    border-right: 1px solid var(--rule, oklch(87% 0.005 260));
+    border-right: 1px dotted var(--rule, oklch(87% 0.005 260));
   }
   .beat:first-child { padding-left: 0; }
   .beat:last-child  { border-right: none; padding-right: 0; }
@@ -118,7 +118,7 @@ const beats = [
     }
     .beat {
       border-right: none;
-      border-bottom: 1px solid var(--rule, oklch(87% 0.005 260));
+      border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
       padding: 2rem 0;
     }
     .beat:last-child { border-bottom: none; }

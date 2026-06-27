@@ -281,6 +281,7 @@
     inset: 0;
     pointer-events: none;
     overflow: hidden;
+    z-index: 10; /* must sit above the WebGL compositing layer */
   }
   .grid-label {
     position: absolute;
@@ -294,7 +295,6 @@
     transform: translate(-50%, -50%);
     user-select: none;
     pointer-events: none;
-    opacity: 0;
   }
 
   /* ── Shader param panel ──────────────────────────────────────── */
@@ -1052,12 +1052,15 @@ void main(){
 
   /* ── Word labels overlaid on the canvas ── */
   const WORDS = ['AI', 'Agents', 'Reliability', 'Systems', 'Engineering', 'Ops', 'CTO', 'Full-Stack'];
-  const labelsEl = document.getElementById('grid-labels');
+  /* Use the sibling #grid-labels div; fall back to canvas parent so we
+     always have a real DOM container even if the ID lookup misses.      */
+  const labelsEl = document.getElementById('grid-labels') ?? canvas!.parentElement;
   const labelEls: HTMLElement[] = [];
   for (let d = 0; d < ND; d++) {
     const el = document.createElement('span');
     el.className = 'grid-label';
     el.textContent = WORDS[d];
+    el.style.opacity = '0';
     labelsEl?.appendChild(el);
     labelEls.push(el);
   }
@@ -1252,9 +1255,10 @@ void main(){
       el.style.left     = (cxPhys / dpr) + 'px';
       el.style.top      = (cyPhys / dpr) + 'px';
       el.style.fontSize = Math.max(8, Math.min(colW[dc], rowH[dr]) / dpr * 0.22) + 'px';
-      /* Fade in as the cell grows, fade out as it shrinks back */
-      const intensity   = Math.max(0, driverDelta[d]) / ((unit * gridParams.amp) || 1);
-      el.style.opacity  = String(Math.max(0, Math.min(1, (intensity - 0.15) / 0.35)));
+      /* Fade proportionally with spring expansion; clamp 0–1 */
+      const maxDelta    = (unit * gridParams.amp) || 1;
+      const intensity   = Math.max(0, driverDelta[d]) / maxDelta;
+      el.style.opacity  = String(Math.min(1, intensity * 1.5));
     }
 
     if (!reducedMotion) rafId = requestAnimationFrame(render);

@@ -130,6 +130,7 @@
     min-height: 960px;
     background: #bbdd00;
     overflow: hidden;
+    margin-top: -2rem; /* nav bar is same lime color — shift up so content sits at optical midpoint of nav+hero combined */
   }
 
   #fluid-canvas,
@@ -732,7 +733,7 @@ float sdTri(vec2 p, vec2 a, vec2 b, vec2 c){
   return -sqrt(d.x)*sign(d.y);
 }
 
-/* ── Row height scales (sum = 12.0 → average = canH/12) ─────────── */
+/* ── Row height scales (sum = 11.50 → unitH = canH/11.50) ──────── */
 float rowScale(int i){
   if(i==0) return 0.60; if(i==1) return 1.20; if(i==2) return 0.80;
   if(i==3) return 1.50; if(i==4) return 0.50; if(i==5) return 1.00;
@@ -746,7 +747,7 @@ void main(){
   float rowY = canH - fc.y;
 
   const int ROWS = 12;
-  float unitH = canH / 12.0;
+  float unitH = canH / 11.50; /* actual sum of rowScale values */
 
   /* Row lookup */
   int   row    = ROWS-1;
@@ -763,7 +764,9 @@ void main(){
 
   float r1=h11(rowF*13.1+2.7);
   float r2=h11(rowF*5.77+4.1);
-  float spd   =18.0+r1*58.0;
+  float tier  = h11(rowF*7.7+3.3);
+  float spd   = tier<0.5 ? 10.0+r1*18.0   /* slow drift 10-28 px/s */
+                          : 42.0+r1*46.0;  /* fast run  42-88 px/s */
   float dir   =r2>0.5?1.0:-1.0;
   float scroll=u_time*spd*dir;
 
@@ -839,8 +842,7 @@ void main(){
   float bxPx = min(lx,1.0-lx)*cellW;
   float byPx = min(ly,1.0-ly)*rowH;
   float grid  = 1.0-step(0.6, min(bxPx,byPx));
-  vec3 gridCol = mix(pal(4), pal(0), 0.25);  /* near-black + lime hint */
-  color = mix(color, gridCol, grid*0.50);
+  color = mix(color, pal(0), grid*0.90);  /* lime separator lines */
 
   fragColor = vec4(color, 1.0);
 }`;

@@ -76,6 +76,16 @@
             <span class="gc-val" id="gc-gap-v">1 px</span>
             <input class="gc-range" id="gc-gap" type="range" min="1" max="8" step="1" value="1">
           </label>
+          <label class="gc-row">
+            <span class="gc-label">Tension</span>
+            <span class="gc-val" id="gc-tension-v">0.05</span>
+            <input class="gc-range" id="gc-tension" type="range" min="0.01" max="0.20" step="0.01" value="0.05">
+          </label>
+          <label class="gc-row">
+            <span class="gc-label">Bounce</span>
+            <span class="gc-val" id="gc-bounce-v">0.40</span>
+            <input class="gc-range" id="gc-bounce" type="range" min="0" max="1" step="0.05" value="0.4">
+          </label>
           <button class="gc-reset" id="gc-reset">Reset</button>
         </div>
       </div>
@@ -259,7 +269,7 @@
     justify-content: center;
     overflow: hidden;
     padding: 0;
-    background: #bbdd00;
+    background: #080a08;
     position: relative; /* anchor for the param panel */
   }
 
@@ -815,6 +825,8 @@ const gridParams = {
   speed:    1.0,  /* playback speed multiplier                  */
   nDrivers: 8,    /* how many of the 8 driver cells are active  */
   gapCSS:   1,    /* gap between cells in CSS pixels            */
+  tension:  0.05, /* spring stiffness k — response speed        */
+  bounce:   0.40, /* bounciness 0–1: maps to damping 0.97–0.68  */
 };
 
 /* ── Grid shader: 16×16 push-layout squares (v3) ── */
@@ -825,7 +837,7 @@ const gridParams = {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const gl = canvas.getContext('webgl2', { antialias: false, alpha: false }) as WebGL2RenderingContext | null;
-  if (!gl) { canvas.style.background = '#bbdd00'; return; }
+  if (!gl) { canvas.style.background = '#080a08'; return; }
 
   function mkShader(type: number, src: string): WebGLShader {
     const s = gl!.createShader(type)!;
@@ -854,64 +866,72 @@ void main(){gl_Position=vec4(a_pos,0.0,1.0);}`;
      ─────────────────────────────────────────────────────────────── */
   const FRAG = `#version 300 es
 precision highp float;
-uniform vec2 u_resolution;
-/* u_cols[0..3] = colX (left edges),  u_cols[4..7] = colW (widths)
-   u_rows[0..3] = rowY (bottom edges, y-up), u_rows[4..7] = rowH   */
+uniform vec2  u_resolution;
+uniform float u_unit;     /* base cell size at rest (physical px) */
+/* u_cols[0..3] = colX,  u_cols[4..7] = colW   (y-up, grid-local)
+   u_rows[0..3] = rowY,  u_rows[4..7] = rowH
+   u_colsV[0..3] = colVel[16],  u_rowsV[0..3] = rowVel[16]       */
 uniform vec4 u_cols[8];
 uniform vec4 u_rows[8];
+uniform vec4 u_colsV[4];
+uniform vec4 u_rowsV[4];
 out vec4 fragColor;
 
-const vec3 BG = vec3(0.733, 0.867, 0.000); /* lime #bbdd00 */
+const vec3 BG = vec3(0.031, 0.039, 0.031); /* near-black #080a08 */
 
 float cX(int c){ return u_cols[  c >> 2   ][ c & 3 ]; }
 float cW(int c){ return u_cols[ (c >> 2)+4 ][ c & 3 ]; }
 float rY(int r){ return u_rows[  r >> 2   ][ r & 3 ]; }
 float rH(int r){ return u_rows[ (r >> 2)+4 ][ r & 3 ]; }
+float cV(int c){ return u_colsV[ c >> 2 ][ c & 3 ]; }
+float rV(int r){ return u_rowsV[ r >> 2 ][ r & 3 ]; }
 
-/* dark charcoal → dark olive → pale lime-white */
-vec3 cellColor(float t){
+/* 4-stop: near-black → deep forest → mid lime → #bbdd00 → pale */
+vec3 cellColor(float t) {
   t = clamp(t, 0.0, 1.0);
-  vec3 dk = vec3(0.094, 0.106, 0.137);
-  vec3 md = vec3(0.280, 0.360, 0.150);
-  vec3 lt = vec3(0.933, 0.957, 0.847);
-  if(t < 0.5) return mix(dk, md, t * 2.0);
-  return mix(md, lt, (t - 0.5) * 2.0);
+  vec3 c0 = vec3(0.031, 0.039, 0.031); /* near-black              */
+  vec3 c1 = vec3(0.150, 0.240, 0.055); /* deep forest green       */
+  vec3 c2 = vec3(0.460, 0.650, 0.010); /* mid chartreuse          */
+  vec3 c3 = vec3(0.733, 0.867, 0.000); /* #bbdd00 site lime       */
+  vec3 c4 = vec3(0.920, 0.960, 0.820); /* pale bloom              */
+  if (t < 0.30) return mix(c0, c1, t / 0.30);
+  if (t < 0.60) return mix(c1, c2, (t - 0.30) / 0.30);
+  if (t < 0.85) return mix(c2, c3, (t - 0.60) / 0.25);
+  return         mix(c3, c4, (t - 0.85) / 0.15);
 }
 
 void main(){
-  /* Square grid, centred in the canvas */
-  float gs  = min(u_resolution.x, u_resolution.y);
-  float ox  = (u_resolution.x - gs) * 0.5;
-  float oy  = (u_resolution.y - gs) * 0.5;
-  float uni = (gs - 17.0) / 16.0;   /* base cell size at rest */
+  float gs = min(u_resolution.x, u_resolution.y);
+  float ox = (u_resolution.x - gs) * 0.5;
+  float oy = (u_resolution.y - gs) * 0.5;
 
-  /* Coordinates local to the grid (y-up from grid bottom-left) */
   vec2 gf = gl_FragCoord.xy - vec2(ox, oy);
 
-  /* Outside grid → lime background */
   if(gf.x < 0.0 || gf.x >= gs || gf.y < 0.0 || gf.y >= gs){
     fragColor = vec4(BG, 1.0); return;
   }
 
-  /* Linear search for column (x) */
   int col = -1;
   for(int c = 0; c < 16; c++){
     if(gf.x >= cX(c) && gf.x < cX(c) + cW(c)){ col = c; break; }
   }
-
-  /* Linear search for row (y, y-up) */
   int row = -1;
   for(int r = 0; r < 16; r++){
     if(gf.y >= rY(r) && gf.y < rY(r) + rH(r)){ row = r; break; }
   }
 
-  /* Gap pixel (col or row not found) → lime */
   if(col < 0 || row < 0){ fragColor = vec4(BG, 1.0); return; }
 
-  /* Colour: geometric-mean size relative to base, mapped [0.1, 4.0] */
-  float sz = sqrt(cW(col) * rH(row)) / uni;
-  float t  = clamp((sz - 0.10) / 3.90, 0.0, 1.0);
-  fragColor = vec4(cellColor(t), 1.0);
+  /* Size-based colour position */
+  float sz  = sqrt(cW(col) * rH(row)) / u_unit;
+  float t   = clamp((sz - 0.10) / 3.90, 0.0, 1.0);
+
+  /* Velocity shift: growing cells bloom brighter, shrinking go darker */
+  float vel  = (cV(col) + rV(row)) * 0.5;
+  float velN = clamp(vel / (u_unit * 0.35), -1.0, 1.0);
+  float tAdj = clamp(t + velN * 0.25, 0.0, 1.0);
+
+  fragColor = vec4(cellColor(tAdj), 1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -933,9 +953,12 @@ void main(){
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   gl.bindVertexArray(null);
 
-  const uRes  = gl.getUniformLocation(prog, 'u_resolution');
-  const uCols = gl.getUniformLocation(prog, 'u_cols[0]');
-  const uRows = gl.getUniformLocation(prog, 'u_rows[0]');
+  const uRes   = gl.getUniformLocation(prog, 'u_resolution');
+  const uUnit  = gl.getUniformLocation(prog, 'u_unit');
+  const uCols  = gl.getUniformLocation(prog, 'u_cols[0]');
+  const uRows  = gl.getUniformLocation(prog, 'u_rows[0]');
+  const uColsV = gl.getUniformLocation(prog, 'u_colsV[0]');
+  const uRowsV = gl.getUniformLocation(prog, 'u_rowsV[0]');
 
   /* ── Driver config ─────────────────────────────────────────────
      Eight cells spread across the 16×16 grid, all on unique
@@ -954,6 +977,17 @@ void main(){
   const colsData = new Float32Array(32); /* 8 vec4s: colX[16] + colW[16] */
   const rowsData = new Float32Array(32); /* 8 vec4s: rowY[16] + rowH[16] */
 
+  /* Spring physics state — per-driver */
+  const driverDelta = new Float32Array(ND); /* current spring positions (expansions) */
+  const driverDV    = new Float32Array(ND); /* spring velocities                     */
+
+  /* Per-track velocity → colour in GLSL */
+  const colV      = new Float32Array(GS);
+  const rowV      = new Float32Array(GS);
+  const colsVData = new Float32Array(16); /* 4 vec4s: colVel[16] */
+  const rowsVData = new Float32Array(16); /* 4 vec4s: rowVel[16] */
+
+  let prevUnit = -1; /* track resize so we can reset springs */
   let rafId = 0;
 
   function resize() {
@@ -978,23 +1012,42 @@ void main(){
     const dpr   = Math.min(devicePixelRatio || 1, 2);
     const gap   = Math.max(1, Math.round(gridParams.gapCSS * dpr)); /* CSS→physical px */
     const avail = gs - (GS + 1) * gap;  /* space shared by all 16 cells */
-    const unit  = avail / GS;           /* base cell size */
+    const unit  = avail / GS;           /* base cell size at rest        */
 
-    /* 1. Driver pulses (speed-scaled frequencies) */
+    /* Reset spring state on canvas resize */
+    if (Math.abs(unit - prevUnit) > 0.5) {
+      driverDelta.fill(0);
+      driverDV.fill(0);
+      prevUnit = unit;
+    }
+
+    /* 1. Target sine-wave pulses (speed-scaled) */
     const nd = Math.min(ND, gridParams.nDrivers);
     for (let d = 0; d < ND; d++) {
       dpulse[d] = Math.sin(time * driverFreq[d] * gridParams.speed + driverPhase[d]);
     }
 
-    /* 2. Layout: active drivers expand their column AND row.
-          The delta is distributed equally across the other 15 tracks,
-          so total space is conserved before clamping. */
-    for (let i = 0; i < GS; i++) { colW[i] = unit; rowH[i] = unit; }
+    /* 2. Spring physics — each driver's expansion springs toward its target.
+          k (tension) controls response speed; damp controls overshoot / ring. */
+    const springK    = gridParams.tension;
+    const springDamp = 0.97 - gridParams.bounce * 0.29; /* bounce 0→1 maps to damp 0.97→0.68 */
+    for (let d = 0; d < nd; d++) {
+      const target    = dpulse[d] * unit * gridParams.amp;
+      driverDV[d]     = (driverDV[d] + (target - driverDelta[d]) * springK) * springDamp;
+      driverDelta[d] += driverDV[d];
+    }
+    /* Inactive drivers spring back to zero */
+    for (let d = nd; d < ND; d++) {
+      driverDV[d]     = (driverDV[d] - driverDelta[d] * springK) * springDamp;
+      driverDelta[d] += driverDV[d];
+    }
 
+    /* 3. Layout using spring positions (not raw pulse) */
+    for (let i = 0; i < GS; i++) { colW[i] = unit; rowH[i] = unit; }
     for (let d = 0; d < nd; d++) {
       const dc    = driverCols[d];
       const dr    = driverRows[d];
-      const delta = dpulse[d] * unit * gridParams.amp;  /* user-controlled amplitude */
+      const delta = driverDelta[d]; /* smoothed by spring */
 
       colW[dc] += delta;
       const shareW = delta / (GS - 1);
@@ -1017,6 +1070,25 @@ void main(){
       rowH[i] = rowH[i] * avail / th;
     }
 
+    /* 4. Per-track velocity (derived from spring velocity, for GLSL colour) */
+    colV.fill(0);
+    rowV.fill(0);
+    for (let d = 0; d < nd; d++) {
+      const dc  = driverCols[d];
+      const dr  = driverRows[d];
+      const vel = driverDV[d];
+      colV[dc] += vel;
+      const sw = vel / (GS - 1);
+      for (let c = 0; c < GS; c++) if (c !== dc) colV[c] -= sw;
+      rowV[dr] += vel;
+      const sh = vel / (GS - 1);
+      for (let r = 0; r < GS; r++) if (r !== dr) rowV[r] -= sh;
+    }
+    for (let i = 0; i < GS; i++) {
+      colsVData[i] = colV[i];
+      rowsVData[i] = rowV[i];
+    }
+
     /* 3. Cumulative positions + pack into uniform float32 buffers.
           colsData layout: [colX × 16, colW × 16] = 32 floats → 8 vec4s
           rowsData layout: [rowY × 16, rowH × 16] (y from grid bottom, y-up)
@@ -1035,12 +1107,15 @@ void main(){
       ry += rowH[r] + gap;
     }
 
-    /* 4. Upload and draw */
+    /* 5. Upload and draw */
     gl!.useProgram(prog);
     gl!.bindVertexArray(vao);
     gl!.uniform2f(uRes,  cw, ch);
-    gl!.uniform4fv(uCols, colsData);
-    gl!.uniform4fv(uRows, rowsData);
+    gl!.uniform1f(uUnit, unit);
+    gl!.uniform4fv(uCols,  colsData);
+    gl!.uniform4fv(uRows,  rowsData);
+    gl!.uniform4fv(uColsV, colsVData);
+    gl!.uniform4fv(uRowsV, rowsVData);
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
     if (!reducedMotion) rafId = requestAnimationFrame(render);
@@ -1102,6 +1177,8 @@ void main(){
     { id: 'gc-speed',   valId: 'gc-speed-v',   key: 'speed',    fmt: v => v.toFixed(1) + '×' },
     { id: 'gc-drivers', valId: 'gc-drivers-v', key: 'nDrivers', fmt: v => String(Math.round(v)) },
     { id: 'gc-gap',     valId: 'gc-gap-v',     key: 'gapCSS',   fmt: v => Math.round(v) + ' px' },
+    { id: 'gc-tension', valId: 'gc-tension-v', key: 'tension',  fmt: v => v.toFixed(2) },
+    { id: 'gc-bounce',  valId: 'gc-bounce-v',  key: 'bounce',   fmt: v => v.toFixed(2) },
   ];
 
   sliders.forEach(({ id, valId, key, fmt }) => {
@@ -1116,7 +1193,7 @@ void main(){
   });
 
   /* Reset all to defaults */
-  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 8, gapCSS: 1 };
+  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 8, gapCSS: 1, tension: 0.05, bounce: 0.40 };
   resetBtn?.addEventListener('click', () => {
     sliders.forEach(({ id, valId, key, fmt }) => {
       const inp = document.getElementById(id)    as HTMLInputElement | null;

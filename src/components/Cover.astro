@@ -48,17 +48,9 @@
       </div>
     </div>
 
-    <!-- Right: hero visual, centered, flush to right edge -->
+    <!-- Right: Bauhaus circles animation -->
     <div class="hero-graphic" aria-hidden="true">
-      <img
-        src="/graphics/lars-ullrich-hero-visual.svg"
-        alt=""
-        class="hero-svg-img"
-        width="375"
-        height="750"
-        loading="eager"
-        decoding="async"
-      />
+      <canvas id="bauhaus-canvas"></canvas>
     </div>
   </section>
 
@@ -231,20 +223,17 @@
   }
   .hero-services li:first-child { border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); }
 
-  /* Right: graphic snapped to right border, centered vertically */
+  /* Right: Bauhaus animation panel */
   .hero-graphic {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     overflow: hidden;
     padding: 0;
+    background: #181b23;
   }
 
-  .hero-svg-img {
-    height: 74%;
-    width: auto;
+  #bauhaus-canvas {
     display: block;
-    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
   }
 
   /* ── Responsive ── */
@@ -258,10 +247,8 @@
     }
     .hero-heading { font-size: clamp(2rem, 7vw, 3.5rem); }
     .hero-graphic {
-      height: 60vw;
-      justify-content: center;
+      height: 55vw;
     }
-    .hero-svg-img { height: 100%; width: auto; }
   }
 
   @media (max-width: 760px) {
@@ -673,6 +660,223 @@ if (reducedMotion) {
 }
 
 } // end WEBGL_ENABLED
+
+/* ── Bauhaus circles animation ── */
+(function initBauhaus() {
+  const canvas = document.getElementById('bauhaus-canvas') as HTMLCanvasElement | null;
+  if (!canvas) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const gl = canvas.getContext('webgl2', { antialias: false, alpha: false }) as WebGL2RenderingContext | null;
+  if (!gl) { canvas.style.background = '#181b23'; return; }
+
+  function mkShader(type: number, src: string): WebGLShader {
+    const s = gl!.createShader(type)!;
+    gl!.shaderSource(s, src);
+    gl!.compileShader(s);
+    if (!gl!.getShaderParameter(s, gl!.COMPILE_STATUS))
+      console.error('Bauhaus shader:', gl!.getShaderInfoLog(s));
+    return s;
+  }
+
+  const VERT = `#version 300 es
+layout(location=0) in vec2 a_pos;
+void main(){gl_Position=vec4(a_pos,0.0,1.0);}`;
+
+  const FRAG = `#version 300 es
+precision highp float;
+uniform float u_time;
+uniform vec2  u_resolution;
+out vec4 fragColor;
+
+/* ── Palette ────────────────────────────────────────────────────────
+   0  lime      #bbdd00
+   1  charcoal  #2C303C
+   2  lt-gray   #c8ccd8
+   3  near-wht  #f6f6f8
+   4  near-blk  #181b23
+   5  mid-gray  #6b7288
+   ─────────────────────────────────────────────────────────────── */
+vec3 pal(int i){
+  if(i==0)return vec3(0.733,0.867,0.000);
+  if(i==1)return vec3(0.173,0.188,0.235);
+  if(i==2)return vec3(0.784,0.800,0.847);
+  if(i==3)return vec3(0.965,0.965,0.973);
+  if(i==4)return vec3(0.094,0.106,0.137);
+  return        vec3(0.420,0.447,0.533);
+}
+
+float h11(float p){p=fract(p*0.1031);p*=p+33.33;p*=p+p;return fract(p);}
+float h21(vec2 p){
+  p=fract(p*vec2(234.34,435.345));
+  p+=dot(p,p+34.23);
+  return fract(p.x*p.y);
+}
+
+/* ── Variable row heights (sum = 12.0 so average = baseH) ──────────
+   Cells are SQUARE (size = rowH × rowH) — circles are always round. */
+float rowScale(int i){
+  if(i==0) return 0.60;
+  if(i==1) return 1.20;
+  if(i==2) return 0.80;
+  if(i==3) return 1.50;
+  if(i==4) return 0.50;
+  if(i==5) return 1.00;
+  if(i==6) return 1.30;
+  if(i==7) return 0.70;
+  if(i==8) return 1.10;
+  if(i==9) return 0.45;
+  if(i==10)return 1.40;
+  return         0.95; /* i==11  — sum of all = 12.00 */
+}
+
+void main(){
+  vec2  fc    = gl_FragCoord.xy;
+  float canH  = u_resolution.y;
+  float rowY  = canH - fc.y; /* pixel distance from top */
+
+  /* Unit height so sum of all rowScale values fills canvas exactly */
+  const int ROWS = 12;
+  float unitH = canH / 12.0; /* = canH / sum(rowScales) since sum==12 */
+
+  /* Walk rows to find which one this pixel sits in */
+  int   row     = ROWS - 1;
+  float rowTop  = 0.0;
+  float rowH    = rowScale(ROWS-1) * unitH;
+  for(int i = 0; i < ROWS; i++){
+    float h = rowScale(i) * unitH;
+    if(rowY >= rowTop && rowY < rowTop + h){
+      row    = i;
+      rowH   = h;
+      break;
+    }
+    rowTop += h;
+  }
+  float rowF    = float(row);
+  float localY  = rowY - rowTop; /* 0 … rowH within this row */
+
+  /* Per-row seeds */
+  float r1 = h11(rowF * 13.1 + 2.7);
+  float r2 = h11(rowF *  5.77 + 4.1);
+
+  /* Square cells — width == height, so circles are always round */
+  float cellW = rowH;
+
+  /* Horizontal scroll: unique speed + direction per row */
+  float spd    = 18.0 + r1 * 58.0;
+  float dir    = r2 > 0.5 ? 1.0 : -1.0;
+  float scroll = u_time * spd * dir;
+
+  float cx  = fc.x + scroll;
+  float col = floor(cx / cellW);
+  float lx  = fract(cx  / cellW);     /* 0..1 across cell width  */
+  float ly  = localY   / rowH;        /* 0..1 across cell height */
+
+  /* Per-cell hashes */
+  float ch0 = h21(vec2(col,          rowF));
+  float ch1 = h21(vec2(col + 47.3,   rowF + 13.1));
+  float ch2 = h21(vec2(col - 23.7,   rowF -  7.9));
+  float ch3 = h21(vec2(col * 1.7 + rowF * 0.3, rowF * 2.1));
+
+  /* Color indices */
+  int li = int(mod(ch0 * 6.0, 6.0));
+  int ri = int(mod(float(li) + 2.0 + floor(ch1 * 2.0), 6.0));
+  int ci = int(mod(float(ri) + 2.0 + floor(ch2 * 2.0), 6.0));
+
+  /* Background: hard vertical split at midpoint */
+  vec3 bg = lx < 0.5 ? pal(li) : pal(ri);
+
+  /* ── Circle (pixel space — always geometrically round) ────────── */
+  vec2  pPx      = vec2((lx - 0.5) * cellW, (ly - 0.5) * rowH);
+  float distPx   = length(pPx);
+  float radiusPx = rowH * 0.46;
+  float circle   = 1.0 - smoothstep(radiusPx - 1.5, radiusPx + 1.5, distPx);
+
+  /* Per-circle fade (independent sine per cell) */
+  float fadeFreq  = 0.08 + ch0 * 0.48;
+  float fadePhase = ch3 * 6.2832 + rowF * 0.74 + col * 0.29;
+  float fade      = 0.5 + 0.5 * sin(u_time * fadeFreq + fadePhase);
+  fade = smoothstep(0.18, 0.82, fade);
+  fade = max(fade, step(0.88, ch1)); /* ~12 % of circles stay on as anchors */
+  circle *= fade;
+
+  /* ── Grid hairlines (1 px in both axes) ──────────────────────── */
+  float bxPx = min(lx, 1.0 - lx) * cellW;
+  float byPx = min(ly, 1.0 - ly) * rowH;
+  float grid  = 1.0 - step(0.6, min(bxPx, byPx));
+
+  vec3 color = mix(bg, pal(ci), circle);
+  color = mix(color, pal(4), grid * 0.40);
+
+  fragColor = vec4(color, 1.0);
+}`;
+
+  const prog = gl.createProgram()!;
+  gl.attachShader(prog, mkShader(gl.VERTEX_SHADER,   VERT));
+  gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FRAG));
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    console.error('Bauhaus link:', gl.getProgramInfoLog(prog));
+    return;
+  }
+
+  const vao = gl.createVertexArray()!;
+  gl.bindVertexArray(vao);
+  const buf = gl.createBuffer()!;
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER,
+    new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+  gl.bindVertexArray(null);
+
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes  = gl.getUniformLocation(prog, 'u_resolution');
+
+  let rafId = 0;
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const w = Math.round(canvas!.clientWidth  * dpr);
+    const h = Math.round(canvas!.clientHeight * dpr);
+    if (canvas!.width !== w || canvas!.height !== h) {
+      canvas!.width  = w;
+      canvas!.height = h;
+      gl!.viewport(0, 0, w, h);
+    }
+  }
+
+  function render(ms: number) {
+    resize();
+    gl!.useProgram(prog);
+    gl!.bindVertexArray(vao);
+    gl!.uniform1f(uTime, ms * 0.001);
+    gl!.uniform2f(uRes, canvas!.width, canvas!.height);
+    gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
+    gl!.bindVertexArray(null);
+    if (!reducedMotion) rafId = requestAnimationFrame(render);
+  }
+
+  if (reducedMotion) {
+    resize();
+    render(0);
+  } else {
+    rafId = requestAnimationFrame(render);
+  }
+
+  /* Pause when off-screen for perf */
+  const obs = new IntersectionObserver(entries => {
+    const vis = entries[0].isIntersecting;
+    if (vis && !reducedMotion) {
+      if (!rafId) rafId = requestAnimationFrame(render);
+    } else {
+      cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+  }, { threshold: 0 });
+  obs.observe(canvas);
+})();
 
 /* ── Mobile nav toggle ── */
 const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement;

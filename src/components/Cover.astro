@@ -51,6 +51,8 @@
     <!-- Right: grid animation + shader controls -->
     <div class="hero-graphic" aria-hidden="true">
       <canvas id="bauhaus-canvas"></canvas>
+      <!-- Word labels — positioned by JS each frame -->
+      <div id="grid-labels" class="grid-labels"></div>
       <!-- Param panel: ⚙ button top-right of canvas area -->
       <div class="grid-ctrl">
         <button class="grid-ctrl__btn" id="gc-toggle" aria-label="Shader controls" title="Shader controls">⚙</button>
@@ -271,6 +273,28 @@
     padding: 0;
     background: #bbdd00;
     position: relative; /* anchor for the param panel */
+  }
+
+  /* ── Word label overlay ─────────────────────────────────────── */
+  .grid-labels {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .grid-label {
+    position: absolute;
+    color: #bbdd00;
+    font-family: var(--font-sans, "Hanken Grotesk", system-ui, sans-serif);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    pointer-events: none;
+    opacity: 0;
   }
 
   /* ── Shader param panel ──────────────────────────────────────── */
@@ -1026,6 +1050,18 @@ void main(){
 
   placeDrivers(gridParams.nDrivers);
 
+  /* ── Word labels overlaid on the canvas ── */
+  const WORDS = ['AI', 'Agents', 'Reliability', 'Systems', 'Engineering', 'Ops', 'CTO', 'Full-Stack'];
+  const labelsEl = document.getElementById('grid-labels');
+  const labelEls: HTMLElement[] = [];
+  for (let d = 0; d < ND; d++) {
+    const el = document.createElement('span');
+    el.className = 'grid-label';
+    el.textContent = WORDS[d];
+    labelsEl?.appendChild(el);
+    labelEls.push(el);
+  }
+
   const dpulse    = new Float32Array(ND);
   const prevPulse = new Float32Array(ND); /* for zero-crossing detection */
   const colW: number[] = new Array(GS).fill(0);
@@ -1067,6 +1103,8 @@ void main(){
     /* Square grid centred in canvas */
     const gs    = Math.min(cw, ch);
     const dpr   = Math.min(devicePixelRatio || 1, 2);
+    const oxPx  = (cw - gs) / 2;  /* physical px from canvas left to grid left   */
+    const oyPx  = (ch - gs) / 2;  /* physical px from canvas bottom to grid btm  */
     const gap   = Math.max(1, Math.round(gridParams.gapCSS * dpr)); /* CSS→physical px */
     const avail = gs - (GS + 1) * gap;  /* space shared by all 16 cells */
     const unit  = avail / GS;           /* base cell size at rest        */
@@ -1200,6 +1238,25 @@ void main(){
     gl!.uniform1i(uDrvN,   nd);
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
+
+    /* 6. Update word label positions to follow driver cells */
+    for (let d = 0; d < ND; d++) {
+      const el = labelEls[d];
+      if (d >= nd) { el.style.opacity = '0'; continue; }
+      const dc = driverCols[d];
+      const dr = driverRows[d];
+      /* Centre of the driver cell in physical px */
+      const cxPhys = oxPx + colsData[dc] + colW[dc] * 0.5;
+      const cyPhys = ch - (oyPx + rowsData[dr] + rowH[dr] * 0.5); /* flip y to CSS top-down */
+      /* Convert to CSS px (canvas fills hero-graphic exactly) */
+      el.style.left     = (cxPhys / dpr) + 'px';
+      el.style.top      = (cyPhys / dpr) + 'px';
+      el.style.fontSize = Math.max(8, Math.min(colW[dc], rowH[dr]) / dpr * 0.22) + 'px';
+      /* Fade in as the cell grows, fade out as it shrinks back */
+      const intensity   = Math.max(0, driverDelta[d]) / ((unit * gridParams.amp) || 1);
+      el.style.opacity  = String(Math.max(0, Math.min(1, (intensity - 0.15) / 0.35)));
+    }
+
     if (!reducedMotion) rafId = requestAnimationFrame(render);
   }
 

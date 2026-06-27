@@ -225,6 +225,9 @@
 
   /* Right: Bauhaus animation panel */
   .hero-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     padding: 0;
     background: #bbdd00;
@@ -797,8 +800,10 @@ void main(){
   bg = mix(pal(0), bg, bgAlpha);
 
   /* ── Shape ───────────────────────────────────────────────────────
-     6 types chosen per cell. SDF → smooth mask via 1.5-px AA.     */
-  int shapeType=int(mod(ch2*6.0,6.0));
+     Circles dominate (80 %). The other 5 shapes share the 20 %.   */
+  int shapeType;
+  if(ch2 < 0.80) shapeType=0;
+  else shapeType=1+int(mod((ch2-0.80)/0.20*5.0,5.0));
   float aa=1.5/rowH;
 
   float sdf;

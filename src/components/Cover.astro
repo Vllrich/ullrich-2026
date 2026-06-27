@@ -665,22 +665,22 @@ if (reducedMotion) {
 
 } // end WEBGL_ENABLED
 
-/* ── Bauhaus circles animation ── */
-(function initBauhaus() {
+/* ── Grid shader: 16×16 pulsing squares ── */
+(function initGridShader() {
   const canvas = document.getElementById('bauhaus-canvas') as HTMLCanvasElement | null;
   if (!canvas) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const gl = canvas.getContext('webgl2', { antialias: false, alpha: false }) as WebGL2RenderingContext | null;
-  if (!gl) { canvas.style.background = '#181b23'; return; }
+  if (!gl) { canvas.style.background = '#bbdd00'; return; }
 
   function mkShader(type: number, src: string): WebGLShader {
     const s = gl!.createShader(type)!;
     gl!.shaderSource(s, src);
     gl!.compileShader(s);
     if (!gl!.getShaderParameter(s, gl!.COMPILE_STATUS))
-      console.error('Bauhaus shader:', gl!.getShaderInfoLog(s));
+      console.error('Grid shader:', gl!.getShaderInfoLog(s));
     return s;
   }
 
@@ -694,157 +694,90 @@ uniform float u_time;
 uniform vec2  u_resolution;
 out vec4 fragColor;
 
-/* ── Palette ────────────────────────────────────────────────────────
-   0  lime      #bbdd00   (also the CSS hero background)
-   1  charcoal  #2C303C
-   2  lt-gray   #c8ccd8
-   3  near-wht  #f6f6f8
-   4  near-blk  #181b23
-   5  mid-gray  #6b7288
-   ─────────────────────────────────────────────────────────────── */
-vec3 pal(int i){
-  if(i==0) return vec3(0.733,0.867,0.000);
-  if(i==1) return vec3(0.173,0.188,0.235);
-  if(i==2) return vec3(0.784,0.800,0.847);
-  if(i==3) return vec3(0.965,0.965,0.973);
-  if(i==4) return vec3(0.094,0.106,0.137);
-  return         vec3(0.420,0.447,0.533);
+/* ─────────────────────────────────────────────────────────────────
+   16×16 grid of squares. Eight driver cells pulse with independent
+   sine waves. Each driver expands/contracts freely; its neighbours
+   are pushed in the opposite direction (cubic falloff, radius 5).
+   Colour maps scale → dark charcoal → muted olive → pale lime.
+   ───────────────────────────────────────────────────────────────── */
+
+const int GRID     = 16;
+const int NDRIVERS = 8;
+
+/* Hash: vec2 → [0,1) */
+float h21(vec2 p){
+  p=fract(p*vec2(234.34,435.345));
+  p+=dot(p,p+34.23);
+  return fract(p.x*p.y);
 }
 
-float h11(float p){p=fract(p*0.1031);p*=p+33.33;p*=p+p;return fract(p);}
-float h21(vec2 p){p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}
-
-/* ── Shape SDFs (p centered in [-0.5, 0.5]², cells are square) ─── */
-float sdCircle (vec2 p)          { return length(p)-0.46; }
-float sdBox    (vec2 p)          { vec2 d=abs(p)-0.40; return length(max(d,0.))+min(max(d.x,d.y),0.); }
-float sdDiamond(vec2 p)          { p=abs(p); return (p.x+p.y)-0.48; }
-float sdRing   (vec2 p)          { return abs(length(p)-0.30)-0.12; }
-float sdTri(vec2 p, vec2 a, vec2 b, vec2 c){
-  /* IQ's exact triangle SDF — negative inside, positive outside */
-  vec2 e0=b-a, e1=c-b, e2=a-c;
-  vec2 v0=p-a, v1=p-b, v2=p-c;
-  vec2 pq0=v0-e0*clamp(dot(v0,e0)/dot(e0,e0),0.,1.);
-  vec2 pq1=v1-e1*clamp(dot(v1,e1)/dot(e1,e1),0.,1.);
-  vec2 pq2=v2-e2*clamp(dot(v2,e2)/dot(e2,e2),0.,1.);
-  float s=sign(e0.x*e2.y-e0.y*e2.x);
-  vec2 d=min(min(vec2(dot(pq0,pq0),s*(v0.x*e0.y-v0.y*e0.x)),
-                 vec2(dot(pq1,pq1),s*(v1.x*e1.y-v1.y*e1.x))),
-                 vec2(dot(pq2,pq2),s*(v2.x*e2.y-v2.y*e2.x)));
-  return -sqrt(d.x)*sign(d.y);
+/* Stable driver cell for index d */
+ivec2 driverCell(int d){
+  float fd=float(d);
+  int c=int(h21(vec2(fd*7.31+1.3,fd*3.17+0.9))*float(GRID));
+  int r=int(h21(vec2(fd*11.7-2.1,fd*5.53+3.7))*float(GRID));
+  return ivec2(clamp(c,0,GRID-1),clamp(r,0,GRID-1));
 }
 
-/* ── Row height scales (sum = 11.50 → unitH = canH/11.50) ──────── */
-float rowScale(int i){
-  if(i==0) return 0.60; if(i==1) return 1.20; if(i==2) return 0.80;
-  if(i==3) return 1.50; if(i==4) return 0.50; if(i==5) return 1.00;
-  if(i==6) return 1.30; if(i==7) return 0.70; if(i==8) return 1.10;
-  if(i==9) return 0.45; if(i==10)return 1.40; return   0.95;
+/* Sine pulse for driver d: [-1, 1] */
+float driverPulse(int d){
+  float fd=float(d);
+  float phase=h21(vec2(fd*3.7+0.1,fd*1.9+0.5))*6.2832;
+  float freq=0.22+h21(vec2(fd*5.1+2.0,fd*2.3+1.7))*0.48;
+  return sin(u_time*freq+phase);
+}
+
+/* Square fill fraction for cell (col, row) */
+float computeScale(int col,int row){
+  float s=0.65;
+  for(int d=0;d<NDRIVERS;d++){
+    ivec2 dc=driverCell(d);
+    float dist=length(vec2(float(col-dc.x),float(row-dc.y)));
+    float pulse=driverPulse(d);
+    bool  isMe=(col==dc.x&&row==dc.y);
+    float t=clamp(dist/5.0,0.0,1.0);
+    float fall=pow(1.0-t,3.0);
+    /* driver expands/contracts; neighbours are pushed opposite */
+    if(isMe) s+=pulse*0.27;
+    else     s-=pulse*fall*0.18;
+  }
+  return clamp(s,0.10,0.92);
+}
+
+/* dark charcoal → muted olive → pale lime-white */
+vec3 squareColor(float sc){
+  float t=clamp(sc/0.92,0.0,1.0);
+  vec3 dk=vec3(0.094,0.106,0.137);  /* #181b23 */
+  vec3 md=vec3(0.239,0.314,0.133);  /* dark olive */
+  vec3 lt=vec3(0.933,0.961,0.800);  /* pale lime-white */
+  if(t<0.5) return mix(dk,md,t*2.0);
+  return mix(md,lt,(t-0.5)*2.0);
 }
 
 void main(){
-  vec2  fc   = gl_FragCoord.xy;
-  float canH = u_resolution.y;
-  float rowY = canH - fc.y;
+  float gf=float(GRID);
+  vec2 uv=gl_FragCoord.xy/u_resolution;
+  float cx=uv.x*gf;
+  float cy=uv.y*gf;
+  int col=clamp(int(cx),0,GRID-1);
+  int row=clamp(int(cy),0,GRID-1);
 
-  const int ROWS = 12;
-  float unitH = canH / 11.50; /* actual sum of rowScale values */
+  /* local position centred in cell: [-0.5, 0.5] */
+  float lx=fract(cx)-0.5;
+  float ly=fract(cy)-0.5;
 
-  /* Row lookup */
-  int   row    = ROWS-1;
-  float rowTop = 0.0;
-  float rowH   = rowScale(ROWS-1)*unitH;
-  for(int i=0;i<ROWS;i++){
-    float h=rowScale(i)*unitH;
-    if(rowY>=rowTop && rowY<rowTop+h){row=i;rowH=h;break;}
-    rowTop+=h;
-  }
-  float rowF   = float(row);
-  float localY = rowY - rowTop;
-  float cellW  = rowH; /* square cells → shapes always round/symmetric */
+  float sc=computeScale(col,row);
 
-  float r1=h11(rowF*13.1+2.7);
-  float r2=h11(rowF*5.77+4.1);
-  float tier  = h11(rowF*7.7+3.3);
-  float spd   = tier<0.5 ? 10.0+r1*18.0   /* slow drift 10-28 px/s */
-                          : 42.0+r1*46.0;  /* fast run  42-88 px/s */
-  float dir   =r2>0.5?1.0:-1.0;
-  float scroll=u_time*spd*dir;
+  /* square SDF: half-extent = sc/2 */
+  float sdf=max(abs(lx),abs(ly))-sc*0.5;
 
-  float cx  = fc.x+scroll;
-  float col = floor(cx/cellW);
-  float lx  = fract(cx/cellW);
-  float ly  = localY/rowH;
-  vec2  p   = vec2(lx-0.5, ly-0.5); /* centered UV */
+  /* sub-pixel AA: 1 px expressed in cell-UV space */
+  float aa=0.5*gf/u_resolution.x;
+  float mask=1.0-smoothstep(-aa,aa,sdf);
 
-  /* Per-cell hashes */
-  float ch0=h21(vec2(col,           rowF));
-  float ch1=h21(vec2(col+47.3,      rowF+13.1));
-  float ch2=h21(vec2(col-23.7,      rowF-7.9));
-  float ch3=h21(vec2(col*1.7+rowF*0.3, rowF*2.1));
-  float ch4=h21(vec2(col+rowF,      rowF-col));
-  float ch5=h21(vec2(col*3.1,       rowF*1.7));
-  float ch6=h21(vec2(col*0.9+1.3,   rowF*3.7+0.5));
-
-  /* ── Background ─────────────────────────────────────────────────
-     Style: 0=vertical split  1=horizontal split  2=solid
-     bgAlpha blends toward lime (pal 0) — simulates transparency.  */
-  int c0=int(mod(ch0*6.0,6.0));
-  int c1=int(mod(float(c0)+2.0+floor(ch1*2.0),6.0));
-  int bgStyle=int(mod(ch4*3.0,3.0));
-
-  vec3 bgA=pal(c0), bgB=pal(c1);
-  vec3 bg;
-  if(bgStyle==0)      bg = lx<0.5 ? bgA : bgB;
-  else if(bgStyle==1) bg = ly<0.5 ? bgA : bgB;
-  else                bg = bgA;
-
-  /* Mix toward lime: high bgAlpha = opaque bg, low = mostly lime */
-  float bgAlpha = 0.45 + ch5*0.55;   /* 0.45 … 1.00 */
-  bg = mix(pal(0), bg, bgAlpha);
-
-  /* ── Shape ───────────────────────────────────────────────────────
-     Circles dominate (80 %). The other 5 shapes share the 20 %.   */
-  int shapeType;
-  if(ch2 < 0.80) shapeType=0;
-  else shapeType=1+int(mod((ch2-0.80)/0.20*5.0,5.0));
-  float aa=1.5/rowH;
-
-  float sdf;
-  if     (shapeType==0) sdf=sdCircle(p);
-  else if(shapeType==1) sdf=sdBox(p);
-  else if(shapeType==2) sdf=sdDiamond(p);
-  else if(shapeType==3) sdf=sdRing(p);
-  else if(shapeType==4) /* triangle up */
-    sdf=sdTri(p, vec2(0.,-0.42), vec2(-0.42,0.38), vec2(0.42,0.38));
-  else /* triangle down */
-    sdf=sdTri(p, vec2(0.,0.42),  vec2(-0.42,-0.38), vec2(0.42,-0.38));
-
-  float shape = 1.0-smoothstep(-aa, aa, sdf);
-
-  /* Shape color — distinct from both bg colors */
-  int ci=int(mod(float(c1)+2.0+floor(ch3*2.0),6.0));
-
-  /* Shape alpha: base opacity + fade animation */
-  float shapeBaseAlpha = 0.55 + ch6*0.45;   /* 0.55 … 1.00 */
-  float fadeFreq  = 0.08+ch0*0.48;
-  float fadePhase = ch3*6.2832+rowF*0.74+col*0.29;
-  float fade      = 0.5+0.5*sin(u_time*fadeFreq+fadePhase);
-  fade = smoothstep(0.18,0.82,fade);
-  fade = max(fade, step(0.88,ch1));          /* ~12 % as permanent anchors */
-  float shapeAlpha = shapeBaseAlpha*fade;
-
-  /* Compose: shape over bg (Porter-Duff "A over B" in straight-alpha space) */
-  float sa = shape*shapeAlpha;
-  vec3  color = mix(bg, pal(ci), sa);
-
-  /* ── Grid hairlines ─────────────────────────────────────────────
-     1 px thick in both axes; lime-tinted dark so they breathe.    */
-  float bxPx = min(lx,1.0-lx)*cellW;
-  float byPx = min(ly,1.0-ly)*rowH;
-  float grid  = 1.0-step(0.6, min(bxPx,byPx));
-  color = mix(color, pal(0), grid*0.90);  /* lime separator lines */
-
-  fragColor = vec4(color, 1.0);
+  /* background matches hero lime #bbdd00 */
+  vec3 bg=vec3(0.733,0.867,0.000);
+  fragColor=vec4(mix(bg,squareColor(sc),mask),1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -852,7 +785,7 @@ void main(){
   gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, FRAG));
   gl.linkProgram(prog);
   if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-    console.error('Bauhaus link:', gl.getProgramInfoLog(prog));
+    console.error('Grid shader link:', gl.getProgramInfoLog(prog));
     return;
   }
 

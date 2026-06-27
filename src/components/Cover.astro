@@ -298,7 +298,6 @@
     transform: translate(-50%, -50%);
     user-select: none;
     pointer-events: none;
-    text-shadow: 0 0 6px rgba(187, 221, 0, 0.55); /* lime halo for low-bloom phase */
   }
 
   /* ── Shader param panel ──────────────────────────────────────── */
@@ -1248,7 +1247,13 @@ void main(){
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
 
-    /* 6. Update word label positions to follow driver cells */
+    /* 6. Update word label positions to follow driver cells.
+          The label overlay (#grid-labels, inset:0) fills .hero-graphic,
+          which can be taller than the 480px canvas, so the canvas is
+          centred inside it. Offset by the canvas's position so labels
+          align to the canvas, not the container. */
+    const offL = canvas!.offsetLeft;
+    const offT = canvas!.offsetTop;
     for (let d = 0; d < ND; d++) {
       const el = labelEls[d];
       if (d >= nd) { el.style.opacity = '0'; continue; }
@@ -1257,9 +1262,9 @@ void main(){
       /* Centre of the driver cell in physical px */
       const cxPhys = oxPx + colsData[dc] + colW[dc] * 0.5;
       const cyPhys = ch - (oyPx + rowsData[dr] + rowH[dr] * 0.5); /* flip y to CSS top-down */
-      /* Convert to CSS px (canvas fills hero-graphic exactly) */
-      el.style.left     = (cxPhys / dpr) + 'px';
-      el.style.top      = (cyPhys / dpr) + 'px';
+      /* Convert physical→CSS px, then offset to the canvas origin */
+      el.style.left     = (offL + cxPhys / dpr) + 'px';
+      el.style.top      = (offT + cyPhys / dpr) + 'px';
       el.style.fontSize = Math.max(8, Math.min(colW[dc], rowH[dr]) / dpr * 0.22) + 'px';
       /* Fade in quickly with spring expansion; clamp 0–1 */
       const maxDelta    = (unit * gridParams.amp) || 1;

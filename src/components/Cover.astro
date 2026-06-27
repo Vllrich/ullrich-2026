@@ -59,7 +59,7 @@
           <label class="gc-row">
             <span class="gc-label">Pulse strength</span>
             <span class="gc-val" id="gc-amp-v">3.0</span>
-            <input class="gc-range" id="gc-amp" type="range" min="0.5" max="5" step="0.1" value="3">
+            <input class="gc-range" id="gc-amp" type="range" min="0.5" max="12" step="0.1" value="3">
           </label>
           <label class="gc-row">
             <span class="gc-label">Speed</span>
@@ -68,8 +68,8 @@
           </label>
           <label class="gc-row">
             <span class="gc-label">Active drivers</span>
-            <span class="gc-val" id="gc-drivers-v">8</span>
-            <input class="gc-range" id="gc-drivers" type="range" min="1" max="8" step="1" value="8">
+            <span class="gc-val" id="gc-drivers-v">3</span>
+            <input class="gc-range" id="gc-drivers" type="range" min="1" max="8" step="1" value="3">
           </label>
           <label class="gc-row">
             <span class="gc-label">Gap</span>
@@ -269,7 +269,7 @@
     justify-content: center;
     overflow: hidden;
     padding: 0;
-    background: #080a08;
+    background: #bbdd00;
     position: relative; /* anchor for the param panel */
   }
 
@@ -823,7 +823,7 @@ if (reducedMotion) {
 const gridParams = {
   amp:      3.0,  /* pulse amplitude — how much drivers expand  */
   speed:    1.0,  /* playback speed multiplier                  */
-  nDrivers: 8,    /* how many of the 8 driver cells are active  */
+  nDrivers: 3,    /* how many of the 8 driver cells are active  */
   gapCSS:   1,    /* gap between cells in CSS pixels            */
   tension:  0.05, /* spring stiffness k — response speed        */
   bounce:   0.40, /* bounciness 0–1: maps to damping 0.97–0.68  */
@@ -837,7 +837,7 @@ const gridParams = {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const gl = canvas.getContext('webgl2', { antialias: false, alpha: false }) as WebGL2RenderingContext | null;
-  if (!gl) { canvas.style.background = '#080a08'; return; }
+  if (!gl) { canvas.style.background = '#bbdd00'; return; }
 
   function mkShader(type: number, src: string): WebGLShader {
     const s = gl!.createShader(type)!;
@@ -875,9 +875,12 @@ uniform vec4 u_cols[8];
 uniform vec4 u_rows[8];
 uniform vec4 u_colsV[4];
 uniform vec4 u_rowsV[4];
+/* u_drv[i] = (driverCol, driverRow, intensity 0..1, unused) */
+uniform vec4 u_drv[8];
+uniform int  u_drvN;
 out vec4 fragColor;
 
-const vec3 BG = vec3(0.031, 0.039, 0.031); /* near-black #080a08 */
+const vec3 BG = vec3(0.733, 0.867, 0.000); /* lime #bbdd00 */
 
 float cX(int c){ return u_cols[  c >> 2   ][ c & 3 ]; }
 float cW(int c){ return u_cols[ (c >> 2)+4 ][ c & 3 ]; }
@@ -889,7 +892,7 @@ float rV(int r){ return u_rowsV[ r >> 2 ][ r & 3 ]; }
 /* 4-stop: near-black → deep forest → mid lime → #bbdd00 → pale */
 vec3 cellColor(float t) {
   t = clamp(t, 0.0, 1.0);
-  vec3 c0 = vec3(0.031, 0.039, 0.031); /* near-black              */
+  vec3 c0 = vec3(0.173, 0.188, 0.235); /* #2C303C site dark ink   */
   vec3 c1 = vec3(0.150, 0.240, 0.055); /* deep forest green       */
   vec3 c2 = vec3(0.460, 0.650, 0.010); /* mid chartreuse          */
   vec3 c3 = vec3(0.733, 0.867, 0.000); /* #bbdd00 site lime       */
@@ -922,16 +925,24 @@ void main(){
 
   if(col < 0 || row < 0){ fragColor = vec4(BG, 1.0); return; }
 
-  /* Size-based colour position */
-  float sz  = sqrt(cW(col) * rH(row)) / u_unit;
-  float t   = clamp((sz - 0.10) / 3.90, 0.0, 1.0);
+  /* 2D bloom field: colour comes from proximity to the REAL driver cells,
+     not from cell size. This avoids the column×row lattice artefact —
+     only the actual (random) driver positions light up.                  */
+  float fc = float(col);
+  float fr = float(row);
+  float bloom = 0.0;
+  const float sigma = 1.6; /* bloom radius in cells */
+  for(int i = 0; i < 8; i++){
+    if(i >= u_drvN) break;
+    float dc = fc - u_drv[i].x;
+    float dr = fr - u_drv[i].y;
+    float d2 = dc*dc + dr*dr;
+    float b  = u_drv[i].z * exp(-d2 / (2.0 * sigma * sigma));
+    bloom = max(bloom, b);
+  }
 
-  /* Velocity shift: growing cells bloom brighter, shrinking go darker */
-  float vel  = (cV(col) + rV(row)) * 0.5;
-  float velN = clamp(vel / (u_unit * 0.35), -1.0, 1.0);
-  float tAdj = clamp(t + velN * 0.25, 0.0, 1.0);
-
-  fragColor = vec4(cellColor(tAdj), 1.0);
+  float t = clamp(0.04 + bloom * 1.05, 0.0, 1.0);
+  fragColor = vec4(cellColor(t), 1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -959,23 +970,69 @@ void main(){
   const uRows  = gl.getUniformLocation(prog, 'u_rows[0]');
   const uColsV = gl.getUniformLocation(prog, 'u_colsV[0]');
   const uRowsV = gl.getUniformLocation(prog, 'u_rowsV[0]');
+  const uDrv   = gl.getUniformLocation(prog, 'u_drv[0]');
+  const uDrvN  = gl.getUniformLocation(prog, 'u_drvN');
 
   /* ── Driver config ─────────────────────────────────────────────
-     Eight cells spread across the 16×16 grid, all on unique
-     columns and unique rows so they never share an axis.
+     Drivers start spread-out and respawn at a well-spread position
+     each time their sine wave starts a fresh positive cycle.
      ─────────────────────────────────────────────────────────────── */
   const ND          = 8;
   const GS          = 16;
-  const driverCols  = [ 2,  6, 11, 14,  1,  7, 12,  9];
-  const driverRows  = [ 2,  4,  3,  8, 10, 13, 12,  7];
+  const driverCols: number[] = new Array(ND).fill(0);
+  const driverRows: number[] = new Array(ND).fill(0);
   const driverPhase = [0.00, 1.10, 2.30, 4.70, 0.70, 3.10, 5.50, 2.00];
   const driverFreq  = [0.28, 0.41, 0.33, 0.55, 0.22, 0.48, 0.37, 0.63];
 
-  const dpulse   = new Float32Array(ND);
+  /* Divide the grid into n equal column-zones and n equal row-zones,
+     shuffle each list independently, assign one zone per driver.
+     Zone width = GS/n so drivers are guaranteed GS/n apart on each axis. */
+  function placeDrivers(n: number): void {
+    const stride = GS / n;
+    const ci = Array.from({ length: n }, (_, i) => i);
+    const ri = Array.from({ length: n }, (_, i) => i);
+    for (let i = n - 1; i > 0; i--) {
+      const jc = Math.floor(Math.random() * (i + 1)); [ci[i], ci[jc]] = [ci[jc], ci[i]];
+      const jr = Math.floor(Math.random() * (i + 1)); [ri[i], ri[jr]] = [ri[jr], ri[i]];
+    }
+    for (let d = 0; d < n; d++) {
+      driverCols[d] = Math.floor(ci[d] * stride + Math.random() * stride);
+      driverRows[d] = Math.floor(ri[d] * stride + Math.random() * stride);
+    }
+  }
+
+  /* On respawn: find which column-zone and row-zone are currently free
+     (not occupied by any other active driver) and pick within them.     */
+  function pickFreeZonePos(self: number, n: number): [number, number] {
+    const stride = GS / n;
+    const usedC = new Set<number>(), usedR = new Set<number>();
+    for (let i = 0; i < n; i++) {
+      if (i === self) continue;
+      usedC.add(Math.floor(driverCols[i] / stride));
+      usedR.add(Math.floor(driverRows[i] / stride));
+    }
+    const freeC: number[] = [], freeR: number[] = [];
+    for (let z = 0; z < n; z++) {
+      if (!usedC.has(z)) freeC.push(z);
+      if (!usedR.has(z)) freeR.push(z);
+    }
+    const cz = freeC[Math.floor(Math.random() * freeC.length)] ?? Math.floor(Math.random() * n);
+    const rz = freeR[Math.floor(Math.random() * freeR.length)] ?? Math.floor(Math.random() * n);
+    return [
+      Math.floor(cz * stride + Math.random() * stride),
+      Math.floor(rz * stride + Math.random() * stride),
+    ];
+  }
+
+  placeDrivers(gridParams.nDrivers);
+
+  const dpulse    = new Float32Array(ND);
+  const prevPulse = new Float32Array(ND); /* for zero-crossing detection */
   const colW: number[] = new Array(GS).fill(0);
   const rowH: number[] = new Array(GS).fill(0);
   const colsData = new Float32Array(32); /* 8 vec4s: colX[16] + colW[16] */
   const rowsData = new Float32Array(32); /* 8 vec4s: rowY[16] + rowH[16] */
+  const drvData  = new Float32Array(32); /* 8 vec4s: (col, row, intensity, _) */
 
   /* Spring physics state — per-driver */
   const driverDelta = new Float32Array(ND); /* current spring positions (expansions) */
@@ -1027,6 +1084,17 @@ void main(){
       dpulse[d] = Math.sin(time * driverFreq[d] * gridParams.speed + driverPhase[d]);
     }
 
+    /* Respawn: when a driver's pulse crosses zero going upward (starts a new
+       positive cycle) it jumps to a well-spread cell and resets its spring.    */
+    for (let d = 0; d < nd; d++) {
+      if (prevPulse[d] < 0 && dpulse[d] >= 0) {
+        [driverCols[d], driverRows[d]] = pickFreeZonePos(d, nd);
+        driverDelta[d] = 0;
+        driverDV[d]    = 0;
+      }
+      prevPulse[d] = dpulse[d];
+    }
+
     /* 2. Spring physics — each driver's expansion springs toward its target.
           k (tension) controls response speed; damp controls overshoot / ring. */
     const springK    = gridParams.tension;
@@ -1058,11 +1126,12 @@ void main(){
       for (let r = 0; r < GS; r++) if (r !== dr) rowH[r] -= shareH;
     }
 
-    /* Clamp to 1 physical px minimum, then renorm to preserve avail */
+    /* Clamp to 32 CSS-px minimum, then renorm to preserve avail */
+    const minCell = Math.round(32 * dpr);
     let tw = 0, th = 0;
     for (let i = 0; i < GS; i++) {
-      colW[i] = Math.max(1, colW[i]);
-      rowH[i] = Math.max(1, rowH[i]);
+      colW[i] = Math.max(minCell, colW[i]);
+      rowH[i] = Math.max(minCell, rowH[i]);
       tw += colW[i]; th += rowH[i];
     }
     for (let i = 0; i < GS; i++) {
@@ -1087,6 +1156,17 @@ void main(){
     for (let i = 0; i < GS; i++) {
       colsVData[i] = colV[i];
       rowsVData[i] = rowV[i];
+    }
+
+    /* 4b. Driver bloom field: position + normalised intensity per driver.
+           Intensity is the spring expansion relative to its max, so it
+           tracks each driver's pulse independently of the amp setting.   */
+    const intScale = unit * gridParams.amp || 1;
+    for (let d = 0; d < nd; d++) {
+      drvData[d * 4]     = driverCols[d];
+      drvData[d * 4 + 1] = driverRows[d];
+      drvData[d * 4 + 2] = Math.max(0, Math.min(1, driverDelta[d] / intScale));
+      drvData[d * 4 + 3] = 0;
     }
 
     /* 3. Cumulative positions + pack into uniform float32 buffers.
@@ -1116,6 +1196,8 @@ void main(){
     gl!.uniform4fv(uRows,  rowsData);
     gl!.uniform4fv(uColsV, colsVData);
     gl!.uniform4fv(uRowsV, rowsVData);
+    gl!.uniform4fv(uDrv,   drvData);
+    gl!.uniform1i(uDrvN,   nd);
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
     if (!reducedMotion) rafId = requestAnimationFrame(render);
@@ -1193,7 +1275,7 @@ void main(){
   });
 
   /* Reset all to defaults */
-  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 8, gapCSS: 1, tension: 0.05, bounce: 0.40 };
+  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 3, gapCSS: 1, tension: 0.05, bounce: 0.40 };
   resetBtn?.addEventListener('click', () => {
     sliders.forEach(({ id, valId, key, fmt }) => {
       const inp = document.getElementById(id)    as HTMLInputElement | null;

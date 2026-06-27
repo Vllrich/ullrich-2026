@@ -16,13 +16,13 @@
   /* Light OKLCH palette - clean, high contrast */
   --white: oklch(99% 0 0); /* body background */
   --surface: oklch(96.5% 0.003 260); /* slightly tinted panel */
-  --ink: oklch(10% 0.012 258); /* near-black - strong contrast */
+  --ink: #2C303C; /* primary dark text */
   --dim: oklch(28% 0.01 258); /* secondary text - still very dark */
   --ghost: oklch(50% 0.006 260); /* tertiary / metadata */
   --rule: oklch(87% 0.005 260); /* dividers */
-  --cobalt: oklch(52% 0.22 265); /* deep cobalt accent */
-  --cobalt-light: oklch(96% 0.05 265); /* cobalt tint for subtle bg */
-  --cobalt-dim: oklch(38% 0.18 265); /* darker cobalt for hover */
+  --cobalt: #bbdd00; /* primary accent — lime green */
+  --cobalt-light: #edf9a0; /* light tint */
+  --cobalt-dim: #8aaa00; /* darker hover */
 
   /* Semantic tokens */
   --color-bg: var(--white);
@@ -52,9 +52,9 @@
   --color-dark-rule: var(--rule);
 }
 
-/* ── Page wrapper - 1200px max-width, centered ── */
+/* ── Page wrapper - 1280px max-width, centered ── */
 .page {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   position: relative;
   background: var(--white, oklch(99% 0 0));

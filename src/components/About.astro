@@ -53,6 +53,9 @@ const stack = [
 
     <div class="about-meta fade-in" data-delay="480">
       <dl class="meta-list">
+        <dd class="meta-graphic" aria-hidden="true">
+          <img src="/graphics/G-137.svg" alt="" loading="lazy" decoding="async" />
+        </dd>
         <dt class="meta-term">Location</dt>
         <dd>Berlin, DE</dd>
         <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
@@ -86,7 +89,7 @@ const stack = [
     font-weight: 700;
     line-height: 1.4;
     letter-spacing: -0.02em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     margin-bottom: 1.75rem;
     max-width: 44ch;
     text-wrap: balance;
@@ -150,7 +153,7 @@ const stack = [
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
   }
 
   .stack-items {
@@ -198,6 +201,19 @@ const stack = [
     margin-bottom: 0.25rem;
   }
 
+  .meta-graphic {
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .meta-graphic img {
+    display: block;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
   .meta-sep {
     position: static;
     width: auto;
@@ -206,7 +222,7 @@ const stack = [
     clip: auto;
     white-space: normal;
     margin-top: 1.5rem;
-    color: var(--cobalt, oklch(52% 0.22 265));
+    color: var(--cobalt, #bbdd00);
     font-weight: 700;
     font-size: 0.62rem;
     letter-spacing: 0.12em;

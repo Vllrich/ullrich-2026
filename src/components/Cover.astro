@@ -29,6 +29,11 @@
   </header>
 
   <section class="hero" aria-label="Hero">
+    <!-- WebGL canvases — hidden, preserved for re-enable -->
+    <canvas id="fluid-canvas" aria-hidden="true"></canvas>
+    <canvas id="ascii-canvas" aria-hidden="true"></canvas>
+
+    <!-- Left: text content -->
     <div class="hero-text">
       <h1 class="hero-heading">
         Anyone can demo an agent.<br/>Running one is the job.
@@ -41,16 +46,25 @@
         <a href="#method" class="hero-cta-secondary">See how I work</a>
       </div>
     </div>
-    <div class="hero-canvas">
-      <canvas id="fluid-canvas" aria-hidden="true"></canvas>
-      <canvas id="ascii-canvas" aria-hidden="true"></canvas>
+
+    <!-- Right: herosvg.svg — centered, flush to right edge -->
+    <div class="hero-graphic" aria-hidden="true">
+      <img
+        src="/graphics/herosvg.svg"
+        alt=""
+        class="hero-svg-img"
+        width="375"
+        height="750"
+        loading="eager"
+        decoding="async"
+      />
     </div>
   </section>
 
 </div>
 
 <style>
-  .site-wrap { background: var(--white, #fafafa); }
+  .site-wrap { background: #ffffff; }
 
   /* ── Navigation ── */
   .site-nav {
@@ -61,10 +75,16 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.2rem 3.5rem;
+    background: #bbdd00;
+    border-bottom: 1px solid transparent;
+    transition: background 0.28s ease, border-color 0.28s ease;
+  }
+
+  .site-nav.is-scrolled {
     background: oklch(99% 0 0 / 0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+    border-bottom-color: var(--rule, oklch(87% 0.005 260));
   }
 
   .nav-logo {
@@ -76,7 +96,7 @@
     font-size: 0.72rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     line-height: 1.1;
   }
@@ -86,7 +106,7 @@
     font-size: 0.55rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ghost, oklch(50% 0.006 260));
+    color: oklch(30% 0.008 258);
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     display: block;
     line-height: 1;
@@ -108,37 +128,38 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--ink, oklch(10% 0.012 258)); }
+  .nav-links a:hover { color: var(--ink, #2C303C); }
 
-  /* ── Hero: split screen ── */
+  /* ── Hero: white, 1280×960, split left/right ── */
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 480px;
-    max-height: 680px;
+    min-height: 960px;
+    background: #bbdd00;
+    overflow: hidden;
   }
 
-  /* ── Left: text column ── */
+  #fluid-canvas,
+  #ascii-canvas { display: none; }
+
+  /* Left: text column — vertically centered */
   .hero-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.25rem;
-    padding: clamp(2.5rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
-    background: var(--white, #fafafa);
-    border-right: 1px dotted var(--rule, oklch(87% 0.005 260));
+    gap: 1.5rem;
+    padding: clamp(3rem, 5vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
   }
 
   .hero-heading {
     font-family: var(--font-display, "Darker Grotesque", system-ui, sans-serif);
-    font-size: clamp(2.2rem, 4vw, 5rem);
+    font-size: clamp(2.8rem, 5vw, 5.5rem);
     font-weight: 800;
     line-height: 1.0;
     letter-spacing: -0.04em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     text-transform: uppercase;
     text-wrap: balance;
-    margin: 0.25rem 0;
   }
 
   .hero-body {
@@ -146,14 +167,13 @@
     font-weight: 400;
     line-height: var(--text-body-lh, 1.875);
     color: var(--dim, oklch(28% 0.010 258));
-    max-width: 44ch;
+    max-width: 42ch;
   }
 
   .hero-ctas {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    padding-top: 0.5rem;
   }
 
   .hero-cta-primary {
@@ -162,13 +182,13 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--white, #fafafa);
-    background: var(--cobalt, oklch(52% 0.22 265));
+    background: var(--ink, #2C303C);
     text-decoration: none;
     padding: 0.75rem 1.5rem;
     transition: background 0.2s;
     white-space: nowrap;
   }
-  .hero-cta-primary:hover { background: var(--cobalt-dim, oklch(38% 0.18 265)); }
+  .hero-cta-primary:hover { background: oklch(22% 0.01 258); }
 
   .hero-cta-secondary {
     font-size: 0.68rem;
@@ -183,43 +203,61 @@
     white-space: nowrap;
   }
   .hero-cta-secondary:hover {
-    color: var(--ink, oklch(10% 0.012 258));
-    border-bottom-color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
+    border-bottom-color: var(--ink, #2C303C);
   }
 
-  /* ── Right: canvas ── */
-  .hero-canvas {
-    position: relative;
+  /* Services list below CTA */
+  .hero-services {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.25rem;
+  }
+
+  .hero-services li {
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    padding: 0.55rem 0;
+    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+    line-height: 1;
+  }
+  .hero-services li:first-child { border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); }
+
+  /* Right: graphic snapped to right border, centered vertically */
+  .hero-graphic {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     overflow: hidden;
-    background: var(--white, #fafafa);
+    padding: 0;
   }
 
-  #fluid-canvas { display: none; }
-
-  #ascii-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+  .hero-svg-img {
+    height: 74%;
+    width: auto;
     display: block;
+    flex-shrink: 0;
   }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
       min-height: auto;
-      max-height: none;
     }
     .hero-text {
-      justify-content: flex-start;
-      border-right: none;
-      border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
-      padding: 2.5rem 1.5rem;
+      padding: clamp(5rem, 12vw, 7rem) 1.5rem 2rem;
     }
     .hero-heading { font-size: clamp(2rem, 7vw, 3.5rem); }
-    .hero-canvas  { min-height: 50vw; }
+    .hero-graphic {
+      height: 60vw;
+      justify-content: center;
+    }
+    .hero-svg-img { height: 100%; width: auto; }
   }
 
   @media (max-width: 760px) {
@@ -245,7 +283,7 @@
     display: block;
     width: 22px;
     height: 1.5px;
-    background: var(--ink, oklch(10% 0.012 258));
+    background: var(--ink, #2C303C);
     transition: transform 0.2s, opacity 0.2s;
     transform-origin: center;
   }
@@ -300,6 +338,10 @@
 </style>
 
 <script>
+/* Set to true to re-enable the fluid/ASCII animation */
+const WEBGL_ENABLED = false;
+
+if (WEBGL_ENABLED) {
 const canvas = document.getElementById('fluid-canvas') as HTMLCanvasElement;
 const ascii  = document.getElementById('ascii-canvas')  as HTMLCanvasElement;
 
@@ -626,6 +668,8 @@ if (reducedMotion) {
 }
 }
 
+} // end WEBGL_ENABLED
+
 /* ── Mobile nav toggle ── */
 const navToggle = document.getElementById('nav-toggle') as HTMLButtonElement;
 const navLinks  = document.getElementById('nav-links')  as HTMLElement;
@@ -645,4 +689,17 @@ navToggle.addEventListener('click', () => {
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+/* ── Nav transparency on scroll ── */
+const siteNavEl   = document.querySelector('.site-nav') as HTMLElement;
+
+function refreshNav() {
+  const heroEl = document.querySelector('.hero') as HTMLElement;
+  const thresh = (heroEl?.offsetHeight ?? 600) - 80;
+  siteNavEl?.classList.toggle('is-scrolled', window.scrollY > thresh);
+}
+
+window.addEventListener('scroll', refreshNav, { passive: true });
+/* Defer initial call so layout has fully painted */
+requestAnimationFrame(refreshNav);
 </script>

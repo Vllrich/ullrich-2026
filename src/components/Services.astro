@@ -4,6 +4,7 @@ const services = [
     title: 'Readiness & Production Audit',
     cat: 'Strategy',
     format: 'Fixed scope · 1-2 weeks',
+    icon: '/graphics/G-001.svg',
     desc: "A focused review of your product, data, and stack: where AI fits, where it doesn't, and what it takes to run in production. You leave with a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model.",
     tags: ['Use-case mapping', 'Agent feasibility', 'Build vs buy', 'Risk & EU AI Act check', 'Cost model'],
   },
@@ -11,6 +12,7 @@ const services = [
     title: 'Build Sprint',
     cat: 'Full-Stack',
     format: 'Project · 6-10 weeks',
+    icon: '/graphics/G-105.svg',
     desc: 'One system shipped to production: the app, the infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo.',
     tags: ['Frontend to infra', 'Python & TypeScript', 'Agents & RAG', 'Open or hosted models', 'Monitoring & guardrails'],
   },
@@ -18,6 +20,7 @@ const services = [
     title: 'Reliability Retainer',
     cat: 'Operations',
     format: 'Monthly · ongoing',
+    icon: '/graphics/G-145.svg',
     desc: 'The keep-it-running part, as a standing engagement: evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not be operating it alone.',
     tags: ['Evals & monitoring', 'Guardrails', 'Drift & cost control', 'Incident response'],
   },
@@ -25,6 +28,7 @@ const services = [
     title: 'Fractional CTO / CAIO',
     cat: 'Leadership',
     format: 'Monthly retainer',
+    icon: '/graphics/G-243.svg',
     desc: 'Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. Technical, not purely advisory.',
     tags: ['Architecture & roadmap', 'Team & vendor selection', 'Delivery ownership', 'Board-level reporting'],
   },
@@ -34,8 +38,13 @@ const services = [
 <section id="services" class="svc-section">
 
   <div class="svc-header">
-    <h2 class="svc-display fade-up" data-delay="0">Diagnose.<br/>Build.<br/>Run.<br/>Lead.</h2>
-    <p class="svc-sub fade-up" data-delay="80">A focused audit, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.</p>
+    <div class="svc-header-left">
+      <h2 class="svc-display fade-up" data-delay="0">Diagnose.<br/>Build.<br/>Run.<br/>Lead.</h2>
+      <p class="svc-sub fade-up" data-delay="80">A focused audit, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.</p>
+    </div>
+    <div class="svc-header-right" aria-hidden="true">
+      <img src="/graphics/diagnose.svg" alt="" class="svc-diagnose-img" loading="lazy" decoding="async" />
+    </div>
   </div>
 
   <ol class="svc-list">
@@ -52,6 +61,7 @@ const services = [
           <div class="svc-right">
             <span class="svc-cat">{s.cat}</span>
             <span class="svc-format">{s.format}</span>
+            <img src={s.icon} alt="" class="svc-icon" aria-hidden="true" loading="lazy" decoding="async" />
           </div>
         </div>
       </li>
@@ -68,7 +78,34 @@ const services = [
   }
 
   .svc-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .svc-header-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .svc-header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svc-diagnose-img {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 760px) {
+    .svc-header { grid-template-columns: 1fr; }
+    .svc-header-right { display: none; }
   }
 
   .svc-display {
@@ -76,7 +113,7 @@ const services = [
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.03em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     text-transform: uppercase;
     text-wrap: balance;
     margin-bottom: 1rem;
@@ -111,7 +148,7 @@ const services = [
     font-size: clamp(1.3rem, 2.8vw, 2.2rem);
     font-weight: 800;
     letter-spacing: -0.025em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     margin-bottom: 1rem;
     line-height: 1.1;
     text-wrap: balance;
@@ -153,12 +190,20 @@ const services = [
     text-align: right;
   }
 
+  .svc-icon {
+    display: block;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    margin-top: 0.75rem;
+  }
+
   .svc-cat {
     font-size: 0.6rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--cobalt, oklch(52% 0.22 265));
+    color: var(--cobalt, #bbdd00);
   }
 
   .svc-format {

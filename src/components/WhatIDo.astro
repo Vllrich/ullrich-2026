@@ -6,58 +6,32 @@
 
   <div class="wid-intro fade-up" data-delay="80">
     <p class="wid-statement">
-      I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
+      <span class="wid-rule" aria-hidden="true"></span>I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
     </p>
-    <p class="wid-sub">
-      Twenty years building systems that fail in public if they fail at all. That's the standard I bring to AI in production.
-    </p>
+    <ul class="wid-services">
+      <li>Production AI</li>
+      <li>Agent reliability</li>
+      <li>Full-stack engineering</li>
+      <li>Fractional CTO / CAIO</li>
+    </ul>
   </div>
 
   <div class="wid-beats">
 
     <div class="beat fade-up" data-delay="160">
-      <!-- Selection matrix: identify the one signal from the noise -->
-      <svg class="beat-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="0.5" y="0.5"  width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="20.5" y="0.5" width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="40.5" y="0.5" width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="0.5" y="20.5"  width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="20.5" y="20.5" width="15" height="15" stroke-width="1.5" style="stroke:var(--cobalt)"/>
-        <rect x="40.5" y="20.5" width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="0.5" y="40.5"  width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="20.5" y="40.5" width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="40.5" y="40.5" width="15" height="15" stroke="currentColor" stroke-width="0.75"/>
-        <circle cx="28" cy="28" r="2" style="fill:var(--cobalt)"/>
-      </svg>
+      <img src="/graphics/G-016.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
       <h3 class="beat-title">Find the right use case</h3>
       <p class="beat-body">Not every problem needs AI, and not every AI needs an agent. I help you pick the few use cases that pay for themselves, and rule out the ones that won't.</p>
     </div>
 
     <div class="beat fade-up" data-delay="240">
-      <!-- Hub & spoke: central agent orchestrating connected components -->
-      <svg class="beat-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="0.5"  y="0.5"  width="11" height="11" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="44.5" y="0.5"  width="11" height="11" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="0.5"  y="44.5" width="11" height="11" stroke="currentColor" stroke-width="0.75"/>
-        <rect x="44.5" y="44.5" width="11" height="11" stroke="currentColor" stroke-width="0.75"/>
-        <line x1="11.5" y1="11.5" x2="23.4" y2="23.4" stroke="currentColor" stroke-width="0.75"/>
-        <line x1="44.5" y1="11.5" x2="32.6" y2="23.4" stroke="currentColor" stroke-width="0.75"/>
-        <line x1="11.5" y1="44.5" x2="23.4" y2="32.6" stroke="currentColor" stroke-width="0.75"/>
-        <line x1="44.5" y1="44.5" x2="32.6" y2="32.6" stroke="currentColor" stroke-width="0.75"/>
-        <circle cx="28" cy="28" r="6.5" stroke-width="1.5" style="stroke:var(--cobalt)"/>
-      </svg>
+      <img src="/graphics/G-132.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
       <h3 class="beat-title">Build the system</h3>
       <p class="beat-body">Agents, RAG, automation, and the systems around them. Built for reliability, observability, and a cost you can predict. Hosted, or on open models you control.</p>
     </div>
 
     <div class="beat fade-up" data-delay="320">
-      <!-- Nested boundary: presence inside the codebase, not advising from outside -->
-      <svg class="beat-icon" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="0.5"  y="0.5"  width="55" height="55" stroke="currentColor" stroke-width="0.75" stroke-dasharray="3 2"/>
-        <rect x="13.5" y="13.5" width="29" height="29" stroke="currentColor" stroke-width="1"/>
-        <circle cx="28" cy="28" r="5"   stroke-width="1.5" style="stroke:var(--cobalt)"/>
-        <circle cx="28" cy="28" r="1.5" style="fill:var(--cobalt)"/>
-      </svg>
+      <img src="/graphics/G-290.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
       <h3 class="beat-title">Build and operate, not just advise</h3>
       <p class="beat-body">Code, architecture reviews, production debugging, and staying on to keep it running. I work in your repository, not from the outside.</p>
     </div>
@@ -69,15 +43,13 @@
 <style>
   .wid-section {
     background: var(--white, oklch(99% 0 0));
-    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
     border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
   }
 
-  /* ── Full-width intro ── */
+  /* ── Upper intro band — white ── */
   .wid-intro {
-
-    padding-top: clamp(2.5rem, 4vw, 3.5rem);
-    margin-bottom: clamp(3rem, 5vw, 5rem);
+    background: #ffffff;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem) clamp(3rem, 5vw, 5rem);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(2rem, 4vw, 4rem);
@@ -88,28 +60,48 @@
     font-size: var(--text-lead-size, clamp(1rem, 1.5vw, 1.125rem));
     font-weight: 500;
     line-height: var(--text-lead-lh, 1.7);
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     max-width: 52ch;
   }
 
-  .wid-sub {
-    font-size: var(--text-body-size, 1rem);
-    font-weight: 400;
-    line-height: var(--text-body-lh, 1.875);
-    color: var(--dim, oklch(28% 0.010 258));
-    max-width: 52ch;
+  .wid-rule {
+    display: inline-block;
+    width: 40px;
+    height: 4px;
+    background: #2C303C;
+    vertical-align: middle;
+    margin-right: 0.6em;
+    flex-shrink: 0;
   }
 
-  .wid-sub strong {
-    font-weight: 700;
-    color: var(--ink, oklch(10% 0.012 258));
+  .wid-services {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
   }
 
-  /* ── Three beats - horizontal row ── */
+  .wid-services li {
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: oklch(18% 0.008 258);
+    padding: 0.65rem 0;
+    border-bottom: 1px solid oklch(14% 0.01 250 / 0.22);
+    line-height: 1;
+  }
+  .wid-services li:first-child { border-top: 1px solid oklch(14% 0.01 250 / 0.22); }
+
+  /* ── Three beats - horizontal row — white bg ── */
   .wid-beats {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+    padding: 0 clamp(1.5rem, 4vw, 3.5rem);
   }
 
   .beat {
@@ -121,11 +113,11 @@
 
   .beat-icon {
     display: block;
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     margin-bottom: 1.75rem;
-    color: oklch(74% 0.004 260);
     flex-shrink: 0;
+    object-fit: contain;
   }
 
   .beat-title {
@@ -133,7 +125,7 @@
     font-weight: 800;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
     margin-bottom: 1rem;
     text-wrap: balance;
   }

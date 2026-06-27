@@ -93,8 +93,27 @@ const socials = [
 
 <style>
   .contact-section {
-    background: var(--white, oklch(99% 0 0));
+    background: #2C303C;
+    position: relative;
+    overflow: hidden;
   }
+
+  /* Diagonal soft-light gradient overlay */
+  .contact-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(35, 31, 32, 0.35) 0%,
+      rgba(255, 255, 255, 0.10) 100%
+    );
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .contact-section > * { position: relative; z-index: 1; }
 
   /* ── Main layout ── */
   .contact-inner {
@@ -102,7 +121,7 @@ const socials = [
     grid-template-columns: 1fr 1fr;
     gap: clamp(3rem, 6vw, 6rem);
     padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
-    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+    border-bottom: 1px dotted rgba(255,255,255,0.15);
     align-items: start;
   }
 
@@ -112,7 +131,7 @@ const socials = [
     font-weight: 800;
     letter-spacing: -0.035em;
     line-height: 1.0;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: #ffffff;
     text-transform: uppercase;
     margin-bottom: 1.75rem;
     text-wrap: balance;
@@ -122,7 +141,7 @@ const socials = [
     font-size: var(--text-body-size, 1rem);
     font-weight: 400;
     line-height: var(--text-body-lh, 1.875);
-    color: var(--dim, oklch(28% 0.010 258));
+    color: rgba(255,255,255,0.7);
     max-width: 44ch;
     margin-bottom: 2rem;
   }
@@ -131,24 +150,24 @@ const socials = [
     font-size: clamp(0.88rem, 1.4vw, 1rem);
     font-weight: 500;
     letter-spacing: 0.01em;
-    color: var(--cobalt, oklch(52% 0.22 265));
+    color: #bbdd00;
     text-decoration: none;
-    border-bottom: 1px solid oklch(52% 0.22 265 / 0.3);
+    border-bottom: 1px solid rgba(187,221,0,0.4);
     padding-bottom: 0.1em;
     display: inline-block;
     margin-bottom: 2rem;
     transition: color 0.2s, border-color 0.2s;
   }
   .contact-email:hover {
-    color: var(--cobalt-dim, oklch(38% 0.18 265));
-    border-bottom-color: var(--cobalt, oklch(52% 0.22 265));
+    color: #d4f033;
+    border-bottom-color: #bbdd00;
   }
 
   .contact-note {
     font-size: var(--text-note-size, 0.875rem);
     font-weight: 400;
     line-height: var(--text-note-lh, 1.8);
-    color: var(--dim, oklch(28% 0.010 258));
+    color: rgba(255,255,255,0.5);
     max-width: 42ch;
   }
 
@@ -176,16 +195,16 @@ const socials = [
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--dim, oklch(28% 0.010 258));
+    color: rgba(255,255,255,0.6);
   }
 
   .form-group input,
   .form-group textarea {
     font-size: 0.9rem;
     font-weight: 400;
-    color: var(--ink, oklch(10% 0.012 258));
-    background: var(--surface, oklch(96.5% 0.003 260));
-    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    color: #ffffff;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 0.7rem 0.9rem;
     outline: none;
     transition: border-color 0.2s, background 0.2s;
@@ -195,13 +214,13 @@ const socials = [
 
   .form-group input::placeholder,
   .form-group textarea::placeholder {
-    color: var(--ghost, oklch(50% 0.006 260));
+    color: rgba(255,255,255,0.3);
   }
 
   .form-group input:focus,
   .form-group textarea:focus {
-    border-color: var(--cobalt, oklch(52% 0.22 265));
-    background: var(--white, oklch(99% 0 0));
+    border-color: #bbdd00;
+    background: rgba(255,255,255,0.12);
   }
 
   .form-group input.is-invalid,
@@ -224,17 +243,17 @@ const socials = [
     font-size: 0.68rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--white, oklch(99% 0 0));
-    background: var(--cobalt, oklch(52% 0.22 265));
-    border: 1px solid var(--cobalt, oklch(52% 0.22 265));
+    color: var(--ink, #2C303C);
+    background: var(--cobalt, #bbdd00);
+    border: 1px solid var(--cobalt, #bbdd00);
     padding: 0.9rem 2rem;
     cursor: pointer;
     transition: background 0.2s, border-color 0.2s;
     align-self: flex-start;
   }
   .cf-btn:hover:not(:disabled) {
-    background: var(--cobalt-dim, oklch(38% 0.18 265));
-    border-color: var(--cobalt-dim, oklch(38% 0.18 265));
+    background: var(--cobalt-dim, #8aaa00);
+    border-color: var(--cobalt-dim, #8aaa00);
   }
   .cf-btn:disabled { opacity: 0.4; cursor: not-allowed; }
   .cf-btn.is-success { background: oklch(55% 0.15 145); border-color: oklch(55% 0.15 145); }
@@ -256,7 +275,7 @@ const socials = [
   }
   .cf-feedback a { color: inherit; }
 
-  /* ── Footer ── */
+  /* ── Footer — green ── */
   .site-footer {
     padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.5rem);
     display: flex;
@@ -264,7 +283,8 @@ const socials = [
     justify-content: space-between;
     gap: 2rem;
     flex-wrap: wrap;
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+    background: #bbdd00;
+    border-top: none;
   }
 
   .footer-brand {
@@ -277,13 +297,13 @@ const socials = [
     font-weight: 800;
     font-size: 0.68rem;
     letter-spacing: 0.2em;
-    color: var(--ink, oklch(10% 0.012 258));
+    color: var(--ink, #2C303C);
   }
 
   .footer-desc {
     font-size: 0.68rem;
     font-weight: 400;
-    color: var(--ghost, oklch(50% 0.006 260));
+    color: oklch(28% 0.010 258);
     line-height: 1.6;
   }
 
@@ -299,17 +319,17 @@ const socials = [
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--dim, oklch(28% 0.010 258));
+    color: oklch(22% 0.01 258);
     text-decoration: none;
     transition: color 0.2s;
   }
-  .footer-links a:hover { color: var(--ink, oklch(10% 0.012 258)); }
+  .footer-links a:hover { color: var(--ink, #2C303C); }
 
   .footer-copy {
     font-size: 0.6rem;
     font-weight: 400;
     letter-spacing: 0.08em;
-    color: var(--ghost, oklch(50% 0.006 260));
+    color: oklch(30% 0.008 258);
     white-space: nowrap;
   }
 

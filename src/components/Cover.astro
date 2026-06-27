@@ -1056,7 +1056,10 @@ void main(){
   placeDrivers(gridParams.nDrivers);
 
   /* ── Word labels overlaid on the canvas ── */
-  const WORDS = ['AI', 'Agents', 'Reliability', 'Systems', 'Engineering', 'Ops', 'CTO', 'Full-Stack'];
+  /* Goethe-style fragment: "In the dark forge of silicon and thought, I kindle
+     minds that strive and endure — agents wrought to persist where others fade,
+     systems woven of logic and care, built to outlast their maker's hand."     */
+  const WORDS = ['Forge', 'Kindle', 'Strive', 'Endure', 'Wrought', 'Persist', 'Woven', 'Outlast'];
   /* Use the sibling #grid-labels div; fall back to canvas parent so we
      always have a real DOM container even if the ID lookup misses.      */
   const labelsEl = document.getElementById('grid-labels') ?? canvas!.parentElement;

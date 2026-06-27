@@ -70,8 +70,8 @@
           </label>
           <label class="gc-row">
             <span class="gc-label">Active drivers</span>
-            <span class="gc-val" id="gc-drivers-v">3</span>
-            <input class="gc-range" id="gc-drivers" type="range" min="1" max="8" step="1" value="3">
+            <span class="gc-val" id="gc-drivers-v">8</span>
+            <input class="gc-range" id="gc-drivers" type="range" min="1" max="8" step="1" value="8">
           </label>
           <label class="gc-row">
             <span class="gc-label">Gap</span>
@@ -852,7 +852,7 @@ if (reducedMotion) {
 const gridParams = {
   amp:      3.0,  /* pulse amplitude — how much drivers expand  */
   speed:    1.0,  /* playback speed multiplier                  */
-  nDrivers: 3,    /* how many of the 8 driver cells are active  */
+  nDrivers: 8,    /* how many of the 8 driver cells are active  */
   gapCSS:   1,    /* gap between cells in CSS pixels            */
   tension:  0.05, /* spring stiffness k — response speed        */
   bounce:   0.40, /* bounciness 0–1: maps to damping 0.97–0.68  */
@@ -1356,7 +1356,7 @@ void main(){
   });
 
   /* Reset all to defaults */
-  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 3, gapCSS: 1, tension: 0.05, bounce: 0.40 };
+  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 8, gapCSS: 1, tension: 0.05, bounce: 0.40 };
   resetBtn?.addEventListener('click', () => {
     sliders.forEach(({ id, valId, key, fmt }) => {
       const inp = document.getElementById(id)    as HTMLInputElement | null;

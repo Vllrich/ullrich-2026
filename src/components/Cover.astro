@@ -48,9 +48,37 @@
       </div>
     </div>
 
-    <!-- Right: Bauhaus circles animation -->
+    <!-- Right: grid animation + shader controls -->
     <div class="hero-graphic" aria-hidden="true">
       <canvas id="bauhaus-canvas"></canvas>
+      <!-- Param panel: ⚙ button top-right of canvas area -->
+      <div class="grid-ctrl">
+        <button class="grid-ctrl__btn" id="gc-toggle" aria-label="Shader controls" title="Shader controls">⚙</button>
+        <div class="grid-ctrl__panel" id="gc-panel" hidden>
+          <p class="gc-heading">Grid parameters</p>
+          <label class="gc-row">
+            <span class="gc-label">Pulse strength</span>
+            <span class="gc-val" id="gc-amp-v">3.0</span>
+            <input class="gc-range" id="gc-amp" type="range" min="0.5" max="5" step="0.1" value="3">
+          </label>
+          <label class="gc-row">
+            <span class="gc-label">Speed</span>
+            <span class="gc-val" id="gc-speed-v">1.0×</span>
+            <input class="gc-range" id="gc-speed" type="range" min="0.1" max="3" step="0.1" value="1">
+          </label>
+          <label class="gc-row">
+            <span class="gc-label">Active drivers</span>
+            <span class="gc-val" id="gc-drivers-v">8</span>
+            <input class="gc-range" id="gc-drivers" type="range" min="1" max="8" step="1" value="8">
+          </label>
+          <label class="gc-row">
+            <span class="gc-label">Gap</span>
+            <span class="gc-val" id="gc-gap-v">1 px</span>
+            <input class="gc-range" id="gc-gap" type="range" min="1" max="8" step="1" value="1">
+          </label>
+          <button class="gc-reset" id="gc-reset">Reset</button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -224,7 +252,7 @@
   }
   .hero-services li:first-child { border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); }
 
-  /* Right: Bauhaus animation panel */
+  /* Right: grid animation panel */
   .hero-graphic {
     display: flex;
     align-items: center;
@@ -232,6 +260,122 @@
     overflow: hidden;
     padding: 0;
     background: #bbdd00;
+    position: relative; /* anchor for the param panel */
+  }
+
+  /* ── Shader param panel ──────────────────────────────────────── */
+  .grid-ctrl {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.4rem;
+    pointer-events: none; /* panel is transparent by default */
+  }
+  .grid-ctrl__btn,
+  .grid-ctrl__panel { pointer-events: all; }
+
+  .grid-ctrl__btn {
+    width: 2rem;
+    height: 2rem;
+    background: rgba(24, 27, 35, 0.82);
+    border: 1px solid rgba(187, 221, 0, 0.35);
+    color: #bbdd00;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .grid-ctrl__btn:hover {
+    background: rgba(24, 27, 35, 1);
+    border-color: rgba(187, 221, 0, 0.7);
+  }
+
+  .grid-ctrl__panel {
+    background: rgba(18, 20, 28, 0.95);
+    border: 1px solid rgba(187, 221, 0, 0.14);
+    padding: 0.9rem 1rem;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .gc-heading {
+    margin: 0 0 0.15rem;
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.54rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(187, 221, 0, 0.45);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(187, 221, 0, 0.1);
+  }
+
+  .gc-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: 0.25rem;
+    column-gap: 0.5rem;
+    cursor: pointer;
+  }
+  .gc-label {
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #c8ccd8;
+    align-self: center;
+  }
+  .gc-val {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.62rem;
+    color: #bbdd00;
+    min-width: 4.5ch;
+    text-align: right;
+    align-self: center;
+  }
+  .gc-range {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 2px;
+    accent-color: #bbdd00;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    appearance: auto;
+  }
+
+  .gc-reset {
+    margin-top: 0.1rem;
+    padding: 0.4rem 0.75rem;
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.56rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(187, 221, 0, 0.6);
+    background: transparent;
+    border: 1px solid rgba(187, 221, 0, 0.2);
+    cursor: pointer;
+    align-self: flex-end;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .gc-reset:hover {
+    color: #bbdd00;
+    border-color: rgba(187, 221, 0, 0.6);
   }
 
   #bauhaus-canvas {
@@ -665,6 +809,14 @@ if (reducedMotion) {
 
 } // end WEBGL_ENABLED
 
+/* ── Shared params object — read by shader, written by UI controls ── */
+const gridParams = {
+  amp:      3.0,  /* pulse amplitude — how much drivers expand  */
+  speed:    1.0,  /* playback speed multiplier                  */
+  nDrivers: 8,    /* how many of the 8 driver cells are active  */
+  gapCSS:   1,    /* gap between cells in CSS pixels            */
+};
+
 /* ── Grid shader: 16×16 push-layout squares (v3) ── */
 (function initGridShader() {
   const canvas = document.getElementById('bauhaus-canvas') as HTMLCanvasElement | null;
@@ -823,25 +975,26 @@ void main(){
 
     /* Square grid centred in canvas */
     const gs    = Math.min(cw, ch);
-    /* 1-px gap in CSS pixels = round(dpr) physical pixels */
-    const gap   = Math.max(1, Math.round(Math.min(devicePixelRatio || 1, 2)));
+    const dpr   = Math.min(devicePixelRatio || 1, 2);
+    const gap   = Math.max(1, Math.round(gridParams.gapCSS * dpr)); /* CSS→physical px */
     const avail = gs - (GS + 1) * gap;  /* space shared by all 16 cells */
     const unit  = avail / GS;           /* base cell size */
 
-    /* 1. Driver pulses */
+    /* 1. Driver pulses (speed-scaled frequencies) */
+    const nd = Math.min(ND, gridParams.nDrivers);
     for (let d = 0; d < ND; d++) {
-      dpulse[d] = Math.sin(time * driverFreq[d] + driverPhase[d]);
+      dpulse[d] = Math.sin(time * driverFreq[d] * gridParams.speed + driverPhase[d]);
     }
 
-    /* 2. Layout: each driver expands its column AND row (amplitude 3×).
+    /* 2. Layout: active drivers expand their column AND row.
           The delta is distributed equally across the other 15 tracks,
           so total space is conserved before clamping. */
     for (let i = 0; i < GS; i++) { colW[i] = unit; rowH[i] = unit; }
 
-    for (let d = 0; d < ND; d++) {
+    for (let d = 0; d < nd; d++) {
       const dc    = driverCols[d];
       const dr    = driverRows[d];
-      const delta = dpulse[d] * unit * 3.0;  /* ±3× unit */
+      const delta = dpulse[d] * unit * gridParams.amp;  /* user-controlled amplitude */
 
       colW[dc] += delta;
       const shareW = delta / (GS - 1);
@@ -911,6 +1064,69 @@ void main(){
     }
   }, { threshold: 0 });
   obs.observe(canvas);
+})();
+
+/* ── Shader param panel controls ── */
+(function initGridControls() {
+  const toggle  = document.getElementById('gc-toggle')  as HTMLButtonElement | null;
+  const panel   = document.getElementById('gc-panel')   as HTMLElement | null;
+  const resetBtn = document.getElementById('gc-reset')  as HTMLButtonElement | null;
+
+  if (!toggle || !panel) return;
+
+  /* Toggle open/close */
+  toggle.addEventListener('click', () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    toggle.textContent = open ? '×' : '⚙';
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
+  /* Close on Escape */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !panel.hidden) {
+      panel.hidden = true;
+      toggle.textContent = '⚙';
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* Slider wiring: id, gridParams key, display formatter */
+  const sliders: Array<{
+    id: string;
+    valId: string;
+    key: keyof typeof gridParams;
+    fmt: (v: number) => string;
+  }> = [
+    { id: 'gc-amp',     valId: 'gc-amp-v',     key: 'amp',      fmt: v => v.toFixed(1) },
+    { id: 'gc-speed',   valId: 'gc-speed-v',   key: 'speed',    fmt: v => v.toFixed(1) + '×' },
+    { id: 'gc-drivers', valId: 'gc-drivers-v', key: 'nDrivers', fmt: v => String(Math.round(v)) },
+    { id: 'gc-gap',     valId: 'gc-gap-v',     key: 'gapCSS',   fmt: v => Math.round(v) + ' px' },
+  ];
+
+  sliders.forEach(({ id, valId, key, fmt }) => {
+    const inp = document.getElementById(id)    as HTMLInputElement | null;
+    const val = document.getElementById(valId) as HTMLElement | null;
+    if (!inp || !val) return;
+    inp.addEventListener('input', () => {
+      const n = parseFloat(inp.value);
+      (gridParams as Record<string, number>)[key] = n;
+      val.textContent = fmt(n);
+    });
+  });
+
+  /* Reset all to defaults */
+  const DEFAULTS = { amp: 3.0, speed: 1.0, nDrivers: 8, gapCSS: 1 };
+  resetBtn?.addEventListener('click', () => {
+    sliders.forEach(({ id, valId, key, fmt }) => {
+      const inp = document.getElementById(id)    as HTMLInputElement | null;
+      const val = document.getElementById(valId) as HTMLElement | null;
+      const def = DEFAULTS[key as keyof typeof DEFAULTS];
+      (gridParams as Record<string, number>)[key] = def;
+      if (inp) inp.value = String(def);
+      if (val) val.textContent = fmt(def);
+    });
+  });
 })();
 
 /* ── Mobile nav toggle ── */

@@ -43,12 +43,12 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Headline**
 
-> Anyone can demo an agent.  
-> Running one is the job.
+> Anyone can build a demo  
+> Running it is the job
 
 **Body**
 
-> I help startups and growing companies get AI into production, and keep it running. Often agents. Often on open models you host yourself.
+> I help startups and growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
 
 **CTAs**
 

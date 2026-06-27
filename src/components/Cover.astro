@@ -6,7 +6,7 @@
   <header class="site-nav">
     <a href="#" class="nav-logo">
       LARS ULLRICH
-      <span class="nav-descriptor">Production AI &middot; Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
+      <span class="nav-descriptor">Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Main navigation">
       <a href="#what-i-do">What I Do</a>
@@ -36,10 +36,11 @@
     <!-- Left: text content -->
     <div class="hero-text">
       <h1 class="hero-heading">
-        Anyone can demo an agent.<br/>Running one is the job.
+        Anyone can build a demo<br/>
+        <span class="hero-heading-alt">Running it is the job</span>
       </h1>
       <p class="hero-body">
-        I help startups and growing companies get AI into production, and keep it running. Often agents. Often on open models you host yourself.
+        I help startups and growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
       </p>
       <div class="hero-ctas">
         <a href="#contact" class="hero-cta-primary">Start a conversation</a>
@@ -47,10 +48,10 @@
       </div>
     </div>
 
-    <!-- Right: herosvg.svg — centered, flush to right edge -->
+    <!-- Right: hero visual, centered, flush to right edge -->
     <div class="hero-graphic" aria-hidden="true">
       <img
-        src="/graphics/herosvg.svg"
+        src="/graphics/lars-ullrich-hero-visual.svg"
         alt=""
         class="hero-svg-img"
         width="375"
@@ -170,10 +171,15 @@
     max-width: 42ch;
   }
 
+  .hero-heading-alt {
+    color: var(--white, #fafafa);
+  }
+
   .hero-ctas {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .hero-cta-primary {
@@ -192,20 +198,18 @@
 
   .hero-cta-secondary {
     font-size: 0.68rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--dim, oklch(28% 0.010 258));
+    color: var(--ink, #2C303C);
+    background: transparent;
     text-decoration: none;
-    padding: 0.75rem 0;
-    border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
-    transition: color 0.2s, border-color 0.2s;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--ink, #2C303C);
+    transition: opacity 0.2s;
     white-space: nowrap;
   }
-  .hero-cta-secondary:hover {
-    color: var(--ink, #2C303C);
-    border-bottom-color: var(--ink, #2C303C);
-  }
+  .hero-cta-secondary:hover { opacity: 0.55; }
 
   /* Services list below CTA */
   .hero-services {

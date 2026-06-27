@@ -20,7 +20,7 @@ const canonicalURL = canonical
   ? new URL(canonical, Astro.site)
   : new URL(Astro.url.pathname, Astro.site);
 
-const ogImageURL = new URL('/og-image.png', Astro.site);
+const ogImageURL = new URL('/graphics/logo-lars-ullrich-og.png', Astro.site);
 
 const schema = {
   '@context': 'https://schema.org',
@@ -127,7 +127,8 @@ const schema = {
   <meta name="geo.region" content="DE-BE" />
   <meta name="geo.placename" content="Berlin" />
   <meta name="theme-color" content="#fafafa" />
-  <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+  <link rel="icon" type="image/png" href="/graphics/logo-lars-ullrich.png" />
+  <link rel="apple-touch-icon" href="/graphics/logo-lars-ullrich-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet" />

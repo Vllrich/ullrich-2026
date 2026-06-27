@@ -34,7 +34,7 @@ const items = [
       to system.
     </h2>
     <div class="method-meta">
-      <img src="/graphics/perspective.svg" alt="" class="method-perspective-img" aria-hidden="true" loading="lazy" decoding="async" />
+      <img src="/graphics/lars-ullrich-perspective.svg" alt="" class="method-perspective-img" aria-hidden="true" loading="lazy" decoding="async" />
       <p class="method-sub">From a demo that works to an agent you can leave running.</p>
     </div>
   </div>
@@ -69,8 +69,9 @@ const items = [
   </div>
 
   <div class="method-statement fade-up" data-delay="440">
-    <p>The stages got smaller.<br/>
-    <strong>The systems got larger.<br/>The discipline carried over.</strong></p>
+    <p><span class="stmt-small">Stages got smaller</span><br/>
+    <span class="stmt-mid">Systems got larger</span><br/>
+    <strong>The discipline carried over</strong></p>
   </div>
 
 </section>
@@ -209,14 +210,30 @@ const items = [
     font-size: clamp(1.4rem, 3.5vw, 3rem);
     font-weight: 700;
     letter-spacing: -0.03em;
-    line-height: 1.15;
+    line-height: 1.2;
     color: #ffffff;
     text-transform: uppercase;
   }
 
+  .stmt-small {
+    font-size: clamp(0.85rem, 1.8vw, 1.5rem);
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: -0.01em;
+  }
+
+  .stmt-mid {
+    font-size: clamp(1.4rem, 3.5vw, 3rem);
+    font-weight: 700;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: -0.03em;
+  }
+
   .method-statement strong {
+    font-size: clamp(1.7rem, 4.5vw, 3.8rem);
     color: #ffffff;
     font-weight: 800;
+    display: inline;
   }
 
   /* ── Scorecard ── */

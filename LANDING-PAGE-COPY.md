@@ -3,7 +3,7 @@
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
 > **Source:** `src/pages/index.astro` and its components.  
-> **Last extracted:** 2026-06-27
+> **Last revised:** 2026-06-27 (tightened pass: shorter copy, no long dashes, niche kept general. See `AGENTS.md` for the house style.)
 
 ---
 
@@ -11,20 +11,19 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Browser title**
 
-> Lars Ullrich - Production-grade AI, Full-Stack Engineer & Fractional CTO
+> Lars Ullrich - Production AI, Agent Reliability & Fractional CTO
 
 **Meta description**
 
-> I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering.
+> I help startups and growing companies get AI into production, and keep it running. Often agents, often on open models you host yourself. Full-stack engineer and fractional CTO/CAIO, with two decades of engineering behind the work.
 
 **Structured data (summary)**
 
-- **Person:** Lars Ullrich — Fractional CTO / CAIO & Full-Stack AI Engineer
-- **Job title (schema):** Fractional CTO / CAIO & Full-Stack AI Engineer
+- **Person:** Lars Ullrich - Fractional CTO / CAIO & Full-Stack AI Engineer
 - **Email:** contact@larsullrich.de
 - **Location:** Berlin, DE
-- **Knows about:** AI systems & ML, RAG / agents / automation, Real-time graphics & GPU, Audio engineering & DSP, Product architecture
-- **Service catalog:** Readiness & Production Audit, Build Sprint, Fractional CTO / CAIO
+- **Knows about:** AI systems & ML, agents / RAG / automation, AI reliability & evaluation, open-weight & self-hosted models, real-time graphics & GPU, audio engineering & DSP, product architecture
+- **Service catalog:** Readiness & Production Audit, Build Sprint, Reliability Retainer, Fractional CTO / CAIO
 
 ---
 
@@ -37,24 +36,19 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 | Element | Copy |
 |---------|------|
 | Logo | LARS ULLRICH |
-| Descriptor | Production-grade AI · Full-Stack Engineer & Fractional CTO |
-| Nav link | What I Do |
-| Nav link | Method |
-| Nav link | Services |
-| Nav link | About |
-| Nav link | Contact |
-| Menu button (closed) | Open menu |
-| Menu button (open) | Close menu |
+| Descriptor | Production AI · Agent reliability · Full-Stack Engineer & Fractional CTO |
+| Nav links | What I Do · Method · Services · About · Contact |
 
 ### Hero
 
 **Headline**
 
-> Turning prototype into production
+> Anyone can demo an agent.  
+> Running one is the job.
 
 **Body**
 
-> I help startups and growing companies get AI into production - and keep it there. The work is technical: architecture, implementation, and the reliability engineering that keeps a system running after launch.
+> I help startups and growing companies get AI into production, and keep it running. Often agents. Often on open models you host yourself.
 
 **CTAs**
 
@@ -73,25 +67,25 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Statement**
 
-> For teams adopting AI, I own the technical decisions from the first use case to a production system: what to build, what to buy, what it costs to run, and who maintains it after launch. Strategy when you need it - and the engineering when you need that too.
+> I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
 
 **Supporting line**
 
-> Real-time audio, live performance, GPU pipelines, industrial robotics - systems where there's no second take. That's the standard I bring to AI in production.
+> Twenty years building systems that fail in public if they fail at all. That's the standard I bring to AI in production.
 
 ### Three beats
 
 #### Find the right use case
 
-> Not every problem needs AI, and not every AI needs a custom model. I help you pick the few use cases that pay for themselves.
+> Not every problem needs AI, and not every AI needs an agent. I help you pick the few use cases that pay for themselves, and rule out the ones that won't.
 
 #### Build the system
 
-> RAG, agents, automation - and the applications and integrations around them, architected for reliability, observability, and cost control.
+> Agents, RAG, automation, and the systems around them. Built for reliability, observability, and a cost you can predict. Hosted, or on open models you control.
 
-#### Implementation, not just advice
+#### Build and operate, not just advise
 
-> The engagement includes code, architecture reviews, and production debugging. I work in the repository with the team, not from the outside.
+> Code, architecture reviews, production debugging, and staying on to keep it running. I work in your repository, not from the outside.
 
 ---
 
@@ -103,44 +97,43 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Headline**
 
-> Signal to system -  
-> a method,  
-> not a guess.
+> From signal  
+> to system.
 
 **Subhead**
 
-> What it takes to move from a working demo to a system you can run.
+> From a demo that works to an agent you can leave running.
 
 ### Method steps
 
 | # | Title | Body |
 |---|-------|------|
 | 01 | Tune in | Understand the real problem, the data, and the constraints before touching a model. Most AI failures are framing failures. |
-| 02 | Compose the architecture | Choose the right tools - often RAG and agents over custom models - and design for reliability, cost, and the team that inherits it. |
-| 03 | Ship and harden | Get it live, then make it dependable: monitoring, guardrails, human-in-the-loop, and clear ownership. |
-| 04 | Adopt responsibly | Governance that fits your size - data protection, EU AI Act readiness, and transparent decisions, without slowing you down. |
+| 02 | Compose the architecture | Choose the right tools, often agents and RAG over a custom model. Design for reliability, cost, and the team that inherits it. |
+| 03 | Ship and harden | Get it live, then make it dependable: evals, monitoring, guardrails, and clear ownership. |
+| 04 | Adopt responsibly | Governance sized to your company: data protection, EU AI Act readiness, decisions you can explain. |
 
-### Readiness scorecard
+### Readiness pattern
 
 **Title**
 
-> Readiness scorecard
+> Where teams usually start
 
 **Context**
 
-> A typical first engagement, scored across the four dimensions where production AI usually breaks. Most teams arrive strong on framing and weak on production readiness.
+> The four dimensions where production AI breaks, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.
 
-| Dimension | Weight | Score |
-|-----------|--------|-------|
-| Problem framing | 35% | 7 / 10 |
-| Stack & architecture | 30% | 6 / 10 |
-| Production readiness | 25% | 4 / 10 |
-| Governance | 10% | 3 / 10 |
+| Dimension | Typical starting point |
+|-----------|------------------------|
+| Problem framing | Usually solid (the team knows the problem) |
+| Stack & architecture | Mixed (works in the demo, untested under load) |
+| Production readiness | Usually the weak point (no evals, no monitoring, no guardrails) |
+| Governance | Rarely addressed yet |
 
 ### Closing statement
 
 > The stages got smaller.  
-> **The systems got larger. The instinct stayed the same.**
+> **The systems got larger. The discipline carried over.**
 
 ---
 
@@ -154,37 +147,47 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 > Diagnose.  
 > Build.  
+> Run.  
 > Lead.
 
 **Subhead**
 
-> A focused audit, one system shipped to production, or embedded technical leadership - pick the depth you need.
+> A focused audit, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.
 
-### Service 1 — Readiness & Production Audit
+### Service 1 - Readiness & Production Audit
 
 | Field | Copy |
 |-------|------|
 | Category | Strategy |
-| Format | Fixed scope |
-| Description | A focused review of your product, data, and stack - where AI fits, where it doesn't, and what it takes to run in production. You get a prioritized use-case shortlist, an honest build/buy/skip call, and a clear path forward. |
-| Tags | Use-case mapping · Build vs buy · Risk & EU AI Act check · Cost model |
+| Format | Fixed scope · 1-2 weeks |
+| Description | A focused review of your product, data, and stack: where AI fits, where it doesn't, and what it takes to run in production. You leave with a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model. |
+| Tags | Use-case mapping · Agent feasibility · Build vs buy · Risk & EU AI Act check · Cost model |
 
-### Service 2 — Build Sprint
+### Service 2 - Build Sprint
 
 | Field | Copy |
 |-------|------|
 | Category | Full-Stack |
-| Format | Project |
-| Description | One system, shipped to production: the application, the infrastructure, and the AI that runs inside it. Implementation and deployment included - not a prototype that stops at the demo. |
-| Tags | Frontend to infra · Python & TypeScript · RAG & agents · Monitoring & guardrails |
+| Format | Project · 6-10 weeks |
+| Description | One system shipped to production: the app, the infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo. |
+| Tags | Frontend to infra · Python & TypeScript · Agents & RAG · Open or hosted models · Monitoring & guardrails |
 
-### Service 3 — Fractional CTO / CAIO
+### Service 3 - Reliability Retainer
+
+| Field | Copy |
+|-------|------|
+| Category | Operations |
+| Format | Monthly · ongoing |
+| Description | The keep-it-running part, as a standing engagement: evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not be operating it alone. |
+| Tags | Evals & monitoring · Guardrails · Drift & cost control · Incident response |
+
+### Service 4 - Fractional CTO / CAIO
 
 | Field | Copy |
 |-------|------|
 | Category | Leadership |
-| Format | Monthly |
-| Description | Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. The role stays technical, not purely advisory. |
+| Format | Monthly retainer |
+| Description | Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. Technical, not purely advisory. |
 | Tags | Architecture & roadmap · Team & vendor selection · Delivery ownership · Board-level reporting |
 
 ---
@@ -196,6 +199,10 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 **Section label**
 
 > Who I've worked with
+
+**Framing line**
+
+> Two decades of engagements across industry, media, and the arts. Some I still operate today.
 
 **Brand names (marquee)**
 
@@ -209,17 +216,18 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ### Lead
 
-> An engineer and technical leader with twenty years across art, sound, and code - now helping companies put AI into production and keep it there.
+> An engineer and technical leader. Twenty years building things that have to work, now putting AI into production and keeping it running.
 
 ### Bio
 
-> I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time audiovisual work - graphics, audio tools, and interactive installations for galleries, opera houses, and electronic music stages. The second decade brought that into startups: leading engineering teams, owning product and architecture, and shipping custom software and AI systems. Today I do that for teams that need senior technical depth without a full-time hire - architecture and strategy, but also the implementation.
+> I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time and creative engineering. The second brought that into startups: leading teams, owning product and architecture, and shipping software and AI systems. Today I do that for teams that need senior depth without a full-time hire. Strategy and architecture, but also the implementation, and operating what we ship. Increasingly agents, often on open models the client hosts themselves.
 
 ### Disciplines
 
 - Fractional CTO / CAIO
 - AI Systems & Machine Learning
-- RAG, Agents & Automation
+- Agents, RAG & Automation
+- AI Reliability & Evaluation
 - Real-Time Graphics & GPU
 - Audio Engineering & DSP
 - Product Architecture
@@ -228,12 +236,12 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 | Category | Technologies |
 |----------|--------------|
-| Languages | Python, TypeScript, JavaScript, C, C++, C#, Java, Rust, Lua, GLSL |
-| AI / ML | PyTorch, LangChain, LlamaIndex, OpenAI API, Anthropic Claude, RAG pipelines, Hugging Face |
+| Languages | Python, TypeScript, JavaScript, C, C++, C#, Rust, GLSL |
+| AI / ML | PyTorch, LangChain, LlamaIndex, OpenAI & Anthropic APIs, open-weight models (Llama, Mistral, Qwen), vLLM, RAG pipelines, evals & guardrails, Hugging Face |
 | Infrastructure | Docker, GitHub Actions, PostgreSQL, Redis, pgvector / Pinecone, Supabase, Hetzner |
-| Scale & Ops | Nginx, Kubernetes, Terraform, Ansible, Cloudflare, Kafka, RabbitMQ, AWS, GCP, Grafana |
+| Scale & Ops | Nginx, Kubernetes, Terraform, Ansible, Cloudflare, Kafka, AWS, GCP, Grafana |
 | Web & Real-time | React, Next.js, Astro, Three.js, WebGL2, WebAssembly, Web Audio API |
-| Creative Tech | TouchDesigner, vvvv, Max/MSP, Unity, Processing, JUCE, OpenFrameworks |
+| Creative Tech | TouchDesigner, vvvv, Max/MSP, Unity, JUCE, OpenFrameworks |
 
 ### Sidebar meta
 
@@ -241,9 +249,7 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 |-------|-------|
 | Location | Berlin, DE |
 | Coordinates | 52°31′ N · 13°23′ E |
-| Open to | AI readiness & production audits |
-| | AI build sprints |
-| | Fractional CTO / CAIO |
+| Open to | AI readiness & production audits · AI & agent build sprints · Reliability retainers · Fractional CTO / CAIO |
 
 ---
 
@@ -260,27 +266,35 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 **What does a fractional CTO / CAIO actually do?**
 
-> A fractional CTO or CAIO provides senior technical leadership on a part-time or project basis — architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical throughout, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the overhead of a full-time hire.
+> Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.
+
+**What do you mean by "agent reliability"?**
+
+> A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.
+
+**Do you work with open models, or only hosted APIs like OpenAI?**
+
+> Both. Hosted APIs are often the fastest start. But when data has to stay in your infrastructure, when per-token cost does not scale, or when you want to avoid vendor lock-in, I build on open models like Llama, Mistral, or Qwen, self-hosted on infrastructure you control. I run open models in production today, so this is not theoretical.
 
 **Do you only advise, or do you also write the code?**
 
-> The engagement includes code. Lars works inside the repository with the team — not from the outside. Depending on the engagement type, the work spans implementation, architecture reviews, and production debugging. Strategy when you need it, and the engineering when you need that too.
+> The engagement includes code. I work inside your repository, not from the outside, and I stay on to operate what we ship. Depending on the engagement, that spans implementation, architecture reviews, production debugging, and ongoing reliability.
 
 **How do you decide whether a company actually needs AI?**
 
-> Not every problem needs AI, and not every AI needs a custom model. The starting point is always the use case: what problem are you actually solving, and does AI change the outcome in a meaningful way? Most AI failures are framing failures — the technology is rarely the hard part. The Readiness & Production Audit is designed to answer this question before any build work begins.
+> Not every problem needs AI, and not every AI needs an agent. I start with the use case: what problem are you solving, and does AI change the outcome enough to justify running it? Most AI failures are framing failures. The technology is rarely the hard part. The Readiness & Production Audit answers this before any build work begins.
 
 **What is the "EU AI Act check" in the readiness audit?**
 
-> The EU AI Act check is part of the Readiness & Production Audit. It assesses whether a proposed AI system falls under the Act's scope, which risk category it belongs to, and what compliance obligations that creates. The audit also covers data protection and governance considerations, scaled to the company's size and the system's intended use.
+> It is part of the Readiness & Production Audit. I assess whether a proposed AI system falls under the Act's scope, which risk category it lands in, and what compliance obligations that creates. It also covers data protection and governance, scaled to your size and intended use. For live systems, the Reliability Retainer re-assesses this as the rules and your usage change.
 
 **Which engagement should I start with?**
 
-> If you are unsure whether AI is the right move or where to start, the Readiness & Production Audit is the right first step: fixed scope, a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model. If you already know what you want to build, a Build Sprint ships one system to production — application, infrastructure, and the AI inside it.
+> Unsure whether AI is the right move? Start with the Readiness & Production Audit: fixed scope, a use-case shortlist, an honest build/buy/skip call, and a cost model. Already know what to build? A Build Sprint ships one system to production. Already shipped? The Reliability Retainer keeps it running.
 
 **Where are you based, and do you work remotely?**
 
-> Lars is based in Berlin, Germany, where he has lived since 2007. He works with startups and growing companies regardless of location. You can reach him at contact@larsullrich.de — he responds within 24 hours.
+> I am based in Berlin and have lived here since 2007. I work with startups and growing companies regardless of location. Email me at contact@larsullrich.de. I read every message personally and usually reply within a day.
 
 ---
 
@@ -297,7 +311,7 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 **Intro**
 
-> Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so - and if I'm not, I'll tell you that too.
+> Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so. If I'm not, I'll tell you that too.
 
 **Email**
 
@@ -305,7 +319,7 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 **Availability note**
 
-> Currently open to fractional CTO/CAIO engagements, AI strategy advisory, and select production builds. I respond within 24 hours.
+> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements. I read every message myself and usually reply within a day.
 
 ### Contact form
 
@@ -343,10 +357,8 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 | Element | Copy |
 |---------|------|
 | Logo | LARS ULLRICH |
-| Tagline | Production-grade AI - built to ship and to keep running. |
-| Social link | GitHub |
-| Social link | Instagram |
-| Social link | LinkedIn |
+| Tagline | Production AI and agents. Built to ship, and to keep running. |
+| Social links | GitHub · Instagram · LinkedIn |
 | Legal link | Impressum |
 | Copyright | © 2026 Lars Ullrich. All rights reserved. |
 
@@ -363,17 +375,10 @@ Replaces the full landing page with a simplified contact view.
 | Brand | LARS ULLRICH |
 | Tagline | Back soon. |
 | Label | - Get in Touch |
-| Headline | Something's brewing. Say hello. |
-| Descriptor | Production-grade AI · Full-Stack Engineer · Fractional CTO/CAIO |
-| Note | The site is temporarily offline for maintenance. Leave a message and I'll get back to you within 24 hours. |
+| Headline | Temporarily offline. The work continues. |
+| Descriptor | Production AI · Agent reliability · Fractional CTO/CAIO |
+| Note | The site is offline for maintenance for a short while. Leave a message and I'll get back to you, usually within a day. |
 
-**Form labels & placeholders**
+**Form labels & placeholders:** Name (Your full name), Email (your.email@example.com), Subject (What's the project?), Message (What are you trying to solve?).
 
-| Field | Label | Placeholder |
-|-------|-------|-------------|
-| Name | Name | Your full name |
-| Email | Email | your.email@example.com |
-| Subject | Subject | What's the project? |
-| Message | Message | What are you trying to solve? |
-
-**Button & error copy** — same as main contact form (Send Message, Sending..., Message Sent, Try Again, validation messages, error fallback).
+**Button & error copy:** same as main contact form.

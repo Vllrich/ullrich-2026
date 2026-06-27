@@ -8,10 +8,10 @@ interface Props {
 }
 
 const DEFAULT_DESCRIPTION =
-  'I help startups and growing companies turn AI from prototype into production - systems that ship, scale, and stay reliable. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering.';
+  'I help startups and growing companies get AI into production, and keep it running. Often agents, often on open models you host yourself. Full-stack engineer and fractional CTO/CAIO, with two decades of engineering behind the work.';
 
 const {
-  title = 'Lars Ullrich - Production-grade AI, Full-Stack Engineer & Fractional CTO',
+  title = 'Lars Ullrich - Production AI, Agent Reliability & Fractional CTO',
   description = DEFAULT_DESCRIPTION,
   canonical,
 } = Astro.props;
@@ -44,7 +44,9 @@ const schema = {
       ],
       knowsAbout: [
         'AI systems & ML',
-        'RAG / agents / automation',
+        'Agents / RAG / automation',
+        'AI reliability & evaluation',
+        'Open-weight & self-hosted models',
         'Real-time graphics & GPU',
         'Audio engineering & DSP',
         'Product architecture',
@@ -61,7 +63,7 @@ const schema = {
     {
       '@type': 'ProfessionalService',
       '@id': 'https://larsullrich.de/#service',
-      name: 'Lars Ullrich — Production-grade AI & Fractional CTO',
+      name: 'Lars Ullrich - Production AI, Agent Reliability & Fractional CTO',
       url: 'https://larsullrich.de',
       areaServed: ['DE', 'EU', 'Worldwide'],
       provider: { '@id': 'https://larsullrich.de/#person' },
@@ -85,7 +87,16 @@ const schema = {
               '@type': 'Service',
               name: 'Build Sprint',
               description:
-                'Full-stack AI build engagement on a per-project basis — from prototype to production-ready system, fast.',
+                'Full-stack AI build engagement on a per-project basis, from prototype to production-ready system.',
+            },
+          },
+          {
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: 'Reliability Retainer',
+              description:
+                'Ongoing AI reliability and operations on a monthly retainer: evaluations, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment for production AI systems.',
             },
           },
           {
@@ -94,7 +105,7 @@ const schema = {
               '@type': 'Service',
               name: 'Fractional CTO / CAIO',
               description:
-                'Ongoing technical leadership on a monthly retainer — covering AI strategy, architecture decisions, and engineering team guidance.',
+                'Ongoing technical leadership on a monthly retainer: AI strategy, architecture decisions, and engineering team guidance.',
             },
           },
         ],

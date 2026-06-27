@@ -1,9 +1,9 @@
 ---
 const scorecard = [
-  { dim: 'Problem framing',      weight: '35%', score: 7 },
-  { dim: 'Stack & architecture', weight: '30%', score: 6 },
-  { dim: 'Production readiness', weight: '25%', score: 4 },
-  { dim: 'Governance',           weight: '10%', score: 3 },
+  { dim: 'Problem framing',      status: 'Usually solid',          note: 'the team knows the problem' },
+  { dim: 'Stack & architecture', status: 'Mixed',                  note: 'works in the demo, untested under load' },
+  { dim: 'Production readiness', status: 'Usually the weak point', note: 'no evals, no monitoring, no guardrails' },
+  { dim: 'Governance',           status: 'Rarely addressed yet',   note: '' },
 ];
 
 const items = [
@@ -13,15 +13,15 @@ const items = [
   },
   {
     code: 'Compose the architecture',
-    body: "Choose the right tools - often RAG and agents over custom models - and design for reliability, cost, and the team that inherits it.",
+    body: 'Choose the right tools, often agents and RAG over a custom model. Design for reliability, cost, and the team that inherits it.',
   },
   {
     code: 'Ship and harden',
-    body: "Get it live, then make it dependable: monitoring, guardrails, human-in-the-loop, and clear ownership.",
+    body: 'Get it live, then make it dependable: evals, monitoring, guardrails, and clear ownership.',
   },
   {
     code: 'Adopt responsibly',
-    body: "Governance that fits your size - data protection, EU AI Act readiness, and transparent decisions, without slowing you down.",
+    body: 'Governance sized to your company: data protection, EU AI Act readiness, decisions you can explain.',
   },
 ];
 ---
@@ -30,12 +30,11 @@ const items = [
 
   <div class="method-header fade-up" data-delay="0">
     <h2 class="method-lead">
-      Signal to system -<br/>
-      a method,<br/>
-      not a guess.
+      From signal<br/>
+      to system.
     </h2>
     <div class="method-meta">
-      <p class="method-sub">What it takes to move from a working demo to a system you can run.</p>
+      <p class="method-sub">From a demo that works to an agent you can leave running.</p>
     </div>
   </div>
 
@@ -52,17 +51,14 @@ const items = [
   </ol>
 
   <div class="sc-wrap fade-up" data-delay="300">
-    <h3 class="sc-title">Readiness scorecard</h3>
-    <p class="sc-context">A typical first engagement, scored across the four dimensions where production AI usually breaks. Most teams arrive strong on framing and weak on production readiness.</p>
+    <h3 class="sc-title">Where teams usually start</h3>
+    <p class="sc-context">The four dimensions where production AI breaks, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.</p>
     <div class="sc-row">
-      {scorecard.map((s, i) => (
-        <div class="sc-col" style={`flex: ${parseInt(s.weight)}`}>
+      {scorecard.map((s) => (
+        <div class="sc-col">
           <span class="sc-dim">{s.dim}</span>
-          <span class="sc-weight">{s.weight}</span>
-          <div class="sc-bar-wrap">
-            <div class="sc-bar-fill" style={`--fill: ${(s.score / 10 * 100).toFixed(1)}%`}></div>
-          </div>
-          <span class="sc-score">{s.score}<span class="sc-denom"> / 10</span></span>
+          <span class="sc-status">{s.status}</span>
+          {s.note && <span class="sc-note">{s.note}</span>}
         </div>
       ))}
     </div>
@@ -70,7 +66,7 @@ const items = [
 
   <div class="method-statement fade-up" data-delay="440">
     <p>The stages got smaller.<br/>
-    <strong>The systems got larger.<br/>The instinct stayed the same.</strong></p>
+    <strong>The systems got larger.<br/>The discipline carried over.</strong></p>
   </div>
 
 </section>
@@ -214,112 +210,65 @@ const items = [
 
   /* ── Scorecard columns ── */
   .sc-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
   }
 
   .sc-col {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.9rem 0 0.75rem 0;
-    border-left: 1px dotted oklch(45% 0.006 260 / 35%);
-    border-right: 1px dotted oklch(45% 0.006 260 / 35%);
+    gap: 0.5rem;
+    padding: 1.25rem 1.25rem 1.25rem 0;
+    border-right: 1px dotted var(--rule, oklch(87% 0.005 260));
     min-width: 0;
   }
-  /* Collapse adjacent right+left borders into one */
-  .sc-col:not(:first-child) { border-left: none; }
-
-  .sc-dim,
-  .sc-weight,
-  .sc-score {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-  .sc-col:first-child .sc-dim,
-  .sc-col:first-child .sc-weight,
-  .sc-col:first-child .sc-score { padding-left: 0.75rem; }
-  .sc-col:last-child .sc-dim,
-  .sc-col:last-child .sc-weight,
-  .sc-col:last-child .sc-score  { padding-right: 0.75rem; }
+  .sc-col:last-child { border-right: none; }
 
   .sc-dim {
-    font-size: 0.72rem;
-    font-weight: 400;
-    color: var(--dim, oklch(28% 0.010 258));
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
     line-height: 1.3;
   }
 
-  .sc-weight {
+  .sc-status {
+    font-size: clamp(0.85rem, 1.4vw, 1.05rem);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink, oklch(10% 0.012 258));
+    line-height: 1.2;
+  }
+
+  .sc-note {
     font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--ink, oklch(10% 0.012 258));
-    margin-bottom: 0.15rem;
-  }
-
-  /* Bar spans full column width - no horizontal padding */
-  .sc-bar-wrap {
-    height: 44px;
-    background: oklch(10% 0.012 258 / 4%);
-    overflow: hidden;
-  }
-
-  .sc-bar-fill {
-    height: 100%;
-    width: var(--fill, 50%);
-    background: oklch(10% 0.012 258 / 12%);
-    transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  html.js-ready .sc-bar-fill { width: 0; }
-  html.js-ready .sc-wrap.in .sc-bar-fill { width: var(--fill); }
-
-  .sc-col:nth-child(1) .sc-bar-fill { transition-delay:   0ms; }
-  .sc-col:nth-child(2) .sc-bar-fill { transition-delay: 110ms; }
-  .sc-col:nth-child(3) .sc-bar-fill { transition-delay: 220ms; }
-  .sc-col:nth-child(4) .sc-bar-fill { transition-delay: 330ms; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sc-bar-fill { transition: none; }
-    html.js-ready .sc-bar-fill { width: var(--fill); }
-  }
-
-  .sc-score {
-    font-size: clamp(0.9rem, 1.6vw, 1.25rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    color: var(--ink, oklch(10% 0.012 258));
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-    font-family: var(--font-display);
-  }
-
-  .sc-denom {
-    font-size: 0.8em;
     font-weight: 400;
-    color: var(--ghost, oklch(50% 0.006 260));
-    letter-spacing: 0;
+    color: var(--dim, oklch(28% 0.010 258));
+    line-height: 1.5;
   }
 
   @media (max-width: 900px) {
     .method-content { grid-template-columns: 1fr; gap: 0.75rem; }
-    .sc-row { flex-wrap: wrap; }
-    .sc-col { flex: 1 1 40% !important; }
-    .sc-col:nth-child(2) { border-right: none; }
-    .sc-col:nth-child(3) { padding-left: 0; }
+    .sc-row { grid-template-columns: 1fr 1fr; }
+    .sc-col:nth-child(2) { border-right: none; padding-right: 0; }
+    .sc-col:nth-child(3) { border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); }
+    .sc-col:nth-child(4) { border-right: none; border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); padding-right: 0; }
   }
 
   @media (max-width: 760px) {
     .method-header { grid-template-columns: 1fr; }
     .method-meta { text-align: left; }
     .method-item { grid-template-columns: 2.5rem 1fr; gap: 0 1rem; }
-    .sc-row { flex-wrap: wrap; }
-    .sc-col { flex: 1 1 40% !important; }
   }
 
   @media (max-width: 480px) {
-    .sc-row { flex-direction: column; }
-    .sc-col { border-right: none; border-bottom: 1px dotted oklch(45% 0.006 260); padding: 0.75rem 0; }
+    .sc-row { grid-template-columns: 1fr; }
+    .sc-col { border-right: none; border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260)); padding: 1rem 0; }
     .sc-col:last-child { border-bottom: none; }
-    .sc-col:not(:first-child) { padding-left: 0; }
+    .sc-col:nth-child(2),
+    .sc-col:nth-child(3),
+    .sc-col:nth-child(4) { border-top: none; }
   }
 </style>

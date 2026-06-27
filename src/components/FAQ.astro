@@ -2,27 +2,35 @@
 const faqs = [
   {
     q: 'What does a fractional CTO / CAIO actually do?',
-    a: 'A fractional CTO or CAIO provides senior technical leadership on a part-time or project basis — architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical throughout, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the overhead of a full-time hire.',
+    a: 'Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.',
+  },
+  {
+    q: 'What do you mean by "agent reliability"?',
+    a: 'A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.',
+  },
+  {
+    q: 'Do you work with open models, or only hosted APIs like OpenAI?',
+    a: 'Both. Hosted APIs are often the fastest start. But when data has to stay in your infrastructure, when per-token cost does not scale, or when you want to avoid vendor lock-in, I build on open models like Llama, Mistral, or Qwen, self-hosted on infrastructure you control. I run open models in production today, so this is not theoretical.',
   },
   {
     q: 'Do you only advise, or do you also write the code?',
-    a: 'The engagement includes code. Lars works inside the repository with the team — not from the outside. Depending on the engagement type, the work spans implementation, architecture reviews, and production debugging. Strategy when you need it, and the engineering when you need that too.',
+    a: 'The engagement includes code. I work inside your repository, not from the outside, and I stay on to operate what we ship. Depending on the engagement, that spans implementation, architecture reviews, production debugging, and ongoing reliability.',
   },
   {
     q: 'How do you decide whether a company actually needs AI?',
-    a: 'Not every problem needs AI, and not every AI needs a custom model. The starting point is always the use case: what problem are you actually solving, and does AI change the outcome in a meaningful way? Most AI failures are framing failures — the technology is rarely the hard part. The Readiness & Production Audit is designed to answer this question before any build work begins.',
+    a: 'Not every problem needs AI, and not every AI needs an agent. I start with the use case: what problem are you solving, and does AI change the outcome enough to justify running it? Most AI failures are framing failures. The technology is rarely the hard part. The Readiness & Production Audit answers this before any build work begins.',
   },
   {
     q: 'What is the "EU AI Act check" in the readiness audit?',
-    a: 'The EU AI Act check is part of the Readiness & Production Audit. It assesses whether a proposed AI system falls under the Act\'s scope, which risk category it belongs to, and what compliance obligations that creates. The audit also covers data protection and governance considerations, scaled to the company\'s size and the system\'s intended use.',
+    a: 'It is part of the Readiness & Production Audit. I assess whether a proposed AI system falls under the Act\'s scope, which risk category it lands in, and what compliance obligations that creates. It also covers data protection and governance, scaled to your size and intended use. For live systems, the Reliability Retainer re-assesses this as the rules and your usage change.',
   },
   {
     q: 'Which engagement should I start with?',
-    a: 'If you are unsure whether AI is the right move or where to start, the Readiness & Production Audit is the right first step: fixed scope, a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model. If you already know what you want to build, a Build Sprint ships one system to production — application, infrastructure, and the AI inside it.',
+    a: 'Unsure whether AI is the right move? Start with the Readiness & Production Audit: fixed scope, a use-case shortlist, an honest build/buy/skip call, and a cost model. Already know what to build? A Build Sprint ships one system to production. Already shipped? The Reliability Retainer keeps it running.',
   },
   {
     q: 'Where are you based, and do you work remotely?',
-    a: 'Lars is based in Berlin, Germany, where he has lived since 2007. He works with startups and growing companies regardless of location. You can reach him at contact@larsullrich.de — he responds within 24 hours.',
+    a: 'I am based in Berlin and have lived here since 2007. I work with startups and growing companies regardless of location. Email me at contact@larsullrich.de. I read every message personally and usually reply within a day.',
   },
 ];
 

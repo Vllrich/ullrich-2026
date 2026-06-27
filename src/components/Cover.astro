@@ -288,8 +288,7 @@
      selector wouldn't match them and position:absolute would be dropped. */
   :global(.grid-label) {
     position: absolute;
-    color: #bbdd00; /* site lime */
-    text-shadow: 0 1px 3px rgba(0,0,0,0.55);
+    color: #2C303C; /* site ink — readable against the lime bloom */
     font-family: var(--font-sans, "Hanken Grotesk", system-ui, sans-serif);
     font-weight: 800;
     text-transform: uppercase;
@@ -1266,7 +1265,13 @@ void main(){
       /* Convert physical→CSS px, then offset to the canvas origin */
       el.style.left     = (offL + cxPhys / dpr) + 'px';
       el.style.top      = (offT + cyPhys / dpr) + 'px';
-      el.style.fontSize = Math.max(8, Math.min(colW[dc], rowH[dr]) / dpr * 0.22) + 'px';
+      /* Font size: scale with cell, but cap so the word never overflows the
+         cell width. Assumes each uppercase char is ~0.62× the font size.    */
+      const cellCssPx   = Math.min(colW[dc], rowH[dr]) / dpr;
+      const cellWidthPx = colW[dc] / dpr;
+      const byHeight    = Math.max(8, cellCssPx * 0.22);
+      const byWidth     = (cellWidthPx * 0.82) / (WORDS[d].length * 0.62);
+      el.style.fontSize = Math.min(byHeight, byWidth) + 'px';
       /* Fade in quickly with spring expansion; clamp 0–1 */
       const maxDelta    = (unit * gridParams.amp) || 1;
       const intensity   = Math.max(0, driverDelta[d]) / maxDelta;

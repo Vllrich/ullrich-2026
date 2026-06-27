@@ -226,7 +226,7 @@
   /* Right: Bauhaus animation panel */
   .hero-graphic {
     overflow: hidden;
-    padding: clamp(6rem, 12vw, 10.5rem) 0;
+    padding: 0;
     background: #bbdd00;
   }
 
@@ -691,7 +691,7 @@ uniform vec2  u_resolution;
 out vec4 fragColor;
 
 /* ── Palette ────────────────────────────────────────────────────────
-   0  lime      #bbdd00
+   0  lime      #bbdd00   (also the CSS hero background)
    1  charcoal  #2C303C
    2  lt-gray   #c8ccd8
    3  near-wht  #f6f6f8
@@ -699,115 +699,143 @@ out vec4 fragColor;
    5  mid-gray  #6b7288
    ─────────────────────────────────────────────────────────────── */
 vec3 pal(int i){
-  if(i==0)return vec3(0.733,0.867,0.000);
-  if(i==1)return vec3(0.173,0.188,0.235);
-  if(i==2)return vec3(0.784,0.800,0.847);
-  if(i==3)return vec3(0.965,0.965,0.973);
-  if(i==4)return vec3(0.094,0.106,0.137);
-  return        vec3(0.420,0.447,0.533);
+  if(i==0) return vec3(0.733,0.867,0.000);
+  if(i==1) return vec3(0.173,0.188,0.235);
+  if(i==2) return vec3(0.784,0.800,0.847);
+  if(i==3) return vec3(0.965,0.965,0.973);
+  if(i==4) return vec3(0.094,0.106,0.137);
+  return         vec3(0.420,0.447,0.533);
 }
 
 float h11(float p){p=fract(p*0.1031);p*=p+33.33;p*=p+p;return fract(p);}
-float h21(vec2 p){
-  p=fract(p*vec2(234.34,435.345));
-  p+=dot(p,p+34.23);
-  return fract(p.x*p.y);
+float h21(vec2 p){p=fract(p*vec2(234.34,435.345));p+=dot(p,p+34.23);return fract(p.x*p.y);}
+
+/* ── Shape SDFs (p centered in [-0.5, 0.5]², cells are square) ─── */
+float sdCircle (vec2 p)          { return length(p)-0.46; }
+float sdBox    (vec2 p)          { vec2 d=abs(p)-0.40; return length(max(d,0.))+min(max(d.x,d.y),0.); }
+float sdDiamond(vec2 p)          { p=abs(p); return (p.x+p.y)-0.48; }
+float sdRing   (vec2 p)          { return abs(length(p)-0.30)-0.12; }
+float sdTri(vec2 p, vec2 a, vec2 b, vec2 c){
+  /* IQ's exact triangle SDF — negative inside, positive outside */
+  vec2 e0=b-a, e1=c-b, e2=a-c;
+  vec2 v0=p-a, v1=p-b, v2=p-c;
+  vec2 pq0=v0-e0*clamp(dot(v0,e0)/dot(e0,e0),0.,1.);
+  vec2 pq1=v1-e1*clamp(dot(v1,e1)/dot(e1,e1),0.,1.);
+  vec2 pq2=v2-e2*clamp(dot(v2,e2)/dot(e2,e2),0.,1.);
+  float s=sign(e0.x*e2.y-e0.y*e2.x);
+  vec2 d=min(min(vec2(dot(pq0,pq0),s*(v0.x*e0.y-v0.y*e0.x)),
+                 vec2(dot(pq1,pq1),s*(v1.x*e1.y-v1.y*e1.x))),
+                 vec2(dot(pq2,pq2),s*(v2.x*e2.y-v2.y*e2.x)));
+  return -sqrt(d.x)*sign(d.y);
 }
 
-/* ── Variable row heights (sum = 12.0 so average = baseH) ──────────
-   Cells are SQUARE (size = rowH × rowH) — circles are always round. */
+/* ── Row height scales (sum = 12.0 → average = canH/12) ─────────── */
 float rowScale(int i){
-  if(i==0) return 0.60;
-  if(i==1) return 1.20;
-  if(i==2) return 0.80;
-  if(i==3) return 1.50;
-  if(i==4) return 0.50;
-  if(i==5) return 1.00;
-  if(i==6) return 1.30;
-  if(i==7) return 0.70;
-  if(i==8) return 1.10;
-  if(i==9) return 0.45;
-  if(i==10)return 1.40;
-  return         0.95; /* i==11  — sum of all = 12.00 */
+  if(i==0) return 0.60; if(i==1) return 1.20; if(i==2) return 0.80;
+  if(i==3) return 1.50; if(i==4) return 0.50; if(i==5) return 1.00;
+  if(i==6) return 1.30; if(i==7) return 0.70; if(i==8) return 1.10;
+  if(i==9) return 0.45; if(i==10)return 1.40; return   0.95;
 }
 
 void main(){
-  vec2  fc    = gl_FragCoord.xy;
-  float canH  = u_resolution.y;
-  float rowY  = canH - fc.y; /* pixel distance from top */
+  vec2  fc   = gl_FragCoord.xy;
+  float canH = u_resolution.y;
+  float rowY = canH - fc.y;
 
-  /* Unit height so sum of all rowScale values fills canvas exactly */
   const int ROWS = 12;
-  float unitH = canH / 12.0; /* = canH / sum(rowScales) since sum==12 */
+  float unitH = canH / 12.0;
 
-  /* Walk rows to find which one this pixel sits in */
-  int   row     = ROWS - 1;
-  float rowTop  = 0.0;
-  float rowH    = rowScale(ROWS-1) * unitH;
-  for(int i = 0; i < ROWS; i++){
-    float h = rowScale(i) * unitH;
-    if(rowY >= rowTop && rowY < rowTop + h){
-      row    = i;
-      rowH   = h;
-      break;
-    }
-    rowTop += h;
+  /* Row lookup */
+  int   row    = ROWS-1;
+  float rowTop = 0.0;
+  float rowH   = rowScale(ROWS-1)*unitH;
+  for(int i=0;i<ROWS;i++){
+    float h=rowScale(i)*unitH;
+    if(rowY>=rowTop && rowY<rowTop+h){row=i;rowH=h;break;}
+    rowTop+=h;
   }
-  float rowF    = float(row);
-  float localY  = rowY - rowTop; /* 0 … rowH within this row */
+  float rowF   = float(row);
+  float localY = rowY - rowTop;
+  float cellW  = rowH; /* square cells → shapes always round/symmetric */
 
-  /* Per-row seeds */
-  float r1 = h11(rowF * 13.1 + 2.7);
-  float r2 = h11(rowF *  5.77 + 4.1);
+  float r1=h11(rowF*13.1+2.7);
+  float r2=h11(rowF*5.77+4.1);
+  float spd   =18.0+r1*58.0;
+  float dir   =r2>0.5?1.0:-1.0;
+  float scroll=u_time*spd*dir;
 
-  /* Square cells — width == height, so circles are always round */
-  float cellW = rowH;
-
-  /* Horizontal scroll: unique speed + direction per row */
-  float spd    = 18.0 + r1 * 58.0;
-  float dir    = r2 > 0.5 ? 1.0 : -1.0;
-  float scroll = u_time * spd * dir;
-
-  float cx  = fc.x + scroll;
-  float col = floor(cx / cellW);
-  float lx  = fract(cx  / cellW);     /* 0..1 across cell width  */
-  float ly  = localY   / rowH;        /* 0..1 across cell height */
+  float cx  = fc.x+scroll;
+  float col = floor(cx/cellW);
+  float lx  = fract(cx/cellW);
+  float ly  = localY/rowH;
+  vec2  p   = vec2(lx-0.5, ly-0.5); /* centered UV */
 
   /* Per-cell hashes */
-  float ch0 = h21(vec2(col,          rowF));
-  float ch1 = h21(vec2(col + 47.3,   rowF + 13.1));
-  float ch2 = h21(vec2(col - 23.7,   rowF -  7.9));
-  float ch3 = h21(vec2(col * 1.7 + rowF * 0.3, rowF * 2.1));
+  float ch0=h21(vec2(col,           rowF));
+  float ch1=h21(vec2(col+47.3,      rowF+13.1));
+  float ch2=h21(vec2(col-23.7,      rowF-7.9));
+  float ch3=h21(vec2(col*1.7+rowF*0.3, rowF*2.1));
+  float ch4=h21(vec2(col+rowF,      rowF-col));
+  float ch5=h21(vec2(col*3.1,       rowF*1.7));
+  float ch6=h21(vec2(col*0.9+1.3,   rowF*3.7+0.5));
 
-  /* Color indices */
-  int li = int(mod(ch0 * 6.0, 6.0));
-  int ri = int(mod(float(li) + 2.0 + floor(ch1 * 2.0), 6.0));
-  int ci = int(mod(float(ri) + 2.0 + floor(ch2 * 2.0), 6.0));
+  /* ── Background ─────────────────────────────────────────────────
+     Style: 0=vertical split  1=horizontal split  2=solid
+     bgAlpha blends toward lime (pal 0) — simulates transparency.  */
+  int c0=int(mod(ch0*6.0,6.0));
+  int c1=int(mod(float(c0)+2.0+floor(ch1*2.0),6.0));
+  int bgStyle=int(mod(ch4*3.0,3.0));
 
-  /* Background: hard vertical split at midpoint */
-  vec3 bg = lx < 0.5 ? pal(li) : pal(ri);
+  vec3 bgA=pal(c0), bgB=pal(c1);
+  vec3 bg;
+  if(bgStyle==0)      bg = lx<0.5 ? bgA : bgB;
+  else if(bgStyle==1) bg = ly<0.5 ? bgA : bgB;
+  else                bg = bgA;
 
-  /* ── Circle (pixel space — always geometrically round) ────────── */
-  vec2  pPx      = vec2((lx - 0.5) * cellW, (ly - 0.5) * rowH);
-  float distPx   = length(pPx);
-  float radiusPx = rowH * 0.46;
-  float circle   = 1.0 - smoothstep(radiusPx - 1.5, radiusPx + 1.5, distPx);
+  /* Mix toward lime: high bgAlpha = opaque bg, low = mostly lime */
+  float bgAlpha = 0.45 + ch5*0.55;   /* 0.45 … 1.00 */
+  bg = mix(pal(0), bg, bgAlpha);
 
-  /* Per-circle fade (independent sine per cell) */
-  float fadeFreq  = 0.08 + ch0 * 0.48;
-  float fadePhase = ch3 * 6.2832 + rowF * 0.74 + col * 0.29;
-  float fade      = 0.5 + 0.5 * sin(u_time * fadeFreq + fadePhase);
-  fade = smoothstep(0.18, 0.82, fade);
-  fade = max(fade, step(0.88, ch1)); /* ~12 % of circles stay on as anchors */
-  circle *= fade;
+  /* ── Shape ───────────────────────────────────────────────────────
+     6 types chosen per cell. SDF → smooth mask via 1.5-px AA.     */
+  int shapeType=int(mod(ch2*6.0,6.0));
+  float aa=1.5/rowH;
 
-  /* ── Grid hairlines (1 px in both axes) ──────────────────────── */
-  float bxPx = min(lx, 1.0 - lx) * cellW;
-  float byPx = min(ly, 1.0 - ly) * rowH;
-  float grid  = 1.0 - step(0.6, min(bxPx, byPx));
+  float sdf;
+  if     (shapeType==0) sdf=sdCircle(p);
+  else if(shapeType==1) sdf=sdBox(p);
+  else if(shapeType==2) sdf=sdDiamond(p);
+  else if(shapeType==3) sdf=sdRing(p);
+  else if(shapeType==4) /* triangle up */
+    sdf=sdTri(p, vec2(0.,-0.42), vec2(-0.42,0.38), vec2(0.42,0.38));
+  else /* triangle down */
+    sdf=sdTri(p, vec2(0.,0.42),  vec2(-0.42,-0.38), vec2(0.42,-0.38));
 
-  vec3 color = mix(bg, pal(ci), circle);
-  color = mix(color, pal(4), grid * 0.40);
+  float shape = 1.0-smoothstep(-aa, aa, sdf);
+
+  /* Shape color — distinct from both bg colors */
+  int ci=int(mod(float(c1)+2.0+floor(ch3*2.0),6.0));
+
+  /* Shape alpha: base opacity + fade animation */
+  float shapeBaseAlpha = 0.55 + ch6*0.45;   /* 0.55 … 1.00 */
+  float fadeFreq  = 0.08+ch0*0.48;
+  float fadePhase = ch3*6.2832+rowF*0.74+col*0.29;
+  float fade      = 0.5+0.5*sin(u_time*fadeFreq+fadePhase);
+  fade = smoothstep(0.18,0.82,fade);
+  fade = max(fade, step(0.88,ch1));          /* ~12 % as permanent anchors */
+  float shapeAlpha = shapeBaseAlpha*fade;
+
+  /* Compose: shape over bg (Porter-Duff "A over B" in straight-alpha space) */
+  float sa = shape*shapeAlpha;
+  vec3  color = mix(bg, pal(ci), sa);
+
+  /* ── Grid hairlines ─────────────────────────────────────────────
+     1 px thick in both axes; lime-tinted dark so they breathe.    */
+  float bxPx = min(lx,1.0-lx)*cellW;
+  float byPx = min(ly,1.0-ly)*rowH;
+  float grid  = 1.0-step(0.6, min(bxPx,byPx));
+  vec3 gridCol = mix(pal(4), pal(0), 0.25);  /* near-black + lime hint */
+  color = mix(color, gridCol, grid*0.50);
 
   fragColor = vec4(color, 1.0);
 }`;

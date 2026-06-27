@@ -665,7 +665,7 @@ if (reducedMotion) {
 
 } // end WEBGL_ENABLED
 
-/* ── Grid shader: 16×16 pulsing squares ── */
+/* ── Grid shader: 16×16 pulsing squares (v2) ── */
 (function initGridShader() {
   const canvas = document.getElementById('bauhaus-canvas') as HTMLCanvasElement | null;
   if (!canvas) return;
@@ -688,96 +688,70 @@ if (reducedMotion) {
 layout(location=0) in vec2 a_pos;
 void main(){gl_Position=vec4(a_pos,0.0,1.0);}`;
 
+  /* ── Fragment shader ────────────────────────────────────────────
+     Scales are precomputed in JS every frame and uploaded as a
+     packed vec4[64] (256 floats = 64 vec4s, well within WebGL2
+     minimum of 224 vec4 fragment uniform slots).
+
+     For each fragment we search ±2 neighbouring cells and pick
+     whichever square's SDF is lowest (most inside).  This lets
+     driver squares grow up to 4× a cell width — roughly a quarter
+     of the 16-cell canvas — and naturally clip at canvas edges.
+     ─────────────────────────────────────────────────────────────── */
   const FRAG = `#version 300 es
 precision highp float;
-uniform float u_time;
-uniform vec2  u_resolution;
+uniform vec2 u_resolution;
+uniform vec4 u_scale[64];
 out vec4 fragColor;
 
-/* ─────────────────────────────────────────────────────────────────
-   16×16 grid of squares. Eight driver cells pulse with independent
-   sine waves. Each driver expands/contracts freely; its neighbours
-   are pushed in the opposite direction (cubic falloff, radius 5).
-   Colour maps scale → dark charcoal → muted olive → pale lime.
-   ───────────────────────────────────────────────────────────────── */
+const int GRID = 16;
 
-const int GRID     = 16;
-const int NDRIVERS = 8;
-
-/* Hash: vec2 → [0,1) */
-float h21(vec2 p){
-  p=fract(p*vec2(234.34,435.345));
-  p+=dot(p,p+34.23);
-  return fract(p.x*p.y);
+float getScale(int col, int row){
+  int i = row * GRID + col;
+  return u_scale[i >> 2][i & 3];
 }
 
-/* Stable driver cell for index d */
-ivec2 driverCell(int d){
-  float fd=float(d);
-  int c=int(h21(vec2(fd*7.31+1.3,fd*3.17+0.9))*float(GRID));
-  int r=int(h21(vec2(fd*11.7-2.1,fd*5.53+3.7))*float(GRID));
-  return ivec2(clamp(c,0,GRID-1),clamp(r,0,GRID-1));
-}
-
-/* Sine pulse for driver d: [-1, 1] */
-float driverPulse(int d){
-  float fd=float(d);
-  float phase=h21(vec2(fd*3.7+0.1,fd*1.9+0.5))*6.2832;
-  float freq=0.22+h21(vec2(fd*5.1+2.0,fd*2.3+1.7))*0.48;
-  return sin(u_time*freq+phase);
-}
-
-/* Square fill fraction for cell (col, row) */
-float computeScale(int col,int row){
-  float s=0.65;
-  for(int d=0;d<NDRIVERS;d++){
-    ivec2 dc=driverCell(d);
-    float dist=length(vec2(float(col-dc.x),float(row-dc.y)));
-    float pulse=driverPulse(d);
-    bool  isMe=(col==dc.x&&row==dc.y);
-    float t=clamp(dist/5.0,0.0,1.0);
-    float fall=pow(1.0-t,3.0);
-    /* driver expands/contracts; neighbours are pushed opposite */
-    if(isMe) s+=pulse*0.27;
-    else     s-=pulse*fall*0.18;
-  }
-  return clamp(s,0.10,0.92);
-}
-
-/* dark charcoal → muted olive → pale lime-white */
+/* dark charcoal (#181b23) → dark olive → pale lime-white (#eef4d8) */
 vec3 squareColor(float sc){
-  float t=clamp(sc/0.92,0.0,1.0);
-  vec3 dk=vec3(0.094,0.106,0.137);  /* #181b23 */
-  vec3 md=vec3(0.239,0.314,0.133);  /* dark olive */
-  vec3 lt=vec3(0.933,0.961,0.800);  /* pale lime-white */
-  if(t<0.5) return mix(dk,md,t*2.0);
-  return mix(md,lt,(t-0.5)*2.0);
+  float t = clamp((sc - 0.05) / 3.95, 0.0, 1.0);
+  vec3 dk = vec3(0.094, 0.106, 0.137);
+  vec3 md = vec3(0.280, 0.360, 0.150);
+  vec3 lt = vec3(0.933, 0.957, 0.847);
+  if(t < 0.5) return mix(dk, md, t * 2.0);
+  return mix(md, lt, (t - 0.5) * 2.0);
 }
 
 void main(){
-  float gf=float(GRID);
-  vec2 uv=gl_FragCoord.xy/u_resolution;
-  float cx=uv.x*gf;
-  float cy=uv.y*gf;
-  int col=clamp(int(cx),0,GRID-1);
-  int row=clamp(int(cy),0,GRID-1);
+  float gf  = float(GRID);
+  vec2  uv  = gl_FragCoord.xy / u_resolution;
+  float cx  = uv.x * gf;
+  float cy  = uv.y * gf;
+  int   col = clamp(int(cx), 0, GRID - 1);
+  int   row = clamp(int(cy), 0, GRID - 1);
 
-  /* local position centred in cell: [-0.5, 0.5] */
-  float lx=fract(cx)-0.5;
-  float ly=fract(cy)-0.5;
+  /* Search ±2 cells — max driver scale is 4.0, half-extent 2.0 cells */
+  float minSdf    = 1e6;
+  float bestScale = 0.95;
 
-  float sc=computeScale(col,row);
+  for(int dc = -2; dc <= 2; dc++){
+    for(int dr = -2; dr <= 2; dr++){
+      int nc = col + dc;
+      int nr = row + dr;
+      if(nc < 0 || nc >= GRID || nr < 0 || nr >= GRID) continue;
+      float sc  = getScale(nc, nr);
+      float lx  = cx - (float(nc) + 0.5);
+      float ly  = cy - (float(nr) + 0.5);
+      float sdf = max(abs(lx), abs(ly)) - sc * 0.5;
+      if(sdf < minSdf){ minSdf = sdf; bestScale = sc; }
+    }
+  }
 
-  /* square SDF: half-extent = sc/2 */
-  float sdf=max(abs(lx),abs(ly))-sc*0.5;
+  /* 1-px AA in cell-local space */
+  float px   = gf / min(u_resolution.x, u_resolution.y);
+  float mask = 1.0 - smoothstep(-px, px, minSdf);
 
-  /* sub-pixel AA: 1 px expressed in cell-UV space */
-  float aa=0.5*gf/u_resolution.x;
-  float mask=1.0-smoothstep(-aa,aa,sdf);
-
-  /* background matches hero lime #bbdd00 */
-  vec3 bg=vec3(0.733,0.867,0.000);
-  fragColor=vec4(mix(bg,squareColor(sc),mask),1.0);
+  vec3 bg = vec3(0.733, 0.867, 0.000);
+  fragColor = vec4(mix(bg, squareColor(bestScale), mask), 1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -799,8 +773,44 @@ void main(){
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   gl.bindVertexArray(null);
 
-  const uTime = gl.getUniformLocation(prog, 'u_time');
-  const uRes  = gl.getUniformLocation(prog, 'u_resolution');
+  const uRes   = gl.getUniformLocation(prog, 'u_resolution');
+  const uScale = gl.getUniformLocation(prog, 'u_scale[0]');
+
+  /* ── Driver configuration ───────────────────────────────────────
+     Eight fixed positions spread across the 16×16 grid.
+     Each pulses with its own frequency and phase offset so they
+     never fully synchronise.
+     ─────────────────────────────────────────────────────────────── */
+  const ND          = 8;
+  const GRID_JS     = 16;
+  const driverCols  = [ 2,  6, 11, 14,  1,  7, 12,  9];
+  const driverRows  = [ 2,  4,  3,  8, 10, 13, 12,  7];
+  const driverPhase = [0.00, 1.10, 2.30, 4.70, 0.70, 3.10, 5.50, 2.00];
+  const driverFreq  = [0.28, 0.41, 0.33, 0.55, 0.22, 0.48, 0.37, 0.63];
+
+  const dpulse   = new Float32Array(ND);
+  const scaleMap = new Float32Array(GRID_JS * GRID_JS); /* 256 floats */
+
+  /* Compute fill fraction for one cell: base 0.95, driver expands
+     up to 4.0 (≈ quarter of a 16-cell canvas), neighbours are
+     pushed in the opposite direction (cubic falloff, radius 5.5). */
+  function computeScale(col: number, row: number): number {
+    let s = 0.95;
+    for (let d = 0; d < ND; d++) {
+      const dx   = col - driverCols[d];
+      const dy   = row - driverRows[d];
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const p    = dpulse[d];
+      if (dist < 0.5) {
+        s += p * 3.05;                           /* driver: own pulse  */
+      } else {
+        const t   = Math.min(dist / 5.5, 1.0);
+        const inv = 1.0 - t;
+        s -= p * inv * inv * inv * 1.8;          /* neighbour: pushed  */
+      }
+    }
+    return Math.max(0.05, Math.min(4.0, s));
+  }
 
   let rafId = 0;
 
@@ -817,10 +827,25 @@ void main(){
 
   function render(ms: number) {
     resize();
+    const time = ms * 0.001;
+
+    /* 1. Pulse each driver */
+    for (let d = 0; d < ND; d++) {
+      dpulse[d] = Math.sin(time * driverFreq[d] + driverPhase[d]);
+    }
+
+    /* 2. Compute scale for every cell (256 × 8 = 2 048 ops — fast) */
+    for (let r = 0; r < GRID_JS; r++) {
+      for (let c = 0; c < GRID_JS; c++) {
+        scaleMap[r * GRID_JS + c] = computeScale(c, r);
+      }
+    }
+
+    /* 3. Upload packed scales and draw */
     gl!.useProgram(prog);
     gl!.bindVertexArray(vao);
-    gl!.uniform1f(uTime, ms * 0.001);
     gl!.uniform2f(uRes, canvas!.width, canvas!.height);
+    gl!.uniform4fv(uScale, scaleMap);   /* 256 floats → 64 vec4s */
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
     if (!reducedMotion) rafId = requestAnimationFrame(render);
@@ -833,7 +858,7 @@ void main(){
     rafId = requestAnimationFrame(render);
   }
 
-  /* Pause when off-screen for perf */
+  /* Pause when off-screen */
   const obs = new IntersectionObserver(entries => {
     const vis = entries[0].isIntersecting;
     if (vis && !reducedMotion) {

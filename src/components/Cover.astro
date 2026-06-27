@@ -665,7 +665,7 @@ if (reducedMotion) {
 
 } // end WEBGL_ENABLED
 
-/* ── Grid shader: 16×16 pulsing squares (v2) ── */
+/* ── Grid shader: 16×16 push-layout squares (v3) ── */
 (function initGridShader() {
   const canvas = document.getElementById('bauhaus-canvas') as HTMLCanvasElement | null;
   if (!canvas) return;
@@ -689,31 +689,36 @@ layout(location=0) in vec2 a_pos;
 void main(){gl_Position=vec4(a_pos,0.0,1.0);}`;
 
   /* ── Fragment shader ────────────────────────────────────────────
-     Scales are precomputed in JS every frame and uploaded as a
-     packed vec4[64] (256 floats = 64 vec4s, well within WebGL2
-     minimum of 224 vec4 fragment uniform slots).
+     JS computes a proper layout every frame:
+       - 16 column widths  (sum = canvas usable width  - 17 px gaps)
+       - 16 row heights    (sum = canvas usable height - 17 px gaps)
+     Driver cells grow their column AND row; neighbours shrink and
+     physically SHIFT so a 1-px gap is always maintained.
 
-     For each fragment we search ±2 neighbouring cells and pick
-     whichever square's SDF is lowest (most inside).  This lets
-     driver squares grow up to 4× a cell width — roughly a quarter
-     of the 16-cell canvas — and naturally clip at canvas edges.
+     The shader receives cumulative positions + sizes packed into
+     two vec4[8] uniforms (32 floats each = 16 vec4 slots total).
+     For each fragment it searches column & row linearly (≤ 16 iters
+     each) — no overlap is geometrically possible by construction.
      ─────────────────────────────────────────────────────────────── */
   const FRAG = `#version 300 es
 precision highp float;
 uniform vec2 u_resolution;
-uniform vec4 u_scale[64];
+/* u_cols[0..3] = colX (left edges),  u_cols[4..7] = colW (widths)
+   u_rows[0..3] = rowY (bottom edges, y-up), u_rows[4..7] = rowH   */
+uniform vec4 u_cols[8];
+uniform vec4 u_rows[8];
 out vec4 fragColor;
 
-const int GRID = 16;
+const vec3 BG = vec3(0.733, 0.867, 0.000); /* lime #bbdd00 */
 
-float getScale(int col, int row){
-  int i = row * GRID + col;
-  return u_scale[i >> 2][i & 3];
-}
+float cX(int c){ return u_cols[  c >> 2   ][ c & 3 ]; }
+float cW(int c){ return u_cols[ (c >> 2)+4 ][ c & 3 ]; }
+float rY(int r){ return u_rows[  r >> 2   ][ r & 3 ]; }
+float rH(int r){ return u_rows[ (r >> 2)+4 ][ r & 3 ]; }
 
-/* dark charcoal (#181b23) → dark olive → pale lime-white (#eef4d8) */
-vec3 squareColor(float sc){
-  float t = clamp((sc - 0.05) / 3.95, 0.0, 1.0);
+/* dark charcoal → dark olive → pale lime-white */
+vec3 cellColor(float t){
+  t = clamp(t, 0.0, 1.0);
   vec3 dk = vec3(0.094, 0.106, 0.137);
   vec3 md = vec3(0.280, 0.360, 0.150);
   vec3 lt = vec3(0.933, 0.957, 0.847);
@@ -722,36 +727,39 @@ vec3 squareColor(float sc){
 }
 
 void main(){
-  float gf  = float(GRID);
-  vec2  uv  = gl_FragCoord.xy / u_resolution;
-  float cx  = uv.x * gf;
-  float cy  = uv.y * gf;
-  int   col = clamp(int(cx), 0, GRID - 1);
-  int   row = clamp(int(cy), 0, GRID - 1);
+  /* Square grid, centred in the canvas */
+  float gs  = min(u_resolution.x, u_resolution.y);
+  float ox  = (u_resolution.x - gs) * 0.5;
+  float oy  = (u_resolution.y - gs) * 0.5;
+  float uni = (gs - 17.0) / 16.0;   /* base cell size at rest */
 
-  /* Search ±2 cells — max driver scale is 4.0, half-extent 2.0 cells */
-  float minSdf    = 1e6;
-  float bestScale = 0.95;
+  /* Coordinates local to the grid (y-up from grid bottom-left) */
+  vec2 gf = gl_FragCoord.xy - vec2(ox, oy);
 
-  for(int dc = -2; dc <= 2; dc++){
-    for(int dr = -2; dr <= 2; dr++){
-      int nc = col + dc;
-      int nr = row + dr;
-      if(nc < 0 || nc >= GRID || nr < 0 || nr >= GRID) continue;
-      float sc  = getScale(nc, nr);
-      float lx  = cx - (float(nc) + 0.5);
-      float ly  = cy - (float(nr) + 0.5);
-      float sdf = max(abs(lx), abs(ly)) - sc * 0.5;
-      if(sdf < minSdf){ minSdf = sdf; bestScale = sc; }
-    }
+  /* Outside grid → lime background */
+  if(gf.x < 0.0 || gf.x >= gs || gf.y < 0.0 || gf.y >= gs){
+    fragColor = vec4(BG, 1.0); return;
   }
 
-  /* 1-px AA in cell-local space */
-  float px   = gf / min(u_resolution.x, u_resolution.y);
-  float mask = 1.0 - smoothstep(-px, px, minSdf);
+  /* Linear search for column (x) */
+  int col = -1;
+  for(int c = 0; c < 16; c++){
+    if(gf.x >= cX(c) && gf.x < cX(c) + cW(c)){ col = c; break; }
+  }
 
-  vec3 bg = vec3(0.733, 0.867, 0.000);
-  fragColor = vec4(mix(bg, squareColor(bestScale), mask), 1.0);
+  /* Linear search for row (y, y-up) */
+  int row = -1;
+  for(int r = 0; r < 16; r++){
+    if(gf.y >= rY(r) && gf.y < rY(r) + rH(r)){ row = r; break; }
+  }
+
+  /* Gap pixel (col or row not found) → lime */
+  if(col < 0 || row < 0){ fragColor = vec4(BG, 1.0); return; }
+
+  /* Colour: geometric-mean size relative to base, mapped [0.1, 4.0] */
+  float sz = sqrt(cW(col) * rH(row)) / uni;
+  float t  = clamp((sz - 0.10) / 3.90, 0.0, 1.0);
+  fragColor = vec4(cellColor(t), 1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -765,52 +773,34 @@ void main(){
 
   const vao = gl.createVertexArray()!;
   gl.bindVertexArray(vao);
-  const buf = gl.createBuffer()!;
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  const vbuf = gl.createBuffer()!;
+  gl.bindBuffer(gl.ARRAY_BUFFER, vbuf);
   gl.bufferData(gl.ARRAY_BUFFER,
     new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0);
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   gl.bindVertexArray(null);
 
-  const uRes   = gl.getUniformLocation(prog, 'u_resolution');
-  const uScale = gl.getUniformLocation(prog, 'u_scale[0]');
+  const uRes  = gl.getUniformLocation(prog, 'u_resolution');
+  const uCols = gl.getUniformLocation(prog, 'u_cols[0]');
+  const uRows = gl.getUniformLocation(prog, 'u_rows[0]');
 
-  /* ── Driver configuration ───────────────────────────────────────
-     Eight fixed positions spread across the 16×16 grid.
-     Each pulses with its own frequency and phase offset so they
-     never fully synchronise.
+  /* ── Driver config ─────────────────────────────────────────────
+     Eight cells spread across the 16×16 grid, all on unique
+     columns and unique rows so they never share an axis.
      ─────────────────────────────────────────────────────────────── */
   const ND          = 8;
-  const GRID_JS     = 16;
+  const GS          = 16;
   const driverCols  = [ 2,  6, 11, 14,  1,  7, 12,  9];
   const driverRows  = [ 2,  4,  3,  8, 10, 13, 12,  7];
   const driverPhase = [0.00, 1.10, 2.30, 4.70, 0.70, 3.10, 5.50, 2.00];
   const driverFreq  = [0.28, 0.41, 0.33, 0.55, 0.22, 0.48, 0.37, 0.63];
 
   const dpulse   = new Float32Array(ND);
-  const scaleMap = new Float32Array(GRID_JS * GRID_JS); /* 256 floats */
-
-  /* Compute fill fraction for one cell: base 0.95, driver expands
-     up to 4.0 (≈ quarter of a 16-cell canvas), neighbours are
-     pushed in the opposite direction (cubic falloff, radius 5.5). */
-  function computeScale(col: number, row: number): number {
-    let s = 0.95;
-    for (let d = 0; d < ND; d++) {
-      const dx   = col - driverCols[d];
-      const dy   = row - driverRows[d];
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const p    = dpulse[d];
-      if (dist < 0.5) {
-        s += p * 3.05;                           /* driver: own pulse  */
-      } else {
-        const t   = Math.min(dist / 5.5, 1.0);
-        const inv = 1.0 - t;
-        s -= p * inv * inv * inv * 1.8;          /* neighbour: pushed  */
-      }
-    }
-    return Math.max(0.05, Math.min(4.0, s));
-  }
+  const colW: number[] = new Array(GS).fill(0);
+  const rowH: number[] = new Array(GS).fill(0);
+  const colsData = new Float32Array(32); /* 8 vec4s: colX[16] + colW[16] */
+  const rowsData = new Float32Array(32); /* 8 vec4s: rowY[16] + rowH[16] */
 
   let rafId = 0;
 
@@ -828,24 +818,76 @@ void main(){
   function render(ms: number) {
     resize();
     const time = ms * 0.001;
+    const cw   = canvas!.width;
+    const ch   = canvas!.height;
 
-    /* 1. Pulse each driver */
+    /* Square grid centred in canvas */
+    const gs    = Math.min(cw, ch);
+    /* 1-px gap in CSS pixels = round(dpr) physical pixels */
+    const gap   = Math.max(1, Math.round(Math.min(devicePixelRatio || 1, 2)));
+    const avail = gs - (GS + 1) * gap;  /* space shared by all 16 cells */
+    const unit  = avail / GS;           /* base cell size */
+
+    /* 1. Driver pulses */
     for (let d = 0; d < ND; d++) {
       dpulse[d] = Math.sin(time * driverFreq[d] + driverPhase[d]);
     }
 
-    /* 2. Compute scale for every cell (256 × 8 = 2 048 ops — fast) */
-    for (let r = 0; r < GRID_JS; r++) {
-      for (let c = 0; c < GRID_JS; c++) {
-        scaleMap[r * GRID_JS + c] = computeScale(c, r);
-      }
+    /* 2. Layout: each driver expands its column AND row (amplitude 3×).
+          The delta is distributed equally across the other 15 tracks,
+          so total space is conserved before clamping. */
+    for (let i = 0; i < GS; i++) { colW[i] = unit; rowH[i] = unit; }
+
+    for (let d = 0; d < ND; d++) {
+      const dc    = driverCols[d];
+      const dr    = driverRows[d];
+      const delta = dpulse[d] * unit * 3.0;  /* ±3× unit */
+
+      colW[dc] += delta;
+      const shareW = delta / (GS - 1);
+      for (let c = 0; c < GS; c++) if (c !== dc) colW[c] -= shareW;
+
+      rowH[dr] += delta;
+      const shareH = delta / (GS - 1);
+      for (let r = 0; r < GS; r++) if (r !== dr) rowH[r] -= shareH;
     }
 
-    /* 3. Upload packed scales and draw */
+    /* Clamp to 1 physical px minimum, then renorm to preserve avail */
+    let tw = 0, th = 0;
+    for (let i = 0; i < GS; i++) {
+      colW[i] = Math.max(1, colW[i]);
+      rowH[i] = Math.max(1, rowH[i]);
+      tw += colW[i]; th += rowH[i];
+    }
+    for (let i = 0; i < GS; i++) {
+      colW[i] = colW[i] * avail / tw;
+      rowH[i] = rowH[i] * avail / th;
+    }
+
+    /* 3. Cumulative positions + pack into uniform float32 buffers.
+          colsData layout: [colX × 16, colW × 16] = 32 floats → 8 vec4s
+          rowsData layout: [rowY × 16, rowH × 16] (y from grid bottom, y-up)
+          All coordinates are grid-local; GLSL subtracts (ox, oy) itself. */
+    let cx = gap;    /* first cell starts after the left border gap */
+    for (let c = 0; c < GS; c++) {
+      colsData[c]      = cx;       /* colX */
+      colsData[c + GS] = colW[c];  /* colW */
+      cx += colW[c] + gap;
+    }
+
+    let ry = gap;    /* first row starts after the bottom border gap */
+    for (let r = 0; r < GS; r++) {
+      rowsData[r]      = ry;       /* rowY */
+      rowsData[r + GS] = rowH[r];  /* rowH */
+      ry += rowH[r] + gap;
+    }
+
+    /* 4. Upload and draw */
     gl!.useProgram(prog);
     gl!.bindVertexArray(vao);
-    gl!.uniform2f(uRes, canvas!.width, canvas!.height);
-    gl!.uniform4fv(uScale, scaleMap);   /* 256 floats → 64 vec4s */
+    gl!.uniform2f(uRes,  cw, ch);
+    gl!.uniform4fv(uCols, colsData);
+    gl!.uniform4fv(uRows, rowsData);
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
     if (!reducedMotion) rafId = requestAnimationFrame(render);

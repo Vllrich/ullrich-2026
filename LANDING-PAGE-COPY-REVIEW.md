@@ -64,7 +64,7 @@ Fine for a CTO skimming a search result. The description is a touch long and fro
 
 > **Title:** Lars Ullrich — Production AI, Full-Stack Engineer & Fractional CTO
 >
-> **Meta description:** I help startups and growing companies get AI past the prototype stage and into production — and keep it running afterward. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering behind the work.
+> **Meta description:** I help growing companies get AI past the prototype stage and into production — and keep it running afterward. Full-stack engineer and fractional CTO/CAIO, with two decades of real-time and creative engineering behind the work.
 
 Removes the "ship, scale, stay reliable" cadence and the "scale" overclaim; keeps the differentiator.
 
@@ -74,7 +74,7 @@ Removes the "ship, scale, stay reliable" cadence and the "scale" overclaim; keep
 
 ### Authenticity
 
-This is the strongest opening on the page. "I help startups and growing companies get AI into production - and keep it there" is a real, narrow claim. The follow-up — "architecture, implementation, and the reliability engineering that keeps a system running after launch" — names the actual work and signals that the author knows the hard part is post-launch, not the demo. That single insight does more for credibility than any adjective could.
+This is the strongest opening on the page. "I help growing companies get AI into production - and keep it there" is a real, narrow claim. The follow-up — "architecture, implementation, and the reliability engineering that keeps a system running after launch" — names the actual work and signals that the author knows the hard part is post-launch, not the demo. That single insight does more for credibility than any adjective could.
 
 ### Genericity audit
 
@@ -103,7 +103,7 @@ A CTO or technical founder would keep reading. It sounds like a person, not a de
 The body is already strong; I'd leave it almost untouched. Optional headline sharpening:
 
 > **Headline:** Most AI demos never survive production.
-> **Subhead/body (unchanged in spirit):** I help startups and growing companies get AI into production — and keep it there. The work is technical: architecture, implementation, and the reliability engineering that keeps a system running after launch.
+> **Subhead/body (unchanged in spirit):** I help growing companies get AI into production — and keep it there. The work is technical: architecture, implementation, and the reliability engineering that keeps a system running after launch.
 
 If you prefer to keep the calmer headline, "Turning prototype into production" is fine — just know it's the one line here that a buyer has seen before.
 

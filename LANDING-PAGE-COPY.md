@@ -15,7 +15,7 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Meta description**
 
-> I help startups and growing companies get AI into production, and keep it running. Often agents, often on open models you host yourself. Full-stack engineer and fractional CTO/CAIO, with two decades of engineering behind the work.
+> I help growing companies get AI into production, and keep it running. Often agents, often on open models you host yourself. Full-stack engineer and fractional CTO/CAIO, with two decades of engineering behind the work.
 
 **Structured data (summary)**
 
@@ -48,7 +48,7 @@ _Component: `Cover.astro`_
 
 **Body**
 
-> I help startups and growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
+> I help growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
 
 **CTAs**
 
@@ -102,16 +102,16 @@ _Component: `Perspective.astro` · Section ID: `#method`_
 
 **Subhead**
 
-> From a demo that works to an agent you can leave running.
+> From a demo that works to a system you can leave running.
 
 ### Method steps
 
 | #   | Title                    | Body                                                                                                                           |
 | --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| 01  | Tune in                  | Understand the real problem, the data, and the constraints before touching a model. Most AI failures are framing failures.     |
-| 02  | Compose the architecture | Choose the right tools, often agents and RAG over a custom model. Design for reliability, cost, and the team that inherits it. |
-| 03  | Ship and harden          | Get it live, then make it dependable: evals, monitoring, guardrails, and clear ownership.                                      |
-| 04  | Adopt responsibly        | Governance sized to your company: data protection, EU AI Act readiness, decisions you can explain.                             |
+| 01  | Tune in                  | Understand the real problem, the data, and the constraints before writing code or reaching for a model. Most failures are framing failures, not technical ones.        |
+| 02  | Compose the architecture | Choose the right stack and shape the system: services, data, and where AI actually earns its place. Design for reliability, cost, and the team that inherits it.      |
+| 03  | Ship and harden          | Get it live, then make it dependable: tests, monitoring, guardrails, evals where AI is involved, and clear ownership.                                                 |
+| 04  | Adopt responsibly        | Governance sized to your company: security, data protection, EU AI Act readiness where it applies, decisions you can explain.                                         |
 
 ### Readiness pattern
 
@@ -121,7 +121,7 @@ _Component: `Perspective.astro` · Section ID: `#method`_
 
 **Context**
 
-> The four dimensions where production AI breaks, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.
+> The four dimensions where production systems break, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.
 
 | Dimension            | Typical starting point                                          |
 | -------------------- | --------------------------------------------------------------- |
@@ -132,8 +132,8 @@ _Component: `Perspective.astro` · Section ID: `#method`_
 
 ### Closing statement
 
-> The stages got smaller.  
-> **The systems got larger. The discipline carried over.**
+> The environments change  
+> **The standard for shipping doesn't**
 
 ---
 
@@ -145,10 +145,10 @@ _Component: `Services.astro` · Section ID: `#services`_
 
 **Headline**
 
-> Diagnose.  
-> Build.  
-> Run.  
-> Lead.
+> Diagnose  
+> Build  
+> Run  
+> Lead
 
 **Subhead**
 
@@ -200,10 +200,6 @@ _Component: `Clients.astro`_
 
 > Who I've worked with
 
-**Framing line**
-
-> Two decades of engagements across industry, media, and the arts. Some I still operate today.
-
 **Brand names (marquee)**
 
 SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MUSIC · THEATER DORTMUND · OPER DORTMUND · ECM RECORDS · AMP SOUND BRANDING · BERLINER FESTSPIELE · SILEX INVESTMENT
@@ -216,11 +212,11 @@ _Component: `About.astro` · Section ID: `#about`_
 
 ### Lead
 
-> An engineer and technical leader. Twenty years building things that have to work, now putting AI into production and keeping it running.
+> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
 
 ### Bio
 
-> I grew up between Germany and Spain, studied in London, and have been based in Berlin since 2007. The first decade was real-time and creative engineering. The second brought that into startups: leading teams, owning product and architecture, and shipping software and AI systems. Today I do that for teams that need senior depth without a full-time hire. Strategy and architecture, but also the implementation, and operating what we ship. Increasingly agents, often on open models the client hosts themselves.
+> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer and director for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way. These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
 
 ### Disciplines
 

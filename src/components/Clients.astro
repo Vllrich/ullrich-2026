@@ -4,7 +4,6 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
 
 <div class="clients-wrap">
   <h2 class="clients-label">Who I've worked with</h2>
-  <p class="clients-context">Two decades of engagements across industry, media, and the arts. Some I still operate today.</p>
   <div class="clients-strip" aria-hidden="true">
     <div class="clients-track">
       {[...brands, ...brands, ...brands].map((b) => (
@@ -20,8 +19,18 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
 <style>
   .clients-wrap {
     background: var(--white, oklch(99% 0 0));
+    padding: 1.75rem clamp(1.5rem, 4vw, 3.5rem);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .clients-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: clamp(1.5rem, 4vw, 3.5rem);
+    right: clamp(1.5rem, 4vw, 3.5rem);
     border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
-    padding: 1.75rem 0;
   }
 
   .clients-label {
@@ -29,7 +38,7 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
     font-weight: 400;
     letter-spacing: 0.02em;
     color: var(--ghost, oklch(50% 0.006 260));
-    padding: 0 clamp(1.5rem, 4vw, 3.5rem) 0.5rem;
+    padding: 0 0 0.5rem;
     margin: 0;
   }
 
@@ -43,7 +52,10 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
     max-width: 72ch;
   }
 
-  .clients-strip { overflow: hidden; }
+  .clients-strip {
+    overflow: hidden;
+    width: 100%;
+  }
 
   .clients-track {
     display: flex;

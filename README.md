@@ -8,7 +8,7 @@ Personal website built with Astro. Bauhaus-grid WebGL canvas hero, self-hosted f
 - WebGL2 Bauhaus grid canvas (Cover.astro)
 - [@fontsource-variable](https://fontsource.org) — Darker Grotesque + Hanken Grotesk (self-hosted, no Google Fonts)
 - [EmailJS](https://emailjs.com) for contact form (honeypot bot protection)
-- [GoatCounter](https://www.goatcounter.com) for privacy-friendly analytics
+- [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) for privacy-friendly analytics
 - Docker + nginx for serving (security headers, gzip, CSP)
 - Deployed to Hetzner via GitHub Actions (type-check gate, health check, rollback image)
 

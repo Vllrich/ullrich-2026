@@ -106,12 +106,12 @@ _Component: `Perspective.astro` · Section ID: `#method`_
 
 ### Method steps
 
-| #   | Title                    | Body                                                                                                                           |
-| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| 01  | Tune in                  | Understand the real problem, the data, and the constraints before writing code or reaching for a model. Most failures are framing failures, not technical ones.        |
-| 02  | Compose the architecture | Choose the right stack and shape the system: services, data, and where AI actually earns its place. Design for reliability, cost, and the team that inherits it.      |
-| 03  | Ship and harden          | Get it live, then make it dependable: tests, monitoring, guardrails, evals where AI is involved, and clear ownership.                                                 |
-| 04  | Adopt responsibly        | Governance sized to your company: security, data protection, EU AI Act readiness where it applies, decisions you can explain.                                         |
+| #   | Title                    | Body                                                                                                                                                             |
+| --- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 01  | Tune in                  | Understand the real problem, the data, and the constraints before writing code or reaching for a model. Most failures are framing failures, not technical ones.  |
+| 02  | Compose the architecture | Choose the right stack and shape the system: services, data, and where AI actually earns its place. Design for reliability, cost, and the team that inherits it. |
+| 03  | Ship and harden          | Get it live, then make it dependable: tests, monitoring, guardrails, evals where AI is involved, and clear ownership.                                            |
+| 04  | Adopt responsibly        | Governance sized to your company: security, data protection, EU AI Act readiness where it applies, decisions you can explain.                                    |
 
 ### Readiness pattern
 
@@ -216,7 +216,7 @@ _Component: `About.astro` · Section ID: `#about`_
 
 ### Bio
 
-> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer and director for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way. These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
+> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way. These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
 
 ### Disciplines
 

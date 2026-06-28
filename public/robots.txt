@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://larsullrich.de/sitemap.xml
+Sitemap: https://larsullrich.de/sitemap-index.xml

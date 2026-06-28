@@ -2,29 +2,29 @@
   "name": "ullrich-2026",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
-    "@astrojs/mdx": "^5.0.3",
-    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@emailjs/browser": "^4.4.1",
-    "@lottiefiles/dotlottie-web": "^0.69.0",
+    "@fontsource-variable/darker-grotesque": "^5.2.8",
+    "@fontsource-variable/hanken-grotesk": "^5.2.8",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.3",
-    "gsap": "^3.14.2",
-    "tailwindcss": "^4.2.2",
-    "three": "^0.183.2"
+    "astro": "^6.4.8",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
-    "sharp": "^0.34.5"
+    "@astrojs/check": "^0.9.9",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3"
   }
 }

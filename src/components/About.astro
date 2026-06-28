@@ -56,10 +56,10 @@ const stack = [
         <dd class="meta-graphic" aria-hidden="true">
           <img src="/graphics/icon-about.svg" alt="" loading="lazy" decoding="async" />
         </dd>
-        <dt class="meta-term">Location</dt>
+        <dt class="visually-hidden">Location</dt>
         <dd>Berlin, DE</dd>
         <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
-        <dt class="meta-term meta-sep">Open to</dt>
+        <dt class="meta-sep">Open to</dt>
         <dd>AI readiness &amp; production audits</dd>
         <dd>AI &amp; agent build sprints</dd>
         <dd>Reliability retainers</dd>
@@ -183,16 +183,6 @@ const stack = [
   }
   .meta-list dt,
   .meta-list dd { margin: 0; }
-
-  /* dt labels are for screen readers only; "Open to" is the exception - it acts as a visible separator */
-  .meta-term {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
 
   .meta-coords {
     color: var(--ghost, oklch(50% 0.006 260));

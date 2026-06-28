@@ -1,7 +1,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 COPY . .
 ARG PUBLIC_EMAILJS_PUBLIC_KEY
 ARG PUBLIC_EMAILJS_SERVICE_ID

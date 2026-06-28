@@ -36,6 +36,7 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
       data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
       data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
     >
+      <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" />
       <div class="mnt-form-row">
         <div class="mnt-form-group">
           <label for="mnt-name">Name</label>
@@ -65,9 +66,10 @@ const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
           <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
         </svg>
       </button>
-      <p class="mnt-feedback" id="mnt-form-error" style="display:none">
+      <p class="mnt-feedback" id="mnt-form-error" role="alert" aria-live="assertive" style="display:none">
         Something went wrong. Email directly: <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>
       </p>
+      <p class="visually-hidden" id="mnt-success-msg" aria-live="polite" aria-atomic="true"></p>
     </form>
   </div>
 
@@ -605,6 +607,9 @@ function validate(d: Record<string,string>) {
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+  // Honeypot check — bots fill hidden fields, humans don't
+  const hp = (form.querySelector('[name="_hp"]') as HTMLInputElement)?.value;
+  if (hp) return;
   const d = {
     name:    (document.getElementById('mnt-name')    as HTMLInputElement).value,
     email:   (document.getElementById('mnt-email')   as HTMLInputElement).value,
@@ -631,6 +636,7 @@ form.addEventListener('submit', async (e) => {
       submitBtn.classList.add('is-success');
       btnLabel.textContent = 'Message Sent';
       form.reset();
+      (document.getElementById('mnt-success-msg') as HTMLElement).textContent = 'Your message was sent successfully.';
       setTimeout(() => { submitBtn.classList.remove('is-success'); btnLabel.textContent = 'Send Message'; submitBtn.disabled = false; }, 3000);
     } else { throw new Error(); }
   } catch {

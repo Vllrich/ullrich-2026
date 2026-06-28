@@ -38,9 +38,9 @@ const schema = {
         addressCountry: 'DE',
       },
       sameAs: [
-        'https://github.com/larsullrich',
-        'https://www.linkedin.com/in/larsullrich',
-        'https://instagram.com/larsullrich',
+        'https://github.com/Vllrich',
+        'https://www.linkedin.com/in/lars-ullrich-47338a27/',
+        'https://www.instagram.com/vllrich/',
       ],
       knowsAbout: [
         'AI systems & ML',
@@ -129,9 +129,6 @@ const schema = {
   <meta name="theme-color" content="#fafafa" />
   <link rel="icon" type="image/png" href="/graphics/logo-lars-ullrich.png" />
   <link rel="apple-touch-icon" href="/graphics/logo-lars-ullrich-512.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;400;500;600;700;800;900&family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Lars Ullrich" />
   <meta property="og:locale" content="en_US" />
@@ -143,7 +140,8 @@ const schema = {
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageURL} />
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script is:inline data-goatcounter="https://sinusrider.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
 </head>
 <body>
   <div class="page">

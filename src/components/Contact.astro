@@ -33,6 +33,7 @@ const socials = [
         data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
         data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
       >
+        <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" />
         <div class="form-row">
           <div class="form-group">
             <label for="cf-name">Name</label>
@@ -62,9 +63,10 @@ const socials = [
             <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
           </svg>
         </button>
-        <p class="cf-feedback" id="cf-error" style="display:none">
+        <p class="cf-feedback" id="cf-error" role="alert" aria-live="assertive" style="display:none">
           Something went wrong. Please try again in a moment.
         </p>
+        <p class="visually-hidden" id="cf-success-msg" aria-live="polite" aria-atomic="true"></p>
       </form>
     </div>
   </div>
@@ -359,6 +361,9 @@ const socials = [
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Honeypot check — bots fill hidden fields, humans don't
+    const hp = (form.querySelector('[name="_hp"]') as HTMLInputElement)?.value;
+    if (hp) return;
     const data = {
       name:    (document.getElementById('cf-name')    as HTMLInputElement).value,
       email:   (document.getElementById('cf-email')   as HTMLInputElement).value,
@@ -385,6 +390,7 @@ const socials = [
         submitBtn.classList.add('is-success');
         btnLabel.textContent = 'Message Sent';
         form.reset();
+        (document.getElementById('cf-success-msg') as HTMLElement).textContent = 'Your message was sent successfully.';
         setTimeout(() => {
           submitBtn.classList.remove('is-success');
           btnLabel.textContent = 'Send Message';

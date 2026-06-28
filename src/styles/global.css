@@ -1,9 +1,11 @@
+@import '@fontsource-variable/darker-grotesque';
+@import '@fontsource-variable/hanken-grotesk';
 @import "tailwindcss";
 
 /* ── Design tokens ── */
 :root {
-  --font-display: "Darker Grotesque", system-ui, sans-serif;
-  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
+  --font-display: "Darker Grotesque Variable", "Darker Grotesque", system-ui, sans-serif;
+  --font-sans: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, sans-serif;
 
   /* Typography scale */
   --text-body-size: 1rem;

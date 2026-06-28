@@ -4,9 +4,9 @@ const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
 
 const socials = [
-  { label: 'GitHub',    href: 'https://github.com/larsullrich' },
-  { label: 'Instagram', href: 'https://instagram.com/larsullrich' },
-  { label: 'LinkedIn',  href: 'https://linkedin.com/in/larsullrich' },
+  { label: 'GitHub',    href: 'https://github.com/Vllrich' },
+  { label: 'Instagram', href: 'https://www.instagram.com/vllrich/' },
+  { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/lars-ullrich-47338a27/' },
 ];
 ---
 
@@ -22,12 +22,8 @@ const socials = [
         Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so. If I'm not, I'll tell you that too.
       </p>
 
-      <a href="mailto:contact@larsullrich.de" class="contact-email fade-up" data-delay="200">
-        contact@larsullrich.de
-      </a>
-
       <p class="contact-note fade-in" data-delay="320">
-        Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements. I read every message myself and usually reply within a day.
+        Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
       </p>
     </div>
 
@@ -67,7 +63,7 @@ const socials = [
           </svg>
         </button>
         <p class="cf-feedback" id="cf-error" style="display:none">
-          Something went wrong. Email directly: <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>
+          Something went wrong. Please try again in a moment.
         </p>
       </form>
     </div>
@@ -144,23 +140,6 @@ const socials = [
     color: rgba(255,255,255,0.7);
     max-width: 44ch;
     margin-bottom: 2rem;
-  }
-
-  .contact-email {
-    font-size: clamp(0.88rem, 1.4vw, 1rem);
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: #bbdd00;
-    text-decoration: none;
-    border-bottom: 1px solid rgba(187,221,0,0.4);
-    padding-bottom: 0.1em;
-    display: inline-block;
-    margin-bottom: 2rem;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .contact-email:hover {
-    color: #d4f033;
-    border-bottom-color: #bbdd00;
   }
 
   .contact-note {

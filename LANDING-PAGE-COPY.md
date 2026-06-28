@@ -29,15 +29,15 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 ## 1. Navigation & Hero
 
-*Component: `Cover.astro`*
+_Component: `Cover.astro`_
 
 ### Navigation
 
-| Element | Copy |
-|---------|------|
-| Logo | LARS ULLRICH |
+| Element    | Copy                                                                     |
+| ---------- | ------------------------------------------------------------------------ |
+| Logo       | LARS ULLRICH                                                             |
 | Descriptor | Production AI · Agent reliability · Full-Stack Engineer & Fractional CTO |
-| Nav links | What I Do · Method · Services · About · Contact |
+| Nav links  | What I Do · Method · Services · About · Contact                          |
 
 ### Hero
 
@@ -52,16 +52,16 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **CTAs**
 
-| Button | Copy |
-|--------|------|
-| Primary | Start a conversation |
-| Secondary | See how I work |
+| Button    | Copy                 |
+| --------- | -------------------- |
+| Primary   | Start a conversation |
+| Secondary | See how I work       |
 
 ---
 
 ## 2. What I Do
 
-*Component: `WhatIDo.astro` · Section ID: `#what-i-do`*
+_Component: `WhatIDo.astro` · Section ID: `#what-i-do`_
 
 ### Intro
 
@@ -91,7 +91,7 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 ## 3. Method
 
-*Component: `Perspective.astro` · Section ID: `#method`*
+_Component: `Perspective.astro` · Section ID: `#method`_
 
 ### Header
 
@@ -106,12 +106,12 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 ### Method steps
 
-| # | Title | Body |
-|---|-------|------|
-| 01 | Tune in | Understand the real problem, the data, and the constraints before touching a model. Most AI failures are framing failures. |
-| 02 | Compose the architecture | Choose the right tools, often agents and RAG over a custom model. Design for reliability, cost, and the team that inherits it. |
-| 03 | Ship and harden | Get it live, then make it dependable: evals, monitoring, guardrails, and clear ownership. |
-| 04 | Adopt responsibly | Governance sized to your company: data protection, EU AI Act readiness, decisions you can explain. |
+| #   | Title                    | Body                                                                                                                           |
+| --- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| 01  | Tune in                  | Understand the real problem, the data, and the constraints before touching a model. Most AI failures are framing failures.     |
+| 02  | Compose the architecture | Choose the right tools, often agents and RAG over a custom model. Design for reliability, cost, and the team that inherits it. |
+| 03  | Ship and harden          | Get it live, then make it dependable: evals, monitoring, guardrails, and clear ownership.                                      |
+| 04  | Adopt responsibly        | Governance sized to your company: data protection, EU AI Act readiness, decisions you can explain.                             |
 
 ### Readiness pattern
 
@@ -123,12 +123,12 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 > The four dimensions where production AI breaks, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.
 
-| Dimension | Typical starting point |
-|-----------|------------------------|
-| Problem framing | Usually solid (the team knows the problem) |
-| Stack & architecture | Mixed (works in the demo, untested under load) |
+| Dimension            | Typical starting point                                          |
+| -------------------- | --------------------------------------------------------------- |
+| Problem framing      | Usually solid (the team knows the problem)                      |
+| Stack & architecture | Mixed (works in the demo, untested under load)                  |
 | Production readiness | Usually the weak point (no evals, no monitoring, no guardrails) |
-| Governance | Rarely addressed yet |
+| Governance           | Rarely addressed yet                                            |
 
 ### Closing statement
 
@@ -139,7 +139,7 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 ## 4. Services
 
-*Component: `Services.astro` · Section ID: `#services`*
+_Component: `Services.astro` · Section ID: `#services`_
 
 ### Header
 
@@ -156,45 +156,45 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 ### Service 1 - Readiness & Production Audit
 
-| Field | Copy |
-|-------|------|
-| Category | Strategy |
-| Format | Fixed scope · 1-2 weeks |
+| Field       | Copy                                                                                                                                                                                                                          |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category    | Strategy                                                                                                                                                                                                                      |
+| Format      | Fixed scope · 1-2 weeks                                                                                                                                                                                                       |
 | Description | A focused review of your product, data, and stack: where AI fits, where it doesn't, and what it takes to run in production. You leave with a prioritized use-case shortlist, an honest build/buy/skip call, and a cost model. |
-| Tags | Use-case mapping · Agent feasibility · Build vs buy · Risk & EU AI Act check · Cost model |
+| Tags        | Use-case mapping · Agent feasibility · Build vs buy · Risk & EU AI Act check · Cost model                                                                                                                                     |
 
 ### Service 2 - Build Sprint
 
-| Field | Copy |
-|-------|------|
-| Category | Full-Stack |
-| Format | Project · 6-10 weeks |
+| Field       | Copy                                                                                                                                                               |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Category    | Full-Stack                                                                                                                                                         |
+| Format      | Project · 6-10 weeks                                                                                                                                               |
 | Description | One system shipped to production: the app, the infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo. |
-| Tags | Frontend to infra · Python & TypeScript · Agents & RAG · Open or hosted models · Monitoring & guardrails |
+| Tags        | Frontend to infra · Python & TypeScript · Agents & RAG · Open or hosted models · Monitoring & guardrails                                                           |
 
 ### Service 3 - Reliability Retainer
 
-| Field | Copy |
-|-------|------|
-| Category | Operations |
-| Format | Monthly · ongoing |
+| Field       | Copy                                                                                                                                                                                                                 |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category    | Operations                                                                                                                                                                                                           |
+| Format      | Monthly · ongoing                                                                                                                                                                                                    |
 | Description | The keep-it-running part, as a standing engagement: evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not be operating it alone. |
-| Tags | Evals & monitoring · Guardrails · Drift & cost control · Incident response |
+| Tags        | Evals & monitoring · Guardrails · Drift & cost control · Incident response                                                                                                                                           |
 
 ### Service 4 - Fractional CTO / CAIO
 
-| Field | Copy |
-|-------|------|
-| Category | Leadership |
-| Format | Monthly retainer |
+| Field       | Copy                                                                                                                                          |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category    | Leadership                                                                                                                                    |
+| Format      | Monthly retainer                                                                                                                              |
 | Description | Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. Technical, not purely advisory. |
-| Tags | Architecture & roadmap · Team & vendor selection · Delivery ownership · Board-level reporting |
+| Tags        | Architecture & roadmap · Team & vendor selection · Delivery ownership · Board-level reporting                                                 |
 
 ---
 
 ## 5. Clients
 
-*Component: `Clients.astro`*
+_Component: `Clients.astro`_
 
 **Section label**
 
@@ -212,7 +212,7 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ## 6. About
 
-*Component: `About.astro` · Section ID: `#about`*
+_Component: `About.astro` · Section ID: `#about`_
 
 ### Lead
 
@@ -234,28 +234,28 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ### Stack
 
-| Category | Technologies |
-|----------|--------------|
-| Languages | Python, TypeScript, JavaScript, C, C++, C#, Rust, GLSL |
-| AI / ML | PyTorch, LangChain, LlamaIndex, OpenAI & Anthropic APIs, open-weight models (Llama, Mistral, Qwen), vLLM, RAG pipelines, evals & guardrails, Hugging Face |
-| Infrastructure | Docker, GitHub Actions, PostgreSQL, Redis, pgvector / Pinecone, Supabase, Hetzner |
-| Scale & Ops | Nginx, Kubernetes, Terraform, Ansible, Cloudflare, Kafka, AWS, GCP, Grafana |
-| Web & Real-time | React, Next.js, Astro, Three.js, WebGL2, WebAssembly, Web Audio API |
-| Creative Tech | TouchDesigner, vvvv, Max/MSP, Unity, JUCE, OpenFrameworks |
+| Category        | Technologies                                                                                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Languages       | Python, TypeScript, JavaScript, C, C++, C#, Rust, GLSL                                                                                                    |
+| AI / ML         | PyTorch, LangChain, LlamaIndex, OpenAI & Anthropic APIs, open-weight models (Llama, Mistral, Qwen), vLLM, RAG pipelines, evals & guardrails, Hugging Face |
+| Infrastructure  | Docker, GitHub Actions, PostgreSQL, Redis, pgvector / Pinecone, Supabase, Hetzner                                                                         |
+| Scale & Ops     | Nginx, Kubernetes, Terraform, Ansible, Cloudflare, Kafka, AWS, GCP, Grafana                                                                               |
+| Web & Real-time | React, Next.js, Astro, Three.js, WebGL2, WebAssembly, Web Audio API                                                                                       |
+| Creative Tech   | TouchDesigner, vvvv, Max/MSP, Unity, JUCE, OpenFrameworks                                                                                                 |
 
 ### Sidebar meta
 
-| Label | Value |
-|-------|-------|
-| Location | Berlin, DE |
-| Coordinates | 52°31′ N · 13°23′ E |
-| Open to | AI readiness & production audits · AI & agent build sprints · Reliability retainers · Fractional CTO / CAIO |
+| Label       | Value                                                                                                       |
+| ----------- | ----------------------------------------------------------------------------------------------------------- |
+| Location    | Berlin, DE                                                                                                  |
+| Coordinates | 52°31′ N · 13°23′ E                                                                                         |
+| Open to     | AI readiness & production audits · AI & agent build sprints · Reliability retainers · Fractional CTO / CAIO |
 
 ---
 
 ## 7. FAQ
 
-*Component: `FAQ.astro` · Section ID: `#faq`*
+_Component: `FAQ.astro` · Section ID: `#faq`_
 
 **Headline**
 
@@ -300,7 +300,7 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ## 8. Contact & Footer
 
-*Component: `Contact.astro` · Section ID: `#contact`*
+_Component: `Contact.astro` · Section ID: `#contact`_
 
 ### Contact block
 
@@ -319,25 +319,25 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 **Availability note**
 
-> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements. I read every message myself and usually reply within a day.
+> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements. .
 
 ### Contact form
 
-| Field | Label | Placeholder |
-|-------|-------|-------------|
-| Name | Name | Your full name |
-| Email | Email | your@email.com |
-| Subject | Subject | What is this about? |
+| Field   | Label   | Placeholder                                   |
+| ------- | ------- | --------------------------------------------- |
+| Name    | Name    | Your full name                                |
+| Email   | Email   | your@email.com                                |
+| Subject | Subject | What is this about?                           |
 | Message | Message | What are you building, and where is it stuck? |
 
 **Submit button states**
 
-| State | Copy |
-|-------|------|
+| State   | Copy         |
+| ------- | ------------ |
 | Default | Send Message |
-| Loading | Sending... |
+| Loading | Sending...   |
 | Success | Message Sent |
-| Error | Try Again |
+| Error   | Try Again    |
 
 **Validation messages**
 
@@ -354,30 +354,30 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ### Footer
 
-| Element | Copy |
-|---------|------|
-| Logo | LARS ULLRICH |
-| Tagline | Production AI and agents. Built to ship, and to keep running. |
-| Social links | GitHub · Instagram · LinkedIn |
-| Legal link | Impressum |
-| Copyright | © 2026 Lars Ullrich. All rights reserved. |
+| Element      | Copy                                                          |
+| ------------ | ------------------------------------------------------------- |
+| Logo         | LARS ULLRICH                                                  |
+| Tagline      | Production AI and agents. Built to ship, and to keep running. |
+| Social links | GitHub · Instagram · LinkedIn                                 |
+| Legal link   | Impressum                                                     |
+| Copyright    | © 2026 Lars Ullrich. All rights reserved.                     |
 
 ---
 
 ## Appendix: Maintenance mode
 
-*Component: `Maintenance.astro` · Shown when `PUBLIC_MAINTENANCE_MODE=true`*
+_Component: `Maintenance.astro` · Shown when `PUBLIC_MAINTENANCE_MODE=true`_
 
 Replaces the full landing page with a simplified contact view.
 
-| Element | Copy |
-|---------|------|
-| Brand | LARS ULLRICH |
-| Tagline | Back soon. |
-| Label | - Get in Touch |
-| Headline | Temporarily offline. The work continues. |
-| Descriptor | Production AI · Agent reliability · Fractional CTO/CAIO |
-| Note | The site is offline for maintenance for a short while. Leave a message and I'll get back to you, usually within a day. |
+| Element    | Copy                                                                                                                   |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Brand      | LARS ULLRICH                                                                                                           |
+| Tagline    | Back soon.                                                                                                             |
+| Label      | - Get in Touch                                                                                                         |
+| Headline   | Temporarily offline. The work continues.                                                                               |
+| Descriptor | Production AI · Agent reliability · Fractional CTO/CAIO                                                                |
+| Note       | The site is offline for maintenance for a short while. Leave a message and I'll get back to you, usually within a day. |
 
 **Form labels & placeholders:** Name (Your full name), Email (your.email@example.com), Subject (What's the project?), Message (What are you trying to solve?).
 

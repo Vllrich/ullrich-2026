@@ -896,10 +896,16 @@ void main(){
   placeDrivers(gridParams.nDrivers);
 
   /* ── Word labels overlaid on the canvas ── */
-  /* Goethe-style fragment: "In the dark forge of silicon and thought, I kindle
-     minds that strive and endure — agents wrought to persist where others fade,
-     systems woven of logic and care, built to outlast their maker's hand."     */
-  const WORDS = ['Forge', 'Kindle', 'Strive', 'Endure', 'Wrought', 'Persist', 'Woven', 'Outlast'];
+  /* After Goethe — "The Living Work":
+     Who dazzles the crowd with a glittering show / has proved nothing yet of what he can do.
+     The work must stand alone when the candles burn low, / when no master's hand remains to see it through.
+     Twenty years I have forged and refined, / in tone and light, in the swift rush of code,
+     till a new spirit summoned and new work assigned: / the mind of the machine along its weightiest road.
+     The agents, those spirits I guide and constrain, / I set their limits, their purpose, their way,
+     that their working runs true, not darkened by strain, / and holds what must hold through the long arc of day.
+     No counsellor I, who watches from outside. / I write the code. I sit where the work is done.
+     I build what will stand when the morning has died, / what runs in the dark long after I am gone. */
+  const WORDS = ['Forge', 'Summon', 'Refine', 'Guide', 'Endure', 'Stand', 'Persist', 'Remain'];
   /* Use the sibling #grid-labels div; fall back to canvas parent so we
      always have a real DOM container even if the ID lookup misses.      */
   const labelsEl = document.getElementById('grid-labels') ?? canvas!.parentElement;

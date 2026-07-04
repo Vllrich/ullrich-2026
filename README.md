@@ -10,7 +10,7 @@ Personal website built with Astro. Bauhaus-grid WebGL canvas hero, self-hosted f
 - [EmailJS](https://emailjs.com) for contact form (honeypot bot protection)
 - [Cloudflare Web Analytics](https://www.cloudflare.com/web-analytics/) for privacy-friendly analytics
 - Docker + nginx for serving (security headers, gzip, CSP)
-- Deployed to Hetzner via GitHub Actions (type-check gate, health check, rollback image)
+- Deployed via GitHub Actions (type-check gate, health check, rollback image)
 
 ## Local Development
 
@@ -48,8 +48,8 @@ Push to `master` triggers the GitHub Actions workflow:
 
 | Name                         | Description                               |
 | ---------------------------- | ----------------------------------------- |
-| `HETZNER_HOST`               | Server IP address                         |
-| `HETZNER_SSH_KEY`            | Private SSH key (deploy user)             |
+| `DEPLOY_HOST`                | Server IP address                         |
+| `DEPLOY_SSH_KEY`             | Private SSH key (deploy user)             |
 | `PUBLIC_EMAILJS_PUBLIC_KEY`  | EmailJS public key                        |
 | `PUBLIC_EMAILJS_SERVICE_ID`  | EmailJS service ID                        |
 | `PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID                       |
@@ -62,8 +62,11 @@ Push to `master` triggers the GitHub Actions workflow:
 
 ## Server Setup Notes
 
-- TLS: Let's Encrypt cert mounted into the `larsullrich-nginx` Docker container from `/opt/larsullrich/ssl/`
-- Cert renewal: managed on the host (Certbot, ~90-day rotation)
-- SSH access: `deploy` user (member of `docker` group), not root
+- Host: netcup KVM VPS, Debian 13 (trixie)
+- TLS: Cloudflare Origin Certificate (15-year validity) mounted into the `larsullrich-nginx` Docker container from `/opt/larsullrich/ssl/`. Requires Cloudflare SSL/TLS mode "Full (strict)" on the zone. No renewal needed until 2041.
+- SSH access: `deploy` user (member of `sudo` and `docker` groups), key-only. Root login and password auth are disabled (`/etc/ssh/sshd_config.d/99-hardening.conf`).
+- Firewall: UFW, default deny inbound, only 22/80/443 open. `fail2ban` bans repeated SSH auth failures.
+- Patching: `unattended-upgrades` applies security updates automatically.
 - Rollback: `docker tag ullrich-2026:previous ullrich-2026:latest && docker compose up -d`
 - Inspect live nginx config: `docker exec larsullrich-nginx cat /etc/nginx/conf.d/default.conf`
+- Proxy config source of truth: `/opt/larsullrich/proxy/docker-compose.yml` + `default.conf` on the host (mirrors `nginx-vhost.conf` in this repo, which is documentation only and not deployed by CI/CD)

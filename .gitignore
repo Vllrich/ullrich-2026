@@ -8,3 +8,8 @@ dist/
 .DS_Store
 hetzner-ssh.txt
 larsullrich.de.txt
+new-server-ssh.txt
+cf-origin-cert.pem
+cf-origin-key.pem
+*.pem
+*.key

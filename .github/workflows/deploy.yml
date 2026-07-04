@@ -1,4 +1,4 @@
-name: Deploy to Hetzner
+name: Deploy to production
 
 on:
   push:
@@ -45,10 +45,10 @@ jobs:
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.HETZNER_HOST }}
+          host: ${{ secrets.DEPLOY_HOST }}
           # Requires a 'deploy' user on the server with docker group access and ownership of /opt/ullrich-2026
           username: deploy
-          key: ${{ secrets.HETZNER_SSH_KEY }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: 22
           source: "website.tar.gz,docker-compose.prod.yml"
           target: "/opt/ullrich-2026"
@@ -58,10 +58,10 @@ jobs:
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.1.0
         with:
-          host: ${{ secrets.HETZNER_HOST }}
+          host: ${{ secrets.DEPLOY_HOST }}
           # Requires a 'deploy' user on the server with docker group access and ownership of /opt/ullrich-2026
           username: deploy
-          key: ${{ secrets.HETZNER_SSH_KEY }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: 22
           timeout: 60s
           command_timeout: 10m

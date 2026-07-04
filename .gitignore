@@ -13,3 +13,4 @@ cf-origin-cert.pem
 cf-origin-key.pem
 *.pem
 *.key
+cloudflare-token.txt

@@ -54,6 +54,8 @@ Push to `master` triggers the GitHub Actions workflow:
 | `PUBLIC_EMAILJS_SERVICE_ID`  | EmailJS service ID                        |
 | `PUBLIC_EMAILJS_TEMPLATE_ID` | EmailJS template ID                       |
 
+> **Deprecated:** `HETZNER_HOST` and `HETZNER_SSH_KEY` are no longer used by the workflow (the old Hetzner server was decommissioned on 2026-07-04 after migrating to the current netcup host). Kept for now in case a rollback reference is needed; safe to delete later.
+
 ### Required GitHub Variables
 
 | Name                      | Description                                                            |

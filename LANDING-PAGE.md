@@ -3,7 +3,7 @@
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
 > **Source:** `src/pages/index.astro` and its components.  
-> **Last revised:** 2026-06-27 (tightened pass: shorter copy, no long dashes, niche kept general. See `AGENTS.md` for the house style.)
+> **Last revised:** 2026-06-30 (synced to live components: nav descriptor, WhatIDo services list, readiness scorecard, contact error copy. See `AGENTS.md` for the house style.)
 
 ---
 
@@ -36,7 +36,7 @@ _Component: `Cover.astro`_
 | Element    | Copy                                                                     |
 | ---------- | ------------------------------------------------------------------------ |
 | Logo       | LARS ULLRICH                                                             |
-| Descriptor | Production AI · Agent reliability · Full-Stack Engineer & Fractional CTO |
+| Descriptor | Agent reliability · Full-Stack Engineer & Fractional CTO                  |
 | Nav links  | What I Do · Method · Services · About · Contact                          |
 
 ### Hero
@@ -69,9 +69,12 @@ _Component: `WhatIDo.astro` · Section ID: `#what-i-do`_
 
 > I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
 
-**Supporting line**
+**Services list**
 
-> Twenty years building systems that fail in public if they fail at all. That's the standard I bring to AI in production.
+- Production AI
+- Agent reliability
+- Full-stack engineering
+- Fractional CTO / CAIO
 
 ### Three beats
 
@@ -113,22 +116,22 @@ _Component: `Perspective.astro` · Section ID: `#method`_
 | 03  | Ship and harden          | Get it live, then make it dependable: tests, monitoring, guardrails, evals where AI is involved, and clear ownership.                                            |
 | 04  | Adopt responsibly        | Governance sized to your company: security, data protection, EU AI Act readiness where it applies, decisions you can explain.                                    |
 
-### Readiness pattern
+### Readiness scorecard
 
 **Title**
 
-> Where teams usually start
+> Readiness scorecard
 
 **Context**
 
-> The four dimensions where production systems break, and where teams usually stand at the first engagement. Strong on framing, thin on what it takes to run.
+> A typical first engagement, scored across the four dimensions where production systems usually break. Most teams arrive strong on framing and weak on production readiness.
 
-| Dimension            | Typical starting point                                          |
-| -------------------- | --------------------------------------------------------------- |
-| Problem framing      | Usually solid (the team knows the problem)                      |
-| Stack & architecture | Mixed (works in the demo, untested under load)                  |
-| Production readiness | Usually the weak point (no evals, no monitoring, no guardrails) |
-| Governance           | Rarely addressed yet                                            |
+| Dimension            | Weight | Score (/ 10) |
+| -------------------- | ------ | ------------ |
+| Problem framing      | 35%    | 7            |
+| Stack & architecture | 30%    | 6            |
+| Production readiness | 25%    | 4            |
+| Governance           | 10%    | 3            |
 
 ### Closing statement
 
@@ -309,13 +312,9 @@ _Component: `Contact.astro` · Section ID: `#contact`_
 
 > Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so. If I'm not, I'll tell you that too.
 
-**Email**
-
-> contact@larsullrich.de
-
 **Availability note**
 
-> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements. .
+> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
 
 ### Contact form
 
@@ -346,7 +345,7 @@ _Component: `Contact.astro` · Section ID: `#contact`_
 
 **Error fallback**
 
-> Something went wrong. Email directly: contact@larsullrich.de
+> Something went wrong. Please try again in a moment.
 
 ### Footer
 
@@ -377,4 +376,4 @@ Replaces the full landing page with a simplified contact view.
 
 **Form labels & placeholders:** Name (Your full name), Email (your.email@example.com), Subject (What's the project?), Message (What are you trying to solve?).
 
-**Button & error copy:** same as main contact form.
+**Button states:** same as main contact form. **Error fallback:** Something went wrong. Email directly: contact@larsullrich.de

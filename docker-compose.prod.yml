@@ -3,5 +3,10 @@ services:
     image: ullrich-2026:latest
     container_name: ullrich-2026
     ports:
-      - "4000:80"
+      # Bound to localhost only: Docker's iptables rules bypass UFW for
+      # published ports, so a bare "4000:80" would be reachable from the
+      # public internet regardless of firewall rules. The reverse proxy
+      # reaches this container over the Docker network by name, not via
+      # this port; it's here for local debugging only.
+      - "127.0.0.1:4000:80"
     restart: unless-stopped

@@ -36,11 +36,13 @@
     <!-- Left: text content -->
     <div class="hero-text">
       <h1 class="hero-heading">
-        Anyone can build a demo<br/>
-        <span class="hero-heading-alt">Running it is the job</span>
+        Features are cheap<br/>
+        <span class="hero-heading-alt">Reliability is earned</span>
       </h1>
+      <span class="hero-badge">And strategy decides which you need...</span>
       <p class="hero-body">
-        I help growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
+        I help growing companies ship software that holds up in production, and keep it running<br/>
+        AI included, when it earns its place
       </p>
       <div class="hero-ctas">
         <a href="#contact" class="hero-cta-primary">Start a conversation</a>
@@ -125,11 +127,11 @@
   }
   .nav-links a:hover { color: var(--ink, #2C303C); }
 
-  /* ── Hero: white, 1280×960, split left/right ── */
+  /* ── Hero: white, 1280×720, split left/right ── */
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 960px;
+    height: 720px;
     background: #bbdd00;
     overflow: hidden;
     margin-top: -2rem; /* nav bar is same lime color — shift up so content sits at optical midpoint of nav+hero combined */
@@ -144,7 +146,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
-    padding: clamp(3rem, 5vw, 5rem) clamp(2.5rem, 5vw, 4.5rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 5vw, 4.5rem);
   }
 
   .hero-heading {
@@ -158,10 +160,25 @@
     text-wrap: balance;
   }
 
+  .hero-badge {
+    display: inline-block;
+    align-self: flex-start;
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink, #2C303C);
+    background: transparent;
+    border: 1px dotted var(--ink, #2C303C);
+    border-radius: 999px;
+    padding: 0.4em 0.9em;
+  }
+
   .hero-body {
-    font-size: var(--text-body-size, 1rem);
+    font-size: 0.9rem;
     font-weight: 400;
-    line-height: var(--text-body-lh, 1.875);
+    line-height: 1.6;
     color: var(--dim, oklch(28% 0.010 258));
     max-width: 42ch;
   }
@@ -280,7 +297,7 @@
       min-height: auto;
     }
     .hero-text {
-      padding: clamp(5rem, 12vw, 7rem) 1.5rem 2rem;
+      padding: clamp(3rem, 8vw, 4rem) 1.5rem 1.5rem;
     }
     .hero-heading { font-size: clamp(2rem, 7vw, 3.5rem); }
     .hero-graphic {

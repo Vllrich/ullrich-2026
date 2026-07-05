@@ -64,6 +64,7 @@ Push to `master` triggers the GitHub Actions workflow:
 
 ## Server Setup Notes
 
+- DNSSEC: enabled on the Cloudflare zone (2026-07-04). Status stays `pending` until the DS record is published at the domain registrar (not Cloudflare) — see `larsullrich.de. 3600 IN DS 2371 13 2 FEE6FE1E83F1D568DA3C878CFAD6652CCC01D12F970D7844052CA5E0A7D61657`. Re-check status via `GET /zones/{id}/dnssec` once added.
 - Host: netcup KVM VPS, Debian 13 (trixie)
 - TLS: Cloudflare Origin Certificate (15-year validity) mounted into the `larsullrich-nginx` Docker container from `/opt/larsullrich/ssl/`. Requires Cloudflare SSL/TLS mode "Full (strict)" on the zone. No renewal needed until 2041.
 - SSH access: `deploy` user (member of `sudo` and `docker` groups), key-only. Root login and password auth are disabled (`/etc/ssh/sshd_config.d/99-hardening.conf`).

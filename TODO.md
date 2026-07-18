@@ -30,6 +30,33 @@ Site-side work is done. Remaining items are operator-only.
 
 - [ ] Echte Cases in `src/data/work-patterns.ts` eintragen bzw. unter `/work/` erweitern
 
+## Site verbessern: von „gute Praxis-Site“ zu Top-Site
+
+Ziel: Proof und Authority nachziehen. Technik/Copy sind schon stark; ohne Outcomes und Off-site bleibt die Site eine Landing, kein Magnet.
+
+### Proof (höchster Hebel)
+
+- [ ] 2–3 Case Studies freigeben (anonym ok): Problem → Ansatz → Outcome-Typ. In `/work/` bzw. `src/data/work-patterns.ts` einhängen
+- [ ] Clients-Marquee entschärfen: Logos mit Kontext (was gemacht wurde) oder durch right-sized Proof ersetzen. Kein reines Name-Dropping
+- [ ] Pedigree an Reliability/Corporate-LLM-Claim koppeln (ein klarer Satz: warum Real-time/Production-Hintergrund die Zuverlässigkeit stützt)
+
+### Off-site Authority
+
+- [ ] LinkedIn + GitHub Entity aligned (siehe oben)
+- [ ] Regelmäßig 1–2 Posts/Monat zu Agent Reliability, Corporate LLM, EU AI Act mit Canonical-Links
+- [ ] 1–2 externe Mentions (Gastbeitrag, Podcast, Community, Directory) im DACH/EU-Tech-Kontext
+
+### Inhalt / DACH vertiefen (nur wenn Traffic oder Anfragen es rechtfertigen)
+
+- [ ] DE-Spiegel bei Bedarf um Audit- und Corporate-LLM-Produktseiten erweitern (nicht die ganze EN-Landing klonen)
+- [ ] FAQ/Cluster um wiederkehrende Buyer-Fragen aus echten Calls erweitern
+
+### Messung (alle 4–6 Wochen)
+
+- [ ] GSC: indexierte URLs, Impressions, Klicks auf Audit / Corporate LLM / DE-Start
+- [ ] Qualitative Leads: Anfragen, die Agent Reliability, Corporate LLM oder Audit nennen
+- [ ] LLM-Smoke-Tests wiederholen; Ziel: korrekte Zitation mit URL
+
 ## Erledigt (Referenz)
 
 - [x] GSC: Indexierung für Haupt-EN/DE-URLs beantragt (Kontingent 2026-07-18)

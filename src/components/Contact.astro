@@ -34,46 +34,66 @@ const socials = [
     </div>
 
     <div class="contact-right fade-up" data-delay="200">
-      <form id="contact-form" class="contact-form" novalidate
-        data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
-        data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
-        data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
-      >
-        <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" />
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cf-name">Name</label>
-            <input type="text" id="cf-name" name="name" placeholder="Your full name" required autocomplete="name" />
-            <span class="form-error" id="err-name"></span>
+      <div class="cf-slot" id="cf-slot">
+        <form id="contact-form" class="contact-form" novalidate
+          data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
+          data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
+          data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
+        >
+          <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" />
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your full name" required autocomplete="name" />
+              <span class="form-error" id="err-name"></span>
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email" />
+              <span class="form-error" id="err-email"></span>
+            </div>
           </div>
           <div class="form-group">
-            <label for="cf-email">Email</label>
-            <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email" />
-            <span class="form-error" id="err-email"></span>
+            <label for="cf-subject">Subject</label>
+            <input type="text" id="cf-subject" name="subject" placeholder="What is this about?" required />
+            <span class="form-error" id="err-subject"></span>
           </div>
+          <div class="form-group">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" rows="5" placeholder="What are you building, and where is it stuck?" required></textarea>
+            <span class="form-error" id="err-message"></span>
+          </div>
+          <button type="submit" id="cf-submit" class="cf-btn">
+            <span class="btn-label">Send Message</span>
+            <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
+              <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+            </svg>
+          </button>
+          <p class="cf-feedback" id="cf-error" role="alert" aria-live="assertive" style="display:none">
+            Something went wrong. Please try again in a moment.
+          </p>
+        </form>
+
+        <div
+          id="cf-success"
+          class="cf-success"
+          role="status"
+          aria-live="polite"
+          aria-labelledby="cf-success-title"
+          hidden
+        >
+          <p class="cf-success-mark" aria-hidden="true">✓</p>
+          <h3 id="cf-success-title" class="cf-success-title">Message sent</h3>
+          <p class="cf-success-body">
+            Thanks. I read every message personally and usually reply within a day.
+          </p>
+          <button type="button" class="cf-btn cf-success-close" id="cf-success-close">
+            Close
+          </button>
+          <p class="cf-success-timer" id="cf-success-timer" aria-hidden="true">Closes in 15s</p>
         </div>
-        <div class="form-group">
-          <label for="cf-subject">Subject</label>
-          <input type="text" id="cf-subject" name="subject" placeholder="What is this about?" required />
-          <span class="form-error" id="err-subject"></span>
-        </div>
-        <div class="form-group">
-          <label for="cf-message">Message</label>
-          <textarea id="cf-message" name="message" rows="5" placeholder="What are you building, and where is it stuck?" required></textarea>
-          <span class="form-error" id="err-message"></span>
-        </div>
-        <button type="submit" id="cf-submit" class="cf-btn">
-          <span class="btn-label">Send Message</span>
-          <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
-            <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
-          </svg>
-        </button>
-        <p class="cf-feedback" id="cf-error" role="alert" aria-live="assertive" style="display:none">
-          Something went wrong. Please try again in a moment.
-        </p>
-        <p class="visually-hidden" id="cf-success-msg" aria-live="polite" aria-atomic="true"></p>
-      </form>
+      </div>
     </div>
   </div>
 
@@ -167,6 +187,23 @@ const socials = [
 
   .contact-note a:hover {
     text-decoration: underline;
+  }
+
+  /* ── Form slot (same footprint for form + success) ── */
+  .cf-slot {
+    display: grid;
+    align-items: stretch;
+  }
+
+  .cf-slot > .contact-form,
+  .cf-slot > .cf-success {
+    grid-area: 1 / 1;
+    width: 100%;
+  }
+
+  .contact-form[hidden],
+  .cf-success[hidden] {
+    display: none;
   }
 
   /* ── Form ── */
@@ -273,6 +310,71 @@ const socials = [
   }
   .cf-feedback a { color: inherit; }
 
+  /* ── In-place success (same slot as form) ── */
+  .cf-success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.85rem;
+    box-sizing: border-box;
+    padding: 0.25rem 0;
+  }
+
+  .cf-success-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin: 0;
+    background: var(--cobalt, #bbdd00);
+    color: var(--ink, #2C303C);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .cf-success-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .cf-success-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0;
+    max-width: 36ch;
+  }
+
+  .cf-success-close {
+    align-self: flex-start;
+    margin-top: 0.35rem;
+  }
+
+  .cf-success-timer {
+    margin: 0;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cf-success:not([hidden]) {
+      animation: cf-success-in 0.22s ease;
+    }
+  }
+
+  @keyframes cf-success-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   /* ── Footer — green ── */
   .site-footer {
     padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3.5rem);
@@ -353,6 +455,64 @@ const socials = [
   const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement;
   const btnLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
   const errorBox = document.getElementById('cf-error') as HTMLElement;
+  const slot = document.getElementById('cf-slot') as HTMLElement;
+  const successPanel = document.getElementById('cf-success') as HTMLElement;
+  const successClose = document.getElementById('cf-success-close') as HTMLButtonElement;
+  const successTimer = document.getElementById('cf-success-timer') as HTMLElement;
+  const SUCCESS_MS = 15000;
+  let successTimeout: ReturnType<typeof setTimeout> | null = null;
+  let successInterval: ReturnType<typeof setInterval> | null = null;
+
+  function clearSuccessTimers() {
+    if (successTimeout) clearTimeout(successTimeout);
+    if (successInterval) clearInterval(successInterval);
+    successTimeout = null;
+    successInterval = null;
+  }
+
+  function showSuccess() {
+    const height = form.offsetHeight;
+    slot.style.minHeight = `${height}px`;
+    form.hidden = true;
+    form.setAttribute('aria-hidden', 'true');
+    successPanel.hidden = false;
+    successClose.focus();
+
+    let remaining = Math.round(SUCCESS_MS / 1000);
+    successTimer.textContent = `Closes in ${remaining}s`;
+    clearSuccessTimers();
+    successInterval = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        successTimer.textContent = 'Closing...';
+        return;
+      }
+      successTimer.textContent = `Closes in ${remaining}s`;
+    }, 1000);
+    successTimeout = setTimeout(() => hideSuccess(), SUCCESS_MS);
+  }
+
+  function hideSuccess() {
+    if (successPanel.hidden) return;
+    clearSuccessTimers();
+    successPanel.hidden = true;
+    form.hidden = false;
+    form.removeAttribute('aria-hidden');
+    slot.style.minHeight = '';
+    submitBtn.classList.remove('is-success', 'is-loading');
+    btnLabel.textContent = 'Send Message';
+    submitBtn.disabled = false;
+    submitBtn.focus();
+  }
+
+  successClose.addEventListener('click', () => hideSuccess());
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !successPanel.hidden) {
+      e.preventDefault();
+      hideSuccess();
+    }
+  });
 
   function setError(fieldId: string, errId: string, msg: string) {
     const el  = document.getElementById(fieldId) as HTMLElement;
@@ -404,15 +564,8 @@ const socials = [
       });
       if (res.status === 200) {
         submitBtn.classList.remove('is-loading');
-        submitBtn.classList.add('is-success');
-        btnLabel.textContent = 'Message Sent';
         form.reset();
-        (document.getElementById('cf-success-msg') as HTMLElement).textContent = 'Your message was sent successfully.';
-        setTimeout(() => {
-          submitBtn.classList.remove('is-success');
-          btnLabel.textContent = 'Send Message';
-          submitBtn.disabled = false;
-        }, 3000);
+        showSuccess();
       } else { throw new Error(); }
     } catch {
       submitBtn.classList.remove('is-loading');

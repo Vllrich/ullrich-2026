@@ -388,6 +388,15 @@ _Component: `Contact.astro` · Section ID: `#contact`_
 
 > Something went wrong. Please try again in a moment.
 
+**Success panel (in place of form, same footprint, auto-closes after 15s)**
+
+| Element | Copy                                                                    |
+| ------- | ----------------------------------------------------------------------- |
+| Title   | Message sent                                                            |
+| Body    | Thanks. I read every message personally and usually reply within a day. |
+| Button  | Close                                                                   |
+| Timer   | Closes in Ns                                                            |
+
 ### Footer
 
 | Element      | Copy                                                          |

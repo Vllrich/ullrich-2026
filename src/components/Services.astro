@@ -1,4 +1,6 @@
 ---
+import DiagnoseIcon from './DiagnoseIcon.astro';
+
 const services = [
   {
     title: 'Readiness & Production Audit',
@@ -55,7 +57,7 @@ const services = [
       <p class="svc-sub fade-up" data-delay="80">A focused audit, a corporate LLM stack, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.</p>
     </div>
     <div class="svc-header-right" aria-hidden="true">
-      <img src="/graphics/icon-diagnose.svg" alt="" class="svc-diagnose-img" loading="lazy" decoding="async" />
+      <DiagnoseIcon />
     </div>
   </div>
 
@@ -107,13 +109,6 @@ const services = [
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .svc-diagnose-img {
-    width: 100%;
-    max-width: 340px;
-    height: auto;
-    display: block;
   }
 
   @media (max-width: 760px) {

@@ -281,6 +281,7 @@
     width: 32px;
     height: 32px;
     object-fit: contain;
+    background: transparent;
     transform: translate(-50%, -50%);
     user-select: none;
     pointer-events: none;
@@ -406,9 +407,8 @@ const gridParams = {
   amp:      2.4,  /* pulse amplitude — how much drivers expand  */
   speed:    1.0,  /* playback speed multiplier                  */
   nDrivers: 8,    /* how many of the 8 driver cells are active  */
-  gapCSS:   1,    /* gap between cells in CSS pixels            */
-  tension:  0.04, /* spring stiffness k — response speed        */
-  bounce:   0.10, /* bounciness 0–1: maps to damping 0.97–0.68  */
+  gapCSS:   2,    /* gap between cells in CSS pixels            */
+  ease:     0.12, /* exponential follow toward pulse target     */
 };
 
 /* ── Grid shader: 16×16 push-layout squares (v3) ── */
@@ -532,35 +532,32 @@ void main(){
 
   float fc = float(col);
   float fr = float(row);
-  vec3 rgb;
 
-  /* ~14% of cells are solid site lime (pattern fixed by u_limeSeed). */
-  if (hash21(vec2(fc, fr) + u_limeSeed * 17.3) < 0.14) {
-    rgb = LIME;
-  } else {
-    /* 2D bloom field: colour comes from proximity to the REAL driver cells,
-       not from cell size. This avoids the column×row lattice artefact —
-       only the actual (random) driver positions light up.                  */
-    float bloom = 0.0;
-    const float sigma = 1.6; /* bloom radius in cells */
-    for(int i = 0; i < 8; i++){
-      if(i >= u_drvN) break;
-      float dc = fc - u_drv[i].x;
-      float dr = fr - u_drv[i].y;
-      float d2 = dc*dc + dr*dr;
-      float b  = u_drv[i].z * exp(-d2 / (2.0 * sigma * sigma));
-      bloom = max(bloom, b);
-    }
-
-    /* Cap bloom so open cells go whitish behind icons, but never full white. */
-    float t = clamp(0.04 + bloom * 0.95, 0.0, 0.88);
-    /* Stable per-cell alpha (no bloom threshold — that caused flicker). */
-    float cellA = 0.25 + hash21(vec2(fc + 5.2, fr + 9.1) + u_limeSeed * 3.7) * 0.75;
-    vec3 lit = cellColor(t);
-    rgb = mix(BG, lit, cellA);
-    /* Bloom smoothly lifts toward the lit colour. */
-    rgb = mix(rgb, lit, smoothstep(0.12, 0.60, t));
+  /* 2D bloom field: colour comes from proximity to the REAL driver cells,
+     not from cell size. This avoids the column×row lattice artefact —
+     only the actual (random) driver positions light up.                  */
+  float bloom = 0.0;
+  const float sigma = 1.6; /* bloom radius in cells */
+  for(int i = 0; i < 8; i++){
+    if(i >= u_drvN) break;
+    float dc = fc - u_drv[i].x;
+    float dr = fr - u_drv[i].y;
+    float d2 = dc*dc + dr*dr;
+    float b  = u_drv[i].z * exp(-d2 / (2.0 * sigma * sigma));
+    bloom = max(bloom, b);
   }
+
+  /* Cap bloom so open cells go whitish behind icons, but never full white. */
+  float t = clamp(0.04 + bloom * 0.95, 0.0, 0.88);
+  /* Narrow alpha range — wide 0.25–1.0 contrast flickered at moving edges. */
+  float cellA = 0.55 + hash21(vec2(fc + 5.2, fr + 9.1) + u_limeSeed * 3.7) * 0.35;
+  vec3 lit = cellColor(t);
+  vec3 rgb = mix(BG, lit, cellA);
+  /* Soft lime accent (no hard binary branch — that flickered at cell edges). */
+  float limeAmt = smoothstep(0.82, 0.92, hash21(vec2(fc, fr) + u_limeSeed * 17.3));
+  rgb = mix(rgb, LIME, limeAmt * (1.0 - smoothstep(0.15, 0.55, t)));
+  /* Bloom smoothly lifts toward the lit colour. */
+  rgb = mix(rgb, lit, smoothstep(0.12, 0.60, t));
 
   fragColor = vec4(mix(BG, rgb, edge), 1.0);
 }`;
@@ -597,8 +594,8 @@ void main(){
   let limeSeed = Math.random() * 1000;
 
   /* ── Driver config ─────────────────────────────────────────────
-     Drivers start spread-out and respawn at a well-spread position
-     each time their sine wave starts a fresh positive cycle.
+     Drivers are placed once at init and stay put. Icons may swap while
+     a cell is closed. Moving drivers mid-run caused layout jumps.
      ─────────────────────────────────────────────────────────────── */
   const ND          = 8;
   const GS          = 16;
@@ -606,6 +603,8 @@ void main(){
   const driverRows: number[] = new Array(ND).fill(0);
   const driverPhase = [0.00, 1.10, 2.30, 4.70, 0.70, 3.10, 5.50, 2.00];
   const driverFreq  = [0.28, 0.41, 0.33, 0.55, 0.22, 0.48, 0.37, 0.63];
+  /* Icon swap once per closed half — positions stay fixed (no layout teleport). */
+  const iconArmed = new Uint8Array(ND);
 
   /* Skyline profile — fixed at init. Left half stays low; right half climbs hard.
      Adjacent columns sometimes share a height so blocks read as buildings.
@@ -671,23 +670,6 @@ void main(){
     }
   }
 
-  /* On respawn: pick a free column-zone, then a floor inside its skyline. */
-  function pickFreeZonePos(self: number, n: number): [number, number] {
-    const stride = GS / n;
-    const usedC = new Set<number>();
-    for (let i = 0; i < n; i++) {
-      if (i === self) continue;
-      usedC.add(Math.floor(driverCols[i] / stride));
-    }
-    const freeC: number[] = [];
-    for (let z = 0; z < n; z++) if (!usedC.has(z)) freeC.push(z);
-    const cz = freeC[Math.floor(Math.random() * freeC.length)] ?? Math.floor(Math.random() * n);
-    const col = Math.floor(cz * stride + Math.random() * stride);
-    const floors = Math.max(1, Math.floor(buildingH[col]));
-    const row = Math.floor(Math.random() * floors);
-    return clampToSkyline(col, row);
-  }
-
   placeDrivers(gridParams.nDrivers);
 
   /* ── Icons overlaid on open driver cells ── */
@@ -741,10 +723,14 @@ void main(){
     labelsEl?.appendChild(el);
     iconEls.push(el);
   }
+  /* Warm the image cache so icon swaps don't flash empty frames. */
+  for (const src of ICONS) {
+    const warm = new Image();
+    warm.src = src;
+  }
   for (let d = 0; d < ND; d++) iconEls[d].src = pickIcon(d);
 
-  const dpulse    = new Float32Array(ND);
-  const prevPulse = new Float32Array(ND); /* for zero-crossing detection */
+  const dpulse = new Float32Array(ND);
   const colW: number[] = new Array(GS).fill(0);
   const rowH: number[] = new Array(GS).fill(0);
   const colsData = new Float32Array(32); /* 8 vec4s: colX[16] + colW[16] */
@@ -833,36 +819,35 @@ void main(){
       dpulse[d] = Math.sin(time * driverFreq[d] * gridParams.speed + driverPhase[d]);
     }
 
-    /* Respawn: when a driver's pulse crosses zero going upward (starts a new
-       positive cycle) it jumps to a well-spread cell, resets its spring, and
-       picks a fresh random icon for the next open.                            */
+    /* Icon-only cycle while closed. Driver cells stay put — relocating
+       columns was the main source of layout jumps and late flicker. */
     for (let d = 0; d < nd; d++) {
-      if (d !== dragDriver && prevPulse[d] < 0 && dpulse[d] >= 0) {
-        [driverCols[d], driverRows[d]] = pickFreeZonePos(d, nd);
-        driverDelta[d] = 0;
-        driverDV[d]    = 0;
+      if (dpulse[d] >= 0) {
+        iconArmed[d] = 1;
+      } else if (
+        d !== dragDriver &&
+        iconArmed[d] &&
+        dpulse[d] < -0.45 &&
+        Math.abs(driverDelta[d]) < 0.5
+      ) {
         iconEls[d].src = pickIcon(d);
+        iconArmed[d] = 0;
       }
-      prevPulse[d] = dpulse[d];
     }
 
-    /* 2. Spring physics — each driver's expansion springs toward its target.
-          k (tension) controls response speed; damp controls overshoot / ring. */
-    const springK    = gridParams.tension;
-    const springDamp = 0.97 - gridParams.bounce * 0.29; /* bounce 0→1 maps to damp 0.97→0.68 */
+    /* 2. Smooth follow toward pulse target — no spring overshoot/ring. */
+    const ease = gridParams.ease;
     for (let d = 0; d < nd; d++) {
-      /* Only expand (never shrink below rest) — negative pulses caused layout thrash / flicker. */
-      const target    = Math.max(0, dpulse[d]) * unit * gridParams.amp;
-      driverDV[d]     = (driverDV[d] + (target - driverDelta[d]) * springK) * springDamp;
-      driverDelta[d] += driverDV[d];
+      const target = Math.max(0, dpulse[d]) * unit * gridParams.amp;
+      driverDelta[d] += (target - driverDelta[d]) * ease;
+      driverDV[d] = target - driverDelta[d]; /* retained for colour velocity only */
     }
-    /* Inactive drivers spring back to zero */
     for (let d = nd; d < ND; d++) {
-      driverDV[d]     = (driverDV[d] - driverDelta[d] * springK) * springDamp;
-      driverDelta[d] += driverDV[d];
+      driverDelta[d] += (0 - driverDelta[d]) * ease;
+      driverDV[d] = -driverDelta[d];
     }
 
-    /* 3. Layout using spring positions (not raw pulse).
+    /* 3. Layout using smoothed expansions.
           Columns always expand. Rows expand only for right-half drivers
           on floors above the left skyline, so left buildings stay under
           the pixel height cap. */
@@ -871,7 +856,7 @@ void main(){
     for (let d = 0; d < nd; d++) {
       const dc    = driverCols[d];
       const dr    = driverRows[d];
-      const delta = driverDelta[d]; /* smoothed by spring */
+      const delta = driverDelta[d];
 
       colW[dc] += delta;
       const shareW = delta / (GS - 1);

@@ -2,34 +2,36 @@
 
 ## Operator: Google index + DACH visibility
 
-### Phase 0 (do now)
+Site-side work is done. Remaining items are operator-only.
 
-- [ ] Search Console (domain property `larsullrich.de`): request indexing for
-  - `/`
-  - `/about/`
-  - `/agent-reliability/`
-  - `/fractional-cto-caio/`
-  - `/eu-ai-act-readiness/`
-  - `/work/patterns/`
-  - `/services/readiness-audit/`
-  - `/de/`
-  - `/de/agenten-zuverlaessigkeit/`
-  - `/de/fractional-cto-caio/`
-  - `/de/eu-ai-act-readiness/`
-  - `/de/impressum/`
-- [ ] Confirm sitemap lists EN + DE URLs: `https://larsullrich.de/sitemap-index.xml`
-- [ ] LinkedIn: headline/about = "Production AI, agent reliability, fractional CTO / CAIO · Berlin". Website `https://larsullrich.de`
-- [ ] GitHub (`Vllrich`): bio + website `https://larsullrich.de`
+### Morgen (GSC-Kontingent)
 
-### After 1-2 weeks
+- [ ] Search Console (Property `larsullrich.de`): Indexierung beantragen für `https://larsullrich.de/de/impressum/`
 
-- [ ] GSC: impressions on brand + at least one non-brand query
-- [ ] LLM smoke tests: "fractional CAIO Berlin", "agent reliability consultant", "Lars Ullrich AI"
-- [ ] LinkedIn: 1 post each on agent reliability and EU AI Act readiness, linking canonical pages
+### Bald (Off-site Entity)
 
-### When case studies are cleared
+- [ ] LinkedIn: Headline/About = "Production AI, agent reliability, fractional CTO / CAIO · Berlin". Website `https://larsullrich.de`
+- [ ] GitHub (`Vllrich`): Bio + Website `https://larsullrich.de`
 
-- [ ] Replace or extend patterns in `src/data/work-patterns.ts` with named (or still anonymous) cases under `/work/`
+### In 1-2 Wochen (Messung)
+
+- [ ] GSC prüfen: Impressions auf Brand + mindestens eine Non-Brand-Query
+- [ ] LLM-Smoke-Tests (ChatGPT / Perplexity / Grok):
+  - "fractional CAIO Berlin"
+  - "agent reliability consultant"
+  - "Lars Ullrich AI"
+  - Erfolg: korrekter Name, Rolle, URL
+- [ ] LinkedIn: 1 Post zu Agent Reliability + 1 Post zu EU AI Act, jeweils mit Link auf die Canonical-Seite
+
+### Später (wenn Case Studies freigegeben)
+
+- [ ] Echte Cases in `src/data/work-patterns.ts` eintragen bzw. unter `/work/` erweitern
+
+## Erledigt (Referenz)
+
+- [x] GSC: Indexierung für Haupt-EN/DE-URLs beantragt (Kontingent 2026-07-18)
+- [x] Sitemap: `https://larsullrich.de/sitemap-index.xml`
+- [x] EN Topic-Cluster + DE-Spiegel + hreflang + Audit-CTAs live
 
 ## Notes
 

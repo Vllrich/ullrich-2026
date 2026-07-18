@@ -1,0 +1,63 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import { languageAlternates } from '../../lib/i18n';
+
+const description =
+  'Corporate LLM: ein Unternehmens-LLM-Stack unter eurer Kontrolle. Private oder offene Modelle, RAG über eure Daten, Zugriffssteuerung, Kostenlimits und Ops.';
+
+const alternates = languageAlternates('/corporate-llm/', '/de/corporate-llm/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/de/corporate-llm/#webpage',
+  url: 'https://larsullrich.de/de/corporate-llm/',
+  name: 'Corporate LLM',
+  description,
+  inLanguage: 'de',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="Corporate LLM - Lars Ullrich"
+  description={description}
+  canonical="/de/corporate-llm/"
+  lang="de"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  homeHref="/de/"
+  backLabel="← Zur Startseite"
+  contactHref="/de/#kontakt"
+  ctaLabel="Mit dem Readiness Audit starten"
+  localeSwitch={{ href: '/corporate-llm/', label: 'English' }}
+>
+  <h1>Corporate LLM</h1>
+  <p>
+    Die meisten Unternehmen brauchen keinen weiteren Consumer-Chatbot. Sie brauchen einen LLM-Stack zu ihren Bedingungen: Datenresidenz, wer was fragen darf, worauf das System zugreifen darf, was es kostet, und wer gerufen wird, wenn es bricht. Das ist Corporate LLM. Projekt, typisch 6-12 Wochen.
+  </p>
+
+  <h2>Was gebaut wird</h2>
+  <ul>
+    <li>Modellwahl: Hosted APIs wo sinnvoll, Open-Weight-Modelle bei euch, wenn Daten, Kosten oder Lock-in es erfordern</li>
+    <li>RAG und Tools über eure Dokumente und Systeme, mit klaren Grenzen</li>
+    <li>Zugriffssteuerung, Audit-Trails, Rate- oder Budget-Limits</li>
+    <li>Ops: Monitoring, Evals und ein Pfad, es nach dem Launch zu betreiben</li>
+  </ul>
+
+  <h2>Unterschied zum Build Sprint</h2>
+  <p>
+    Ein Build Sprint liefert ein Produktsystem mit KI darin. Corporate LLM ist die geteilte Unternehmensfähigkeit: die Plattform, die interne Teams (manchmal auch Kunden) unter euren Policies nutzen. Gleiche Engineering-Latte. Anderer Scope.
+  </p>
+
+  <h2>Wo starten</h2>
+  <p>
+    Unklar, ob Plattform oder einzelner Use Case?
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Klar, dass ihr einen privaten oder hybriden LLM-Stack braucht? Dieses Engagement.
+    Mehr:
+    <a href="/de/agenten-zuverlaessigkeit/">Agenten-Zuverlässigkeit</a>,
+    <a href="/de/eu-ai-act-readiness/">EU-AI-Act-Readiness</a>.
+  </p>
+</ContentPage>

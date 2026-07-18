@@ -6,7 +6,10 @@ Site-side work is done. Remaining items are operator-only.
 
 ### Morgen (GSC-Kontingent)
 
-- [ ] Search Console (Property `larsullrich.de`): Indexierung beantragen für `https://larsullrich.de/de/impressum/`
+- [ ] Search Console (Property `larsullrich.de`): Indexierung beantragen für
+  - `https://larsullrich.de/de/impressum/`
+  - `https://larsullrich.de/corporate-llm/`
+  - `https://larsullrich.de/de/corporate-llm/`
 
 ### Bald (Off-site Entity)
 

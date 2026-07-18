@@ -1,0 +1,78 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import { languageAlternates } from '../lib/i18n';
+
+const description =
+  'Corporate LLM: a company LLM stack you control. Private or open models, RAG over your data, access control, cost limits, and ops under your policies.';
+
+const alternates = languageAlternates('/corporate-llm/', '/de/corporate-llm/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://larsullrich.de/corporate-llm/#webpage',
+      url: 'https://larsullrich.de/corporate-llm/',
+      name: 'Corporate LLM',
+      description,
+      inLanguage: 'en',
+      isPartOf: { '@id': 'https://larsullrich.de/#website' },
+      author: { '@id': 'https://larsullrich.de/#person' },
+      about: {
+        '@type': 'DefinedTerm',
+        name: 'Corporate LLM',
+        description,
+      },
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://larsullrich.de/corporate-llm/#service',
+      name: 'Corporate LLM',
+      url: 'https://larsullrich.de/corporate-llm/',
+      description,
+      provider: { '@id': 'https://larsullrich.de/#person' },
+      areaServed: ['DE', 'EU', 'Worldwide'],
+      serviceType: 'Corporate LLM platform build',
+    },
+  ],
+};
+---
+
+<ContentPage
+  title="Corporate LLM - Lars Ullrich"
+  description={description}
+  canonical="/corporate-llm/"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/corporate-llm/', label: 'Deutsch' }}
+>
+  <h1>Corporate LLM</h1>
+  <p>
+    Most companies do not need another consumer chatbot. They need an LLM stack that runs on their terms: data residency, who can ask what, what it may touch, what it costs, and who gets paged when it breaks. That is a Corporate LLM. Project engagement, typically 6-12 weeks.
+  </p>
+
+  <h2>What gets built</h2>
+  <ul>
+    <li>Model choice: hosted APIs where they fit, open-weight models you host when data, cost, or lock-in require it</li>
+    <li>RAG and tools over your documents and systems, with clear boundaries</li>
+    <li>Access control, audit trails, and rate or budget limits</li>
+    <li>Ops: monitoring, evals, and a path to keep it running after launch</li>
+  </ul>
+
+  <h2>How this differs from a Build Sprint</h2>
+  <p>
+    A Build Sprint ships one product system with AI inside it. Corporate LLM is the shared company capability: the platform internal teams (and sometimes customers) use under your policies. Same engineering bar. Different scope.
+  </p>
+
+  <h2>Where to start</h2>
+  <p>
+    Unsure whether you need a platform or a single use case? Start with the
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Already clear you need a private or hybrid LLM stack? This engagement.
+    Related:
+    <a href="/agent-reliability/">agent reliability</a>,
+    <a href="/eu-ai-act-readiness/">EU AI Act readiness</a>,
+    <a href="/work/patterns/">engagement patterns</a>.
+  </p>
+</ContentPage>

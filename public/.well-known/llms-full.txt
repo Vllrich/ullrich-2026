@@ -28,6 +28,12 @@ More: https://larsullrich.de/fractional-cto-caio/
 
 Both. Hosted APIs are often the fastest start. When data has to stay in your infrastructure, when per-token cost does not scale, or when you want to avoid vendor lock-in, I build on open models like Llama, Mistral, or Qwen, self-hosted on infrastructure you control.
 
+## Corporate LLM
+
+A company LLM stack under your policies: private or open models, RAG over your data, access control, cost limits, and ops. Not a consumer chatbot bolted onto Slack. Project engagement, typically 6-12 weeks. Differs from a Build Sprint: Corporate LLM is the shared company capability; a Build Sprint ships one product system.
+
+More: https://larsullrich.de/corporate-llm/ · German: https://larsullrich.de/de/corporate-llm/
+
 ## Method
 
 1. Tune in: understand the real problem, data, and constraints before writing code or reaching for a model.
@@ -42,6 +48,9 @@ Fixed scope, 1-2 weeks. Focused review of product, data, and stack: where AI fit
 
 ### Build Sprint
 Project, 6-10 weeks. One system shipped to production: app, infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo.
+
+### Corporate LLM
+Project, 6-12 weeks. Company LLM platform: model choice, RAG, access and audit, cost limits, production ops under company policy.
 
 ### Reliability Retainer
 Monthly, ongoing. Evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not operate it alone.

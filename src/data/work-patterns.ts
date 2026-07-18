@@ -44,6 +44,18 @@ export const workPatterns: WorkPattern[] = [
     caseStudyReady: false,
   },
   {
+    id: 'corporate-llm',
+    title: 'Corporate LLM as a shared company capability',
+    sector: 'Internal platforms / knowledge work',
+    problem:
+      'Teams bolted consumer chat onto Slack or Notion. Data paths were unclear, cost spiked, and nobody owned access, evals, or incidents.',
+    approach:
+      'Corporate LLM engagement: model choice (hosted and/or open), RAG over approved corpora, access and audit trails, budget limits, monitoring and a reliability path.',
+    outcome:
+      'One internal LLM stack under company policy, usable by multiple teams without reinventing the plumbing each time.',
+    caseStudyReady: false,
+  },
+  {
     id: 'readiness-audit',
     title: 'Build, buy, or skip before the sprint',
     sector: 'Seed to Series B / growing companies',

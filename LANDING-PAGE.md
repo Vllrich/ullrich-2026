@@ -32,6 +32,8 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 | `/about/` | Entity page: who Lars is |
 | `/agent-reliability/` | Definition of agent reliability |
 | `/fractional-cto-caio/` | Fractional CTO / CAIO role |
+| `/corporate-llm/` | Corporate LLM platform engagement |
+| `/de/corporate-llm/` | German mirror |
 | `/eu-ai-act-readiness/` | EU AI Act readiness (audit scope) |
 | `/work/patterns/` | Anonymized engagement patterns (cases later) |
 | `/services/readiness-audit/` | Top-of-funnel audit product page |
@@ -86,6 +88,7 @@ _Component: `WhatIDo.astro` · Section ID: `#what-i-do`_
 **Services list**
 
 - Production AI
+- Corporate LLM
 - Agent reliability
 - Full-stack engineering
 - Fractional CTO / CAIO
@@ -169,7 +172,7 @@ _Component: `Services.astro` · Section ID: `#services`_
 
 **Subhead**
 
-> A focused audit, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.
+> A focused audit, a corporate LLM stack, one system shipped, ongoing reliability, or embedded leadership. Pick the depth you need.
 
 ### Service 1 - Readiness & Production Audit
 
@@ -189,7 +192,17 @@ _Component: `Services.astro` · Section ID: `#services`_
 | Description | One system shipped to production: the app, the infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo. |
 | Tags        | Frontend to infra · Python & TypeScript · Agents & RAG · Open or hosted models · Monitoring & guardrails                                                           |
 
-### Service 3 - Reliability Retainer
+### Service 3 - Corporate LLM
+
+| Field       | Copy                                                                                                                                                                                                 |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Category    | Platform                                                                                                                                                                                             |
+| Format      | Project · 6-12 weeks                                                                                                                                                                                 |
+| Description | A company LLM stack you can actually run: private or open models, RAG over your data, access control, cost limits, and ops. Built for internal use under your policies, not a consumer chatbot bolted on. |
+| Tags        | Private / open models · RAG over company data · Access & audit trails · Cost & rate limits · EU-ready ops                                                                                            |
+| Title link  | [/corporate-llm/](/corporate-llm/)                                                                                                                                                                   |
+
+### Service 4 - Reliability Retainer
 
 | Field       | Copy                                                                                                                                                                                                                 |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -199,7 +212,7 @@ _Component: `Services.astro` · Section ID: `#services`_
 | Tags        | Evals & monitoring · Guardrails · Drift & cost control · Incident response                                                                                                                                           |
 | Title link  | [/agent-reliability/](/agent-reliability/)                                                                                                                                                                           |
 
-### Service 4 - Fractional CTO / CAIO
+### Service 5 - Fractional CTO / CAIO
 
 | Field       | Copy                                                                                                                                          |
 | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -294,6 +307,14 @@ _Component: `FAQ.astro` · Section ID: `#faq`_
 **Do you work with open models, or only hosted APIs like OpenAI?**
 
 > Both. Hosted APIs are often the fastest start. But when data has to stay in your infrastructure, when per-token cost does not scale, or when you want to avoid vendor lock-in, I build on open models like Llama, Mistral, or Qwen, self-hosted on infrastructure you control. I run open models in production today, so this is not theoretical.
+>
+> Link: [Corporate LLM](/corporate-llm/)
+
+**What is a "Corporate LLM"?**
+
+> A company LLM stack under your policies: private or open models, RAG over your data, access control, cost limits, and ops. Not a consumer chatbot bolted onto Slack. When the need is a shared internal platform rather than one product feature, that is the Corporate LLM engagement.
+>
+> Link: [Corporate LLM](/corporate-llm/)
 
 **Do you only advise, or do you also write the code?**
 
@@ -334,7 +355,7 @@ _Component: `Contact.astro` · Section ID: `#contact`_
 
 **Availability note**
 
-> Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
+> Currently open to AI readiness audits, corporate LLM builds, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
 
 ### Contact form
 

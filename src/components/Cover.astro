@@ -403,12 +403,12 @@
 <script>
 /* ── Shared params object — read by shader, written by UI controls ── */
 const gridParams = {
-  amp:      3.0,  /* pulse amplitude — how much drivers expand  */
+  amp:      2.4,  /* pulse amplitude — how much drivers expand  */
   speed:    1.0,  /* playback speed multiplier                  */
   nDrivers: 8,    /* how many of the 8 driver cells are active  */
   gapCSS:   1,    /* gap between cells in CSS pixels            */
-  tension:  0.05, /* spring stiffness k — response speed        */
-  bounce:   0.22, /* bounciness 0–1: maps to damping 0.97–0.68  */
+  tension:  0.04, /* spring stiffness k — response speed        */
+  bounce:   0.10, /* bounciness 0–1: maps to damping 0.97–0.68  */
 };
 
 /* ── Grid shader: 16×16 push-layout squares (v3) ── */
@@ -613,6 +613,8 @@ void main(){
   const LEFT_MAX_CSS = 154;
   const buildingH = new Float32Array(GS);
   const skyEff = new Float32Array(GS); /* effective floors after pixel cap */
+  let leftFloorsCap = 3;               /* frozen from rest layout; avoids pop flicker */
+  let skySizeKey = '';
   {
     let c = 0;
     while (c < GS) {
@@ -631,6 +633,20 @@ void main(){
       }
     }
     skyEff.set(buildingH);
+  }
+
+  /* Recompute left floor budget only when canvas size changes (rest row height). */
+  function refreshLeftFloorsCap(gapPx: number, unitRest: number, dpr: number): void {
+    const maxLeftPhy = LEFT_MAX_CSS * dpr;
+    let top = gapPx;
+    let floors = 0;
+    for (let r = 0; r < GS; r++) {
+      top += unitRest;
+      if (top <= maxLeftPhy + 0.5) floors = r + 1;
+      else break;
+      top += gapPx;
+    }
+    leftFloorsCap = Math.max(1, floors);
   }
 
   function clampToSkyline(col: number, row: number): [number, number] {
@@ -902,14 +918,12 @@ void main(){
       rowsVData[i] = rowV[i];
     }
 
-    /* 4b. Driver bloom field: position + normalised intensity per driver.
-           Intensity is the spring expansion relative to its max, so it
-           tracks each driver's pulse independently of the amp setting.   */
-    const intScale = unit * gridParams.amp || 1;
+    /* 4b. Driver bloom field: position + intensity from the sine pulse
+           (not spring delta) so colour doesn't ring/flicker with overshoot. */
     for (let d = 0; d < nd; d++) {
       drvData[d * 4]     = driverCols[d];
       drvData[d * 4 + 1] = driverRows[d];
-      drvData[d * 4 + 2] = Math.max(0, Math.min(1, driverDelta[d] / intScale));
+      drvData[d * 4 + 2] = Math.max(0, Math.min(1, dpulse[d]));
       drvData[d * 4 + 3] = 0;
     }
 
@@ -947,27 +961,25 @@ void main(){
       ry += rowH[r] + gap;
     }
 
-    /* Cap left-half buildings to LEFT_MAX_CSS (physical px from canvas bottom). */
-    const maxLeftPhy = LEFT_MAX_CSS * dpr;
+    /* Cap left-half buildings using a frozen rest-layout floor budget
+       (recomputed only on resize) so spring motion can't pop floors on/off. */
+    const unitRest = availH / GS;
+    const sizeKey = `${cw}x${ch}x${dpr}`;
+    if (sizeKey !== skySizeKey) {
+      skySizeKey = sizeKey;
+      refreshLeftFloorsCap(gap, unitRest, dpr);
+    }
     for (let c = 0; c < GS; c++) {
-      let floors = Math.floor(buildingH[c]);
-      if (c < GS / 2) {
-        let capped = 1;
-        for (let r = 0; r < floors; r++) {
-          const top = rowsData[r] + rowsData[r + GS];
-          if (top <= maxLeftPhy + 0.5) capped = r + 1;
-          else break;
-        }
-        floors = capped;
-      }
-      skyEff[c] = floors;
+      skyEff[c] = c < GS / 2
+        ? Math.min(buildingH[c], leftFloorsCap)
+        : buildingH[c];
     }
     /* Keep drivers inside the effective skyline after the left cap. */
     for (let d = 0; d < nd; d++) {
       [driverCols[d], driverRows[d]] = clampToSkyline(driverCols[d], driverRows[d]);
       drvData[d * 4]     = driverCols[d];
       drvData[d * 4 + 1] = driverRows[d];
-      drvData[d * 4 + 2] = Math.max(0, Math.min(1, driverDelta[d] / intScale));
+      drvData[d * 4 + 2] = Math.max(0, Math.min(1, dpulse[d]));
       drvData[d * 4 + 3] = 0;
     }
 
@@ -1012,10 +1024,8 @@ void main(){
       const size      = Math.max(14, Math.min(cellCssPx * 0.55, cellCssPx - 6));
       el.style.width  = size + 'px';
       el.style.height = size + 'px';
-      /* Fade in quickly with spring expansion; clamp 0–1 */
-      const maxDelta  = (unit * gridParams.amp) || 1;
-      const intensity = Math.max(0, driverDelta[d]) / maxDelta;
-      el.style.opacity = String(Math.min(1, intensity * 3.0));
+      /* Fade with sine pulse (same as bloom) so opacity doesn't ring with the spring. */
+      el.style.opacity = String(Math.min(1, Math.max(0, dpulse[d]) * 2.2));
     }
 
     if (!reducedMotion) rafId = requestAnimationFrame(render);

@@ -3,7 +3,7 @@
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
 > **Source:** `src/pages/index.astro` and its components.  
-> **Last revised:** 2026-07-18 (GEO: entity pages, llms.txt, FAQ/Services deep links. See `AGENTS.md` for the house style.)
+> **Last revised:** 2026-07-18 (About moved off the landing page to `/about/`; Consult CTA section added. See `AGENTS.md` for the house style.)
 
 ---
 
@@ -53,7 +53,7 @@ _Component: `Cover.astro`_
 | ---------- | ------------------------------------------------------------------------ |
 | Logo       | LARS ULLRICH                                                             |
 | Descriptor | Agent reliability · Full-Stack Engineer & Fractional CTO                  |
-| Nav links  | What I Do · Method · Services · About · Contact                          |
+| Nav links  | What I Do · Method · Services · About (`/about/`) · Start (`#consult`) · Contact |
 
 ### Hero
 
@@ -238,17 +238,50 @@ SONY · PORSCHE · BMW · ARRI MEDIA · KORG · MICROPSI INDUSTRIES · CORPUS.MU
 
 ---
 
-## 6. About
+## 6. Consult (CTA)
 
-_Component: `About.astro` · Section ID: `#about`_
+_Component: `Consult.astro` · Section ID: `#consult`_
+
+Replaces the old landing About block. Full bio, stack, and meta live on [`/about/`](/about/) (`src/pages/about.astro`).
+
+**Headline**
+
+> Not sure  
+> where to start?
+
+**Lead**
+
+> Most teams begin with a Readiness & Production Audit. Fixed scope, 1-2 weeks. Clear recommendation before you fund a build.
+
+**Points**
+
+- Use-case shortlist and an honest build / buy / skip call
+- Cost model you can take into a decision
+- Agent feasibility and EU AI Act check where it applies
+
+**CTAs**
+
+| Element   | Copy                 | Target                         |
+| --------- | -------------------- | ------------------------------ |
+| Primary   | Start a conversation | `#contact`                     |
+| Secondary | Readiness Audit      | `/services/readiness-audit/`   |
+| Tertiary  | About                | `/about/`                      |
+
+---
+
+## 6b. About (standalone page)
+
+_Page: `/about/` · `src/pages/about.astro` (not on the landing page)_
 
 ### Lead
 
-> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working. [About](/about/)
+> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
 
 ### Bio
 
-> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way. These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
+> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
+>
+> These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own policies.
 
 ### Disciplines
 
@@ -256,6 +289,7 @@ _Component: `About.astro` · Section ID: `#about`_
 - AI Systems & Machine Learning
 - Agents, RAG & Automation
 - AI Reliability & Evaluation
+- Corporate LLM
 - Real-Time Graphics & GPU
 - Audio Engineering & DSP
 - Product Architecture
@@ -273,11 +307,11 @@ _Component: `About.astro` · Section ID: `#about`_
 
 ### Sidebar meta
 
-| Label       | Value                                                                                                       |
-| ----------- | ----------------------------------------------------------------------------------------------------------- |
-| Location    | Berlin, DE                                                                                                  |
-| Coordinates | 52°31′ N · 13°23′ E                                                                                         |
-| Open to     | AI readiness & production audits · AI & agent build sprints · Reliability retainers · Fractional CTO / CAIO |
+| Label       | Value                                                                                                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Location    | Berlin, DE                                                                                                                                 |
+| Coordinates | 52°31′ N · 13°23′ E                                                                                                                        |
+| Open to     | AI readiness & production audits · Corporate LLM builds · AI & agent build sprints · Reliability retainers · Fractional CTO / CAIO |
 
 ---
 

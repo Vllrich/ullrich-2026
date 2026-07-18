@@ -1,0 +1,168 @@
+---
+const points = [
+  'Use-case shortlist and an honest build / buy / skip call',
+  'Cost model you can take into a decision',
+  'Agent feasibility and EU AI Act check where it applies',
+];
+---
+
+<section id="consult" class="consult-section">
+  <div class="consult-inner">
+    <div class="consult-copy fade-up" data-delay="0">
+      <h2 class="consult-display">Not sure<br/>where to start?</h2>
+      <p class="consult-lead">
+        Most teams begin with a Readiness &amp; Production Audit. Fixed scope, 1-2 weeks. Clear recommendation before you fund a build.
+      </p>
+      <ul class="consult-points">
+        {points.map((p) => (
+          <li>{p}</li>
+        ))}
+      </ul>
+      <div class="consult-ctas">
+        <a href="#contact" class="consult-cta-primary">Start a conversation</a>
+        <a href="/services/readiness-audit/" class="consult-cta-secondary">Readiness Audit</a>
+      </div>
+      <p class="consult-about">
+        Want the longer bio and stack?
+        <a href="/about/">About</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .consult-section {
+    background: #2C303C;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .consult-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(35, 31, 32, 0.35) 0%,
+      rgba(255, 255, 255, 0.10) 100%
+    );
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .consult-section > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .consult-inner {
+    max-width: 52rem;
+  }
+
+  .consult-display {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+  }
+
+  .consult-lead {
+    font-size: var(--text-lead-size, 1.1rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.78);
+    margin: 0 0 1.5rem;
+    max-width: 46ch;
+  }
+
+  .consult-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .consult-points li {
+    position: relative;
+    padding-left: 1.15rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .consult-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.45rem;
+    height: 0.45rem;
+    background: var(--cobalt, #bbdd00);
+  }
+
+  .consult-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .consult-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink, #2C303C);
+    background: var(--cobalt, #bbdd00);
+    border: 1px solid var(--cobalt, #bbdd00);
+    padding: 0.9rem 1.6rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .consult-cta-primary:hover {
+    background: var(--cobalt-dim, #8aaa00);
+    border-color: var(--cobalt-dim, #8aaa00);
+  }
+
+  .consult-cta-secondary {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px solid var(--cobalt, #bbdd00);
+    padding-bottom: 0.1rem;
+  }
+
+  .consult-cta-secondary:hover {
+    color: var(--cobalt, #bbdd00);
+  }
+
+  .consult-about {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .consult-about a {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .consult-about a:hover {
+    text-decoration: underline;
+  }
+</style>

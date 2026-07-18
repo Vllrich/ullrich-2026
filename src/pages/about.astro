@@ -1,8 +1,28 @@
 ---
-import ContentPage from '../layouts/ContentPage.astro';
+import Layout from '../layouts/Layout.astro';
 
 const description =
-  'Lars Ullrich is a Berlin-based full-stack engineer and fractional CTO / CAIO. Production AI, agent reliability, and systems that have to keep working.';
+  'Lars Ullrich is a Berlin-based full-stack engineer and fractional CTO / CAIO. Production AI, agent reliability, corporate LLM, and systems that have to keep working.';
+
+const disciplines = [
+  'Fractional CTO / CAIO',
+  'AI Systems & Machine Learning',
+  'Agents, RAG & Automation',
+  'AI Reliability & Evaluation',
+  'Corporate LLM',
+  'Real-Time Graphics & GPU',
+  'Audio Engineering & DSP',
+  'Product Architecture',
+];
+
+const stack = [
+  { cat: 'Languages', items: 'Python, TypeScript, JavaScript, C, C++, C#, Rust, GLSL' },
+  { cat: 'AI / ML', items: 'PyTorch, LangChain, LlamaIndex, OpenAI & Anthropic APIs, open-weight models (Llama, Mistral, Qwen), vLLM, RAG pipelines, evals & guardrails, Hugging Face' },
+  { cat: 'Infrastructure', items: 'Docker, GitHub Actions, PostgreSQL, Redis, pgvector / Pinecone, Supabase, Hetzner' },
+  { cat: 'Scale & Ops', items: 'Nginx, Kubernetes, Terraform, Ansible, Cloudflare, Kafka, AWS, GCP, Grafana' },
+  { cat: 'Web & Real-time', items: 'React, Next.js, Astro, Three.js, WebGL2, WebAssembly, Web Audio API' },
+  { cat: 'Creative Tech', items: 'TouchDesigner, vvvv, Max/MSP, Unity, JUCE, OpenFrameworks' },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -18,41 +38,282 @@ const jsonLd = {
 };
 ---
 
-<ContentPage
-  title="About - Lars Ullrich"
-  description={description}
-  canonical="/about/"
-  jsonLd={jsonLd}
-  localeSwitch={{ href: '/de/', label: 'Deutsch' }}
->
-  <h1>About</h1>
-  <p>
-    I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
-  </p>
-  <p>
-    I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
-  </p>
-  <p>
-    These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
-  </p>
+<Layout title="About - Lars Ullrich" description={description} canonical="/about/">
+  <main class="about-page">
+    <div class="about-top">
+      <a href="/" class="back-link">← Back to home</a>
+      <a href="/de/" class="locale-switch" hreflang="de">Deutsch</a>
+    </div>
 
-  <h2>Focus</h2>
-  <ul>
-    <li>Production AI</li>
-    <li><a href="/corporate-llm/">Corporate LLM</a></li>
-    <li><a href="/agent-reliability/">Agent reliability</a></li>
-    <li>Full-stack engineering</li>
-    <li><a href="/fractional-cto-caio/">Fractional CTO / CAIO</a></li>
-    <li><a href="/eu-ai-act-readiness/">EU AI Act readiness</a></li>
-  </ul>
+    <div class="about-grid">
+      <div class="about-body">
+        <h1>About</h1>
+        <p class="about-lead">
+          I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
+        </p>
+        <p class="about-prose">
+          I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
+        </p>
+        <p class="about-prose">
+          These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own policies.
+        </p>
 
-  <h2>Where</h2>
-  <p>
-    Berlin, Germany, since 2007. I work with startups and growing companies regardless of location.
-    Email <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>.
-  </p>
-  <p>
-    Best starting point for most teams:
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-  </p>
-</ContentPage>
+        <h2>Focus</h2>
+        <ul class="disciplines-list">
+          {disciplines.map((d) => <li>{d}</li>)}
+        </ul>
+
+        <div class="about-stack">
+          <span class="about-stack-label">Stack, among others</span>
+          <dl class="stack-list">
+            {stack.map((s) => (
+              <div class="stack-row">
+                <dt class="stack-cat">{s.cat}</dt>
+                <dd class="stack-items">{s.items}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <p class="about-cta">
+          Best starting point for most teams:
+          <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
+          ·
+          <a href="/#contact">Contact</a>
+        </p>
+      </div>
+
+      <aside class="about-meta">
+        <dl class="meta-list">
+          <dd class="meta-graphic" aria-hidden="true">
+            <img src="/graphics/icon-about.svg" alt="" loading="lazy" decoding="async" />
+          </dd>
+          <dt class="visually-hidden">Location</dt>
+          <dd>Berlin, DE</dd>
+          <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
+          <dt class="meta-sep">Open to</dt>
+          <dd>AI readiness &amp; production audits</dd>
+          <dd>Corporate LLM builds</dd>
+          <dd>AI &amp; agent build sprints</dd>
+          <dd>Reliability retainers</dd>
+          <dd>Fractional CTO / CAIO</dd>
+        </dl>
+      </aside>
+    </div>
+  </main>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+</Layout>
+
+<style>
+  .about-page {
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(4rem, 8vw, 7rem);
+  }
+
+  .about-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    max-width: 1100px;
+  }
+
+  .back-link,
+  .locale-switch {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .locale-switch {
+    font-weight: 600;
+  }
+
+  .back-link:hover,
+  .locale-switch:hover {
+    text-decoration: underline;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2.6fr 1fr;
+    gap: 0 clamp(3rem, 5vw, 6rem);
+    align-items: start;
+    max-width: 1100px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--ink, #2C303C);
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+  }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 2.5rem 0 1rem;
+    color: var(--ink, #2C303C);
+  }
+
+  .about-lead {
+    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    color: var(--ink, #2C303C);
+    margin: 0 0 1.75rem;
+    max-width: 44ch;
+  }
+
+  .about-prose {
+    font-size: 1rem;
+    line-height: 1.875;
+    color: var(--dim, oklch(28% 0.01 258));
+    margin: 0 0 1.25rem;
+    max-width: 58ch;
+  }
+
+  .disciplines-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem 2rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .disciplines-list li {
+    font-size: 0.78rem;
+    color: var(--dim, oklch(28% 0.01 258));
+  }
+
+  .about-stack {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .about-stack-label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-bottom: 1.1rem;
+  }
+
+  .stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .stack-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 0 1.5rem;
+  }
+
+  .stack-cat {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink, #2C303C);
+  }
+
+  .stack-items {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.65;
+    color: var(--dim, oklch(28% 0.01 258));
+  }
+
+  .about-cta {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+    font-size: 0.95rem;
+    color: var(--dim, oklch(28% 0.01 258));
+  }
+
+  .about-cta a {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .about-cta a:hover {
+    text-decoration: underline;
+  }
+
+  .about-meta {
+    text-align: right;
+    padding-top: 0.25rem;
+  }
+
+  .meta-list {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+    line-height: 2.2;
+  }
+
+  .meta-list dt,
+  .meta-list dd {
+    margin: 0;
+  }
+
+  .meta-coords {
+    margin-bottom: 0.25rem;
+  }
+
+  .meta-graphic {
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .meta-graphic img {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+  }
+
+  .meta-sep {
+    margin-top: 1.5rem;
+    color: var(--cobalt, #bbdd00);
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .about-meta {
+      text-align: left;
+    }
+    .meta-graphic {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .disciplines-list {
+      grid-template-columns: 1fr;
+    }
+    .stack-row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

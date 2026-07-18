@@ -3,20 +3,39 @@ import ContentPage from '../../layouts/ContentPage.astro';
 import { languageAlternates } from '../../lib/i18n';
 
 const description =
-  'Corporate LLM: ein Unternehmens-LLM-Stack unter eurer Kontrolle. Private oder offene Modelle, RAG über eure Daten, Zugriffssteuerung, Kostenlimits und Ops.';
+  'Ein Firmen-LLM-Stack unter eurer Kontrolle: Modelle, Daten, Zugriffe, Kosten und wer den Pager hat, wenn etwas bricht.';
 
 const alternates = languageAlternates('/corporate-llm/', '/de/corporate-llm/');
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  '@id': 'https://larsullrich.de/de/corporate-llm/#webpage',
-  url: 'https://larsullrich.de/de/corporate-llm/',
-  name: 'Corporate LLM',
-  description,
-  inLanguage: 'de',
-  isPartOf: { '@id': 'https://larsullrich.de/#website' },
-  author: { '@id': 'https://larsullrich.de/#person' },
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      '@id': 'https://larsullrich.de/de/corporate-llm/#webpage',
+      url: 'https://larsullrich.de/de/corporate-llm/',
+      name: 'Corporate LLM',
+      description,
+      inLanguage: 'de',
+      isPartOf: { '@id': 'https://larsullrich.de/#website' },
+      author: { '@id': 'https://larsullrich.de/#person' },
+      about: {
+        '@type': 'DefinedTerm',
+        name: 'Corporate LLM',
+        description,
+      },
+    },
+    {
+      '@type': 'Service',
+      '@id': 'https://larsullrich.de/de/corporate-llm/#service',
+      name: 'Corporate LLM',
+      url: 'https://larsullrich.de/de/corporate-llm/',
+      description,
+      provider: { '@id': 'https://larsullrich.de/#person' },
+      areaServed: ['DE', 'EU', 'Worldwide'],
+      serviceType: 'Corporate-LLM-Plattform',
+    },
+  ],
 };
 ---
 
@@ -25,38 +44,33 @@ const jsonLd = {
   description={description}
   canonical="/de/corporate-llm/"
   noteId="corporate-llm-de"
-  heading="Corporate LLM"
-  eyebrow="Service · Plattform"
-  lead="Ein Unternehmens-LLM-Stack zu euren Bedingungen: Datenresidenz, Zugriff, Kosten und Ops."
-  icon="/graphics/icon-model-orbits.svg"
   lang="de"
+  heading="Corporate LLM"
+  eyebrow="Plattform"
+  lead="Kein weiterer Chatbot an Slack. Ein Stack, der unter euren Regeln läuft."
+  icon="/graphics/icon-model-orbits.svg"
   alternates={alternates}
   jsonLd={jsonLd}
-  ctaLabel="Mit dem Readiness Audit starten"
-  contactHref="/services/readiness-audit/"
   localeSwitch={{ href: '/corporate-llm/', label: 'English' }}
 >
   <p>
-    Die meisten Unternehmen brauchen keinen weiteren Consumer-Chatbot. Sie brauchen einen LLM-Stack zu ihren Bedingungen. Das ist Corporate LLM. Projekt, typisch 6-12 Wochen.
+    Genau das meine ich mit Corporate LLM. Wo die Daten liegen. Wer was fragen darf. Was das Modell anfassen darf. Was es pro Woche kostet. Wer den Pager hat. Typisch sechs bis zwölf Wochen, je nachdem, wie verknotet der Startpunkt ist.
   </p>
 
-  <h2>Was gebaut wird</h2>
-  <ul>
-    <li>Modellwahl: Hosted APIs wo sinnvoll, Open-Weight-Modelle bei euch, wenn Daten, Kosten oder Lock-in es erfordern</li>
-    <li>RAG und Tools über eure Dokumente und Systeme, mit klaren Grenzen</li>
-    <li>Zugriffssteuerung, Audit-Trails, Rate- oder Budget-Limits</li>
-    <li>Ops: Monitoring, Evals und ein Pfad, es nach dem Launch zu betreiben</li>
-  </ul>
-
-  <h2>Unterschied zum Build Sprint</h2>
+  <h2>Was wir aufsetzen</h2>
   <p>
-    Ein Build Sprint liefert ein Produktsystem mit KI darin. Corporate LLM ist die geteilte Unternehmensfähigkeit: die Plattform, die interne Teams (manchmal auch Kunden) unter euren Policies nutzen. Gleiche Engineering-Latte. Anderer Scope.
+    Modelle, die passen: Hosted APIs, wenn das okay ist, Open Weights bei euch, wenn Daten, Kosten oder Lock-in dagegen sprechen. RAG und Tools über die Docs und Systeme, die ihr freigebt, mit klaren Grenzen. Zugriffskontrolle, Audit-Trails, Budget- oder Rate-Limits. Monitoring und Evals, damit ihr den Stack nach dem Launch am Leben haltet.
   </p>
 
-  <h2>Wo starten</h2>
+  <h2>Gegenüber einem Build Sprint</h2>
   <p>
-    Unklar, ob Plattform oder einzelner Use Case?
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Klar, dass ihr einen privaten oder hybriden LLM-Stack braucht? Dieses Engagement.
+    Ein Build Sprint liefert ein Produkt mit AI drin. Corporate LLM ist die gemeinsame Schicht, die viele Teams (manchmal auch Kunden) unter Firmenpolicy nutzen. Gleicher Anspruch ans Engineering. Größerer Scope.
+  </p>
+
+  <h2>Wo anfangen</h2>
+  <p>
+    Noch die Plattform-gegen-Use-Case-Diskussion?
+    <a href="/services/readiness-audit/">Erst das Audit</a>.
+    Schon klar, dass ihr einen privaten oder hybriden Stack braucht? Dann ist das hier das Engagement.
   </p>
 </ContentPage>

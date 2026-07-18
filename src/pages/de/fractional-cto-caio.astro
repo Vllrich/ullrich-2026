@@ -3,7 +3,7 @@ import ContentPage from '../../layouts/ContentPage.astro';
 import { languageAlternates } from '../../lib/i18n';
 
 const description =
-  'Was ein Fractional CTO / CAIO macht: technische Führung in Teilzeit, inkl. Architektur, Delivery und AI-Strategie. Nicht rein advisory.';
+  'Teilzeit-Führung auf Senior-Level: Architektur, Delivery und AI-Strategie, mit Händen im Repo. Monatlicher Retainer.';
 
 const alternates = languageAlternates('/fractional-cto-caio/', '/de/fractional-cto-caio/');
 
@@ -16,6 +16,11 @@ const jsonLd = {
   description,
   inLanguage: 'de',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  about: {
+    '@type': 'Occupation',
+    name: 'Fractional CTO / CAIO',
+    description,
+  },
   author: { '@id': 'https://larsullrich.de/#person' },
 };
 ---
@@ -25,36 +30,37 @@ const jsonLd = {
   description={description}
   canonical="/de/fractional-cto-caio/"
   noteId="fractional-cto-de"
-  heading="Fractional CTO / CAIO"
-  eyebrow="Service · Leadership"
-  lead="Senior technische Führung ohne Vollzeit-Hire. Architektur, Delivery und AI-Strategie. Technisch, nicht rein advisory."
-  icon="/graphics/icon-command.svg"
   lang="de"
+  heading="Fractional CTO / CAIO"
+  eyebrow="Führung"
+  lead="Senior-Urteil und Delivery-Ownership in Teilzeit. Mit Händen im Repo."
+  icon="/graphics/icon-command.svg"
   alternates={alternates}
   jsonLd={jsonLd}
-  ctaLabel="Gespräch starten"
   localeSwitch={{ href: '/fractional-cto-caio/', label: 'English' }}
 >
   <p>
-    Senior technische Führung auf Teilzeit- oder Projektbasis: Architektur, Roadmap, Delivery-Ownership, Team- und Vendor-Auswahl, AI-Strategie. Die Rolle bleibt technisch, nicht rein advisory. In der Praxis heißt das Code Reviews, Architekturentscheidungen und Production-Debugging im Team, ohne die Kosten einer Vollzeit-Anstellung.
+    Ich komme teilzeit oder projektbezogen rein. Architektur, Roadmap, Delivery, Team- und Vendor-Calls, AI-Strategie. Im Alltag: Reviews, harte Entscheidungen, Production-Debugging mit eurem Team. Ähnliche Arbeit wie ein Staff+-Hire. Ohne die volle Gehaltslast.
   </p>
 
-  <h2>Unterschied zu reinem Advisory</h2>
+  <h2>Hände im Repo</h2>
   <p>
-    Das Engagement schließt Code ein. Ich arbeite in eurem Repository, nicht von außen, und bleibe dran, bis das System betrieben werden kann. Je nach Setup: Implementierung, Reviews, Production-Debugging und laufende Reliability.
+    Das Engagement schließt Code ein. Ich arbeite in eurem Repository. Wenn es dazu gehört, bleibe ich am Betrieb dessen, was wir shippen. Implementation, Architecture Reviews, Production-Debugging, laufende Reliability. Mischt euch, was passt.
   </p>
 
-  <h2>Wo starten</h2>
-  <ul>
-    <li>
-      Unklar, ob KI der richtige Schritt ist? Start mit dem
-      <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    </li>
-    <li>Klar, was gebaut werden soll? Build Sprint bis in die Produktion.</li>
-    <li>
-      Schon live? Reliability Retainer, inkl.
-      <a href="/de/agenten-zuverlaessigkeit/">Agenten-Zuverlässigkeit</a>.
-    </li>
-    <li>Laufende Führung nötig? Fractional CTO / CAIO als Monats-Retainer.</li>
-  </ul>
+  <h2>Wo die meisten starten</h2>
+  <p>
+    AI noch unscharf?
+    <a href="/services/readiness-audit/">Erst das Audit</a>.
+    Build schon klar? Ein Build Sprint bringt ein System in Produktion. Schon live?
+    <a href="/de/agenten-zuverlaessigkeit/">Reliability</a>
+    hält es ehrlich. Den Sitz laufend besetzen? Das ist dieser Retainer.
+  </p>
+  <p>
+    Mehr in
+    <a href="/work/patterns/">Patterns</a>,
+    <a href="/de/eu-ai-act-readiness/">EU-AI-Act-Readiness</a>
+    und
+    <a href="/about/">About</a>.
+  </p>
 </ContentPage>

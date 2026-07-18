@@ -3,7 +3,7 @@ import ContentPage from '../../layouts/ContentPage.astro';
 import { workPatterns } from '../../data/work-patterns';
 
 const description =
-  'Engagement patterns for production AI and agent reliability: anonymized problem, approach, and outcome types. Named case studies will land here when cleared.';
+  'How production AI and agent work usually shows up: problem, approach, outcome type. Named case studies land here when cleared.';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -31,12 +31,12 @@ const jsonLd = {
   noteId="patterns"
   heading="Engagement patterns"
   eyebrow="Work"
-  lead="How the work usually shows up, without invented metrics or named clients. Named case studies plug in here when cleared."
+  lead="How the work usually shows up. No invented metrics, no named clients until they clear it. Case studies plug in here when ready."
   icon="/graphics/icon-pattern-steps.svg"
   jsonLd={jsonLd}
 >
   <p>
-    Until cleared case studies land under <code>/work/</code>, these patterns are the honest proof layer.
+    Until cleared case studies land under <code>/work/</code>, these patterns are the honest stand-in.
   </p>
 
   {workPatterns.map((p) => (
@@ -63,6 +63,7 @@ const jsonLd = {
   <p>
     Most companies should begin with the
     <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Fixed scope. Usually one to two weeks.
   </p>
 </ContentPage>
 

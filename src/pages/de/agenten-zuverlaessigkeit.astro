@@ -3,7 +3,7 @@ import ContentPage from '../../layouts/ContentPage.astro';
 import { languageAlternates } from '../../lib/i18n';
 
 const description =
-  'Agenten-Zuverlässigkeit: Evals, Guardrails, begrenzte Autonomie, Monitoring und ein klarer Rollback. So mache ich Produktions-Agenten betreibbar.';
+  'Produktionsreife Agenten: Tests, die man ernst nimmt, klare Grenzen, Monitoring und ein Rollback, den das Team auch wirklich auslöst.';
 
 const alternates = languageAlternates('/agent-reliability/', '/de/agenten-zuverlaessigkeit/');
 
@@ -16,6 +16,11 @@ const jsonLd = {
   description,
   inLanguage: 'de',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  about: {
+    '@type': 'DefinedTerm',
+    name: 'Agenten-Zuverlässigkeit',
+    description,
+  },
   author: { '@id': 'https://larsullrich.de/#person' },
 };
 ---
@@ -25,39 +30,33 @@ const jsonLd = {
   description={description}
   canonical="/de/agenten-zuverlaessigkeit/"
   noteId="agenten-zuverlaessigkeit"
+  lang="de"
   heading="Agenten-Zuverlässigkeit"
   eyebrow="Praxis"
-  lead="Ein Demo-Agent und ein Produktions-Agent sind unterschiedliche Probleme. Zuverlässigkeit macht Produktion betreibbar."
+  lead="Ein Demo-Agent ist ein Gag. Ein Produktionsagent muss laufen, wenn niemand zusieht."
   icon="/graphics/icon-focus-monitor.svg"
-  lang="de"
   alternates={alternates}
   jsonLd={jsonLd}
-  ctaLabel="Mit dem Readiness Audit starten"
-  contactHref="/services/readiness-audit/"
   localeSwitch={{ href: '/agent-reliability/', label: 'English' }}
 >
   <p>
-    In der Demo antwortet er einmal, unter Aufsicht. In Produktion handelt er allein, wiederholt, gegen sich ändernde Daten. Typische Fehler: Loops, halluzinierte Aktionen, Kostenexplosion, stille Regressionen. Zuverlässigkeit ist die Arbeit, die das absichert: belastbare Evals, Guardrails, begrenzte Autonomie, Monitoring und ein Rollback, den das Team auch nutzt. Genau den Teil überspringen die meisten.
-  </p>
-
-  <h2>In der Praxis</h2>
-  <ul>
-    <li>Evals vor und nach jeder relevanten Änderung</li>
-    <li>Guardrails für Aktionen und Kosten</li>
-    <li>Monitoring für Drift, Loops und stille Qualitätsverluste</li>
-    <li>Ein Rollback-Pfad mit klarer Ownership</li>
-  </ul>
-
-  <h2>Wie ich arbeite</h2>
-  <p>
-    Zuerst Framing: Nicht jedes Problem braucht KI, und nicht jede KI braucht einen Agenten. Dann Architektur für Zuverlässigkeit und Kosten, dann Ship and Harden. Für Teams, die schon live sind, deckt der Reliability Retainer Evals, Monitoring, Guardrails, Drift, Incidents und die
-    <a href="/de/eu-ai-act-readiness/">EU-AI-Act</a>-Neubewertung ab.
+    In der Demo stellt jemand eine Frage und alle nicken. In Produktion läuft der Agent allein, immer wieder, auf echten Daten. Dann kommen Schleifen, Aktionen, die niemand wollte, Rechnungen über Nacht, oder Qualität, die still wegkippt.
   </p>
   <p>
-    Einstieg:
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Mehr:
-    <a href="/work/patterns/">Engagement-Patterns</a>,
+    Zuverlässigkeit ist der unspektakuläre Teil dagegen. Tests vor und nach Änderungen. Harte Limits, was der Agent anfassen und ausgeben darf. Monitoring für Drift und Loops. Ein Rollback, den das Team auch wirklich zieht. Die meisten überspringen genau das. Und wundern sich, warum die Demo den Montagmorgen nicht überlebt.
+  </p>
+
+  <h2>So gehe ich meist vor</h2>
+  <p>
+    Zuerst: braucht ihr überhaupt einen Agenten? Viele Probleme wollen eine einfachere Pipeline. Wenn ein Agent Sinn ergibt, planen wir Kosten und Fehlerfälle mit ein, dann shippen und härten. Für Teams, die schon live sind, deckt der Reliability Retainer den Betrieb ab, inklusive einem
+    <a href="/de/eu-ai-act-readiness/">EU-AI-Act</a>-Check, wenn Nutzung oder Regeln sich ändern.
+  </p>
+  <p>
+    Noch unklar, wo anfangen?
+    <a href="/services/readiness-audit/">Mit dem Audit starten</a>.
+    Mehr Kontext in
+    <a href="/work/patterns/">Patterns</a>
+    und
     <a href="/de/fractional-cto-caio/">Fractional CTO / CAIO</a>.
   </p>
 </ContentPage>

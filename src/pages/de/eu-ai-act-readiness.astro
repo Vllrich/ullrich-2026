@@ -3,7 +3,7 @@ import ContentPage from '../../layouts/ContentPage.astro';
 import { languageAlternates } from '../../lib/i18n';
 
 const description =
-  'EU-AI-Act-Readiness für produktive KI-Systeme: Was ich im Readiness Audit prüfe, für wen, und was ihr mitnehmt. Berlin, Fokus EU/DACH.';
+  'Was ich bei EU-AI-Act-Readiness prüfe, wenn ihr Produktions-AI plant oder betreibt: Scope, Risikoklasse, Daten, Logging und was jetzt schon shippen kann.';
 
 const alternates = languageAlternates('/eu-ai-act-readiness/', '/de/eu-ai-act-readiness/');
 
@@ -17,6 +17,11 @@ const jsonLd = {
   inLanguage: 'de',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   author: { '@id': 'https://larsullrich.de/#person' },
+  about: {
+    '@type': 'Thing',
+    name: 'EU AI Act',
+    description: 'EU-Verordnung über Systeme der künstlichen Intelligenz.',
+  },
 };
 ---
 
@@ -25,39 +30,34 @@ const jsonLd = {
   description={description}
   canonical="/de/eu-ai-act-readiness/"
   noteId="eu-ai-act-de"
-  heading="EU-AI-Act-Readiness"
-  eyebrow="Thema · Compliance"
-  lead="Ob der Act greift, welche Risikoklasse droht, und was das für Daten, Logging und Ownership bedeutet."
-  icon="/graphics/icon-compliance-frame.svg"
   lang="de"
+  heading="EU-AI-Act-Readiness"
+  eyebrow="Compliance"
+  lead="Der Act bringt Uhr und Budget auf den Tisch. Ihr braucht eine klare Antwort, ob er greift und was das im Alltag heißt."
+  icon="/graphics/icon-compliance-frame.svg"
   alternates={alternates}
   jsonLd={jsonLd}
-  ctaLabel="Mit dem Readiness Audit starten"
-  contactHref="/services/readiness-audit/"
   localeSwitch={{ href: '/eu-ai-act-readiness/', label: 'English' }}
 >
   <p>
-    Regulierung setzt Budget und Frist. Ich prüfe das im
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
-    als Engineer, der auch baut, nicht als reine Folien-Compliance.
+    Das stecke ich in den
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Ich bin auch die Person, die das System baut. Deshalb bleibt das Write-up an dem hängen, was ihr wirklich shippt. Kein Foliensatz für die Schublade.
   </p>
 
-  <h2>Was ich prüfe</h2>
-  <ul>
-    <li>Ob das geplante System in den Anwendungsbereich fällt</li>
-    <li>Wahrscheinliche Risikokategorie und folgende Pflichten</li>
-    <li>Datenschutz und Governance, skaliert auf Größe und Use Case</li>
-    <li>Was jetzt shippbar ist und was Kontrolle oder Redesign braucht</li>
-  </ul>
-
-  <h2>Für wen</h2>
+  <h2>Worauf ich schaue</h2>
   <p>
-    Wachsende Unternehmen in DACH und der weiteren EU, die über den Experiment-Slide hinaus sind. Auch Teams, die schon live sind und eine Neubewertung brauchen, wenn Nutzung oder Regeln sich ändern. Das läuft im
+    Fällt das geplante System unter den Act. In welche Risikoklasse ihr wahrscheinlich kommt, und welche Pflichten folgen. Datenschutz und Governance in der Größe eures Unternehmens und Use Cases. Was ihr jetzt shippen könnt, und was erst eine Kontrolle oder einen Umbau braucht.
+  </p>
+
+  <h2>Wem das hilft</h2>
+  <p>
+    Wachsende Firmen in DACH und der weiteren EU, die über die Experiment-Folie hinaus sind. Auch Teams, die schon live sind und einen Re-Check brauchen, wenn Nutzung oder Regeln sich ändern. Der laufende Teil sitzt im
     <a href="/de/agenten-zuverlaessigkeit/">Reliability Retainer</a>.
   </p>
 
-  <h2>Was ihr mitnehmt</h2>
+  <h2>Was ihr bekommt</h2>
   <p>
-    Ein klares Schreiben: Scope ja/nein, Risikolage, Lücken, praktische Reihenfolge. Gekoppelt an Use-Case-Shortlist und Build/Buy/Skip, damit Compliance nicht vom Produkt getrennt wird.
+    Ein klares Write-up: im Scope oder nicht, Risikolage, Lücken, und eine praktische Reihenfolge. Es liegt neben der Use-Case-Shortlist und dem Build-/Buy-/Skip-Call aus dem Audit. Compliance und Produkt bleiben in einem Gespräch.
   </p>
 </ContentPage>

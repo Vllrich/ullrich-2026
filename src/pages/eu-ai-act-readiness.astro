@@ -3,7 +3,7 @@ import ContentPage from '../layouts/ContentPage.astro';
 import { languageAlternates } from '../lib/i18n';
 
 const description =
-  'EU AI Act readiness for production AI systems: what I assess in a Readiness Audit, who it is for, and what you leave with. Berlin-based, EU-focused.';
+  'What I check for EU AI Act readiness when you plan or run production AI: scope, risk class, data, logging, and what you can ship now.';
 
 const alternates = languageAlternates('/eu-ai-act-readiness/', '/de/eu-ai-act-readiness/');
 
@@ -31,34 +31,32 @@ const jsonLd = {
   canonical="/eu-ai-act-readiness/"
   noteId="eu-ai-act"
   heading="EU AI Act readiness"
-  eyebrow="Topic · Compliance"
-  lead="Whether the Act applies, which risk category you land in, and what that means for data, logging, and ownership."
+  eyebrow="Compliance"
+  lead="The Act puts a clock and a budget on the table. You need a straight answer on whether it applies and what that means day to day."
   icon="/graphics/icon-compliance-frame.svg"
   alternates={alternates}
   jsonLd={jsonLd}
   localeSwitch={{ href: '/de/eu-ai-act-readiness/', label: 'Deutsch' }}
 >
   <p>
-    Regulation forces a budget and a clock. If you are shipping or planning AI in the EU, you need a clear answer. I assess that as part of the
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>, as an engineer who also ships the system, not as a slide-only compliance exercise.
+    I fold this into the
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    I'm the person who also ships the system, so the write-up stays tied to what you'll actually build. No slide deck that dies in a drawer.
   </p>
 
-  <h2>What I assess</h2>
-  <ul>
-    <li>Whether the proposed system falls under the Act's scope</li>
-    <li>Likely risk category and the obligations that follow</li>
-    <li>Data protection and governance, scaled to your size and intended use</li>
-    <li>What you can ship now vs what needs a control or a redesign</li>
-  </ul>
-
-  <h2>Who this is for</h2>
+  <h2>What I look at</h2>
   <p>
-    Growing companies in the DACH region and wider EU that are past the "AI experiment" slide and need a production path. Also teams that already shipped and need a re-assessment as usage or the rules change. That ongoing check sits in the
+    Does the planned system fall under the Act. Which risk bucket you're likely in, and what obligations follow. Data protection and governance sized to your company and use case. What you can ship now, and what needs a control or a redesign first.
+  </p>
+
+  <h2>Who this helps</h2>
+  <p>
+    Growing companies in DACH and the wider EU that are past the experiment slide. Also teams already live who need a re-check when usage or the rules shift. That ongoing piece sits in the
     <a href="/agent-reliability/">Reliability Retainer</a>.
   </p>
 
-  <h2>What you leave with</h2>
+  <h2>What you get</h2>
   <p>
-    A clear write-up: in scope or not, risk posture, gaps, and a practical sequence. Coupled with the audit's use-case shortlist and build/buy/skip call, so compliance is not detached from the product decision.
+    A plain write-up: in scope or not, risk posture, gaps, and a practical order of work. It sits next to the audit's use-case shortlist and build / buy / skip call, so compliance and product stay in the same conversation.
   </p>
 </ContentPage>

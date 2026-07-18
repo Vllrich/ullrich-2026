@@ -3,7 +3,7 @@
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
 > **Source:** `src/pages/index.astro` and its components.  
-> **Last revised:** 2026-07-18 (About moved off the landing page to `/about/`; Consult CTA section added. See `AGENTS.md` for the house style.)
+> **Last revised:** 2026-07-18 (Note pages rewritten in conversational house style; About moved off the landing page to `/about/`. See `AGENTS.md`.)
 
 ---
 
@@ -279,13 +279,13 @@ _Page: `/about/` · `src/pages/about.astro` (not on the landing page)_
 
 ### Lead
 
-> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
+> I'm an engineer and technical lead in Berlin. I care most about systems that have to keep working.
 
 ### Bio
 
-> I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
+> I've been building software for about 25 years. Started as a developer: apps, then real-time GPU and audio where a dropped frame is a bug you can hear. A lot of that was for the stage and custom clients. For years I did creative tech for theater and performance, including with artists like Philip Glass. In startups the job got bigger than writing code. Architecture, small teams, then running engineering as a CTO, with plenty of infra and custom systems along the way.
 >
-> These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own policies.
+> These days I help companies get AI into production and keep it running. Usually the unglamorous parts: infra, plumbing, the custom bits that don't come in a box. Often agents. Often open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own rules.
 
 ### Disciplines
 

@@ -17,7 +17,7 @@ export const notesEn: Note[] = [
     href: '/services/readiness-audit/',
     title: 'Readiness & Production Audit',
     eyebrow: 'Service',
-    summary: 'Fixed scope, 1-2 weeks. Use-case shortlist before you fund a build.',
+    summary: 'One to two weeks. Figure out what is worth building before you spend.',
   },
   {
     id: 'agent-reliability',
@@ -25,7 +25,7 @@ export const notesEn: Note[] = [
     href: '/agent-reliability/',
     title: 'Agent reliability',
     eyebrow: 'Practice',
-    summary: 'Evals, guardrails, monitoring, and rollback for production agents.',
+    summary: 'Tests, limits, monitoring, and a rollback the team will actually use.',
     twinId: 'agenten-zuverlaessigkeit',
   },
   {
@@ -34,7 +34,7 @@ export const notesEn: Note[] = [
     href: '/corporate-llm/',
     title: 'Corporate LLM',
     eyebrow: 'Platform',
-    summary: 'A company LLM stack under your policies, data, and cost limits.',
+    summary: 'A company LLM stack under your rules, data, and cost limits.',
     twinId: 'corporate-llm-de',
   },
   {
@@ -43,7 +43,7 @@ export const notesEn: Note[] = [
     href: '/eu-ai-act-readiness/',
     title: 'EU AI Act readiness',
     eyebrow: 'Compliance',
-    summary: 'Scope, risk class, and what that means for data and ownership.',
+    summary: 'Does it apply, what risk class, and what that means day to day.',
     twinId: 'eu-ai-act-de',
   },
   {
@@ -52,7 +52,7 @@ export const notesEn: Note[] = [
     href: '/fractional-cto-caio/',
     title: 'Fractional CTO / CAIO',
     eyebrow: 'Leadership',
-    summary: 'Senior technical leadership without the full-time hire.',
+    summary: 'Senior judgment and delivery, part-time, with hands in the repo.',
     twinId: 'fractional-cto-de',
   },
   {
@@ -61,7 +61,7 @@ export const notesEn: Note[] = [
     href: '/work/patterns/',
     title: 'Engagement patterns',
     eyebrow: 'Work',
-    summary: 'How the work usually shows up, without invented case metrics.',
+    summary: 'How the work usually shows up. No invented case metrics.',
   },
   {
     id: 'about',
@@ -69,7 +69,7 @@ export const notesEn: Note[] = [
     href: '/about/',
     title: 'About',
     eyebrow: 'Profile',
-    summary: 'Engineer and technical lead in Berlin. Systems that have to keep working.',
+    summary: 'Berlin. Engineer and technical lead. Systems that have to keep working.',
   },
 ];
 
@@ -80,7 +80,7 @@ export const notesDe: Note[] = [
     href: '/de/agenten-zuverlaessigkeit/',
     title: 'Agenten-Zuverlässigkeit',
     eyebrow: 'Praxis',
-    summary: 'Evals, Guardrails, Monitoring und Rollback für Produktions-Agenten.',
+    summary: 'Tests, Limits, Monitoring und ein Rollback, den das Team auch zieht.',
     twinId: 'agent-reliability',
   },
   {
@@ -89,7 +89,7 @@ export const notesDe: Note[] = [
     href: '/de/corporate-llm/',
     title: 'Corporate LLM',
     eyebrow: 'Plattform',
-    summary: 'Unternehmens-LLM-Stack unter euren Policies, Daten und Kostenlimits.',
+    summary: 'Firmen-LLM-Stack unter euren Regeln, Daten und Kostenlimits.',
     twinId: 'corporate-llm',
   },
   {
@@ -98,7 +98,7 @@ export const notesDe: Note[] = [
     href: '/de/eu-ai-act-readiness/',
     title: 'EU-AI-Act-Readiness',
     eyebrow: 'Compliance',
-    summary: 'Scope, Risikoklasse und was das für Daten und Ownership bedeutet.',
+    summary: 'Greift der Act, welche Risikoklasse, und was das im Alltag heißt.',
     twinId: 'eu-ai-act',
   },
   {
@@ -107,7 +107,7 @@ export const notesDe: Note[] = [
     href: '/de/fractional-cto-caio/',
     title: 'Fractional CTO / CAIO',
     eyebrow: 'Leadership',
-    summary: 'Senior technische Führung ohne Vollzeit-Hire.',
+    summary: 'Senior-Urteil und Delivery in Teilzeit, mit Händen im Repo.',
     twinId: 'fractional-cto',
   },
 ];

@@ -2,7 +2,7 @@
 import ContentPage from '../../layouts/ContentPage.astro';
 
 const description =
-  'Readiness & Production Audit: fixed scope, 1-2 weeks. Use-case shortlist, build/buy/skip, cost model, agent feasibility, and EU AI Act check where it applies.';
+  'A short, fixed-scope review before you spend real money on AI. Use cases, cost, and whether an agent even makes sense. Usually 1-2 weeks.';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -25,7 +25,7 @@ const jsonLd = {
           name: 'How long is the Readiness & Production Audit?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Fixed scope, typically 1-2 weeks.',
+            text: 'Fixed scope, usually 1-2 weeks.',
           },
         },
         {
@@ -33,7 +33,7 @@ const jsonLd = {
           name: 'What do I leave with?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'A prioritized use-case shortlist, an honest build/buy/skip call, a cost model, and where relevant an EU AI Act readiness assessment.',
+            text: 'A shortlist of use cases worth doing, a clear build / buy / skip call, a cost picture you can argue with, and an EU AI Act check when it matters.',
           },
         },
       ],
@@ -48,37 +48,36 @@ const jsonLd = {
   canonical="/services/readiness-audit/"
   noteId="readiness-audit"
   heading="Readiness & Production Audit"
-  eyebrow="Service · Strategy"
-  lead="Not every problem needs AI, and not every AI needs an agent. Fixed scope, usually 1-2 weeks, before you fund a build."
+  eyebrow="Service"
+  lead="You're under pressure to do something with AI. Cool. Let's figure out what actually earns its keep before you fund a build."
   icon="/graphics/icon-signal-nodes.svg"
-  ctaLabel="Start with a Readiness Audit"
+  ctaLabel="Talk about an audit"
   jsonLd={jsonLd}
 >
-  <h2>What we cover</h2>
-  <ul>
-    <li>Use-case mapping: which few bets pay for themselves</li>
-    <li>Agent feasibility where agents are on the table</li>
-    <li>Build vs buy vs skip, with reasons</li>
-    <li>Cost model you can take to a decision</li>
-    <li>
-      <a href="/eu-ai-act-readiness/">EU AI Act check</a> where the system may fall in scope
-    </li>
-  </ul>
-
-  <h2>Deliverables</h2>
   <p>
-    A structured write-up and a short readout: prioritized shortlist, recommendation, risks, and next step. If the next step is a build, that feeds a
-    <a href="/#services">Build Sprint</a>. If you already shipped, look at the
+    I run this as a fixed-scope engagement. Usually one to two weeks. We look at your product, your data, and your stack. Then we pick a few bets that could pay for themselves.
+  </p>
+
+  <h2>What we dig into</h2>
+  <p>
+    Which use cases are real, and which are slide theater. Whether an agent helps or just makes a mess. Build it, buy it, or leave it alone, with reasons you can take into a meeting. A rough cost model so nobody is guessing. And if you're in the EU, an
+    <a href="/eu-ai-act-readiness/">AI Act check</a>
+    when the system might fall in scope.
+  </p>
+
+  <h2>What you walk away with</h2>
+  <p>
+    A write-up and a short readout. Prioritized shortlist. Recommendation. Risks. Next step. If that next step is a build, it feeds a
+    <a href="/#services">Build Sprint</a>.
+    If you already shipped something shaky, look at the
     <a href="/agent-reliability/">Reliability Retainer</a>.
   </p>
 
-  <h2>Best starting point</h2>
+  <h2>When this is the right move</h2>
   <p>
-    Unsure whether AI is the right move? Start here. Already know what to build? Skip to a Build Sprint. Need embedded leadership?
-    <a href="/fractional-cto-caio/">Fractional CTO / CAIO</a>.
-  </p>
-  <p>
-    Patterns of how this shows up in practice:
+    Start here when the room is still arguing about AI in the abstract. If you already know the thing to build, skip ahead. If you need someone in the seat longer term, that's
+    <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>.
+    For how this shows up in the wild, see
     <a href="/work/patterns/">engagement patterns</a>.
   </p>
 </ContentPage>

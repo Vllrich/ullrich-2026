@@ -3,7 +3,7 @@ import ContentPage from '../layouts/ContentPage.astro';
 import { languageAlternates } from '../lib/i18n';
 
 const description =
-  'Agent reliability is the work that makes production agents safe: evals, guardrails, bounded autonomy, monitoring, and a clear rollback path. How I approach it.';
+  'Making production agents safe enough to leave running: tests you trust, limits on what they can do, monitoring, and a rollback people will actually use.';
 
 const alternates = languageAlternates('/agent-reliability/', '/de/agenten-zuverlaessigkeit/');
 
@@ -32,35 +32,31 @@ const jsonLd = {
   noteId="agent-reliability"
   heading="Agent reliability"
   eyebrow="Practice"
-  lead="A demo agent and a production agent are different problems. Reliability is the work that makes production safe."
+  lead="A demo agent is a party trick. A production agent has to keep working when nobody is watching."
   icon="/graphics/icon-focus-monitor.svg"
   alternates={alternates}
   jsonLd={jsonLd}
   localeSwitch={{ href: '/de/agenten-zuverlaessigkeit/', label: 'Deutsch' }}
 >
   <p>
-    In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability covers evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.
-  </p>
-
-  <h2>What that means in practice</h2>
-  <ul>
-    <li>Evals you can trust before and after every meaningful change</li>
-    <li>Guardrails that bound what the agent can do and spend</li>
-    <li>Monitoring for drift, loops, and silent quality drops</li>
-    <li>A rollback path the team will actually use</li>
-  </ul>
-
-  <h2>How I work on it</h2>
-  <p>
-    I start with framing: not every problem needs AI, and not every AI needs an agent. Then architecture for reliability and cost, then ship and harden. For teams who already shipped, the Reliability Retainer covers evals, monitoring, guardrails, drift checks, incident response, and
-    <a href="/eu-ai-act-readiness/">EU AI Act</a> re-assessment.
+    In a demo, someone asks a question and everyone claps. In production the agent runs on its own, again and again, against messy live data. That's when you get loops, made-up actions, bills that spike overnight, or quiet quality drops nobody notices for a week.
   </p>
   <p>
-    Unsure where to begin?
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Related:
-    <a href="/work/patterns/">engagement patterns</a>,
-    <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>,
-    <a href="/about/">about</a>.
+    Reliability is the boring stuff that stops that. Tests you run before and after changes. Hard limits on what the agent can touch and spend. Monitoring for drift and loops. A rollback path the team will actually hit when things go sideways. Most teams skip this part. Then they wonder why the demo didn't survive contact with Monday morning.
+  </p>
+
+  <h2>How I usually approach it</h2>
+  <p>
+    First we check whether you even need an agent. Plenty of problems want a simpler pipeline. If an agent still makes sense, we design for cost and failure modes up front, then ship and harden. For teams that already went live, the Reliability Retainer covers the keep-it-running work, including an
+    <a href="/eu-ai-act-readiness/">EU AI Act</a>
+    re-check when usage or the rules move.
+  </p>
+  <p>
+    Don't know where to begin?
+    <a href="/services/readiness-audit/">Start with the audit</a>.
+    More context in
+    <a href="/work/patterns/">patterns</a>
+    and
+    <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>.
   </p>
 </ContentPage>

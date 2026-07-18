@@ -3,7 +3,7 @@ import ContentPage from '../layouts/ContentPage.astro';
 import { languageAlternates } from '../lib/i18n';
 
 const description =
-  'Corporate LLM: a company LLM stack you control. Private or open models, RAG over your data, access control, cost limits, and ops under your policies.';
+  'A company LLM stack you actually control: models, your data, who can ask what, what it costs, and who gets paged when it breaks.';
 
 const alternates = languageAlternates('/corporate-llm/', '/de/corporate-llm/');
 
@@ -45,34 +45,31 @@ const jsonLd = {
   canonical="/corporate-llm/"
   noteId="corporate-llm"
   heading="Corporate LLM"
-  eyebrow="Service · Platform"
-  lead="A company LLM stack on your terms: data residency, access, cost, and who gets paged when it breaks."
+  eyebrow="Platform"
+  lead="Skip the chatbot bolted onto Slack. Build a stack that runs under your rules."
   icon="/graphics/icon-model-orbits.svg"
   alternates={alternates}
   jsonLd={jsonLd}
   localeSwitch={{ href: '/de/corporate-llm/', label: 'Deutsch' }}
 >
   <p>
-    Most companies do not need another consumer chatbot. They need an LLM stack that runs on their terms. That is a Corporate LLM. Project engagement, typically 6-12 weeks.
+    That's what I mean by Corporate LLM. Where the data lives. Who can ask what. What the model is allowed to touch. What it costs per week. Who owns the pager. Typical project runs about six to twelve weeks, depending on how tangled the starting point is.
   </p>
 
-  <h2>What gets built</h2>
-  <ul>
-    <li>Model choice: hosted APIs where they fit, open-weight models you host when data, cost, or lock-in require it</li>
-    <li>RAG and tools over your documents and systems, with clear boundaries</li>
-    <li>Access control, audit trails, and rate or budget limits</li>
-    <li>Ops: monitoring, evals, and a path to keep it running after launch</li>
-  </ul>
-
-  <h2>How this differs from a Build Sprint</h2>
+  <h2>What we put in place</h2>
   <p>
-    A Build Sprint ships one product system with AI inside it. Corporate LLM is the shared company capability: the platform internal teams (and sometimes customers) use under your policies. Same engineering bar. Different scope.
+    We pick models that fit: hosted APIs when they're fine, open weights you host when data, cost, or lock-in say otherwise. RAG and tools over the docs and systems you approve, with clear edges. Access control, audit trails, budget or rate limits. Monitoring and evals so you can keep it alive after launch.
+  </p>
+
+  <h2>Versus a Build Sprint</h2>
+  <p>
+    A Build Sprint ships one product with AI inside it. Corporate LLM is the shared layer lots of teams (sometimes customers) use under company policy. Same bar for engineering. Wider scope.
   </p>
 
   <h2>Where to start</h2>
   <p>
-    Unsure whether you need a platform or a single use case? Start with the
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Already clear you need a private or hybrid LLM stack? This engagement.
+    Still arguing platform versus one use case?
+    <a href="/services/readiness-audit/">Do the audit first</a>.
+    Already sure you need a private or hybrid stack? This engagement is the one.
   </p>
 </ContentPage>

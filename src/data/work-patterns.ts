@@ -24,23 +24,23 @@ export const workPatterns: WorkPattern[] = [
     title: 'Agent in production, not just in a demo',
     sector: 'B2B product / internal tools',
     problem:
-      'An agent looked fine in demos, then looped, spent unpredictably, or failed silently once it ran unattended against live data.',
+      'The agent looked fine when someone was clicking through a demo. Once it ran alone on live data, it looped, spent money in weird ways, or failed quietly.',
     approach:
-      'Bounded tools, eval suite before each release, guardrails on actions and cost, monitoring for drift and loops, clear rollback.',
+      'Tight tool access, an eval suite before each release, hard limits on actions and cost, monitoring for drift and loops, and a rollback the team will hit.',
     outcome:
-      'A system the team can leave running, with known failure modes and an owner for incidents.',
+      'A system you can leave running. Known failure modes. Someone owns the pager.',
     caseStudyReady: false,
   },
   {
     id: 'open-models',
-    title: 'Open models where APIs do not fit',
+    title: 'Open models when APIs stop fitting',
     sector: 'Data-sensitive or cost-sensitive stacks',
     problem:
-      'Hosted APIs blocked on data residency, lock-in, or unit economics once volume grew.',
+      'Hosted APIs hit a wall on data residency, lock-in, or unit economics once volume went up.',
     approach:
-      'Self-hosted open-weight models (e.g. Llama, Mistral, Qwen) behind the same product surface, with RAG and ops wired for production.',
+      'Self-hosted open-weight models (Llama, Mistral, Qwen, that crowd) behind the same product surface, with RAG and ops built for production.',
     outcome:
-      'Inference under your control, with a cost and reliability model you can forecast.',
+      'Inference you control, with a cost and reliability picture you can forecast.',
     caseStudyReady: false,
   },
   {
@@ -48,11 +48,11 @@ export const workPatterns: WorkPattern[] = [
     title: 'Corporate LLM as a shared company capability',
     sector: 'Internal platforms / knowledge work',
     problem:
-      'Teams bolted consumer chat onto Slack or Notion. Data paths were unclear, cost spiked, and nobody owned access, evals, or incidents.',
+      'Teams bolted consumer chat onto Slack or Notion. Nobody knew where the data went. Cost spiked. Access, evals, and incidents had no owner.',
     approach:
-      'Corporate LLM engagement: model choice (hosted and/or open), RAG over approved corpora, access and audit trails, budget limits, monitoring and a reliability path.',
+      'Corporate LLM work: pick hosted and/or open models, RAG over approved docs, access and audit trails, budget limits, monitoring, and a reliability path.',
     outcome:
-      'One internal LLM stack under company policy, usable by multiple teams without reinventing the plumbing each time.',
+      'One internal LLM stack under company policy. Multiple teams can use it without reinventing the plumbing each time.',
     caseStudyReady: false,
   },
   {
@@ -60,11 +60,11 @@ export const workPatterns: WorkPattern[] = [
     title: 'Build, buy, or skip before the sprint',
     sector: 'Seed to Series B / growing companies',
     problem:
-      'Pressure to "do AI" without a use case that pays for itself, or with a POC that cannot survive production.',
+      'Pressure to "do AI" with no use case that pays for itself, or a POC that could never survive production.',
     approach:
-      'Fixed-scope Readiness & Production Audit: use-case shortlist, agent feasibility, build/buy/skip, cost model, EU AI Act check where it applies.',
+      'Fixed-scope Readiness & Production Audit: use-case shortlist, whether an agent even helps, build / buy / skip, cost model, EU AI Act check when it applies.',
     outcome:
-      'A clear go / no-go and a path that matches the team you actually have.',
+      'A clear go / no-go, and a path that matches the team you actually have.',
     caseStudyReady: false,
   },
   {
@@ -72,9 +72,9 @@ export const workPatterns: WorkPattern[] = [
     title: 'Keep it running after ship',
     sector: 'Teams that already shipped AI',
     problem:
-      'The build ended, but evals, drift, incidents, and governance had no standing owner.',
+      'The build ended. Evals, drift, incidents, and governance had nobody standing behind them.',
     approach:
-      'Reliability Retainer: monitoring, guardrails, drift and cost control, incident response, periodic AI Act re-assessment.',
+      'Reliability Retainer: monitoring, guardrails, drift and cost control, incident response, periodic AI Act re-check.',
     outcome:
       'Ongoing reliability without hiring a full in-house AI ops function on day one.',
     caseStudyReady: false,

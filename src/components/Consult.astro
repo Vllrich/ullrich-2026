@@ -27,6 +27,15 @@ const points = [
         <a href="/about/">About</a>
       </p>
     </div>
+    <div class="consult-visual" aria-hidden="true">
+      <img
+        src="/graphics/consult-visual.svg"
+        alt=""
+        class="consult-visual-img"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
   </div>
 </section>
 
@@ -58,7 +67,33 @@ const points = [
   }
 
   .consult-inner {
-    max-width: 52rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.85fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+
+  .consult-copy {
+    max-width: 36rem;
+  }
+
+  .consult-visual {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    pointer-events: none;
+    min-width: 0;
+  }
+
+  .consult-visual-img {
+    width: min(100%, 28rem);
+    max-width: 480px;
+    height: auto;
+    display: block;
+    transform: scale(1.15);
+    transform-origin: center right;
   }
 
   .consult-display {
@@ -164,5 +199,22 @@ const points = [
 
   .consult-about a:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 800px) {
+    .consult-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .consult-visual {
+      justify-content: flex-start;
+    }
+
+    .consult-visual-img {
+      width: min(72vw, 22rem);
+      max-width: 360px;
+      transform: none;
+    }
   }
 </style>

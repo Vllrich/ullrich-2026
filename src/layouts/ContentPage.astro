@@ -1,0 +1,104 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, canonical, jsonLd } = Astro.props;
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <main class="content-page">
+    <div class="container">
+      <a href="/" class="back-link">← Back to home</a>
+      <slot />
+      <p class="cta">
+        <a href="/#contact">Start a conversation</a>
+      </p>
+    </div>
+  </main>
+  {jsonLd && (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  )}
+</Layout>
+
+<style>
+  .content-page {
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+  }
+
+  .container {
+    max-width: 70ch;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s ease;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+
+  .content-page :global(h1) {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--ink, #2C303C);
+    line-height: 1.1;
+    margin: 0 0 1.5rem;
+  }
+
+  .content-page :global(h2) {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    color: var(--ink, #2C303C);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    margin: 2.5rem 0 0.875rem;
+  }
+
+  .content-page :global(p),
+  .content-page :global(li) {
+    color: var(--dim, oklch(28% 0.01 258));
+    font-size: 1rem;
+    line-height: 1.875;
+    margin: 0 0 1rem;
+  }
+
+  .content-page :global(ul) {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+  }
+
+  .content-page :global(a) {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+  }
+
+  .content-page :global(a:hover) {
+    text-decoration: underline;
+  }
+
+  .cta {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .cta a {
+    font-weight: 600;
+  }
+</style>

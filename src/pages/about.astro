@@ -1,0 +1,50 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+
+const description =
+  'Lars Ullrich is a Berlin-based full-stack engineer and fractional CTO / CAIO. Production AI, agent reliability, and systems that have to keep working.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/about/#webpage',
+  url: 'https://larsullrich.de/about/',
+  name: 'About Lars Ullrich',
+  description,
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  about: { '@id': 'https://larsullrich.de/#person' },
+  mainEntity: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="About - Lars Ullrich"
+  description={description}
+  canonical="/about/"
+  jsonLd={jsonLd}
+>
+  <h1>About</h1>
+  <p>
+    I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
+  </p>
+  <p>
+    I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
+  </p>
+  <p>
+    These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves.
+  </p>
+
+  <h2>Focus</h2>
+  <ul>
+    <li>Production AI</li>
+    <li><a href="/agent-reliability/">Agent reliability</a></li>
+    <li>Full-stack engineering</li>
+    <li><a href="/fractional-cto-caio/">Fractional CTO / CAIO</a></li>
+  </ul>
+
+  <h2>Where</h2>
+  <p>
+    Berlin, Germany, since 2007. I work with startups and growing companies regardless of location.
+    Email <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>.
+  </p>
+</ContentPage>

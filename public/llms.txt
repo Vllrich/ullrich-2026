@@ -1,0 +1,44 @@
+# Lars Ullrich
+
+> Production AI, agent reliability, and fractional CTO / CAIO. Berlin-based full-stack engineer.
+
+I help growing companies get AI into production and keep it running. Often agents, often on open models you host yourself. Strategy when you need it, engineering when you need that too.
+
+## Identity
+
+- Name: Lars Ullrich
+- Role: Fractional CTO / CAIO & Full-Stack AI Engineer
+- Location: Berlin, Germany
+- Email: contact@larsullrich.de
+- Site: https://larsullrich.de/
+- GitHub: https://github.com/Vllrich
+- LinkedIn: https://www.linkedin.com/in/lars-ullrich-47338a27/
+
+## Focus
+
+- Production AI systems
+- Agent reliability (evals, guardrails, monitoring, bounded autonomy)
+- Full-stack engineering (Python, TypeScript, infra)
+- Fractional CTO / CAIO leadership
+- Open-weight and self-hosted models when data, cost, or lock-in require it
+
+## Services
+
+- Readiness & Production Audit (fixed scope, 1-2 weeks)
+- Build Sprint (project, 6-10 weeks)
+- Reliability Retainer (monthly)
+- Fractional CTO / CAIO (monthly retainer)
+
+## Pages
+
+- [Home](https://larsullrich.de/): positioning, method, services, FAQ, contact
+- [About](https://larsullrich.de/about/): who I am and how I work
+- [Agent reliability](https://larsullrich.de/agent-reliability/): definition and when it matters
+- [Fractional CTO / CAIO](https://larsullrich.de/fractional-cto-caio/): role and how engagements start
+- [Impressum](https://larsullrich.de/impressum/): legal notice
+- [Full text for LLMs](https://larsullrich.de/.well-known/llms-full.txt): longer extract
+- [Sitemap](https://larsullrich.de/sitemap-index.xml)
+
+## Contact
+
+Email contact@larsullrich.de. I read every message personally and usually reply within a day.

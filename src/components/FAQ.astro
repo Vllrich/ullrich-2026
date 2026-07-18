@@ -3,10 +3,14 @@ const faqs = [
   {
     q: 'What does a fractional CTO / CAIO actually do?',
     a: 'Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.',
+    moreHref: '/fractional-cto-caio/',
+    moreLabel: 'Fractional CTO / CAIO',
   },
   {
     q: 'What do you mean by "agent reliability"?',
     a: 'A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.',
+    moreHref: '/agent-reliability/',
+    moreLabel: 'Agent reliability',
   },
   {
     q: 'Do you work with open models, or only hosted APIs like OpenAI?',
@@ -61,7 +65,14 @@ const faqSchema = {
           <span class="faq-q-text">{f.q}</span>
           <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p class="faq-a">{f.a}</p>
+        <div class="faq-a">
+          <p>{f.a}</p>
+          {'moreHref' in f && f.moreHref && (
+            <p class="faq-more">
+              <a href={f.moreHref}>{f.moreLabel}</a>
+            </p>
+          )}
+        </div>
       </details>
     ))}
   </div>
@@ -155,5 +166,23 @@ const faqSchema = {
     font-weight: 400;
     line-height: 1.75;
     color: var(--dim, oklch(28% 0.010 258));
+  }
+
+  .faq-a p {
+    margin: 0;
+  }
+
+  .faq-more {
+    margin-top: 0.65rem;
+  }
+
+  .faq-more a {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .faq-more a:hover {
+    text-decoration: underline;
   }
 </style>

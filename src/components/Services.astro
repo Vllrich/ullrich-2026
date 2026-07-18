@@ -23,6 +23,7 @@ const services = [
     icon: '/graphics/icon-reliability-retainer.svg',
     desc: 'The keep-it-running part, as a standing engagement: evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not be operating it alone.',
     tags: ['Evals & monitoring', 'Guardrails', 'Drift & cost control', 'Incident response'],
+    href: '/agent-reliability/',
   },
   {
     title: 'Fractional CTO / CAIO',
@@ -31,6 +32,7 @@ const services = [
     icon: '/graphics/icon-fractional-cto.svg',
     desc: 'Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. Technical, not purely advisory.',
     tags: ['Architecture & roadmap', 'Team & vendor selection', 'Delivery ownership', 'Board-level reporting'],
+    href: '/fractional-cto-caio/',
   },
 ];
 ---
@@ -52,7 +54,9 @@ const services = [
       <li class="svc fade-up" data-delay={String(120 + i * 70)}>
         <div class="svc-row">
           <div class="svc-left">
-            <h3 class="svc-title">{s.title}</h3>
+            <h3 class="svc-title">
+              {'href' in s && s.href ? <a href={s.href}>{s.title}</a> : s.title}
+            </h3>
             <p class="svc-desc">{s.desc}</p>
             <ul class="svc-tags">
               {s.tags.map((t) => <li>{t}</li>)}
@@ -151,6 +155,15 @@ const services = [
     margin-bottom: 1rem;
     line-height: 1.1;
     text-wrap: balance;
+  }
+
+  .svc-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .svc-title a:hover {
+    color: var(--cobalt-dim, #8aaa00);
   }
 
   .svc-desc {

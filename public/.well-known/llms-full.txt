@@ -1,0 +1,69 @@
+# Lars Ullrich - full extract for LLMs
+
+Site: https://larsullrich.de/
+Contact: contact@larsullrich.de
+Location: Berlin, Germany
+
+## Who
+
+Lars Ullrich is an engineer and technical lead based in Berlin. He has been building software for about 25 years, from real-time GPU and audio systems to startup architecture and CTO roles. Today he helps companies get AI into production and keep it running: infrastructure, agents, open models you host yourself, and fractional technical leadership.
+
+## Positioning
+
+Anyone can build a demo. Running it is the job. I help growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place.
+
+## Agent reliability
+
+A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.
+
+More: https://larsullrich.de/agent-reliability/
+
+## Fractional CTO / CAIO
+
+Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.
+
+More: https://larsullrich.de/fractional-cto-caio/
+
+## Open models vs hosted APIs
+
+Both. Hosted APIs are often the fastest start. When data has to stay in your infrastructure, when per-token cost does not scale, or when you want to avoid vendor lock-in, I build on open models like Llama, Mistral, or Qwen, self-hosted on infrastructure you control.
+
+## Method
+
+1. Tune in: understand the real problem, data, and constraints before writing code or reaching for a model.
+2. Compose the architecture: services, data, and where AI earns its place. Design for reliability, cost, and the team that inherits it.
+3. Ship and harden: tests, monitoring, guardrails, evals where AI is involved, clear ownership.
+4. Adopt responsibly: governance sized to the company, including EU AI Act readiness where it applies.
+
+## Services
+
+### Readiness & Production Audit
+Fixed scope, 1-2 weeks. Focused review of product, data, and stack: where AI fits, where it does not, and what it takes to run in production. Deliverables: prioritized use-case shortlist, build/buy/skip call, cost model. Includes agent feasibility and EU AI Act check where relevant.
+
+### Build Sprint
+Project, 6-10 weeks. One system shipped to production: app, infrastructure, and the AI inside it. Hosted or on open models you control. Not a prototype that stops at the demo.
+
+### Reliability Retainer
+Monthly, ongoing. Evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not operate it alone.
+
+### Fractional CTO / CAIO
+Monthly retainer. Architecture, delivery, code review, and AI strategy. Technical, not purely advisory.
+
+## Which engagement to start with
+
+Unsure whether AI is the right move? Start with the Readiness & Production Audit. Already know what to build? A Build Sprint ships one system to production. Already shipped? The Reliability Retainer keeps it running. Need embedded leadership? Fractional CTO / CAIO.
+
+## About page
+
+https://larsullrich.de/about/
+
+## FAQ (selected)
+
+Q: Do you only advise, or do you also write the code?
+A: The engagement includes code. I work inside your repository, not from the outside, and I stay on to operate what we ship.
+
+Q: How do you decide whether a company actually needs AI?
+A: Not every problem needs AI, and not every AI needs an agent. I start with the use case. Most AI failures are framing failures. The Readiness & Production Audit answers this before any build work begins.
+
+Q: Where are you based?
+A: Berlin since 2007. Remote with startups and growing companies regardless of location.

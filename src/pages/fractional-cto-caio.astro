@@ -1,0 +1,53 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+
+const description =
+  'What a fractional CTO / CAIO does: senior technical leadership on a part-time basis, including architecture, delivery, and AI strategy. Not purely advisory.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/fractional-cto-caio/#webpage',
+  url: 'https://larsullrich.de/fractional-cto-caio/',
+  name: 'Fractional CTO / CAIO',
+  description,
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  about: {
+    '@type': 'Occupation',
+    name: 'Fractional CTO / CAIO',
+    description,
+  },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="Fractional CTO / CAIO - Lars Ullrich"
+  description={description}
+  canonical="/fractional-cto-caio/"
+  jsonLd={jsonLd}
+>
+  <h1>Fractional CTO / CAIO</h1>
+  <p>
+    Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.
+  </p>
+
+  <h2>How this differs from advisory</h2>
+  <p>
+    The engagement includes code. I work inside your repository, not from the outside, and I stay on to operate what we ship. Depending on the engagement, that spans implementation, architecture reviews, production debugging, and ongoing reliability.
+  </p>
+
+  <h2>Where to start</h2>
+  <ul>
+    <li>
+      Unsure whether AI is the right move? Start with the Readiness &amp; Production Audit: fixed scope, a use-case shortlist, an honest build/buy/skip call, and a cost model.
+    </li>
+    <li>Already know what to build? A Build Sprint ships one system to production.</li>
+    <li>Already shipped? The Reliability Retainer keeps it running, including <a href="/agent-reliability/">agent reliability</a>.</li>
+    <li>Need embedded leadership ongoing? Fractional CTO / CAIO on a monthly retainer.</li>
+  </ul>
+  <p>
+    More: <a href="/#services">all services</a>,
+    <a href="/about/">about</a>.
+  </p>
+</ContentPage>

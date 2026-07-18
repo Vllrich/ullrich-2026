@@ -3,7 +3,7 @@
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
 > **Source:** `src/pages/index.astro` and its components.  
-> **Last revised:** 2026-06-30 (synced to live components: nav descriptor, WhatIDo services list, readiness scorecard, contact error copy. See `AGENTS.md` for the house style.)
+> **Last revised:** 2026-07-18 (GEO: entity pages, llms.txt, FAQ/Services deep links. See `AGENTS.md` for the house style.)
 
 ---
 
@@ -22,8 +22,18 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 - **Person:** Lars Ullrich - Fractional CTO / CAIO & Full-Stack AI Engineer
 - **Email:** contact@larsullrich.de
 - **Location:** Berlin, DE
-- **Knows about:** AI systems & ML, agents / RAG / automation, AI reliability & evaluation, open-weight & self-hosted models, real-time graphics & GPU, audio engineering & DSP, product architecture
+- **Knows about:** Production AI, agent reliability, AI systems & ML, agents / RAG / automation, AI reliability & evaluation, open-weight & self-hosted models, fractional CTO / CAIO, real-time graphics & GPU, audio engineering & DSP, product architecture
 - **Service catalog:** Readiness & Production Audit, Build Sprint, Reliability Retainer, Fractional CTO / CAIO
+
+**Citation surfaces (standalone pages)**
+
+| URL | Purpose |
+| --- | --- |
+| `/about/` | Entity page: who Lars is |
+| `/agent-reliability/` | Definition of agent reliability |
+| `/fractional-cto-caio/` | Fractional CTO / CAIO role |
+| `/llms.txt` | Short machine-readable summary |
+| `/.well-known/llms-full.txt` | Longer extract for LLMs |
 
 ---
 
@@ -183,6 +193,7 @@ _Component: `Services.astro` · Section ID: `#services`_
 | Format      | Monthly · ongoing                                                                                                                                                                                                    |
 | Description | The keep-it-running part, as a standing engagement: evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment. For teams who already shipped and should not be operating it alone. |
 | Tags        | Evals & monitoring · Guardrails · Drift & cost control · Incident response                                                                                                                                           |
+| Title link  | [/agent-reliability/](/agent-reliability/)                                                                                                                                                                           |
 
 ### Service 4 - Fractional CTO / CAIO
 
@@ -192,6 +203,7 @@ _Component: `Services.astro` · Section ID: `#services`_
 | Format      | Monthly retainer                                                                                                                              |
 | Description | Senior technical leadership without the full-time hire: architecture, delivery, code review, and AI strategy. Technical, not purely advisory. |
 | Tags        | Architecture & roadmap · Team & vendor selection · Delivery ownership · Board-level reporting                                                 |
+| Title link  | [/fractional-cto-caio/](/fractional-cto-caio/)                                                                                                 |
 
 ---
 
@@ -215,7 +227,7 @@ _Component: `About.astro` · Section ID: `#about`_
 
 ### Lead
 
-> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
+> I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working. [About](/about/)
 
 ### Bio
 
@@ -266,10 +278,14 @@ _Component: `FAQ.astro` · Section ID: `#faq`_
 **What does a fractional CTO / CAIO actually do?**
 
 > Senior technical leadership on a part-time or project basis: architecture, roadmap, delivery ownership, team and vendor selection, and AI strategy. The role stays technical, not purely advisory. In practice that means code reviews, architecture decisions, and production debugging alongside the team, without the cost of a full-time hire.
+>
+> Link: [Fractional CTO / CAIO](/fractional-cto-caio/)
 
 **What do you mean by "agent reliability"?**
 
 > A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.
+>
+> Link: [Agent reliability](/agent-reliability/)
 
 **Do you work with open models, or only hosted APIs like OpenAI?**
 

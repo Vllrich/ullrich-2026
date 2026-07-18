@@ -1,4 +1,58 @@
+# Content Signals (https://contentsignals.org/)
+# search: indexing for search results with links/excerpts
+# ai-input: retrieval for generative answers at query time
+# ai-train: training or fine-tuning models
+# use: what may be kept after access (reference = index, excerpt, cite)
+
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no, use=reference
 Allow: /
+
+# Search / retrieval crawlers (answers, citations)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# Training crawlers (blocked; Cloudflare ai_training=block also enforces at edge)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
 
 Sitemap: https://larsullrich.de/sitemap-index.xml

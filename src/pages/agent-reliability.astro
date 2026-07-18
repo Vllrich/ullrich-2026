@@ -1,0 +1,52 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+
+const description =
+  'Agent reliability is the work that makes production agents safe: evals, guardrails, bounded autonomy, monitoring, and a clear rollback path. How I approach it.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/agent-reliability/#webpage',
+  url: 'https://larsullrich.de/agent-reliability/',
+  name: 'Agent reliability',
+  description,
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  about: {
+    '@type': 'DefinedTerm',
+    name: 'Agent reliability',
+    description,
+  },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="Agent reliability - Lars Ullrich"
+  description={description}
+  canonical="/agent-reliability/"
+  jsonLd={jsonLd}
+>
+  <h1>Agent reliability</h1>
+  <p>
+    A demo agent and a production agent are different problems. In a demo it answers once, watched by a human. In production it acts on its own, repeatedly, against changing data. The failure modes are looping, hallucinated actions, runaway cost, and silent regressions. Reliability is the work that makes that safe: evals you can trust, guardrails, bounded autonomy, monitoring, and a clear rollback path. It is the part most teams skip.
+  </p>
+
+  <h2>What that means in practice</h2>
+  <ul>
+    <li>Evals you can trust before and after every meaningful change</li>
+    <li>Guardrails that bound what the agent can do and spend</li>
+    <li>Monitoring for drift, loops, and silent quality drops</li>
+    <li>A rollback path the team will actually use</li>
+  </ul>
+
+  <h2>How I work on it</h2>
+  <p>
+    I start with framing: not every problem needs AI, and not every AI needs an agent. Then architecture for reliability and cost, then ship and harden. For teams who already shipped, the Reliability Retainer covers evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment.
+  </p>
+  <p>
+    Related: <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>,
+    <a href="/#services">services</a>,
+    <a href="/about/">about</a>.
+  </p>
+</ContentPage>

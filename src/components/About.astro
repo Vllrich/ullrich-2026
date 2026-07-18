@@ -26,6 +26,7 @@ const stack = [
     <div class="about-body">
       <p class="about-lead fade-up" data-delay="100">
         I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
+        <a href="/about/" class="about-more">About</a>
       </p>
 
       <p class="about-prose fade-up" data-delay="240">
@@ -92,6 +93,20 @@ const stack = [
     margin-bottom: 1.75rem;
     max-width: 44ch;
     text-wrap: balance;
+  }
+
+  .about-more {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+  }
+
+  .about-more:hover {
+    text-decoration: underline;
   }
 
   .about-prose {

@@ -62,6 +62,14 @@ Push to `master` triggers the GitHub Actions workflow:
 | ------------------------- | ---------------------------------------------------------------------- |
 | `PUBLIC_MAINTENANCE_MODE` | `true` to enable maintenance mode, `false` (or unset) for normal site  |
 
+## GEO / LLM visibility
+
+- Origin [`public/robots.txt`](public/robots.txt): `search=yes`, `ai-input=yes`, `ai-train=no`; search bots allowed; training bots disallowed
+- Cloudflare zone: managed robots.txt off; `ai_training=block` at the edge
+- Machine summaries: [`/llms.txt`](public/llms.txt), [`/.well-known/llms-full.txt`](public/.well-known/llms-full.txt)
+- Citation pages: `/about/`, `/agent-reliability/`, `/fractional-cto-caio/`
+- Operator checklist (LinkedIn, GitHub, GSC, prompt tests): see [`TODO.md`](TODO.md)
+
 ## Server Setup Notes
 
 - DNSSEC: enabled on the Cloudflare zone (2026-07-04). Status stays `pending` until the DS record is published at the domain registrar (not Cloudflare) — see `larsullrich.de. 3600 IN DS 2371 13 2 FEE6FE1E83F1D568DA3C878CFAD6652CCC01D12F970D7844052CA5E0A7D61657`. Re-check status via `GET /zones/{id}/dnssec` once added.

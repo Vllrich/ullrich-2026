@@ -1,16 +1,12 @@
 ---
-import DiagnoseIcon from './DiagnoseIcon.astro';
 ---
 
 <div class="site-wrap">
 
   <header class="site-nav">
     <a href="#" class="nav-logo">
-      <DiagnoseIcon size="sm" class="nav-logo-mark" />
-      <span class="nav-logo-text">
-        LARS ULLRICH
-        <span class="nav-descriptor">Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
-      </span>
+      LARS ULLRICH
+      <span class="nav-descriptor">Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Main navigation">
       <a href="#what-i-do">What I Do</a>
@@ -91,9 +87,8 @@ import DiagnoseIcon from './DiagnoseIcon.astro';
 
   .nav-logo {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.65rem;
+    flex-direction: column;
+    gap: 0.2rem;
     text-decoration: none;
     font-weight: 800;
     font-size: 0.72rem;
@@ -102,28 +97,6 @@ import DiagnoseIcon from './DiagnoseIcon.astro';
     color: var(--ink, #2C303C);
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     line-height: 1.1;
-  }
-
-  .nav-logo-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .nav-logo :global(.nav-logo-mark) {
-    width: 2.15rem;
-    height: 2.15rem;
-    max-width: none;
-    flex-shrink: 0;
-  }
-
-  /* Lime faces would vanish on the lime nav bar; ink reads, then lime after scroll. */
-  .nav-logo :global(.tri:not(.is-off)) {
-    fill: var(--ink, #2C303C);
-  }
-
-  .site-nav.is-scrolled .nav-logo :global(.tri:not(.is-off)) {
-    fill: #caf200;
   }
 
   .nav-descriptor {

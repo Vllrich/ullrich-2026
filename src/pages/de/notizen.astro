@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ContentFooter from '../../components/ContentFooter.astro';
-import DiagnoseIcon from '../../components/DiagnoseIcon.astro';
 import { notesDe } from '../../data/notes';
 import { languageAlternates } from '../../lib/i18n';
 import '../../styles/content-page.css';
@@ -22,7 +21,6 @@ const alternates = languageAlternates('/notes/', '/de/notizen/');
   <div class="cp-shell">
     <header class="cp-bar">
       <a href="/de/" class="cp-brand" aria-label="Zur Startseite">
-        <DiagnoseIcon size="sm" />
         <span class="cp-brand-text">Lars Ullrich</span>
       </a>
       <nav class="cp-bar-nav" aria-label="Bereich">

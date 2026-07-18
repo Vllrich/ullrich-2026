@@ -1,7 +1,6 @@
 ---
 import Layout from './Layout.astro';
 import ContentFooter from '../components/ContentFooter.astro';
-import DiagnoseIcon from '../components/DiagnoseIcon.astro';
 import { continueReading, neighbors, notesFor, type Note } from '../data/notes';
 import '../styles/content-page.css';
 import type { AlternateLink } from '../lib/i18n';
@@ -55,7 +54,6 @@ const railNotes = notesFor(lang).filter((n) => n.id !== noteId);
   <div class="cp-shell">
     <header class="cp-bar">
       <a href={homeHref} class="cp-brand" aria-label={lang === 'de' ? 'Zur Startseite' : 'Back to home'}>
-        <DiagnoseIcon size="sm" />
         <span class="cp-brand-text">Lars Ullrich</span>
       </a>
       <nav class="cp-bar-nav" aria-label={lang === 'de' ? 'Bereich' : 'Section'}>

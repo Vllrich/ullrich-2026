@@ -51,10 +51,10 @@
       </div>
     </div>
 
-    <!-- Right: grid animation + shader controls -->
+    <!-- Full-bleed skyline along the hero floor -->
     <div class="hero-graphic" aria-hidden="true">
       <canvas id="bauhaus-canvas"></canvas>
-      <!-- Word labels — positioned by JS each frame -->
+      <!-- Icons over open driver cells — positioned by JS each frame -->
       <div id="grid-labels" class="grid-labels"></div>
     </div>
   </section>
@@ -128,26 +128,32 @@
   }
   .nav-links a:hover { color: var(--ink, #2C303C); }
 
-  /* ── Hero: white, 1280×720, split left/right ── */
+  /* ── Hero: text left, skyline graphic full-bleed at bottom ── */
   .hero {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
     height: 720px;
     background: #bbdd00;
     overflow: hidden;
+    position: relative;
     margin-top: -2rem; /* nav bar is same lime color — shift up so content sits at optical midpoint of nav+hero combined */
   }
 
   #fluid-canvas,
   #ascii-canvas { display: none; }
 
-  /* Left: text column — vertically centered */
+  /* Left: text column — vertically centered, above the skyline */
   .hero-text {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
     padding: clamp(1.5rem, 3vw, 2.5rem) clamp(2.5rem, 5vw, 4.5rem);
+    position: relative;
   }
 
   .hero-heading {
@@ -215,7 +221,7 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--ink, #2C303C);
-    background: transparent;
+    background: #bbdd00;
     text-decoration: none;
     padding: 0.75rem 1.5rem;
     border: 1px solid var(--ink, #2C303C);
@@ -244,19 +250,22 @@
   }
   .hero-services li:first-child { border-top: 1px dotted var(--rule, oklch(87% 0.005 260)); }
 
-  /* Right: grid animation panel */
+  /* Full-bleed skyline — sits on the hero floor, under the text */
   .hero-graphic {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    z-index: 1;
     display: flex;
-    align-items: center; /* centre the (shorter) canvas vertically */
-    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: stretch;
     overflow: hidden;
-    padding: 80px 0;
-    background: #bbdd00;
-    position: relative; /* anchor for the param panel */
-    align-self: stretch; /* fill the full hero row height */
+    padding: 0;
+    background: transparent;
+    position: relative;
+    pointer-events: none;
   }
 
-  /* ── Word label overlay ─────────────────────────────────────── */
+  /* ── Icon overlay on open driver cells ──────────────────────── */
   .grid-labels {
     position: absolute;
     inset: 0;
@@ -264,18 +273,14 @@
     overflow: hidden;
     z-index: 5; /* above the canvas (z-index:1), below the param panel (20) */
   }
-  /* :global — these spans are created in JS via createElement, so they
+  /* :global — these imgs are created in JS via createElement, so they
      don't carry Astro's scoped data-attribute. Without :global the scoped
      selector wouldn't match them and position:absolute would be dropped. */
-  :global(.grid-label) {
+  :global(.grid-icon) {
     position: absolute;
-    color: #2C303C; /* site ink — readable against the lime bloom */
-    font-family: var(--font-sans, "Hanken Grotesk", system-ui, sans-serif);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    white-space: nowrap;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
     transform: translate(-50%, -50%);
     user-select: none;
     pointer-events: none;
@@ -283,26 +288,38 @@
 
   #bauhaus-canvas {
     display: block;
-    aspect-ratio: 1 / 1; /* square, sized to fit height, pinned right by .hero-graphic */
-    width: auto;
-    height: 84%;
-    max-width: 100%;
+    width: 100%;
+    height: 92%;
+    max-width: none;
     position: relative;
-    z-index: 1; /* keep below the word-label overlay */
+    z-index: 1; /* keep below the icon overlay */
+    pointer-events: auto;
   }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .hero {
       grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      height: auto;
       min-height: auto;
     }
     .hero-text {
+      grid-column: 1;
+      grid-row: 1;
       padding: clamp(3rem, 8vw, 4rem) 1.5rem 1.5rem;
     }
     .hero-heading { font-size: clamp(1.4rem, 5vw, 2.45rem); }
     .hero-graphic {
-      height: 80vw;
+      grid-column: 1;
+      grid-row: 2;
+      position: relative;
+      height: 52vw;
+      min-height: 220px;
+      pointer-events: auto;
+    }
+    #bauhaus-canvas {
+      height: 100%;
     }
   }
 
@@ -391,7 +408,7 @@ const gridParams = {
   nDrivers: 8,    /* how many of the 8 driver cells are active  */
   gapCSS:   1,    /* gap between cells in CSS pixels            */
   tension:  0.05, /* spring stiffness k — response speed        */
-  bounce:   0.40, /* bounciness 0–1: maps to damping 0.97–0.68  */
+  bounce:   0.22, /* bounciness 0–1: maps to damping 0.97–0.68  */
 };
 
 /* ── Grid shader: 16×16 push-layout squares (v3) ── */
@@ -443,9 +460,12 @@ uniform vec4 u_rowsV[4];
 /* u_drv[i] = (driverCol, driverRow, intensity 0..1, unused) */
 uniform vec4 u_drv[8];
 uniform int  u_drvN;
+uniform float u_limeSeed; /* fixed at init — which cells are solid lime */
+uniform vec4 u_sky[4];    /* 16 floats: floors visible per column (from bottom) */
 out vec4 fragColor;
 
 const vec3 BG = vec3(0.733, 0.867, 0.000); /* lime #bbdd00 */
+const vec3 LIME = vec3(0.733, 0.867, 0.000); /* solid site lime */
 
 float cX(int c){ return u_cols[  c >> 2   ][ c & 3 ]; }
 float cW(int c){ return u_cols[ (c >> 2)+4 ][ c & 3 ]; }
@@ -453,19 +473,30 @@ float rY(int r){ return u_rows[  r >> 2   ][ r & 3 ]; }
 float rH(int r){ return u_rows[ (r >> 2)+4 ][ r & 3 ]; }
 float cV(int c){ return u_colsV[ c >> 2 ][ c & 3 ]; }
 float rV(int r){ return u_rowsV[ r >> 2 ][ r & 3 ]; }
+float skyH(int c){ return u_sky[ c >> 2 ][ c & 3 ]; }
 
-/* 4-stop: near-black → deep forest → mid lime → #bbdd00 → pale */
+/* 4-stop: deep lime → mid → #bbdd00 → soft pale lime (never full white) */
 vec3 cellColor(float t) {
   t = clamp(t, 0.0, 1.0);
-  vec3 c0 = vec3(0.173, 0.188, 0.235); /* #2C303C site dark ink   */
-  vec3 c1 = vec3(0.150, 0.240, 0.055); /* deep forest green       */
-  vec3 c2 = vec3(0.460, 0.650, 0.010); /* mid chartreuse          */
+  vec3 c0 = vec3(0.55, 0.68, 0.000);   /* deep lime resting cells */
+  vec3 c1 = vec3(0.62, 0.76, 0.000);   /* mid lime                */
+  vec3 c2 = vec3(0.68, 0.82, 0.000);   /* bright lime             */
   vec3 c3 = vec3(0.733, 0.867, 0.000); /* #bbdd00 site lime       */
-  vec3 c4 = vec3(0.920, 0.960, 0.820); /* pale bloom              */
+  vec3 c4 = vec3(0.90, 0.95, 0.62);    /* whitish lime, not full white */
   if (t < 0.30) return mix(c0, c1, t / 0.30);
   if (t < 0.60) return mix(c1, c2, (t - 0.30) / 0.30);
   if (t < 0.85) return mix(c2, c3, (t - 0.60) / 0.25);
   return         mix(c3, c4, (t - 0.85) / 0.15);
+}
+
+/* Signed distance to a rounded box; p relative to centre, b = half-size. */
+float sdRoundBox(vec2 p, vec2 b, float r) {
+  vec2 q = abs(p) - b + r;
+  return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - r;
+}
+
+float hash21(vec2 p) {
+  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
 }
 
 void main(){
@@ -480,26 +511,58 @@ void main(){
     if(gf.y >= rY(r) && gf.y < rY(r) + rH(r)){ row = r; break; }
   }
 
-  if(col < 0 || row < 0){ fragColor = vec4(BG, 1.0); return; }
-
-  /* 2D bloom field: colour comes from proximity to the REAL driver cells,
-     not from cell size. This avoids the column×row lattice artefact —
-     only the actual (random) driver positions light up.                  */
-  float fc = float(col);
-  float fr = float(row);
-  float bloom = 0.0;
-  const float sigma = 1.6; /* bloom radius in cells */
-  for(int i = 0; i < 8; i++){
-    if(i >= u_drvN) break;
-    float dc = fc - u_drv[i].x;
-    float dr = fr - u_drv[i].y;
-    float d2 = dc*dc + dr*dr;
-    float b  = u_drv[i].z * exp(-d2 / (2.0 * sigma * sigma));
-    bloom = max(bloom, b);
+  /* Skyline mask: only floors below each column's building height. */
+  if(col < 0 || row < 0 || float(row) >= skyH(col)){
+    fragColor = vec4(BG, 1.0);
+    return;
   }
 
-  float t = clamp(0.04 + bloom * 1.05, 0.0, 1.0);
-  fragColor = vec4(cellColor(t), 1.0);
+  /* Round each cell; soft edge so spring motion doesn't shimmer. */
+  float cw = cW(col);
+  float ch = rH(row);
+  float rr = min(min(cw, ch) * 0.22, u_unit * 0.22);
+  vec2 halfSz = vec2(cw, ch) * 0.5;
+  vec2 center = vec2(cX(col), rY(row)) + halfSz;
+  float sd = sdRoundBox(gf - center, halfSz, rr);
+  if (sd > 1.25) {
+    fragColor = vec4(BG, 1.0);
+    return;
+  }
+  float edge = 1.0 - smoothstep(-0.5, 1.25, sd);
+
+  float fc = float(col);
+  float fr = float(row);
+  vec3 rgb;
+
+  /* ~14% of cells are solid site lime (pattern fixed by u_limeSeed). */
+  if (hash21(vec2(fc, fr) + u_limeSeed * 17.3) < 0.14) {
+    rgb = LIME;
+  } else {
+    /* 2D bloom field: colour comes from proximity to the REAL driver cells,
+       not from cell size. This avoids the column×row lattice artefact —
+       only the actual (random) driver positions light up.                  */
+    float bloom = 0.0;
+    const float sigma = 1.6; /* bloom radius in cells */
+    for(int i = 0; i < 8; i++){
+      if(i >= u_drvN) break;
+      float dc = fc - u_drv[i].x;
+      float dr = fr - u_drv[i].y;
+      float d2 = dc*dc + dr*dr;
+      float b  = u_drv[i].z * exp(-d2 / (2.0 * sigma * sigma));
+      bloom = max(bloom, b);
+    }
+
+    /* Cap bloom so open cells go whitish behind icons, but never full white. */
+    float t = clamp(0.04 + bloom * 0.95, 0.0, 0.88);
+    /* Stable per-cell alpha (no bloom threshold — that caused flicker). */
+    float cellA = 0.25 + hash21(vec2(fc + 5.2, fr + 9.1) + u_limeSeed * 3.7) * 0.75;
+    vec3 lit = cellColor(t);
+    rgb = mix(BG, lit, cellA);
+    /* Bloom smoothly lifts toward the lit colour. */
+    rgb = mix(rgb, lit, smoothstep(0.12, 0.60, t));
+  }
+
+  fragColor = vec4(mix(BG, rgb, edge), 1.0);
 }`;
 
   const prog = gl.createProgram()!;
@@ -521,14 +584,17 @@ void main(){
   gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   gl.bindVertexArray(null);
 
-  const uRes   = gl.getUniformLocation(prog, 'u_resolution');
-  const uUnit  = gl.getUniformLocation(prog, 'u_unit');
-  const uCols  = gl.getUniformLocation(prog, 'u_cols[0]');
-  const uRows  = gl.getUniformLocation(prog, 'u_rows[0]');
-  const uColsV = gl.getUniformLocation(prog, 'u_colsV[0]');
-  const uRowsV = gl.getUniformLocation(prog, 'u_rowsV[0]');
-  const uDrv   = gl.getUniformLocation(prog, 'u_drv[0]');
-  const uDrvN  = gl.getUniformLocation(prog, 'u_drvN');
+  const uRes      = gl.getUniformLocation(prog, 'u_resolution');
+  const uUnit     = gl.getUniformLocation(prog, 'u_unit');
+  const uCols     = gl.getUniformLocation(prog, 'u_cols[0]');
+  const uRows     = gl.getUniformLocation(prog, 'u_rows[0]');
+  const uColsV    = gl.getUniformLocation(prog, 'u_colsV[0]');
+  const uRowsV    = gl.getUniformLocation(prog, 'u_rowsV[0]');
+  const uDrv      = gl.getUniformLocation(prog, 'u_drv[0]');
+  const uDrvN     = gl.getUniformLocation(prog, 'u_drvN');
+  const uLimeSeed = gl.getUniformLocation(prog, 'u_limeSeed');
+  const uSky      = gl.getUniformLocation(prog, 'u_sky[0]');
+  let limeSeed = Math.random() * 1000;
 
   /* ── Driver config ─────────────────────────────────────────────
      Drivers start spread-out and respawn at a well-spread position
@@ -541,71 +607,125 @@ void main(){
   const driverPhase = [0.00, 1.10, 2.30, 4.70, 0.70, 3.10, 5.50, 2.00];
   const driverFreq  = [0.28, 0.41, 0.33, 0.55, 0.22, 0.48, 0.37, 0.63];
 
-  /* Divide the grid into n equal column-zones and n equal row-zones,
-     shuffle each list independently, assign one zone per driver.
-     Zone width = GS/n so drivers are guaranteed GS/n apart on each axis. */
+  /* Skyline profile — fixed at init. Left half stays low; right half climbs hard.
+     Adjacent columns sometimes share a height so blocks read as buildings.
+     Left floors are also capped to LEFT_MAX_CSS px after layout each frame. */
+  const LEFT_MAX_CSS = 154;
+  const buildingH = new Float32Array(GS);
+  const skyEff = new Float32Array(GS); /* effective floors after pixel cap */
+  {
+    let c = 0;
+    while (c < GS) {
+      const t = c / (GS - 1);
+      /* Left half: 2–3 floors (pixel-capped later). Right half: up to full height. */
+      const base = t < 0.5
+        ? 2 + t * 2
+        : 4 + Math.pow((t - 0.5) * 2, 0.85) * 12;
+      const wobble = t < 0.5 ? (Math.random() - 0.5) * 0.8 : (Math.random() - 0.15) * 2.8;
+      const h = t < 0.5
+        ? Math.max(2, Math.min(3, Math.round(base + wobble)))
+        : Math.max(2, Math.min(GS, Math.round(base + wobble)));
+      const span = Math.random() < 0.4 ? 1 : Math.random() < 0.65 ? 2 : 3;
+      for (let k = 0; k < span && c < GS; k++, c++) {
+        buildingH[c] = h;
+      }
+    }
+    skyEff.set(buildingH);
+  }
+
+  function clampToSkyline(col: number, row: number): [number, number] {
+    const h = skyEff[col] > 0 ? skyEff[col] : buildingH[col];
+    const maxR = Math.max(0, Math.floor(h) - 1);
+    return [col, Math.min(row, maxR)];
+  }
+
+  /* Divide the grid into n equal column-zones, shuffle, assign one zone
+     per driver. Row is picked inside that column's visible skyline floors. */
   function placeDrivers(n: number): void {
     const stride = GS / n;
     const ci = Array.from({ length: n }, (_, i) => i);
-    const ri = Array.from({ length: n }, (_, i) => i);
     for (let i = n - 1; i > 0; i--) {
       const jc = Math.floor(Math.random() * (i + 1)); [ci[i], ci[jc]] = [ci[jc], ci[i]];
-      const jr = Math.floor(Math.random() * (i + 1)); [ri[i], ri[jr]] = [ri[jr], ri[i]];
     }
     for (let d = 0; d < n; d++) {
-      driverCols[d] = Math.floor(ci[d] * stride + Math.random() * stride);
-      driverRows[d] = Math.floor(ri[d] * stride + Math.random() * stride);
+      const col = Math.floor(ci[d] * stride + Math.random() * stride);
+      const floors = Math.max(1, Math.floor(buildingH[col]));
+      const row = Math.floor(Math.random() * floors);
+      [driverCols[d], driverRows[d]] = clampToSkyline(col, row);
     }
   }
 
-  /* On respawn: find which column-zone and row-zone are currently free
-     (not occupied by any other active driver) and pick within them.     */
+  /* On respawn: pick a free column-zone, then a floor inside its skyline. */
   function pickFreeZonePos(self: number, n: number): [number, number] {
     const stride = GS / n;
-    const usedC = new Set<number>(), usedR = new Set<number>();
+    const usedC = new Set<number>();
     for (let i = 0; i < n; i++) {
       if (i === self) continue;
       usedC.add(Math.floor(driverCols[i] / stride));
-      usedR.add(Math.floor(driverRows[i] / stride));
     }
-    const freeC: number[] = [], freeR: number[] = [];
-    for (let z = 0; z < n; z++) {
-      if (!usedC.has(z)) freeC.push(z);
-      if (!usedR.has(z)) freeR.push(z);
-    }
+    const freeC: number[] = [];
+    for (let z = 0; z < n; z++) if (!usedC.has(z)) freeC.push(z);
     const cz = freeC[Math.floor(Math.random() * freeC.length)] ?? Math.floor(Math.random() * n);
-    const rz = freeR[Math.floor(Math.random() * freeR.length)] ?? Math.floor(Math.random() * n);
-    return [
-      Math.floor(cz * stride + Math.random() * stride),
-      Math.floor(rz * stride + Math.random() * stride),
-    ];
+    const col = Math.floor(cz * stride + Math.random() * stride);
+    const floors = Math.max(1, Math.floor(buildingH[col]));
+    const row = Math.floor(Math.random() * floors);
+    return clampToSkyline(col, row);
   }
 
   placeDrivers(gridParams.nDrivers);
 
-  /* ── Word labels overlaid on the canvas ── */
-  /* After Goethe — "The Living Work":
-     Who dazzles the crowd with a glittering show / has proved nothing yet of what he can do.
-     The work must stand alone when the candles burn low, / when no master's hand remains to see it through.
-     Twenty years I have forged and refined, / in tone and light, in the swift rush of code,
-     till a new spirit summoned and new work assigned: / the mind of the machine along its weightiest road.
-     The agents, those spirits I guide and constrain, / I set their limits, their purpose, their way,
-     that their working runs true, not darkened by strain, / and holds what must hold through the long arc of day.
-     No counsellor I, who watches from outside. / I write the code. I sit where the work is done.
-     I build what will stand when the morning has died, / what runs in the dark long after I am gone. */
-  const WORDS = ['Forge', 'Summon', 'Refine', 'Guide', 'Endure', 'Stand', 'Persist', 'Remain'];
+  /* ── Icons overlaid on open driver cells ── */
+  const ICONS = [
+    '/graphics/icon-about.svg',
+    '/graphics/icon-ai-readiness-audit.svg',
+    '/graphics/icon-build-and-operate.svg',
+    '/graphics/icon-build-sprint.svg',
+    '/graphics/icon-build-system.svg',
+    '/graphics/icon-command.svg',
+    '/graphics/icon-compliance-frame.svg',
+    '/graphics/icon-core-diamond.svg',
+    '/graphics/icon-corporate-llm.svg',
+    '/graphics/icon-diagnose.svg',
+    '/graphics/icon-find-use-case.svg',
+    '/graphics/icon-focus-monitor.svg',
+    '/graphics/icon-fractional-cto.svg',
+    '/graphics/icon-layer-stack.svg',
+    '/graphics/icon-model-orbits.svg',
+    '/graphics/icon-pattern-steps.svg',
+    '/graphics/icon-priority-stack.svg',
+    '/graphics/icon-reliability-retainer.svg',
+    '/graphics/icon-signal-nodes.svg',
+    '/graphics/icon-structure-frame.svg',
+    '/graphics/icon-system-grid.svg',
+  ];
+
+  /* Pick a random icon, preferring ones not currently shown by other drivers. */
+  function pickIcon(self = -1): string {
+    const used = new Set<string>();
+    for (let i = 0; i < iconEls.length; i++) {
+      if (i === self) continue;
+      const src = iconEls[i]?.getAttribute('src');
+      if (src) used.add(src);
+    }
+    const free = ICONS.filter((src) => !used.has(src));
+    const pool = free.length > 0 ? free : ICONS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
   /* Use the sibling #grid-labels div; fall back to canvas parent so we
      always have a real DOM container even if the ID lookup misses.      */
   const labelsEl = document.getElementById('grid-labels') ?? canvas!.parentElement;
-  const labelEls: HTMLElement[] = [];
+  const iconEls: HTMLImageElement[] = [];
   for (let d = 0; d < ND; d++) {
-    const el = document.createElement('span');
-    el.className = 'grid-label';
-    el.textContent = WORDS[d];
+    const el = document.createElement('img');
+    el.className = 'grid-icon';
+    el.alt = '';
+    el.draggable = false;
     el.style.opacity = '0';
     labelsEl?.appendChild(el);
-    labelEls.push(el);
+    iconEls.push(el);
   }
+  for (let d = 0; d < ND; d++) iconEls[d].src = pickIcon(d);
 
   const dpulse    = new Float32Array(ND);
   const prevPulse = new Float32Array(ND); /* for zero-crossing detection */
@@ -698,12 +818,14 @@ void main(){
     }
 
     /* Respawn: when a driver's pulse crosses zero going upward (starts a new
-       positive cycle) it jumps to a well-spread cell and resets its spring.    */
+       positive cycle) it jumps to a well-spread cell, resets its spring, and
+       picks a fresh random icon for the next open.                            */
     for (let d = 0; d < nd; d++) {
       if (d !== dragDriver && prevPulse[d] < 0 && dpulse[d] >= 0) {
         [driverCols[d], driverRows[d]] = pickFreeZonePos(d, nd);
         driverDelta[d] = 0;
         driverDV[d]    = 0;
+        iconEls[d].src = pickIcon(d);
       }
       prevPulse[d] = dpulse[d];
     }
@@ -713,7 +835,8 @@ void main(){
     const springK    = gridParams.tension;
     const springDamp = 0.97 - gridParams.bounce * 0.29; /* bounce 0→1 maps to damp 0.97→0.68 */
     for (let d = 0; d < nd; d++) {
-      const target    = dpulse[d] * unit * gridParams.amp;
+      /* Only expand (never shrink below rest) — negative pulses caused layout thrash / flicker. */
+      const target    = Math.max(0, dpulse[d]) * unit * gridParams.amp;
       driverDV[d]     = (driverDV[d] + (target - driverDelta[d]) * springK) * springDamp;
       driverDelta[d] += driverDV[d];
     }
@@ -723,7 +846,11 @@ void main(){
       driverDelta[d] += driverDV[d];
     }
 
-    /* 3. Layout using spring positions (not raw pulse) */
+    /* 3. Layout using spring positions (not raw pulse).
+          Columns always expand. Rows expand only for right-half drivers
+          on floors above the left skyline, so left buildings stay under
+          the pixel height cap. */
+    const LEFT_MAX_FLOORS = 3;
     for (let i = 0; i < GS; i++) { colW[i] = unit; rowH[i] = unit; }
     for (let d = 0; d < nd; d++) {
       const dc    = driverCols[d];
@@ -734,9 +861,11 @@ void main(){
       const shareW = delta / (GS - 1);
       for (let c = 0; c < GS; c++) if (c !== dc) colW[c] -= shareW;
 
-      rowH[dr] += delta;
-      const shareH = delta / (GS - 1);
-      for (let r = 0; r < GS; r++) if (r !== dr) rowH[r] -= shareH;
+      if (dc >= GS / 2 && dr >= LEFT_MAX_FLOORS) {
+        rowH[dr] += delta;
+        const shareH = delta / (GS - 1);
+        for (let r = 0; r < GS; r++) if (r !== dr) rowH[r] -= shareH;
+      }
     }
 
     /* Clamp to 32 CSS-px minimum, then renorm to preserve avail */
@@ -762,9 +891,11 @@ void main(){
       colV[dc] += vel;
       const sw = vel / (GS - 1);
       for (let c = 0; c < GS; c++) if (c !== dc) colV[c] -= sw;
-      rowV[dr] += vel;
-      const sh = vel / (GS - 1);
-      for (let r = 0; r < GS; r++) if (r !== dr) rowV[r] -= sh;
+      if (dc >= GS / 2 && dr >= LEFT_MAX_FLOORS) {
+        rowV[dr] += vel;
+        const sh = vel / (GS - 1);
+        for (let r = 0; r < GS; r++) if (r !== dr) rowV[r] -= sh;
+      }
     }
     for (let i = 0; i < GS; i++) {
       colsVData[i] = colV[i];
@@ -816,6 +947,30 @@ void main(){
       ry += rowH[r] + gap;
     }
 
+    /* Cap left-half buildings to LEFT_MAX_CSS (physical px from canvas bottom). */
+    const maxLeftPhy = LEFT_MAX_CSS * dpr;
+    for (let c = 0; c < GS; c++) {
+      let floors = Math.floor(buildingH[c]);
+      if (c < GS / 2) {
+        let capped = 1;
+        for (let r = 0; r < floors; r++) {
+          const top = rowsData[r] + rowsData[r + GS];
+          if (top <= maxLeftPhy + 0.5) capped = r + 1;
+          else break;
+        }
+        floors = capped;
+      }
+      skyEff[c] = floors;
+    }
+    /* Keep drivers inside the effective skyline after the left cap. */
+    for (let d = 0; d < nd; d++) {
+      [driverCols[d], driverRows[d]] = clampToSkyline(driverCols[d], driverRows[d]);
+      drvData[d * 4]     = driverCols[d];
+      drvData[d * 4 + 1] = driverRows[d];
+      drvData[d * 4 + 2] = Math.max(0, Math.min(1, driverDelta[d] / intScale));
+      drvData[d * 4 + 3] = 0;
+    }
+
     /* 5. Upload and draw */
     gl!.useProgram(prog);
     gl!.bindVertexArray(vao);
@@ -825,40 +980,42 @@ void main(){
     gl!.uniform4fv(uRows,  rowsData);
     gl!.uniform4fv(uColsV, colsVData);
     gl!.uniform4fv(uRowsV, rowsVData);
-    gl!.uniform4fv(uDrv,   drvData);
-    gl!.uniform1i(uDrvN,   totalDrv);
+    gl!.uniform4fv(uDrv,      drvData);
+    gl!.uniform1i(uDrvN,      totalDrv);
+    gl!.uniform1f(uLimeSeed,  limeSeed);
+    gl!.uniform4fv(uSky,      skyEff);
     gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
     gl!.bindVertexArray(null);
 
-    /* 6. Update word label positions to follow driver cells.
-          The label overlay (#grid-labels, inset:0) fills .hero-graphic,
-          which can be taller than the 480px canvas, so the canvas is
-          centred inside it. Offset by the canvas's position so labels
+    /* 6. Update icon positions to follow driver cells.
+          The overlay (#grid-labels, inset:0) fills .hero-graphic,
+          which can be taller than the canvas, so the canvas is
+          centred inside it. Offset by the canvas's position so icons
           align to the canvas, not the container. */
     const offL = canvas!.offsetLeft;
     const offT = canvas!.offsetTop;
     for (let d = 0; d < ND; d++) {
-      const el = labelEls[d];
+      const el = iconEls[d];
       if (d >= nd) { el.style.opacity = '0'; continue; }
       const dc = driverCols[d];
       const dr = driverRows[d];
+      /* Hide if the driver sits above this column's skyline. */
+      if (dr >= skyEff[dc]) { el.style.opacity = '0'; continue; }
       /* Centre of the driver cell in physical px */
       const cxPhys = oxPx + colsData[dc] + colW[dc] * 0.5;
       const cyPhys = ch - (oyPx + rowsData[dr] + rowH[dr] * 0.5); /* flip y to CSS top-down */
       /* Convert physical→CSS px, then offset to the canvas origin */
-      el.style.left     = (offL + cxPhys / dpr) + 'px';
-      el.style.top      = (offT + cyPhys / dpr) + 'px';
-      /* Font size: scale with cell, but cap so the word never overflows the
-         cell width. Assumes each uppercase char is ~0.62× the font size.    */
-      const cellCssPx   = Math.min(colW[dc], rowH[dr]) / dpr;
-      const cellWidthPx = colW[dc] / dpr;
-      const byHeight    = Math.max(8, cellCssPx * 0.22);
-      const byWidth     = (cellWidthPx * 0.82) / (WORDS[d].length * 0.62);
-      el.style.fontSize = Math.min(byHeight, byWidth) + 'px';
+      el.style.left = (offL + cxPhys / dpr) + 'px';
+      el.style.top  = (offT + cyPhys / dpr) + 'px';
+      /* Size: ~55% of the smaller cell edge, capped so it stays inside */
+      const cellCssPx = Math.min(colW[dc], rowH[dr]) / dpr;
+      const size      = Math.max(14, Math.min(cellCssPx * 0.55, cellCssPx - 6));
+      el.style.width  = size + 'px';
+      el.style.height = size + 'px';
       /* Fade in quickly with spring expansion; clamp 0–1 */
-      const maxDelta    = (unit * gridParams.amp) || 1;
-      const intensity   = Math.max(0, driverDelta[d]) / maxDelta;
-      el.style.opacity  = String(Math.min(1, intensity * 3.0));
+      const maxDelta  = (unit * gridParams.amp) || 1;
+      const intensity = Math.max(0, driverDelta[d]) / maxDelta;
+      el.style.opacity = String(Math.min(1, intensity * 3.0));
     }
 
     if (!reducedMotion) rafId = requestAnimationFrame(render);
@@ -901,8 +1058,12 @@ void main(){
     if (dragDriver >= 0) {
       didDrag = true;
       const [col, row] = pxToCell(px, py);
-      if (col >= 0) driverCols[dragDriver] = col;
-      if (row >= 0) driverRows[dragDriver] = row;
+      if (col >= 0 && row >= 0) {
+        [driverCols[dragDriver], driverRows[dragDriver]] = clampToSkyline(col, row);
+      } else if (col >= 0) {
+        driverCols[dragDriver] = col;
+        driverRows[dragDriver] = Math.min(driverRows[dragDriver], Math.max(0, Math.floor(buildingH[col]) - 1));
+      }
       canvas!.style.cursor = 'grabbing';
     } else {
       /* Show grab cursor when hovering within 2 cells of any driver */
@@ -939,7 +1100,7 @@ void main(){
       /* Clean click on empty space → ghost impulse ripple */
       const [px, py] = canvasPhy(e);
       const [col, row] = pxToCell(px, py);
-      if (col >= 0 && row >= 0) {
+      if (col >= 0 && row >= 0 && row < skyEff[col]) {
         if (ghosts.length >= MAX_GHOSTS) ghosts.shift();
         ghosts.push({ col, row, born: performance.now() * 0.001 });
       }

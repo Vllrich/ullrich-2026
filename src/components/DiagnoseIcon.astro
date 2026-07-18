@@ -53,6 +53,15 @@ const { size = 'default', class: className = '' } = Astro.props;
     height: 2.75rem;
   }
 
+  .line {
+    fill: var(--ink, #2c303c);
+  }
+
+  .shade {
+    fill: #000;
+    fill-opacity: 0.2;
+  }
+
   .tri {
     fill: #caf200;
     transition: fill 0.45s ease;

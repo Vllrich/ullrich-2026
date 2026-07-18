@@ -1,0 +1,93 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import { workPatterns } from '../../data/work-patterns';
+
+const description =
+  'Engagement patterns for production AI and agent reliability: anonymized problem, approach, and outcome types. Named case studies will land here when cleared.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': 'https://larsullrich.de/work/patterns/#webpage',
+  url: 'https://larsullrich.de/work/patterns/',
+  name: 'Engagement patterns',
+  description,
+  inLanguage: 'en',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+  hasPart: workPatterns.map((p) => ({
+    '@type': 'CreativeWork',
+    name: p.title,
+    description: p.problem,
+    identifier: p.id,
+  })),
+};
+---
+
+<ContentPage
+  title="Engagement patterns - Lars Ullrich"
+  description={description}
+  canonical="/work/patterns/"
+  jsonLd={jsonLd}
+>
+  <h1>Engagement patterns</h1>
+  <p>
+    How the work usually shows up, without invented metrics or named clients. When case studies are cleared, they plug into this same structure under
+    <code>/work/</code>. Until then, these patterns are the honest proof layer.
+  </p>
+
+  {workPatterns.map((p) => (
+    <article class="pattern" id={p.id}>
+      <h2>{p.title}</h2>
+      <p class="meta">
+        <span>{p.sector}</span>
+        {p.caseStudyReady && p.clientLabel ? (
+          <span> · {p.clientLabel}</span>
+        ) : (
+          <span> · Pattern (case study pending)</span>
+        )}
+      </p>
+      <h3>Problem</h3>
+      <p>{p.problem}</p>
+      <h3>Approach</h3>
+      <p>{p.approach}</p>
+      <h3>Outcome type</h3>
+      <p>{p.outcome}</p>
+    </article>
+  ))}
+
+  <h2>Start here</h2>
+  <p>
+    Most companies should begin with the
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Related:
+    <a href="/agent-reliability/">agent reliability</a>,
+    <a href="/eu-ai-act-readiness/">EU AI Act readiness</a>.
+  </p>
+</ContentPage>
+
+<style>
+  .pattern {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .pattern:first-of-type {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .meta {
+    color: var(--ghost, oklch(50% 0.006 260)) !important;
+    font-size: 0.9rem !important;
+    margin-top: -0.5rem !important;
+  }
+
+  code {
+    font-size: 0.9em;
+    background: var(--surface, oklch(96.5% 0.003 260));
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+</style>

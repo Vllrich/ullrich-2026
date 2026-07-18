@@ -32,6 +32,10 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 | `/about/` | Entity page: who Lars is |
 | `/agent-reliability/` | Definition of agent reliability |
 | `/fractional-cto-caio/` | Fractional CTO / CAIO role |
+| `/eu-ai-act-readiness/` | EU AI Act readiness (audit scope) |
+| `/work/patterns/` | Anonymized engagement patterns (cases later) |
+| `/services/readiness-audit/` | Top-of-funnel audit product page |
+| `/de/` … | German mirror for DACH intent |
 | `/llms.txt` | Short machine-readable summary |
 | `/.well-known/llms-full.txt` | Longer extract for LLMs |
 

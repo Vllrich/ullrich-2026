@@ -1,16 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { languageAlternates } from '../lib/i18n';
+
+const alternates = languageAlternates('/impressum/', '/de/impressum/');
 ---
 
 <Layout
   title="Legal Notice - Lars Ullrich"
   description="Legal notice (Impressum) for larsullrich.de. Lars Ullrich, Berlin."
   canonical="/impressum/"
+  alternates={alternates}
 >
   <main class="impressum">
     <div class="container">
 
-      <a href="/" class="back-link">← Back to home</a>
+      <div class="top-row">
+        <a href="/" class="back-link">← Back to home</a>
+        <a href="/de/impressum/" class="locale-switch" hreflang="de">Deutsch</a>
+      </div>
 
       <h1>Legal Notice</h1>
 
@@ -102,9 +109,16 @@ import Layout from '../layouts/Layout.astro';
     margin: 0 auto;
   }
 
-  .back-link {
-    display: inline-block;
+  .top-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 2.5rem;
+  }
+
+  .back-link,
+  .locale-switch {
     color: var(--cobalt, #bbdd00);
     text-decoration: none;
     font-size: 0.9rem;
@@ -112,7 +126,12 @@ import Layout from '../layouts/Layout.astro';
     transition: opacity 0.15s ease;
   }
 
-  .back-link:hover {
+  .locale-switch {
+    font-weight: 600;
+  }
+
+  .back-link:hover,
+  .locale-switch:hover {
     text-decoration: underline;
     opacity: 0.8;
   }

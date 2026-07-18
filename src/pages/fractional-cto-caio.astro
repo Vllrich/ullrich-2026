@@ -1,8 +1,11 @@
 ---
 import ContentPage from '../layouts/ContentPage.astro';
+import { languageAlternates } from '../lib/i18n';
 
 const description =
   'What a fractional CTO / CAIO does: senior technical leadership on a part-time basis, including architecture, delivery, and AI strategy. Not purely advisory.';
+
+const alternates = languageAlternates('/fractional-cto-caio/', '/de/fractional-cto-caio/');
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -11,6 +14,7 @@ const jsonLd = {
   url: 'https://larsullrich.de/fractional-cto-caio/',
   name: 'Fractional CTO / CAIO',
   description,
+  inLanguage: 'en',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   about: {
     '@type': 'Occupation',
@@ -25,7 +29,9 @@ const jsonLd = {
   title="Fractional CTO / CAIO - Lars Ullrich"
   description={description}
   canonical="/fractional-cto-caio/"
+  alternates={alternates}
   jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/fractional-cto-caio/', label: 'Deutsch' }}
 >
   <h1>Fractional CTO / CAIO</h1>
   <p>
@@ -40,14 +46,21 @@ const jsonLd = {
   <h2>Where to start</h2>
   <ul>
     <li>
-      Unsure whether AI is the right move? Start with the Readiness &amp; Production Audit: fixed scope, a use-case shortlist, an honest build/buy/skip call, and a cost model.
+      Unsure whether AI is the right move? Start with the
+      <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>:
+      fixed scope, a use-case shortlist, an honest build/buy/skip call, and a cost model.
     </li>
     <li>Already know what to build? A Build Sprint ships one system to production.</li>
-    <li>Already shipped? The Reliability Retainer keeps it running, including <a href="/agent-reliability/">agent reliability</a>.</li>
+    <li>
+      Already shipped? The Reliability Retainer keeps it running, including
+      <a href="/agent-reliability/">agent reliability</a>.
+    </li>
     <li>Need embedded leadership ongoing? Fractional CTO / CAIO on a monthly retainer.</li>
   </ul>
   <p>
-    More: <a href="/#services">all services</a>,
+    More:
+    <a href="/work/patterns/">engagement patterns</a>,
+    <a href="/eu-ai-act-readiness/">EU AI Act readiness</a>,
     <a href="/about/">about</a>.
   </p>
 </ContentPage>

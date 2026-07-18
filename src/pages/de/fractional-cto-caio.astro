@@ -1,0 +1,59 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import { languageAlternates } from '../../lib/i18n';
+
+const description =
+  'Was ein Fractional CTO / CAIO macht: technische Führung in Teilzeit, inkl. Architektur, Delivery und AI-Strategie. Nicht rein advisory.';
+
+const alternates = languageAlternates('/fractional-cto-caio/', '/de/fractional-cto-caio/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/de/fractional-cto-caio/#webpage',
+  url: 'https://larsullrich.de/de/fractional-cto-caio/',
+  name: 'Fractional CTO / CAIO',
+  description,
+  inLanguage: 'de',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="Fractional CTO / CAIO - Lars Ullrich"
+  description={description}
+  canonical="/de/fractional-cto-caio/"
+  lang="de"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  homeHref="/de/"
+  backLabel="← Zur Startseite"
+  contactHref="/de/#kontakt"
+  ctaLabel="Mit dem Readiness Audit starten"
+  localeSwitch={{ href: '/fractional-cto-caio/', label: 'English' }}
+>
+  <h1>Fractional CTO / CAIO</h1>
+  <p>
+    Senior technische Führung auf Teilzeit- oder Projektbasis: Architektur, Roadmap, Delivery-Ownership, Team- und Vendor-Auswahl, AI-Strategie. Die Rolle bleibt technisch, nicht rein advisory. In der Praxis heißt das Code Reviews, Architekturentscheidungen und Production-Debugging im Team, ohne die Kosten einer Vollzeit-Anstellung.
+  </p>
+
+  <h2>Unterschied zu reinem Advisory</h2>
+  <p>
+    Das Engagement schließt Code ein. Ich arbeite in eurem Repository, nicht von außen, und bleibe dran, bis das System betrieben werden kann. Je nach Setup: Implementierung, Reviews, Production-Debugging und laufende Reliability.
+  </p>
+
+  <h2>Wo starten</h2>
+  <ul>
+    <li>
+      Unklar, ob KI der richtige Schritt ist? Start mit dem
+      <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    </li>
+    <li>Klar, was gebaut werden soll? Build Sprint bis in die Produktion.</li>
+    <li>
+      Schon live? Reliability Retainer, inkl.
+      <a href="/de/agenten-zuverlaessigkeit/">Agenten-Zuverlässigkeit</a>.
+    </li>
+    <li>Laufende Führung nötig? Fractional CTO / CAIO als Monats-Retainer.</li>
+  </ul>
+</ContentPage>

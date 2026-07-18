@@ -62,13 +62,15 @@ Push to `master` triggers the GitHub Actions workflow:
 | ------------------------- | ---------------------------------------------------------------------- |
 | `PUBLIC_MAINTENANCE_MODE` | `true` to enable maintenance mode, `false` (or unset) for normal site  |
 
-## GEO / LLM visibility
+## GEO / LLM visibility + DACH
 
 - Origin [`public/robots.txt`](public/robots.txt): `search=yes`, `ai-input=yes`, `ai-train=no`; search bots allowed; training bots disallowed
 - Cloudflare zone: managed robots.txt off; `ai_training=block` at the edge
 - Machine summaries: [`/llms.txt`](public/llms.txt), [`/.well-known/llms-full.txt`](public/.well-known/llms-full.txt)
-- Citation pages: `/about/`, `/agent-reliability/`, `/fractional-cto-caio/`
-- Operator checklist (LinkedIn, GitHub, GSC, prompt tests): see [`TODO.md`](TODO.md)
+- EN cluster: `/about/`, `/agent-reliability/`, `/fractional-cto-caio/`, `/eu-ai-act-readiness/`, `/work/patterns/`, `/services/readiness-audit/`
+- DE mirror: `/de/`, `/de/agenten-zuverlaessigkeit/`, `/de/fractional-cto-caio/`, `/de/eu-ai-act-readiness/`, `/de/impressum/` with `hreflang`
+- Case-study plug-in point: [`src/data/work-patterns.ts`](src/data/work-patterns.ts)
+- Operator checklist (LinkedIn, GitHub, GSC): see [`TODO.md`](TODO.md)
 
 ## Server Setup Notes
 

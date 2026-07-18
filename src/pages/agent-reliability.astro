@@ -1,8 +1,11 @@
 ---
 import ContentPage from '../layouts/ContentPage.astro';
+import { languageAlternates } from '../lib/i18n';
 
 const description =
   'Agent reliability is the work that makes production agents safe: evals, guardrails, bounded autonomy, monitoring, and a clear rollback path. How I approach it.';
+
+const alternates = languageAlternates('/agent-reliability/', '/de/agenten-zuverlaessigkeit/');
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -11,6 +14,7 @@ const jsonLd = {
   url: 'https://larsullrich.de/agent-reliability/',
   name: 'Agent reliability',
   description,
+  inLanguage: 'en',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   about: {
     '@type': 'DefinedTerm',
@@ -25,7 +29,9 @@ const jsonLd = {
   title="Agent reliability - Lars Ullrich"
   description={description}
   canonical="/agent-reliability/"
+  alternates={alternates}
   jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/agenten-zuverlaessigkeit/', label: 'Deutsch' }}
 >
   <h1>Agent reliability</h1>
   <p>
@@ -42,11 +48,15 @@ const jsonLd = {
 
   <h2>How I work on it</h2>
   <p>
-    I start with framing: not every problem needs AI, and not every AI needs an agent. Then architecture for reliability and cost, then ship and harden. For teams who already shipped, the Reliability Retainer covers evals, monitoring, guardrails, drift checks, incident response, and EU AI Act re-assessment.
+    I start with framing: not every problem needs AI, and not every AI needs an agent. Then architecture for reliability and cost, then ship and harden. For teams who already shipped, the Reliability Retainer covers evals, monitoring, guardrails, drift checks, incident response, and
+    <a href="/eu-ai-act-readiness/">EU AI Act</a> re-assessment.
   </p>
   <p>
-    Related: <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>,
-    <a href="/#services">services</a>,
+    Unsure where to begin?
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Related:
+    <a href="/work/patterns/">engagement patterns</a>,
+    <a href="/fractional-cto-caio/">fractional CTO / CAIO</a>,
     <a href="/about/">about</a>.
   </p>
 </ContentPage>

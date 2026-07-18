@@ -1,0 +1,66 @@
+---
+import ContentPage from '../layouts/ContentPage.astro';
+import { languageAlternates } from '../lib/i18n';
+
+const description =
+  'EU AI Act readiness for production AI systems: what I assess in a Readiness Audit, who it is for, and what you leave with. Berlin-based, EU-focused.';
+
+const alternates = languageAlternates('/eu-ai-act-readiness/', '/de/eu-ai-act-readiness/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/eu-ai-act-readiness/#webpage',
+  url: 'https://larsullrich.de/eu-ai-act-readiness/',
+  name: 'EU AI Act readiness',
+  description,
+  inLanguage: 'en',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+  about: {
+    '@type': 'Thing',
+    name: 'EU AI Act',
+    description: 'European Union regulation on artificial intelligence systems.',
+  },
+};
+---
+
+<ContentPage
+  title="EU AI Act readiness - Lars Ullrich"
+  description={description}
+  canonical="/eu-ai-act-readiness/"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/eu-ai-act-readiness/', label: 'Deutsch' }}
+>
+  <h1>EU AI Act readiness</h1>
+  <p>
+    Regulation forces a budget and a clock. If you are shipping or planning AI in the EU, you need to know whether the Act applies, which risk category you land in, and what that means for data, logging, and ownership. I assess that as part of the
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>, as an engineer who also ships the system, not as a slide-only compliance exercise.
+  </p>
+
+  <h2>What I assess</h2>
+  <ul>
+    <li>Whether the proposed system falls under the Act's scope</li>
+    <li>Likely risk category and the obligations that follow</li>
+    <li>Data protection and governance, scaled to your size and intended use</li>
+    <li>What you can ship now vs what needs a control or a redesign</li>
+  </ul>
+
+  <h2>Who this is for</h2>
+  <p>
+    Growing companies in the DACH region and wider EU that are past the "AI experiment" slide and need a production path. Also teams that already shipped and need a re-assessment as usage or the rules change. That ongoing check sits in the
+    <a href="/agent-reliability/">Reliability Retainer</a>.
+  </p>
+
+  <h2>What you leave with</h2>
+  <p>
+    A clear write-up: in scope or not, risk posture, gaps, and a practical sequence. Coupled with the audit's use-case shortlist and build/buy/skip call, so compliance is not detached from the product decision.
+  </p>
+  <p>
+    Related:
+    <a href="/services/readiness-audit/">Readiness Audit</a>,
+    <a href="/agent-reliability/">agent reliability</a>,
+    <a href="/work/patterns/">engagement patterns</a>.
+  </p>
+</ContentPage>

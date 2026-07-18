@@ -22,6 +22,12 @@ const socials = [
         Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so. If I'm not, I'll tell you that too.
       </p>
 
+      <p class="contact-note fade-in" data-delay="240">
+        Best starting point for most teams:
+        <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
+        (fixed scope, 1-2 weeks).
+      </p>
+
       <p class="contact-note fade-in" data-delay="320">
         Currently open to AI readiness audits, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
       </p>
@@ -81,6 +87,8 @@ const socials = [
       {socials.map(s => (
         <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
       ))}
+      <a href="/de/" hreflang="de">Deutsch</a>
+      <a href="/work/patterns/">Patterns</a>
       <a href="/impressum/">Impressum</a>
     </nav>
 
@@ -150,6 +158,15 @@ const socials = [
     line-height: var(--text-note-lh, 1.8);
     color: rgba(255,255,255,0.5);
     max-width: 42ch;
+  }
+
+  .contact-note a {
+    color: var(--cobalt, #bbdd00);
+    text-decoration: none;
+  }
+
+  .contact-note a:hover {
+    text-decoration: underline;
   }
 
   /* ── Form ── */

@@ -1,0 +1,61 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import { languageAlternates } from '../../lib/i18n';
+
+const description =
+  'EU-AI-Act-Readiness für produktive KI-Systeme: Was ich im Readiness Audit prüfe, für wen, und was ihr mitnehmt. Berlin, Fokus EU/DACH.';
+
+const alternates = languageAlternates('/eu-ai-act-readiness/', '/de/eu-ai-act-readiness/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/de/eu-ai-act-readiness/#webpage',
+  url: 'https://larsullrich.de/de/eu-ai-act-readiness/',
+  name: 'EU-AI-Act-Readiness',
+  description,
+  inLanguage: 'de',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="EU-AI-Act-Readiness - Lars Ullrich"
+  description={description}
+  canonical="/de/eu-ai-act-readiness/"
+  lang="de"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  homeHref="/de/"
+  backLabel="← Zur Startseite"
+  contactHref="/de/#kontakt"
+  ctaLabel="Mit dem Readiness Audit starten"
+  localeSwitch={{ href: '/eu-ai-act-readiness/', label: 'English' }}
+>
+  <h1>EU-AI-Act-Readiness</h1>
+  <p>
+    Regulierung setzt Budget und Frist. Wenn ihr in der EU KI plant oder betreibt, müsst ihr wissen, ob der Act greift, welche Risikoklasse droht und was das für Daten, Logging und Ownership bedeutet. Ich prüfe das im
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
+    als Engineer, der auch baut, nicht als reine Folien-Compliance.
+  </p>
+
+  <h2>Was ich prüfe</h2>
+  <ul>
+    <li>Ob das geplante System in den Anwendungsbereich fällt</li>
+    <li>Wahrscheinliche Risikokategorie und folgende Pflichten</li>
+    <li>Datenschutz und Governance, skaliert auf Größe und Use Case</li>
+    <li>Was jetzt shippbar ist und was Kontrolle oder Redesign braucht</li>
+  </ul>
+
+  <h2>Für wen</h2>
+  <p>
+    Wachsende Unternehmen in DACH und der weiteren EU, die über den Experiment-Slide hinaus sind. Auch Teams, die schon live sind und eine Neubewertung brauchen, wenn Nutzung oder Regeln sich ändern. Das läuft im
+    <a href="/de/agenten-zuverlaessigkeit/">Reliability Retainer</a>.
+  </p>
+
+  <h2>Was ihr mitnehmt</h2>
+  <p>
+    Ein klares Schreiben: Scope ja/nein, Risikolage, Lücken, praktische Reihenfolge. Gekoppelt an Use-Case-Shortlist und Build/Buy/Skip, damit Compliance nicht vom Produkt getrennt wird.
+  </p>
+</ContentPage>

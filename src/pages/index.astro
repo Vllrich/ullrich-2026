@@ -9,11 +9,17 @@ import Clients     from '../components/Clients.astro';
 import About       from '../components/About.astro';
 import FAQ         from '../components/FAQ.astro';
 import Contact     from '../components/Contact.astro';
+import { languageAlternates } from '../lib/i18n';
 
 const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
+const alternates = languageAlternates('/', '/de/');
 ---
 
-<Layout title="Lars Ullrich - Production AI, Agent Reliability & Fractional CTO">
+<Layout
+  title="Lars Ullrich - Production AI, Agent Reliability & Fractional CTO"
+  canonical="/"
+  alternates={alternates}
+>
   {maintenance ? (
     <Maintenance />
   ) : (

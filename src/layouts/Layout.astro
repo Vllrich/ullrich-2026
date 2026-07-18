@@ -1,10 +1,14 @@
 ---
 import '../styles/global.css';
+import type { AlternateLink } from '../lib/i18n';
+import { absoluteUrl } from '../lib/i18n';
 
 interface Props {
   title?: string;
   description?: string;
   canonical?: string;
+  lang?: 'en' | 'de';
+  alternates?: AlternateLink[];
 }
 
 const DEFAULT_DESCRIPTION =
@@ -14,6 +18,8 @@ const {
   title = 'Lars Ullrich - Production AI, Agent Reliability & Fractional CTO',
   description = DEFAULT_DESCRIPTION,
   canonical,
+  lang = 'en',
+  alternates = [],
 } = Astro.props;
 
 const canonicalURL = canonical
@@ -21,6 +27,12 @@ const canonicalURL = canonical
   : new URL(Astro.url.pathname, Astro.site);
 
 const ogImageURL = new URL('/graphics/logo-lars-ullrich-og.png', Astro.site);
+const ogLocale = lang === 'de' ? 'de_DE' : 'en_US';
+
+const resolvedAlternates = alternates.map((a) => ({
+  hreflang: a.hreflang,
+  href: absoluteUrl(a.href),
+}));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -50,6 +62,7 @@ const schema = {
         'AI reliability & evaluation',
         'Open-weight & self-hosted models',
         'Fractional CTO / CAIO',
+        'EU AI Act readiness',
         'Real-time graphics & GPU',
         'Audio engineering & DSP',
         'Product architecture',
@@ -61,7 +74,7 @@ const schema = {
       '@id': 'https://larsullrich.de/#website',
       url: 'https://larsullrich.de',
       name: 'Lars Ullrich',
-      inLanguage: 'en',
+      inLanguage: ['en', 'de'],
     },
     {
       '@type': 'ProfessionalService',
@@ -80,6 +93,7 @@ const schema = {
             itemOffered: {
               '@type': 'Service',
               name: 'Readiness & Production Audit',
+              url: 'https://larsullrich.de/services/readiness-audit/',
               description:
                 'Strategy and fixed-scope audit to assess AI and engineering readiness for production. Delivered as a structured engagement with clear deliverables.',
             },
@@ -107,6 +121,7 @@ const schema = {
             itemOffered: {
               '@type': 'Service',
               name: 'Fractional CTO / CAIO',
+              url: 'https://larsullrich.de/fractional-cto-caio/',
               description:
                 'Ongoing technical leadership on a monthly retainer: AI strategy, architecture decisions, and engineering team guidance.',
             },
@@ -118,13 +133,16 @@ const schema = {
 };
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  {resolvedAlternates.map((a) => (
+    <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+  ))}
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="author" content="Lars Ullrich" />
   <meta name="geo.region" content="DE-BE" />
@@ -134,7 +152,9 @@ const schema = {
   <link rel="apple-touch-icon" href="/graphics/logo-lars-ullrich-512.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Lars Ullrich" />
-  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale" content={ogLocale} />
+  {lang === 'en' && <meta property="og:locale:alternate" content="de_DE" />}
+  {lang === 'de' && <meta property="og:locale:alternate" content="en_US" />}
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
@@ -152,9 +172,6 @@ const schema = {
   </div>
 
   <script>
-    // Mark document as JS-ready so fade animations opt in.
-    // Must happen BEFORE querySelectorAll so elements are already visible
-    // by default and only transition from that point forward.
     document.documentElement.classList.add('js-ready');
 
     const io = new IntersectionObserver(

@@ -1,0 +1,61 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import { languageAlternates } from '../../lib/i18n';
+
+const description =
+  'Agenten-Zuverlässigkeit: Evals, Guardrails, begrenzte Autonomie, Monitoring und ein klarer Rollback. So mache ich Produktions-Agenten betreibbar.';
+
+const alternates = languageAlternates('/agent-reliability/', '/de/agenten-zuverlaessigkeit/');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': 'https://larsullrich.de/de/agenten-zuverlaessigkeit/#webpage',
+  url: 'https://larsullrich.de/de/agenten-zuverlaessigkeit/',
+  name: 'Agenten-Zuverlässigkeit',
+  description,
+  inLanguage: 'de',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+};
+---
+
+<ContentPage
+  title="Agenten-Zuverlässigkeit - Lars Ullrich"
+  description={description}
+  canonical="/de/agenten-zuverlaessigkeit/"
+  lang="de"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  homeHref="/de/"
+  backLabel="← Zur Startseite"
+  contactHref="/de/#kontakt"
+  ctaLabel="Mit dem Readiness Audit starten"
+  localeSwitch={{ href: '/agent-reliability/', label: 'English' }}
+>
+  <h1>Agenten-Zuverlässigkeit</h1>
+  <p>
+    Ein Demo-Agent und ein Produktions-Agent sind unterschiedliche Probleme. In der Demo antwortet er einmal, unter Aufsicht. In Produktion handelt er allein, wiederholt, gegen sich ändernde Daten. Typische Fehler: Loops, halluzinierte Aktionen, Kostenexplosion, stille Regressionen. Zuverlässigkeit ist die Arbeit, die das absichert: belastbare Evals, Guardrails, begrenzte Autonomie, Monitoring und ein Rollback, den das Team auch nutzt. Genau den Teil überspringen die meisten.
+  </p>
+
+  <h2>In der Praxis</h2>
+  <ul>
+    <li>Evals vor und nach jeder relevanten Änderung</li>
+    <li>Guardrails für Aktionen und Kosten</li>
+    <li>Monitoring für Drift, Loops und stille Qualitätsverluste</li>
+    <li>Ein Rollback-Pfad mit klarer Ownership</li>
+  </ul>
+
+  <h2>Wie ich arbeite</h2>
+  <p>
+    Zuerst Framing: Nicht jedes Problem braucht KI, und nicht jede KI braucht einen Agenten. Dann Architektur für Zuverlässigkeit und Kosten, dann Ship and Harden. Für Teams, die schon live sind, deckt der Reliability Retainer Evals, Monitoring, Guardrails, Drift, Incidents und die
+    <a href="/de/eu-ai-act-readiness/">EU-AI-Act</a>-Neubewertung ab.
+  </p>
+  <p>
+    Einstieg:
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
+    Mehr:
+    <a href="/work/patterns/">Engagement-Patterns</a>,
+    <a href="/de/fractional-cto-caio/">Fractional CTO / CAIO</a>.
+  </p>
+</ContentPage>

@@ -1,23 +1,50 @@
 ---
 import Layout from './Layout.astro';
+import type { AlternateLink } from '../lib/i18n';
 
 interface Props {
   title: string;
   description: string;
   canonical: string;
+  lang?: 'en' | 'de';
+  alternates?: AlternateLink[];
   jsonLd?: Record<string, unknown>;
+  homeHref?: string;
+  backLabel?: string;
+  contactHref?: string;
+  ctaLabel?: string;
+  localeSwitch?: { href: string; label: string };
 }
 
-const { title, description, canonical, jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  canonical,
+  lang = 'en',
+  alternates = [],
+  jsonLd,
+  homeHref = '/',
+  backLabel = '← Back to home',
+  contactHref = '/#contact',
+  ctaLabel = 'Start with a Readiness Audit',
+  localeSwitch,
+} = Astro.props;
 ---
 
-<Layout title={title} description={description} canonical={canonical}>
+<Layout title={title} description={description} canonical={canonical} lang={lang} alternates={alternates}>
   <main class="content-page">
     <div class="container">
-      <a href="/" class="back-link">← Back to home</a>
+      <div class="top-row">
+        <a href={homeHref} class="back-link">{backLabel}</a>
+        {localeSwitch && (
+          <a href={localeSwitch.href} class="locale-switch" hreflang={lang === 'en' ? 'de' : 'en'}>
+            {localeSwitch.label}
+          </a>
+        )}
+      </div>
       <slot />
       <p class="cta">
-        <a href="/#contact">Start a conversation</a>
+        <a href={contactHref}>{ctaLabel}</a>
       </p>
     </div>
   </main>
@@ -36,9 +63,17 @@ const { title, description, canonical, jsonLd } = Astro.props;
     margin: 0 auto;
   }
 
-  .back-link {
-    display: inline-block;
+  .top-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
     margin-bottom: 2.5rem;
+  }
+
+  .back-link,
+  .locale-switch {
     color: var(--cobalt, #bbdd00);
     text-decoration: none;
     font-size: 0.9rem;
@@ -46,9 +81,14 @@ const { title, description, canonical, jsonLd } = Astro.props;
     transition: opacity 0.15s ease;
   }
 
-  .back-link:hover {
+  .back-link:hover,
+  .locale-switch:hover {
     text-decoration: underline;
     opacity: 0.8;
+  }
+
+  .locale-switch {
+    font-weight: 600;
   }
 
   .content-page :global(h1) {
@@ -68,6 +108,14 @@ const { title, description, canonical, jsonLd } = Astro.props;
     letter-spacing: 0.02em;
     text-transform: uppercase;
     margin: 2.5rem 0 0.875rem;
+  }
+
+  .content-page :global(h3) {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink, #2C303C);
+    margin: 1.75rem 0 0.5rem;
   }
 
   .content-page :global(p),

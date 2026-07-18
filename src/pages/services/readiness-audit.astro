@@ -1,0 +1,83 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+
+const description =
+  'Readiness & Production Audit: fixed scope, 1-2 weeks. Use-case shortlist, build/buy/skip, cost model, agent feasibility, and EU AI Act check where it applies.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Service',
+      '@id': 'https://larsullrich.de/services/readiness-audit/#service',
+      name: 'Readiness & Production Audit',
+      url: 'https://larsullrich.de/services/readiness-audit/',
+      description,
+      provider: { '@id': 'https://larsullrich.de/#person' },
+      areaServed: ['DE', 'EU', 'Worldwide'],
+      serviceType: 'AI readiness and production audit',
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'How long is the Readiness & Production Audit?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Fixed scope, typically 1-2 weeks.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What do I leave with?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'A prioritized use-case shortlist, an honest build/buy/skip call, a cost model, and where relevant an EU AI Act readiness assessment.',
+          },
+        },
+      ],
+    },
+  ],
+};
+---
+
+<ContentPage
+  title="Readiness & Production Audit - Lars Ullrich"
+  description={description}
+  canonical="/services/readiness-audit/"
+  jsonLd={jsonLd}
+>
+  <h1>Readiness &amp; Production Audit</h1>
+  <p>
+    Not every problem needs AI, and not every AI needs an agent. This is the fixed-scope engagement that answers that before you fund a build. Strategy category. Usually 1-2 weeks.
+  </p>
+
+  <h2>What we cover</h2>
+  <ul>
+    <li>Use-case mapping: which few bets pay for themselves</li>
+    <li>Agent feasibility where agents are on the table</li>
+    <li>Build vs buy vs skip, with reasons</li>
+    <li>Cost model you can take to a decision</li>
+    <li>
+      <a href="/eu-ai-act-readiness/">EU AI Act check</a> where the system may fall in scope
+    </li>
+  </ul>
+
+  <h2>Deliverables</h2>
+  <p>
+    A structured write-up and a short readout: prioritized shortlist, recommendation, risks, and next step. If the next step is a build, that feeds a
+    <a href="/#services">Build Sprint</a>. If you already shipped, look at the
+    <a href="/agent-reliability/">Reliability Retainer</a>.
+  </p>
+
+  <h2>Best starting point</h2>
+  <p>
+    Unsure whether AI is the right move? Start here. Already know what to build? Skip to a Build Sprint. Need embedded leadership?
+    <a href="/fractional-cto-caio/">Fractional CTO / CAIO</a>.
+  </p>
+  <p>
+    Patterns of how this shows up in practice:
+    <a href="/work/patterns/">engagement patterns</a>.
+  </p>
+</ContentPage>

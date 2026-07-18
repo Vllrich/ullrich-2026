@@ -11,6 +11,7 @@ I help growing companies get AI into production and keep it running. Often agent
 - Location: Berlin, Germany
 - Email: contact@larsullrich.de
 - Site: https://larsullrich.de/
+- German: https://larsullrich.de/de/
 - GitHub: https://github.com/Vllrich
 - LinkedIn: https://www.linkedin.com/in/lars-ullrich-47338a27/
 
@@ -20,25 +21,33 @@ I help growing companies get AI into production and keep it running. Often agent
 - Agent reliability (evals, guardrails, monitoring, bounded autonomy)
 - Full-stack engineering (Python, TypeScript, infra)
 - Fractional CTO / CAIO leadership
+- EU AI Act readiness for production systems
 - Open-weight and self-hosted models when data, cost, or lock-in require it
 
 ## Services
 
-- Readiness & Production Audit (fixed scope, 1-2 weeks)
+- Readiness & Production Audit (fixed scope, 1-2 weeks): https://larsullrich.de/services/readiness-audit/
 - Build Sprint (project, 6-10 weeks)
 - Reliability Retainer (monthly)
 - Fractional CTO / CAIO (monthly retainer)
 
-## Pages
+## Pages (English)
 
-- [Home](https://larsullrich.de/): positioning, method, services, FAQ, contact
-- [About](https://larsullrich.de/about/): who I am and how I work
-- [Agent reliability](https://larsullrich.de/agent-reliability/): definition and when it matters
-- [Fractional CTO / CAIO](https://larsullrich.de/fractional-cto-caio/): role and how engagements start
-- [Impressum](https://larsullrich.de/impressum/): legal notice
-- [Full text for LLMs](https://larsullrich.de/.well-known/llms-full.txt): longer extract
-- [Sitemap](https://larsullrich.de/sitemap-index.xml)
+- [Home](https://larsullrich.de/)
+- [About](https://larsullrich.de/about/)
+- [Agent reliability](https://larsullrich.de/agent-reliability/)
+- [Fractional CTO / CAIO](https://larsullrich.de/fractional-cto-caio/)
+- [EU AI Act readiness](https://larsullrich.de/eu-ai-act-readiness/)
+- [Engagement patterns](https://larsullrich.de/work/patterns/)
+- [Readiness Audit](https://larsullrich.de/services/readiness-audit/)
+
+## Pages (German)
+
+- [Start](https://larsullrich.de/de/)
+- [Agenten-Zuverlässigkeit](https://larsullrich.de/de/agenten-zuverlaessigkeit/)
+- [Fractional CTO / CAIO](https://larsullrich.de/de/fractional-cto-caio/)
+- [EU-AI-Act-Readiness](https://larsullrich.de/de/eu-ai-act-readiness/)
 
 ## Contact
 
-Email contact@larsullrich.de. I read every message personally and usually reply within a day.
+Email contact@larsullrich.de. Best starting point for most teams: Readiness & Production Audit.

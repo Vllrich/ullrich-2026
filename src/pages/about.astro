@@ -11,6 +11,7 @@ const jsonLd = {
   url: 'https://larsullrich.de/about/',
   name: 'About Lars Ullrich',
   description,
+  inLanguage: 'en',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   about: { '@id': 'https://larsullrich.de/#person' },
   mainEntity: { '@id': 'https://larsullrich.de/#person' },
@@ -22,6 +23,7 @@ const jsonLd = {
   description={description}
   canonical="/about/"
   jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/', label: 'Deutsch' }}
 >
   <h1>About</h1>
   <p>
@@ -40,11 +42,16 @@ const jsonLd = {
     <li><a href="/agent-reliability/">Agent reliability</a></li>
     <li>Full-stack engineering</li>
     <li><a href="/fractional-cto-caio/">Fractional CTO / CAIO</a></li>
+    <li><a href="/eu-ai-act-readiness/">EU AI Act readiness</a></li>
   </ul>
 
   <h2>Where</h2>
   <p>
     Berlin, Germany, since 2007. I work with startups and growing companies regardless of location.
     Email <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>.
+  </p>
+  <p>
+    Best starting point for most teams:
+    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
   </p>
 </ContentPage>

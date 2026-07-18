@@ -174,7 +174,9 @@ const schema = {
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImageURL} />
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "f4e21edead614058a4b53d2be7a1bf76"}'></script>
+  {import.meta.env.PROD && (
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "f4e21edead614058a4b53d2be7a1bf76"}'></script>
+  )}
   <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
 </head>
 <body>

@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ContentFooter from '../../components/ContentFooter.astro';
+import DiagnoseIcon from '../../components/DiagnoseIcon.astro';
+import { notesDe } from '../../data/notes';
+import { languageAlternates } from '../../lib/i18n';
+import '../../styles/content-page.css';
+
+const description =
+  'Notizen zu Production AI, Agenten-Zuverlässigkeit, Corporate LLM und Fractional CTO. Kurze Seiten, kein Broschüren-Fülltext.';
+
+const alternates = languageAlternates('/notes/', '/de/notizen/');
+---
+
+<Layout
+  title="Notizen - Lars Ullrich"
+  description={description}
+  canonical="/de/notizen/"
+  lang="de"
+  alternates={alternates}
+>
+  <div class="cp-shell">
+    <header class="cp-bar">
+      <a href="/de/" class="cp-brand" aria-label="Zur Startseite">
+        <DiagnoseIcon size="sm" />
+        <span class="cp-brand-text">Lars Ullrich</span>
+      </a>
+      <nav class="cp-bar-nav" aria-label="Bereich">
+        <a href="/de/notizen/" class="is-active">Notizen</a>
+        <a href="/about/">About</a>
+        <a href="/notes/" hreflang="en">English</a>
+        <a href="/de/">Startseite</a>
+      </nav>
+    </header>
+
+    <header class="cp-index-head">
+      <h1>Notizen</h1>
+      <p>Kurze Seiten zur Arbeit: Audits, Agenten, Corporate LLM, Reliability und Leadership.</p>
+    </header>
+
+    <ol class="notes-index">
+      {notesDe.map((n) => (
+        <li class="notes-index-item">
+          <a href={n.href} class="notes-index-link">
+            <span class="notes-index-eyebrow">{n.eyebrow}</span>
+            <span class="notes-index-title">{n.title}</span>
+            <span class="notes-index-summary">{n.summary}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+
+    <p class="notes-index-more">
+      Mehr auf Englisch: <a href="/notes/">All notes</a>
+    </p>
+  </div>
+
+  <ContentFooter lang="de" />
+</Layout>

@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import ContentPage from '../layouts/ContentPage.astro';
 
 const description =
   'Lars Ullrich is a Berlin-based full-stack engineer and fractional CTO / CAIO. Production AI, agent reliability, corporate LLM, and systems that have to keep working.';
@@ -38,145 +38,78 @@ const jsonLd = {
 };
 ---
 
-<Layout title="About - Lars Ullrich" description={description} canonical="/about/">
-  <main class="about-page">
-    <div class="about-top">
-      <a href="/" class="back-link">← Back to home</a>
-      <a href="/de/" class="locale-switch" hreflang="de">Deutsch</a>
-    </div>
+<ContentPage
+  title="About - Lars Ullrich"
+  description={description}
+  canonical="/about/"
+  noteId="about"
+  heading="About"
+  eyebrow="Profile"
+  lead="I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working."
+  icon="/graphics/icon-system-grid.svg"
+  jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/', label: 'Deutsch' }}
+  layout="wide"
+>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>
+        I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
+      </p>
+      <p>
+        These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own policies.
+      </p>
 
-    <div class="about-grid">
-      <div class="about-body">
-        <h1>About</h1>
-        <p class="about-lead">
-          I'm an engineer and technical lead based in Berlin. I care most about systems that have to keep working.
-        </p>
-        <p class="about-prose">
-          I've been building software for about 25 years. I started as a developer, writing apps and the real-time GPU and audio code where a dropped frame is a bug you can hear. A lot of it was for the stage and custom software clients. For years I worked as a creative developer for theater and performance, including with artists like Philip Glass. In startups, that work grew into more than writing code. I took on architecture, started leading small teams, and over time ran engineering as a CTO, building plenty of infrastructure and custom systems along the way.
-        </p>
-        <p class="about-prose">
-          These days I help companies get AI into production and keep it running. Usually the unglamorous parts: the infra, the plumbing, the custom pieces that don't come in a box. Often agents, often on open models they host themselves. Corporate LLM stacks when the company needs a shared capability under its own policies.
-        </p>
+      <h2>Focus</h2>
+      <ul class="disciplines-list">
+        {disciplines.map((d) => <li>{d}</li>)}
+      </ul>
 
-        <h2>Focus</h2>
-        <ul class="disciplines-list">
-          {disciplines.map((d) => <li>{d}</li>)}
-        </ul>
-
-        <div class="about-stack">
-          <span class="about-stack-label">Stack, among others</span>
-          <dl class="stack-list">
-            {stack.map((s) => (
-              <div class="stack-row">
-                <dt class="stack-cat">{s.cat}</dt>
-                <dd class="stack-items">{s.items}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <p class="about-cta">
-          Best starting point for most teams:
-          <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
-          ·
-          <a href="/#contact">Contact</a>
-        </p>
+      <div class="about-stack">
+        <span class="about-stack-label">Stack, among others</span>
+        <dl class="stack-list">
+          {stack.map((s) => (
+            <div class="stack-row">
+              <dt class="stack-cat">{s.cat}</dt>
+              <dd class="stack-items">{s.items}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      <aside class="about-meta">
-        <dl class="meta-list">
-          <dd class="meta-graphic" aria-hidden="true">
-            <img src="/graphics/icon-about.svg" alt="" loading="lazy" decoding="async" />
-          </dd>
-          <dt class="visually-hidden">Location</dt>
-          <dd>Berlin, DE</dd>
-          <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
-          <dt class="meta-sep">Open to</dt>
-          <dd>AI readiness &amp; production audits</dd>
-          <dd>Corporate LLM builds</dd>
-          <dd>AI &amp; agent build sprints</dd>
-          <dd>Reliability retainers</dd>
-          <dd>Fractional CTO / CAIO</dd>
-        </dl>
-      </aside>
+      <p class="about-cta">
+        Best starting point for most teams:
+        <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
+        ·
+        <a href="/#contact">Contact</a>
+      </p>
     </div>
-  </main>
-  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
-</Layout>
+
+    <aside class="about-meta">
+      <dl class="meta-list">
+        <dd class="meta-graphic" aria-hidden="true">
+          <img src="/graphics/icon-layer-stack.svg" alt="" loading="lazy" decoding="async" />
+        </dd>
+        <dt class="visually-hidden">Location</dt>
+        <dd>Berlin, DE</dd>
+        <dd class="meta-coords">52°31′ N · 13°23′ E</dd>
+        <dt class="meta-sep">Open to</dt>
+        <dd>AI readiness &amp; production audits</dd>
+        <dd>Corporate LLM builds</dd>
+        <dd>AI &amp; agent build sprints</dd>
+        <dd>Reliability retainers</dd>
+        <dd>Fractional CTO / CAIO</dd>
+      </dl>
+    </aside>
+  </div>
+</ContentPage>
 
 <style>
-  .about-page {
-    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(4rem, 8vw, 7rem);
-  }
-
-  .about-top {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    max-width: 1100px;
-  }
-
-  .back-link,
-  .locale-switch {
-    color: var(--cobalt, #bbdd00);
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
-
-  .locale-switch {
-    font-weight: 600;
-  }
-
-  .back-link:hover,
-  .locale-switch:hover {
-    text-decoration: underline;
-  }
-
   .about-grid {
     display: grid;
     grid-template-columns: 2.6fr 1fr;
     gap: 0 clamp(3rem, 5vw, 6rem);
     align-items: start;
-    max-width: 1100px;
-  }
-
-  h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    color: var(--ink, #2C303C);
-    line-height: 1.1;
-    margin: 0 0 1.5rem;
-  }
-
-  h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    margin: 2.5rem 0 1rem;
-    color: var(--ink, #2C303C);
-  }
-
-  .about-lead {
-    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
-    font-weight: 700;
-    line-height: 1.4;
-    letter-spacing: -0.02em;
-    color: var(--ink, #2C303C);
-    margin: 0 0 1.75rem;
-    max-width: 44ch;
-  }
-
-  .about-prose {
-    font-size: 1rem;
-    line-height: 1.875;
-    color: var(--dim, oklch(28% 0.01 258));
-    margin: 0 0 1.25rem;
-    max-width: 58ch;
   }
 
   .disciplines-list {
@@ -226,7 +159,7 @@ const jsonLd = {
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ink, #2C303C);
+    color: var(--ink, #2c303c);
   }
 
   .stack-items {
@@ -242,16 +175,6 @@ const jsonLd = {
     border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
     font-size: 0.95rem;
     color: var(--dim, oklch(28% 0.01 258));
-  }
-
-  .about-cta a {
-    color: var(--cobalt, #bbdd00);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .about-cta a:hover {
-    text-decoration: underline;
   }
 
   .about-meta {
@@ -283,8 +206,8 @@ const jsonLd = {
   }
 
   .meta-graphic img {
-    width: 56px;
-    height: 56px;
+    width: 72px;
+    height: 72px;
     object-fit: contain;
   }
 

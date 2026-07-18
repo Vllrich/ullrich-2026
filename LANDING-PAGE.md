@@ -27,19 +27,23 @@ All user-facing wording on the landing page (`/`), organized by section in page 
 
 **Citation surfaces (standalone pages)**
 
-| URL | Purpose |
-| --- | --- |
-| `/about/` | Entity page: who Lars is |
-| `/agent-reliability/` | Definition of agent reliability |
-| `/fractional-cto-caio/` | Fractional CTO / CAIO role |
-| `/corporate-llm/` | Corporate LLM platform engagement |
-| `/de/corporate-llm/` | German mirror |
-| `/eu-ai-act-readiness/` | EU AI Act readiness (audit scope) |
-| `/work/patterns/` | Anonymized engagement patterns (cases later) |
-| `/services/readiness-audit/` | Top-of-funnel audit product page |
-| `/de/` … | German mirror for DACH intent |
-| `/llms.txt` | Short machine-readable summary |
-| `/.well-known/llms-full.txt` | Longer extract for LLMs |
+Shared chrome (blog-leaning): animated diagnose mark, Notes section link, breadcrumbs, byline, Continue reading + prev/next, footer note index. Index: `/notes/` · `/de/notizen/`. Data: `src/data/notes.ts`. Layout: `src/layouts/ContentPage.astro`.
+
+| URL | Purpose | Hero icon |
+| --- | --- | --- |
+| `/notes/` | Notes index (EN) | |
+| `/de/notizen/` | Notes index (DE) | |
+| `/about/` | Entity page: who Lars is | `icon-system-grid.svg` |
+| `/agent-reliability/` | Definition of agent reliability | `icon-focus-monitor.svg` |
+| `/fractional-cto-caio/` | Fractional CTO / CAIO role | `icon-command.svg` |
+| `/corporate-llm/` | Corporate LLM platform engagement | `icon-model-orbits.svg` |
+| `/de/corporate-llm/` | German mirror | same |
+| `/eu-ai-act-readiness/` | EU AI Act readiness (audit scope) | `icon-compliance-frame.svg` |
+| `/work/patterns/` | Anonymized engagement patterns (cases later) | `icon-pattern-steps.svg` |
+| `/services/readiness-audit/` | Top-of-funnel audit product page | `icon-signal-nodes.svg` |
+| `/de/` … | German mirror for DACH intent | (per page) |
+| `/llms.txt` | Short machine-readable summary | |
+| `/.well-known/llms-full.txt` | Longer extract for LLMs | |
 
 ---
 

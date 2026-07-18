@@ -28,12 +28,15 @@ const jsonLd = {
   title="Engagement patterns - Lars Ullrich"
   description={description}
   canonical="/work/patterns/"
+  noteId="patterns"
+  heading="Engagement patterns"
+  eyebrow="Work"
+  lead="How the work usually shows up, without invented metrics or named clients. Named case studies plug in here when cleared."
+  icon="/graphics/icon-pattern-steps.svg"
   jsonLd={jsonLd}
 >
-  <h1>Engagement patterns</h1>
   <p>
-    How the work usually shows up, without invented metrics or named clients. When case studies are cleared, they plug into this same structure under
-    <code>/work/</code>. Until then, these patterns are the honest proof layer.
+    Until cleared case studies land under <code>/work/</code>, these patterns are the honest proof layer.
   </p>
 
   {workPatterns.map((p) => (
@@ -60,9 +63,6 @@ const jsonLd = {
   <p>
     Most companies should begin with the
     <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Related:
-    <a href="/agent-reliability/">agent reliability</a>,
-    <a href="/eu-ai-act-readiness/">EU AI Act readiness</a>.
   </p>
 </ContentPage>
 

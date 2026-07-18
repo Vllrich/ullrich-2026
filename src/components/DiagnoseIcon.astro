@@ -1,9 +1,15 @@
 ---
-/** Inline diagnose mark: lime triangle fills toggle at random. */
+interface Props {
+  /** Compact mark for content-page brand link. */
+  size?: 'default' | 'sm';
+  class?: string;
+}
+
+const { size = 'default', class: className = '' } = Astro.props;
 ---
 
 <svg
-  class="svc-diagnose-img"
+  class:list={['diagnose-mark', size === 'sm' && 'diagnose-mark--sm', className]}
   viewBox="0 0 1200 1200"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
@@ -34,11 +40,17 @@
 </svg>
 
 <style>
-  .svc-diagnose-img {
+  .diagnose-mark {
     width: 100%;
     max-width: 340px;
     height: auto;
     display: block;
+  }
+
+  .diagnose-mark--sm {
+    width: 2.75rem;
+    max-width: none;
+    height: 2.75rem;
   }
 
   .tri {
@@ -58,8 +70,7 @@
 </style>
 
 <script>
-  function boot() {
-    const root = document.querySelector('[data-diagnose-icon]');
+  function bootOne(root: Element) {
     if (!(root instanceof SVGElement) || root.dataset.animate === '1') return;
 
     const tris = Array.from(root.querySelectorAll('.tri'));
@@ -69,8 +80,6 @@
     if (reduce.matches) return;
 
     root.dataset.animate = '1';
-
-    // Start with a mixed pattern so the first tick isn't all-on.
     tris.forEach((t, i) => t.classList.toggle('is-off', i % 2 === 1));
 
     let timer = 0;
@@ -78,13 +87,8 @@
     const tick = () => {
       const idx = Math.floor(Math.random() * tris.length);
       tris[idx].classList.toggle('is-off');
-
-      // Keep at least one lime face lit so the mark never goes empty.
       const lit = tris.filter((t) => !t.classList.contains('is-off'));
-      if (lit.length === 0) {
-        tris[idx].classList.remove('is-off');
-      }
-
+      if (lit.length === 0) tris[idx].classList.remove('is-off');
       timer = window.setTimeout(tick, 700 + Math.random() * 900);
     };
 
@@ -96,6 +100,10 @@
       tris.forEach((t) => t.classList.remove('is-off'));
       delete root.dataset.animate;
     });
+  }
+
+  function boot() {
+    document.querySelectorAll('[data-diagnose-icon]').forEach(bootOne);
   }
 
   boot();

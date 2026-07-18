@@ -1,152 +1,174 @@
 ---
 import Layout from './Layout.astro';
+import ContentFooter from '../components/ContentFooter.astro';
+import DiagnoseIcon from '../components/DiagnoseIcon.astro';
+import { continueReading, neighbors, notesFor, type Note } from '../data/notes';
+import '../styles/content-page.css';
 import type { AlternateLink } from '../lib/i18n';
 
 interface Props {
   title: string;
   description: string;
   canonical: string;
+  heading: string;
+  noteId?: string;
   lang?: 'en' | 'de';
   alternates?: AlternateLink[];
   jsonLd?: Record<string, unknown>;
-  homeHref?: string;
-  backLabel?: string;
+  eyebrow?: string;
+  lead?: string;
+  icon?: string;
   contactHref?: string;
   ctaLabel?: string;
   localeSwitch?: { href: string; label: string };
+  layout?: 'prose' | 'wide';
 }
 
 const {
   title,
   description,
   canonical,
+  heading,
+  noteId,
   lang = 'en',
   alternates = [],
   jsonLd,
-  homeHref = '/',
-  backLabel = '← Back to home',
-  contactHref = '/#contact',
-  ctaLabel = 'Start with a Readiness Audit',
+  eyebrow,
+  lead,
+  icon,
+  contactHref = lang === 'de' ? '/de/#kontakt' : '/#contact',
+  ctaLabel = lang === 'de' ? 'Gespräch starten' : 'Start a conversation',
   localeSwitch,
+  layout = 'prose',
 } = Astro.props;
+
+const homeHref = lang === 'de' ? '/de/' : '/';
+const notesHref = lang === 'de' ? '/de/notizen/' : '/notes/';
+const notesLabel = lang === 'de' ? 'Notizen' : 'Notes';
+
+const { prev, next } = noteId ? neighbors(noteId, lang) : {};
+const more: Note[] = noteId ? continueReading(noteId, lang, 3) : [];
+const railNotes = notesFor(lang).filter((n) => n.id !== noteId);
 ---
 
 <Layout title={title} description={description} canonical={canonical} lang={lang} alternates={alternates}>
-  <main class="content-page">
-    <div class="container">
-      <div class="top-row">
-        <a href={homeHref} class="back-link">{backLabel}</a>
+  <div class="cp-shell">
+    <header class="cp-bar">
+      <a href={homeHref} class="cp-brand" aria-label={lang === 'de' ? 'Zur Startseite' : 'Back to home'}>
+        <DiagnoseIcon size="sm" />
+        <span class="cp-brand-text">Lars Ullrich</span>
+      </a>
+      <nav class="cp-bar-nav" aria-label={lang === 'de' ? 'Bereich' : 'Section'}>
+        <a href={notesHref} class="is-active">{notesLabel}</a>
+        <a href="/about/">About</a>
         {localeSwitch && (
-          <a href={localeSwitch.href} class="locale-switch" hreflang={lang === 'en' ? 'de' : 'en'}>
-            {localeSwitch.label}
-          </a>
+          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'}>{localeSwitch.label}</a>
+        )}
+        <a href={homeHref}>{lang === 'de' ? 'Startseite' : 'Home'}</a>
+      </nav>
+    </header>
+
+    <div class:list={['cp-layout', layout === 'wide' && 'is-wide']}>
+      <header class="cp-article-head">
+        <div class="cp-article-head-copy">
+          <p class="cp-crumb">
+            <a href={notesHref}>{notesLabel}</a>
+            <span aria-hidden="true"> / </span>
+            <span>{heading}</span>
+          </p>
+          {eyebrow && <p class="cp-eyebrow">{eyebrow}</p>}
+          <h1 class="cp-heading">{heading}</h1>
+          <p class="cp-byline">
+            <a href="/about/">Lars Ullrich</a>
+            <span aria-hidden="true"> · </span>
+            Berlin
+          </p>
+          {lead && <p class="cp-lead">{lead}</p>}
+        </div>
+        {icon && (
+          <img
+            class="cp-title-icon"
+            src={icon}
+            alt=""
+            width="96"
+            height="96"
+            loading="eager"
+            decoding="async"
+          />
+        )}
+      </header>
+
+      <div class="cp-column">
+        <article class="cp-body">
+          <slot />
+        </article>
+
+        {noteId && (
+          <footer class="cp-article-foot">
+            <p class="cp-end-cta">
+              <a href={contactHref}>{ctaLabel}</a>
+            </p>
+
+            {more.length > 0 && (
+              <section class="cp-continue" aria-label={lang === 'de' ? 'Weiterlesen' : 'Continue reading'}>
+                <h2 class="cp-continue-heading">
+                  {lang === 'de' ? 'Weiterlesen' : 'Continue reading'}
+                </h2>
+                <ul class="cp-continue-list">
+                  {more.map((n) => (
+                    <li>
+                      <a href={n.href}>
+                        <span class="cp-continue-title">{n.title}</span>
+                        <span class="cp-continue-summary">{n.summary}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {(prev || next) && (
+              <nav class="cp-pager" aria-label={lang === 'de' ? 'Blättern' : 'Pagination'}>
+                {prev ? (
+                  <a href={prev.href} class="cp-pager-prev">
+                    <span>{lang === 'de' ? 'Zurück' : 'Previous'}</span>
+                    {prev.title}
+                  </a>
+                ) : <span />}
+                <a href={notesHref} class="cp-pager-index">{notesLabel}</a>
+                {next ? (
+                  <a href={next.href} class="cp-pager-next">
+                    <span>{lang === 'de' ? 'Weiter' : 'Next'}</span>
+                    {next.title}
+                  </a>
+                ) : <span />}
+              </nav>
+            )}
+          </footer>
         )}
       </div>
-      <slot />
-      <p class="cta">
-        <a href={contactHref}>{ctaLabel}</a>
-      </p>
+
+      {layout === 'prose' && railNotes.length > 0 && (
+        <aside class="cp-rail" aria-label={notesLabel}>
+          <p class="cp-rail-label">{notesLabel}</p>
+          <ul>
+            {railNotes.map((n) => (
+              <li>
+                <a href={n.href}>{n.title}</a>
+              </li>
+            ))}
+          </ul>
+          <a class="cp-rail-all" href={notesHref}>
+            {lang === 'de' ? 'Alle Notizen' : 'All notes'}
+          </a>
+        </aside>
+      )}
     </div>
-  </main>
+  </div>
+
+  <ContentFooter lang={lang} />
+
   {jsonLd && (
     <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   )}
 </Layout>
-
-<style>
-  .content-page {
-    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
-  }
-
-  .container {
-    max-width: 70ch;
-    margin: 0 auto;
-  }
-
-  .top-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .back-link,
-  .locale-switch {
-    color: var(--cobalt, #bbdd00);
-    text-decoration: none;
-    font-size: 0.9rem;
-    letter-spacing: 0.01em;
-    transition: opacity 0.15s ease;
-  }
-
-  .back-link:hover,
-  .locale-switch:hover {
-    text-decoration: underline;
-    opacity: 0.8;
-  }
-
-  .locale-switch {
-    font-weight: 600;
-  }
-
-  .content-page :global(h1) {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    color: var(--ink, #2C303C);
-    line-height: 1.1;
-    margin: 0 0 1.5rem;
-  }
-
-  .content-page :global(h2) {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: 700;
-    color: var(--ink, #2C303C);
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    margin: 2.5rem 0 0.875rem;
-  }
-
-  .content-page :global(h3) {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--ink, #2C303C);
-    margin: 1.75rem 0 0.5rem;
-  }
-
-  .content-page :global(p),
-  .content-page :global(li) {
-    color: var(--dim, oklch(28% 0.01 258));
-    font-size: 1rem;
-    line-height: 1.875;
-    margin: 0 0 1rem;
-  }
-
-  .content-page :global(ul) {
-    margin: 0 0 1rem;
-    padding-left: 1.25rem;
-  }
-
-  .content-page :global(a) {
-    color: var(--cobalt, #bbdd00);
-    text-decoration: none;
-  }
-
-  .content-page :global(a:hover) {
-    text-decoration: underline;
-  }
-
-  .cta {
-    margin-top: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
-  }
-
-  .cta a {
-    font-weight: 600;
-  }
-</style>

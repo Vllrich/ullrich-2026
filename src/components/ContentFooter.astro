@@ -1,0 +1,61 @@
+---
+import { notesFor } from '../data/notes';
+
+interface Props {
+  lang?: 'en' | 'de';
+}
+
+const { lang = 'en' } = Astro.props;
+const notes = notesFor(lang);
+const homeHref = lang === 'de' ? '/de/' : '/';
+const notesHref = lang === 'de' ? '/de/notizen/' : '/notes/';
+const notesLabel = lang === 'de' ? 'Notizen' : 'Notes';
+const year = new Date().getFullYear();
+---
+
+<footer class="notes-footer">
+  <div class="notes-footer-inner">
+    <div class="notes-footer-grid">
+      <div class="notes-footer-brand">
+        <a href={homeHref} class="notes-footer-logo">Lars Ullrich</a>
+        <p class="notes-footer-tagline">
+          {lang === 'de'
+            ? 'Production AI, Agenten-Zuverlässigkeit, Fractional CTO. Berlin.'
+            : 'Production AI, agent reliability, fractional CTO. Berlin.'}
+        </p>
+      </div>
+
+      <div class="notes-footer-col">
+        <a href={notesHref} class="notes-footer-label">{notesLabel}</a>
+        <nav class="notes-footer-links" aria-label={notesLabel}>
+          {notes.map((n) => (
+            <a href={n.href}>{n.title}</a>
+          ))}
+        </nav>
+      </div>
+
+      <div class="notes-footer-col">
+        <span class="notes-footer-label">{lang === 'de' ? 'Website' : 'Site'}</span>
+        <nav class="notes-footer-links" aria-label="Site">
+          <a href={homeHref}>{lang === 'de' ? 'Startseite' : 'Home'}</a>
+          <a href="/about/">About</a>
+          <a href={notesHref}>{notesLabel}</a>
+          <a href={lang === 'de' ? '/de/#kontakt' : '/#contact'}>
+            {lang === 'de' ? 'Kontakt' : 'Contact'}
+          </a>
+          {lang === 'de' ? (
+            <a href="/notes/" hreflang="en">English</a>
+          ) : (
+            <a href="/de/notizen/" hreflang="de">Deutsch</a>
+          )}
+          <a href={lang === 'de' ? '/de/impressum/' : '/impressum/'}>Impressum</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="notes-footer-bottom">
+      <span>&copy; {year} Lars Ullrich</span>
+      <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>
+    </div>
+  </div>
+</footer>

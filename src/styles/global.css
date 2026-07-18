@@ -1,6 +1,7 @@
 @import '@fontsource-variable/darker-grotesque';
 @import '@fontsource-variable/hanken-grotesk';
 @import "tailwindcss";
+@import './content-page.css';
 
 /* ── Design tokens ── */
 :root {

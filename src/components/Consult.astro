@@ -1,17 +1,27 @@
 ---
-const points = [
-  'Use-case shortlist and an honest build / buy / skip call',
-  'Cost model you can take into a decision',
-  'Agent feasibility and EU AI Act check where it applies',
-];
+import {
+  landingAuditHref,
+  landingCopy,
+  landingNotesHref,
+  landingSectionHref,
+  type LandingLang,
+} from '../data/landing';
+
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const points = t.consult.points;
 ---
 
-<section id="consult" class="consult-section">
+<section id={t.ids.consult} class="consult-section">
   <div class="consult-inner">
     <div class="consult-copy fade-up" data-delay="0">
-      <h2 class="consult-display">Not sure<br/>where to start?</h2>
+      <h2 class="consult-display">{t.consult.displayLine1}<br/>{t.consult.displayLine2}</h2>
       <p class="consult-lead">
-        Most teams begin with a Readiness &amp; Production Audit. Fixed scope, 1-2 weeks. Clear recommendation before you fund a build.
+        {t.consult.lead}
       </p>
       <ul class="consult-points">
         {points.map((p) => (
@@ -19,14 +29,14 @@ const points = [
         ))}
       </ul>
       <div class="consult-ctas">
-        <a href="#contact" class="consult-cta-primary">Request a scope call</a>
-        <a href="/services/readiness-audit/" class="consult-cta-secondary">See the audit</a>
+        <a href={`#${t.ids.contact}`} class="consult-cta-primary">{t.consult.ctaPrimary}</a>
+        <a href={landingAuditHref(lang)} class="consult-cta-secondary">{t.consult.ctaSecondary}</a>
       </div>
       <p class="consult-about">
-        More context:
-        <a href="/#work">work</a>,
-        <a href="/notes/">notes</a>,
-        <a href="/about/">about</a>.
+        {t.consult.moreContext}
+        <a href={landingSectionHref(lang, 'work')}>{t.consult.workLink}</a>,
+        <a href={landingNotesHref(lang)}>{t.consult.notesLink}</a>,
+        <a href="/about/">{t.consult.aboutLink}</a>.
       </p>
     </div>
     <div class="consult-visual" aria-hidden="true">

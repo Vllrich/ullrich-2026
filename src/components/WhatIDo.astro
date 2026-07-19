@@ -1,44 +1,43 @@
 ---
+import { landingCopy, type LandingLang } from '../data/landing';
+
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const beatIcons = [
+  '/graphics/icon-find-use-case.svg',
+  '/graphics/icon-build-system.svg',
+  '/graphics/icon-build-and-operate.svg',
+];
 ---
 
-<section id="what-i-do" class="wid-section">
-  <h2 class="visually-hidden">What I do</h2>
+<section id={t.ids.whatIDo} class="wid-section">
+  <h2 class="visually-hidden">{t.whatIDo.heading}</h2>
 
   <div class="wid-intro fade-up" data-delay="80">
     <p class="wid-statement">
-      <img src="/graphics/intro-line.svg" alt="" class="wid-rule" aria-hidden="true" loading="lazy" decoding="async" />I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
+      <img src="/graphics/intro-line.svg" alt="" class="wid-rule" aria-hidden="true" loading="lazy" decoding="async" />{t.whatIDo.statement}
     </p>
     <div class="wid-aside">
       <ul class="wid-services">
-        <li>Production AI</li>
-        <li>Corporate LLM</li>
-        <li>Agent reliability</li>
-        <li>Full-stack engineering</li>
-        <li>Fractional CTO / CAIO</li>
+        {t.whatIDo.services.map((s) => (
+          <li>{s}</li>
+        ))}
       </ul>
     </div>
   </div>
 
   <div class="wid-beats">
-
-    <div class="beat fade-up" data-delay="160">
-      <img src="/graphics/icon-find-use-case.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
-      <h3 class="beat-title">Find the right use case</h3>
-      <p class="beat-body">Not every problem needs AI, and not every AI needs an agent. I help you pick the few use cases that pay for themselves, and rule out the ones that won't.</p>
-    </div>
-
-    <div class="beat fade-up" data-delay="240">
-      <img src="/graphics/icon-build-system.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
-      <h3 class="beat-title">Build the system</h3>
-      <p class="beat-body">Agents, RAG, automation, and the systems around them. Built for reliability, observability, and a cost you can predict. Hosted, or on open models you control.</p>
-    </div>
-
-    <div class="beat fade-up" data-delay="320">
-      <img src="/graphics/icon-build-and-operate.svg" alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
-      <h3 class="beat-title">Build and operate, not just advise</h3>
-      <p class="beat-body">Code, architecture reviews, production debugging, and staying on to keep it running. I work in your repository, not from the outside.</p>
-    </div>
-
+    {t.whatIDo.beats.map((beat, i) => (
+      <div class="beat fade-up" data-delay={String(160 + i * 80)}>
+        <img src={beatIcons[i]} alt="" class="beat-icon" aria-hidden="true" loading="lazy" decoding="async" />
+        <h3 class="beat-title">{beat.title}</h3>
+        <p class="beat-body">{beat.body}</p>
+      </div>
+    ))}
   </div>
 
 </section>
@@ -47,6 +46,18 @@
   .wid-section {
     background: var(--white, oklch(99% 0 0));
     border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* ── Upper intro band — white ── */

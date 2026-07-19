@@ -1,9 +1,17 @@
 ---
+import { landingCopy, type LandingLang } from '../data/landing';
+
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
 const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUSTRIES', 'CORPUS.MUSIC', 'THEATER DORTMUND', 'OPER DORTMUND', 'ECM RECORDS', 'AMP SOUND BRANDING', 'BERLINER FESTSPIELE', 'SILEX INVESTMENT'];
 ---
 
 <div class="clients-wrap">
-  <h2 class="clients-label">Who I've worked with</h2>
+  <h2 class="clients-label">{t.clients.label}</h2>
   <div class="clients-strip" aria-hidden="true">
     <div class="clients-track">
       {[...brands, ...brands, ...brands].map((b) => (

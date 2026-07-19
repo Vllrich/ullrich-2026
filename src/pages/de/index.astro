@@ -1,10 +1,20 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Maintenance from '../../components/Maintenance.astro';
+import Cover from '../../components/Cover.astro';
+import WhatIDo from '../../components/WhatIDo.astro';
+import Perspective from '../../components/Perspective.astro';
+import Services from '../../components/Services.astro';
+import Work from '../../components/Work.astro';
+import Clients from '../../components/Clients.astro';
+import Consult from '../../components/Consult.astro';
+import FAQ from '../../components/FAQ.astro';
+import Contact from '../../components/Contact.astro';
 import { languageAlternates } from '../../lib/i18n';
+import { landingCopy } from '../../data/landing';
 
-const description =
-  'Lars Ullrich, Berlin: Production AI, Agenten-Zuverlässigkeit und Fractional CTO / CAIO. Ich helfe wachsenden Unternehmen, KI in Produktion zu bringen und am Laufen zu halten.';
-
+const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
+const t = landingCopy('de');
 const alternates = languageAlternates('/', '/de/');
 
 const jsonLd = {
@@ -12,8 +22,8 @@ const jsonLd = {
   '@type': 'WebPage',
   '@id': 'https://larsullrich.de/de/#webpage',
   url: 'https://larsullrich.de/de/',
-  name: 'Lars Ullrich - Production AI & Fractional CTO',
-  description,
+  name: t.meta.title,
+  description: t.meta.description,
   inLanguage: 'de',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   about: { '@id': 'https://larsullrich.de/#person' },
@@ -21,226 +31,26 @@ const jsonLd = {
 ---
 
 <Layout
-  title="Lars Ullrich - Production AI, Agenten-Zuverlässigkeit & Fractional CTO"
-  description={description}
+  title={t.meta.title}
+  description={t.meta.description}
   canonical="/de/"
   lang="de"
   alternates={alternates}
 >
-  <main class="de-home">
-    <header class="de-top">
-      <nav class="de-nav" aria-label="Hauptnavigation">
-        <a href="/de/arbeit/muster/">Arbeit</a>
-        <a href="/de/notizen/">Notizen</a>
-        <a href="/de/#leistungen">Leistungen</a>
-        <a href="/about/">About</a>
-        <a href="/de/#kontakt">Kontakt</a>
-        <a href="/" class="locale-switch" hreflang="en">English</a>
-      </nav>
-    </header>
-
-    <section class="de-hero">
-      <p class="eyebrow">Lars Ullrich · Berlin</p>
-      <h1>Jeder kann eine Demo bauen.<br />Betreiben ist die Arbeit.</h1>
-      <p class="lead">
-        Ich helfe wachsenden Unternehmen, Software zu shippen, die in Produktion hält, und sie am Laufen zu halten. KI inklusive, wenn sie ihren Platz verdient. Oft Agenten, oft auf offenen Modellen, die ihr selbst hostet.
-      </p>
-      <p class="cta-row">
-        <a class="cta-primary" href="#kontakt">Scope-Call anfragen</a>
-        <a class="cta-secondary" href="/de/arbeit/muster/">Arbeit ansehen</a>
-      </p>
-    </section>
-
-    <section class="de-block">
-      <h2>Fokus</h2>
-      <ul>
-        <li><a href="/de/corporate-llm/">Corporate LLM</a></li>
-        <li><a href="/de/agenten-zuverlaessigkeit/">Agenten-Zuverlässigkeit</a></li>
-        <li>Production AI &amp; Full-Stack Engineering</li>
-        <li><a href="/de/fractional-cto-caio/">Fractional CTO / CAIO</a></li>
-        <li><a href="/de/eu-ai-act-readiness/">EU-AI-Act-Readiness</a></li>
-        <li><a href="/de/arbeit/muster/">Arbeitsmuster &amp; Case Studies</a></li>
-      </ul>
-    </section>
-
-    <section class="de-block" id="leistungen">
-      <h2>Leistungen</h2>
-      <ul>
-        <li>
-          <strong>Readiness &amp; Production Audit</strong> - fester Scope, 1-2 Wochen.
-          Use-Case-Shortlist, Build/Buy/Skip, Kostenmodell,
-          <a href="/de/eu-ai-act-readiness/">EU-AI-Act-Check</a> wo relevant.
-        </li>
-        <li>
-          <strong>Build Sprint</strong> - 6-10 Wochen. Ein System in Produktion, nicht nur als Demo.
-        </li>
-        <li>
-          <strong><a href="/de/corporate-llm/">Corporate LLM</a></strong> - 6-12 Wochen.
-          Unternehmens-LLM-Stack: private/offene Modelle, RAG, Zugriffs- und Kostenkontrolle, Ops.
-        </li>
-        <li>
-          <strong>Reliability Retainer</strong> - laufend: Evals, Monitoring, Guardrails, Incidents.
-        </li>
-        <li>
-          <strong>Fractional CTO / CAIO</strong> - technische Führung auf Monatsbasis, nicht nur Advisory.
-        </li>
-      </ul>
-      <p>
-        Unsicher, wo ihr steht? Startpunkt ist fast immer der
-        <a href="/services/readiness-audit/">Readiness Audit</a>.
-        Oder schaut zuerst in die
-        <a href="/de/arbeit/muster/">Case Studies</a>.
-      </p>
-    </section>
-
-    <section class="de-block" id="kontakt">
-      <h2>Kontakt</h2>
-      <p>
-        Schreib mir, was ihr baut und wo es hakt. Wenn ich der richtige bin, sage ich das. Wenn nicht, auch.
-      </p>
-      <p>
-        E-Mail:
-        <a href="mailto:contact@larsullrich.de">contact@larsullrich.de</a>.
-        Ich lese jede Nachricht persönlich und antworte meist innerhalb eines Tages.
-      </p>
-      <p>
-        <a href="/#contact">Kontaktformular (EN)</a>
-        ·
-        <a href="/de/notizen/">Notizen</a>
-        ·
-        <a href="/de/impressum/">Impressum</a>
-      </p>
-    </section>
-  </main>
+  {maintenance ? (
+    <Maintenance />
+  ) : (
+    <>
+      <Cover lang="de" />
+      <WhatIDo lang="de" />
+      <Perspective lang="de" />
+      <Services lang="de" />
+      <Work lang="de" />
+      <Clients lang="de" />
+      <Consult lang="de" />
+      <FAQ lang="de" />
+      <Contact lang="de" />
+    </>
+  )}
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 </Layout>
-
-<style>
-  .de-home {
-    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem) clamp(4rem, 8vw, 7rem);
-    max-width: 70ch;
-    margin: 0 auto;
-  }
-
-  .de-top {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 2rem;
-  }
-
-  .de-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.75rem 1.1rem;
-    align-items: center;
-  }
-
-  .de-nav a {
-    color: var(--dim, oklch(28% 0.01 258));
-    text-decoration: none;
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-
-  .de-nav a:hover {
-    color: var(--ink, #2c303c);
-  }
-
-  .locale-switch {
-    color: var(--cobalt-dim, #8aaa00) !important;
-  }
-
-  .locale-switch:hover {
-    text-decoration: underline;
-  }
-
-  .eyebrow {
-    color: var(--ghost, oklch(50% 0.006 260));
-    font-size: 0.9rem;
-    margin: 0 0 1rem;
-  }
-
-  h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--ink, #2C303C);
-    margin: 0 0 1.25rem;
-  }
-
-  .lead {
-    color: var(--dim, oklch(28% 0.01 258));
-    font-size: var(--text-lead-size, 1.1rem);
-    line-height: 1.7;
-    margin: 0 0 1.75rem;
-  }
-
-  .cta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin: 0 0 3rem;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .cta-primary {
-    color: var(--ink, #2C303C);
-    background: var(--cobalt, #bbdd00);
-    padding: 0.7rem 1.1rem;
-  }
-
-  .cta-secondary {
-    color: var(--cobalt, #bbdd00);
-    padding: 0.7rem 0;
-  }
-
-  .cta-secondary:hover {
-    text-decoration: underline;
-  }
-
-  .de-block {
-    margin-bottom: 2.5rem;
-    padding-top: 2rem;
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
-  }
-
-  h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    margin: 0 0 1rem;
-    color: var(--ink, #2C303C);
-  }
-
-  p,
-  li {
-    color: var(--dim, oklch(28% 0.01 258));
-    font-size: 1rem;
-    line-height: 1.875;
-    margin: 0 0 0.75rem;
-  }
-
-  ul {
-    padding-left: 1.25rem;
-    margin: 0 0 1rem;
-  }
-
-  a {
-    color: var(--cobalt, #bbdd00);
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-</style>

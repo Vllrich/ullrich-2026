@@ -1,27 +1,45 @@
 ---
+import LocaleSwitch from './LocaleSwitch.astro';
+import { primaryNav } from '../lib/nav';
+import {
+  landingCopy,
+  landingHomeHref,
+  landingLocaleSwitchHref,
+  type LandingLang,
+} from '../data/landing';
+
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const items = primaryNav(lang);
+const homeHref = landingHomeHref(lang);
+const localeHref = landingLocaleSwitchHref(lang);
 ---
 
 <div class="site-wrap">
 
   <header class="site-nav">
-    <a href="/" class="nav-logo">
+    <a href={homeHref} class="nav-logo">
       LARS ULLRICH
-      <span class="nav-descriptor">Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
+      <span class="nav-descriptor">{t.cover.descriptor}</span>
     </a>
-    <nav class="nav-links" id="nav-links" aria-label="Main navigation">
-      <a href="/work/patterns/">Work</a>
-      <a href="/notes/">Notes</a>
-      <a href="#services">Services</a>
-      <a href="/about/">About</a>
-      <a href="#contact">Contact</a>
-      <a href="/de/" hreflang="de" class="nav-locale">Deutsch</a>
+    <nav class="nav-links" id="nav-links" aria-label={t.cover.navLabel}>
+      {items.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+      <LocaleSwitch lang={lang} href={localeHref} variant="lime" />
     </nav>
     <button
       class="nav-toggle"
       id="nav-toggle"
-      aria-label="Open menu"
+      aria-label={t.cover.menuOpen}
       aria-expanded="false"
       aria-controls="nav-links"
+      data-label-open={t.cover.menuOpen}
+      data-label-close={t.cover.menuClose}
     >
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
@@ -29,7 +47,7 @@
     </button>
   </header>
 
-  <section class="hero" aria-label="Hero">
+  <section class="hero" aria-label={t.cover.heroLabel}>
     <!-- WebGL canvases — hidden, preserved for re-enable -->
     <canvas id="fluid-canvas" aria-hidden="true"></canvas>
     <canvas id="ascii-canvas" aria-hidden="true"></canvas>
@@ -37,17 +55,16 @@
     <!-- Left: text content -->
     <div class="hero-text">
       <h1 class="hero-heading">
-        Engineering leadership<br/>
-        <span class="hero-heading-alt">for software that has to work</span>
+        {t.cover.headline}<br/>
+        <span class="hero-heading-alt">{t.cover.headlineAlt}</span>
       </h1>
 
       <p class="hero-body">
-        I help growing companies ship software that holds up in production, and keep it running<br/>
-        AI included, when it earns its place
+        {t.cover.body}
       </p>
       <div class="hero-ctas">
-        <a href="#contact" class="hero-cta-primary">Request a scope call</a>
-        <a href="#method" class="hero-cta-secondary">See how I work</a>
+        <a href={`#${t.ids.contact}`} class="hero-cta-primary">{t.cover.ctaPrimary}</a>
+        <a href={`#${t.ids.method}`} class="hero-cta-secondary">{t.cover.ctaSecondary}</a>
       </div>
     </div>
 
@@ -116,7 +133,7 @@
     align-items: center;
   }
 
-  .nav-links a {
+  .nav-links > a {
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     font-weight: 500;
     font-size: 0.72rem;
@@ -126,11 +143,10 @@
     text-decoration: none;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--ink, #2C303C); }
+  .nav-links > a:hover { color: var(--ink, #2C303C); }
 
-  .nav-links a.nav-locale {
-    color: var(--ink, #2C303C);
-    font-weight: 700;
+  .nav-links :global(.locale-switch) {
+    margin-left: 0.15rem;
   }
 
   /* ── Hero: text left, skyline graphic full-bleed at bottom ── */
@@ -822,7 +838,15 @@ void main(){
 
   function render(ms: number) {
     resize();
-    const time = ms * 0.001;
+    if (lastMs < 0) {
+      /* Sync to the same epoch as performance.now() (used by ghost
+         timestamps below) so the clamped clock stays comparable. */
+      clockTime = ms * 0.001;
+    } else {
+      clockTime += Math.min((ms - lastMs) * 0.001, MAX_DT);
+    }
+    lastMs = ms;
+    const time = clockTime;
     const cw   = canvas!.width;
     const ch   = canvas!.height;
 
@@ -1149,13 +1173,15 @@ const navLinks  = document.getElementById('nav-links')  as HTMLElement;
 function closeNav() {
   navLinks.classList.remove('is-open');
   navToggle.setAttribute('aria-expanded', 'false');
-  navToggle.setAttribute('aria-label', 'Open menu');
+  navToggle.setAttribute('aria-label', navToggle.dataset.labelOpen || 'Open menu');
 }
 
 navToggle.addEventListener('click', () => {
   const isOpen = navLinks.classList.toggle('is-open');
   navToggle.setAttribute('aria-expanded', String(isOpen));
-  navToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  const open = navToggle.dataset.labelOpen || 'Open menu';
+  const close = navToggle.dataset.labelClose || 'Close menu';
+  navToggle.setAttribute('aria-label', isOpen ? close : open);
 });
 
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));

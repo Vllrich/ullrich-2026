@@ -70,3 +70,4 @@ Ziel: Proof und Authority nachziehen. Technik/Copy sind schon stark; ohne Outcom
 - Cloudflare: `is_robots_txt_managed=false`, `ai_training=block`
 - robots.txt: `ai-input=yes`, `ai-train=no`; search bots allowed
 - EN is primary (`x-default`); DE is mirror under `/de/`
+- `/de/` uses the same landing components as `/` via `src/data/landing.ts` (copy + section IDs only)

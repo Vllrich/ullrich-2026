@@ -1,5 +1,24 @@
 ---
 import DiagnoseIcon from './DiagnoseIcon.astro';
+import LocaleSwitch from './LocaleSwitch.astro';
+import {
+  landingAuditHref,
+  landingCopy,
+  landingImpressumHref,
+  landingLocaleSwitchHref,
+  landingNotesHref,
+  landingWorkIndexHref,
+  type LandingLang,
+} from '../data/landing';
+
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const f = t.contact.form;
+const year = new Date().getFullYear();
 
 const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
@@ -12,26 +31,26 @@ const socials = [
 ];
 ---
 
-<section id="contact" class="contact-section">
+<section id={t.ids.contact} class="contact-section">
 
   <div class="contact-inner">
     <div class="contact-left">
       <h2 class="contact-display fade-up" data-delay="0">
-        Let's<br/>Talk.
+        {t.contact.displayLine1}<br/>{t.contact.displayLine2}
       </h2>
 
       <p class="contact-intro fade-up" data-delay="120">
-        Tell me what you're building and where it's stuck. If I'm the right person to help, I'll say so. If I'm not, I'll tell you that too.
+        {t.contact.intro}
       </p>
 
       <p class="contact-note fade-in" data-delay="240">
-        Best starting point for most teams:
-        <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>
-        (fixed scope, 1-2 weeks).
+        {t.contact.noteStart}
+        <a href={landingAuditHref(lang)}>{t.contact.noteAudit}</a>
+        {t.contact.noteAuditSuffix}
       </p>
 
       <p class="contact-note fade-in" data-delay="320">
-        Currently open to AI readiness audits, corporate LLM builds, agent and production builds, reliability retainers, and fractional CTO/CAIO engagements.
+        {t.contact.availability}
       </p>
     </div>
 
@@ -41,39 +60,49 @@ const socials = [
           data-ejs-key={EMAILJS_PUBLIC_KEY ?? ''}
           data-ejs-service={EMAILJS_SERVICE_ID ?? ''}
           data-ejs-template={EMAILJS_TEMPLATE_ID ?? ''}
+          data-label-submit={f.submit}
+          data-label-sending={f.sending}
+          data-label-try-again={f.tryAgain}
+          data-label-closes-in={f.closesIn}
+          data-err-name={f.errName}
+          data-err-email={f.errEmail}
+          data-err-email-invalid={f.errEmailInvalid}
+          data-err-subject={f.errSubject}
+          data-err-message={f.errMessage}
+          data-err-message-short={f.errMessageShort}
         >
           <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" />
           <div class="form-row">
             <div class="form-group">
-              <label for="cf-name">Name</label>
-              <input type="text" id="cf-name" name="name" placeholder="Your full name" required autocomplete="name" />
+              <label for="cf-name">{f.name}</label>
+              <input type="text" id="cf-name" name="name" placeholder={f.namePh} required autocomplete="name" />
               <span class="form-error" id="err-name"></span>
             </div>
             <div class="form-group">
-              <label for="cf-email">Email</label>
-              <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email" />
+              <label for="cf-email">{f.email}</label>
+              <input type="email" id="cf-email" name="email" placeholder={f.emailPh} required autocomplete="email" />
               <span class="form-error" id="err-email"></span>
             </div>
           </div>
           <div class="form-group">
-            <label for="cf-subject">Subject</label>
-            <input type="text" id="cf-subject" name="subject" placeholder="What is this about?" required />
+            <label for="cf-subject">{f.subject}</label>
+            <input type="text" id="cf-subject" name="subject" placeholder={f.subjectPh} required />
             <span class="form-error" id="err-subject"></span>
           </div>
           <div class="form-group">
-            <label for="cf-message">Message</label>
-            <textarea id="cf-message" name="message" rows="5" placeholder="What are you building, and where is it stuck?" required></textarea>
+            <label for="cf-message">{f.message}</label>
+            <textarea id="cf-message" name="message" rows="5" placeholder={f.messagePh} required></textarea>
             <span class="form-error" id="err-message"></span>
           </div>
           <button type="submit" id="cf-submit" class="cf-btn">
-            <span class="btn-label">Request a scope call</span>
+            <span class="btn-label">{f.submit}</span>
             <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
               <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
             </svg>
           </button>
           <p class="cf-feedback" id="cf-error" role="alert" aria-live="assertive" style="display:none">
-            Something went wrong. Please try again in a moment.
+            {f.error}
           </p>
         </form>
 
@@ -86,14 +115,14 @@ const socials = [
           hidden
         >
           <p class="cf-success-mark" aria-hidden="true">✓</p>
-          <h3 id="cf-success-title" class="cf-success-title">Message sent</h3>
+          <h3 id="cf-success-title" class="cf-success-title">{f.successTitle}</h3>
           <p class="cf-success-body">
-            Thanks. I read every message personally and usually reply within a day.
+            {f.successBody}
           </p>
           <button type="button" class="cf-btn cf-success-close" id="cf-success-close">
-            Close
+            {f.close}
           </button>
-          <p class="cf-success-timer" id="cf-success-timer" aria-hidden="true">Closes in 15s</p>
+          <p class="cf-success-timer" id="cf-success-timer" aria-hidden="true">{f.closesIn} 15s</p>
         </div>
       </div>
     </div>
@@ -103,21 +132,21 @@ const socials = [
     <div class="footer-brand">
       <span class="footer-logo">LARS ULLRICH</span>
       <DiagnoseIcon size="sm" class="footer-mark" />
-      <p class="footer-desc">Production AI and agents. Built to ship, and to keep running.</p>
+      <p class="footer-desc">{t.contact.footer.tagline}</p>
     </div>
 
-    <nav class="footer-links" aria-label="Footer navigation">
+    <nav class="footer-links" aria-label={t.contact.footer.navLabel}>
       {socials.map(s => (
         <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
       ))}
-      <a href="/de/" hreflang="de">Deutsch</a>
-      <a href="/work/patterns/">Work</a>
-      <a href="/notes/">Notes</a>
-      <a href="/about/">About</a>
-      <a href="/impressum/">Impressum</a>
+      <LocaleSwitch lang={lang} href={landingLocaleSwitchHref(lang)} variant="lime" />
+      <a href={landingWorkIndexHref(lang)}>{t.contact.footer.work}</a>
+      <a href={landingNotesHref(lang)}>{t.contact.footer.notes}</a>
+      <a href="/about/">{t.contact.footer.about}</a>
+      <a href={landingImpressumHref(lang)}>Impressum</a>
     </nav>
 
-    <span class="footer-copy">&copy; 2026 Lars Ullrich. All rights reserved.</span>
+    <span class="footer-copy">&copy; {year} Lars Ullrich. {t.contact.footer.copyright}</span>
   </footer>
 
 </section>
@@ -431,7 +460,7 @@ const socials = [
     flex-wrap: wrap;
   }
 
-  .footer-links a {
+  .footer-links > a {
     font-size: 0.62rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -440,7 +469,7 @@ const socials = [
     text-decoration: none;
     transition: color 0.2s;
   }
-  .footer-links a:hover { color: var(--ink, #2C303C); }
+  .footer-links > a:hover { color: var(--ink, #2C303C); }
 
   .footer-copy {
     font-size: 0.6rem;
@@ -466,8 +495,14 @@ const socials = [
   import emailjs from '@emailjs/browser';
 
   const form = document.getElementById('contact-form') as HTMLFormElement;
-  const { ejsKey, ejsService, ejsTemplate } = (form as any).dataset;
+  const ds = form.dataset;
+  const { ejsKey, ejsService, ejsTemplate } = ds as any;
   emailjs.init(ejsKey);
+
+  const labelSubmit = ds.labelSubmit || 'Request a scope call';
+  const labelSending = ds.labelSending || 'Sending...';
+  const labelTryAgain = ds.labelTryAgain || 'Try Again';
+  const labelClosesIn = ds.labelClosesIn || 'Closes in';
 
   const submitBtn = document.getElementById('cf-submit') as HTMLButtonElement;
   const btnLabel = submitBtn.querySelector('.btn-label') as HTMLElement;
@@ -496,15 +531,15 @@ const socials = [
     successClose.focus();
 
     let remaining = Math.round(SUCCESS_MS / 1000);
-    successTimer.textContent = `Closes in ${remaining}s`;
+    successTimer.textContent = `${labelClosesIn} ${remaining}s`;
     clearSuccessTimers();
     successInterval = setInterval(() => {
       remaining -= 1;
       if (remaining <= 0) {
-        successTimer.textContent = 'Closing...';
+        successTimer.textContent = '...';
         return;
       }
-      successTimer.textContent = `Closes in ${remaining}s`;
+      successTimer.textContent = `${labelClosesIn} ${remaining}s`;
     }, 1000);
     successTimeout = setTimeout(() => hideSuccess(), SUCCESS_MS);
   }
@@ -517,7 +552,7 @@ const socials = [
     form.removeAttribute('aria-hidden');
     slot.style.minHeight = '';
     submitBtn.classList.remove('is-success', 'is-loading');
-    btnLabel.textContent = 'Request a scope call';
+    btnLabel.textContent = labelSubmit;
     submitBtn.disabled = false;
     submitBtn.focus();
   }
@@ -540,15 +575,15 @@ const socials = [
 
   function validate(data: Record<string,string>) {
     let ok = true;
-    if (!data.name.trim())    { setError('cf-name','err-name','Name is required'); ok=false; }
+    if (!data.name.trim())    { setError('cf-name','err-name', ds.errName || 'Name is required'); ok=false; }
     else setError('cf-name','err-name','');
-    if (!data.email.trim())   { setError('cf-email','err-email','Email is required'); ok=false; }
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setError('cf-email','err-email','Please enter a valid email'); ok=false; }
+    if (!data.email.trim())   { setError('cf-email','err-email', ds.errEmail || 'Email is required'); ok=false; }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { setError('cf-email','err-email', ds.errEmailInvalid || 'Please enter a valid email'); ok=false; }
     else setError('cf-email','err-email','');
-    if (!data.subject.trim()) { setError('cf-subject','err-subject','Subject is required'); ok=false; }
+    if (!data.subject.trim()) { setError('cf-subject','err-subject', ds.errSubject || 'Subject is required'); ok=false; }
     else setError('cf-subject','err-subject','');
-    if (!data.message.trim()) { setError('cf-message','err-message','Message is required'); ok=false; }
-    else if (data.message.length < 10) { setError('cf-message','err-message','At least 10 characters'); ok=false; }
+    if (!data.message.trim()) { setError('cf-message','err-message', ds.errMessage || 'Message is required'); ok=false; }
+    else if (data.message.length < 10) { setError('cf-message','err-message', ds.errMessageShort || 'At least 10 characters'); ok=false; }
     else setError('cf-message','err-message','');
     return ok;
   }
@@ -568,7 +603,7 @@ const socials = [
 
     submitBtn.disabled = true;
     submitBtn.classList.add('is-loading');
-    btnLabel.textContent = 'Sending...';
+    btnLabel.textContent = labelSending;
     errorBox.style.display = 'none';
 
     try {
@@ -587,12 +622,12 @@ const socials = [
     } catch {
       submitBtn.classList.remove('is-loading');
       submitBtn.classList.add('is-error');
-      btnLabel.textContent = 'Try Again';
+      btnLabel.textContent = labelTryAgain;
       errorBox.style.display = 'block';
       submitBtn.disabled = false;
       setTimeout(() => {
         submitBtn.classList.remove('is-error');
-        btnLabel.textContent = 'Request a scope call';
+        btnLabel.textContent = labelSubmit;
       }, 5000);
     }
   });

@@ -78,7 +78,7 @@ a.notes-footer-label:hover {
   gap: 0.4rem;
 }
 
-.notes-footer-links a {
+.notes-footer-links > a {
   font-size: 0.88rem;
   font-weight: 500;
   line-height: 1.35;
@@ -86,8 +86,13 @@ a.notes-footer-label:hover {
   text-decoration: none;
 }
 
-.notes-footer-links a:hover {
+.notes-footer-links > a:hover {
   color: #8aaa00;
+}
+
+.notes-footer-links .locale-switch {
+  margin-top: 0.15rem;
+  align-self: flex-start;
 }
 
 .notes-footer-bottom {
@@ -174,21 +179,25 @@ a.notes-footer-label:hover {
   gap: 0.75rem 1.1rem;
 }
 
-.cp-bar-nav a {
+.cp-bar-nav > a {
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--ghost, oklch(50% 0.006 260));
   text-decoration: none;
 }
 
-.cp-bar-nav a:hover,
-.cp-bar-nav a.is-active {
+.cp-bar-nav > a:hover,
+.cp-bar-nav > a.is-active {
   color: var(--ink, #2c303c);
 }
 
-.cp-bar-nav a.is-active {
+.cp-bar-nav > a.is-active {
   border-bottom: 1px solid var(--cobalt, #bbdd00);
   padding-bottom: 0.05rem;
+}
+
+.cp-bar-nav .locale-switch {
+  margin-left: 0.15rem;
 }
 
 .cp-layout {

@@ -11,29 +11,33 @@ import Consult from '../components/Consult.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import { languageAlternates } from '../lib/i18n';
+import { landingCopy } from '../data/landing';
 
 const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
 const alternates = languageAlternates('/', '/de/');
+const t = landingCopy('en');
 ---
 
 <Layout
-  title="Lars Ullrich - Production AI, Agent Reliability & Fractional CTO"
+  title={t.meta.title}
+  description={t.meta.description}
   canonical="/"
+  lang="en"
   alternates={alternates}
 >
   {maintenance ? (
     <Maintenance />
   ) : (
     <>
-      <Cover />
-      <WhatIDo />
-      <Perspective />
-      <Services />
-      <Work />
-      <Clients />
-      <Consult />
-      <FAQ />
-      <Contact />
+      <Cover lang="en" />
+      <WhatIDo lang="en" />
+      <Perspective lang="en" />
+      <Services lang="en" />
+      <Work lang="en" />
+      <Clients lang="en" />
+      <Consult lang="en" />
+      <FAQ lang="en" />
+      <Contact lang="en" />
     </>
   )}
 </Layout>

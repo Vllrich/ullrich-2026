@@ -1,41 +1,26 @@
 ---
-const scorecard = [
-  { dim: 'Problem framing',      weight: '35%', score: 7 },
-  { dim: 'Stack & architecture', weight: '30%', score: 6 },
-  { dim: 'Production readiness', weight: '25%', score: 4 },
-  { dim: 'Governance',           weight: '10%', score: 3 },
-];
+import { landingCopy, type LandingLang } from '../data/landing';
 
-const items = [
-  {
-    code: 'Tune in',
-    body: 'Understand the real problem, the data, and the constraints before writing code or reaching for a model. Most failures are framing failures, not technical ones.',
-  },
-  {
-    code: 'Compose the architecture',
-    body: 'Choose the right stack and shape the system: services, data, and where AI actually earns its place. Design for reliability, cost, and the team that inherits it.',
-  },
-  {
-    code: 'Ship and harden',
-    body: 'Get it live, then make it dependable: tests, monitoring, guardrails, evals where AI is involved, and clear ownership.',
-  },
-  {
-    code: 'Adopt responsibly',
-    body: 'Governance sized to your company: security, data protection, EU AI Act readiness where it applies, decisions you can explain.',
-  },
-];
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const scorecard = t.method.scorecard;
+const items = t.method.steps;
 ---
 
-<section id="method" class="method-section">
+<section id={t.ids.method} class="method-section">
 
   <div class="method-header fade-up" data-delay="0">
     <h2 class="method-lead">
-      From signal<br/>
-      to system.
+      {t.method.leadLine1}<br/>
+      {t.method.leadLine2}
     </h2>
     <div class="method-meta">
       <img src="/graphics/lars-ullrich-perspective.svg" alt="" class="method-perspective-img" aria-hidden="true" loading="lazy" decoding="async" />
-      <p class="method-sub">From a demo that works to a system you can leave running.</p>
+      <p class="method-sub">{t.method.sub}</p>
     </div>
   </div>
 
@@ -52,8 +37,8 @@ const items = [
   </ol>
 
   <div class="sc-wrap fade-up" data-delay="300">
-    <h3 class="sc-title">Readiness scorecard</h3>
-    <p class="sc-context">A typical first engagement, scored across the four dimensions where production systems usually break. Most teams arrive strong on framing and weak on production readiness.</p>
+    <h3 class="sc-title">{t.method.scorecardTitle}</h3>
+    <p class="sc-context">{t.method.scorecardContext}</p>
     <div class="sc-row">
       {scorecard.map((s) => (
         <div class="sc-col" style={`flex: ${parseInt(s.weight)}`}>
@@ -69,8 +54,8 @@ const items = [
   </div>
 
   <div class="method-statement fade-up" data-delay="440">
-    <p><span class="stmt-mid">The environments change</span><br/>
-    <strong>The standard for shipping doesn't</strong></p>
+    <p><span class="stmt-mid">{t.method.stmtMid}</span><br/>
+    <strong>{t.method.stmtStrong}</strong></p>
   </div>
 
 </section>

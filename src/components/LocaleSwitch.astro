@@ -1,0 +1,141 @@
+---
+import type { SiteLang } from '../lib/i18n';
+
+interface Props {
+  lang: SiteLang;
+  /** Href of the other language version */
+  href: string;
+  /** Visual surface for contrast */
+  variant?: 'lime' | 'content' | 'footer' | 'dark';
+}
+
+const { lang, href, variant = 'content' } = Astro.props;
+const label = lang === 'de' ? 'Sprache' : 'Language';
+const switchHint = lang === 'en' ? 'Switch to German' : 'Auf Englisch wechseln';
+---
+
+<nav class:list={['locale-switch', `locale-switch--${variant}`]} aria-label={label}>
+  <span class="locale-switch__globe" aria-hidden="true">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M3 12h18"></path>
+      <path d="M12 3a14 14 0 0 1 0 18"></path>
+      <path d="M12 3a14 14 0 0 0 0 18"></path>
+    </svg>
+  </span>
+  {lang === 'en' ? (
+    <span class="locale-switch__opt is-current" aria-current="true">EN</span>
+  ) : (
+    <a class="locale-switch__opt" href={href} hreflang="en" lang="en" title={switchHint}>EN</a>
+  )}
+  <span class="locale-switch__sep" aria-hidden="true"></span>
+  {lang === 'de' ? (
+    <span class="locale-switch__opt is-current" aria-current="true">DE</span>
+  ) : (
+    <a class="locale-switch__opt" href={href} hreflang="de" lang="de" title={switchHint}>DE</a>
+  )}
+</nav>
+
+<style>
+  .locale-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.18rem 0.28rem 0.18rem 0.35rem;
+    border: 1px solid color-mix(in oklch, var(--ink, #2c303c) 18%, transparent);
+    border-radius: 999px;
+    text-decoration: none;
+    line-height: 1;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .locale-switch__globe {
+    display: inline-flex;
+    color: var(--ghost, oklch(50% 0.006 260));
+    margin-right: 0.1rem;
+  }
+
+  .locale-switch__opt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.55rem;
+    height: 1.35rem;
+    padding: 0 0.28rem;
+    border-radius: 999px;
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ghost, oklch(50% 0.006 260));
+    transition: color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .locale-switch__opt.is-current {
+    background: var(--ink, #2c303c);
+    color: var(--paper, #f4f5f0);
+  }
+
+  a.locale-switch__opt:hover {
+    color: var(--ink, #2c303c);
+  }
+
+  a.locale-switch__opt:focus-visible {
+    outline: 2px solid var(--cobalt, #bbdd00);
+    outline-offset: 2px;
+  }
+
+  .locale-switch__sep {
+    width: 1px;
+    height: 0.7rem;
+    background: color-mix(in oklch, var(--ink, #2c303c) 16%, transparent);
+  }
+
+  .locale-switch--lime {
+    border-color: color-mix(in oklch, var(--ink, #2c303c) 22%, transparent);
+  }
+
+  .locale-switch--lime .locale-switch__opt.is-current {
+    background: var(--ink, #2c303c);
+    color: var(--lime, #bbdd00);
+  }
+
+  .locale-switch--footer {
+    border-color: color-mix(in oklch, var(--ink, #2c303c) 20%, transparent);
+    padding: 0.14rem 0.24rem 0.14rem 0.3rem;
+  }
+
+  .locale-switch--footer .locale-switch__opt {
+    font-size: 0.64rem;
+    min-width: 1.4rem;
+    height: 1.2rem;
+  }
+
+  .locale-switch--dark {
+    border-color: rgba(255, 255, 255, 0.22);
+  }
+
+  .locale-switch--dark .locale-switch__globe {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .locale-switch--dark .locale-switch__opt {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .locale-switch--dark .locale-switch__opt.is-current {
+    background: #bbdd00;
+    color: #2c303c;
+  }
+
+  .locale-switch--dark a.locale-switch__opt:hover {
+    color: #ffffff;
+  }
+
+  .locale-switch--dark .locale-switch__sep {
+    background: rgba(255, 255, 255, 0.22);
+  }
+</style>

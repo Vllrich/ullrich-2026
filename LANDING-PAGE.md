@@ -2,8 +2,9 @@
 
 All user-facing wording on the landing page (`/`), organized by section in page order.
 
-> **Source:** `src/pages/index.astro` and its components.  
-> **Last revised:** 2026-07-18 (Note pages rewritten in conversational house style; About moved off the landing page to `/about/`. See `AGENTS.md`.)
+> **Source:** `src/pages/index.astro` / `src/pages/de/index.astro` and shared landing components.  
+> **Copy module:** `src/data/landing.ts` (EN + DE).  
+> **Last revised:** 2026-07-19 (`/de/` mirrors the full EN landing; language switch only changes copy, anchors, and links.)
 
 ---
 

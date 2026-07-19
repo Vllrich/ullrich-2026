@@ -1,20 +1,27 @@
 ---
 import '../styles/work.css';
 import { workCases, localizeWorkEntry, workHref } from '../data/work-patterns';
+import { landingCopy, type LandingLang } from '../data/landing';
 
-const cases = workCases.map((entry) => localizeWorkEntry(entry, 'en'));
+interface Props {
+  lang?: LandingLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = landingCopy(lang);
+const cases = workCases.map((entry) => localizeWorkEntry(entry, lang));
 ---
 
-<section id="work" class="work-section" aria-labelledby="work-heading">
+<section id={t.ids.work} class="work-section" aria-labelledby="work-heading">
   <div class="work-header fade-up" data-delay="0">
-    <h2 class="work-display" id="work-heading">Work</h2>
-    <p class="work-sub">Selected projects. Names held back.</p>
+    <h2 class="work-display" id="work-heading">{t.work.heading}</h2>
+    <p class="work-sub">{t.work.sub}</p>
   </div>
 
   <ol class="work-previews">
     {cases.map((item, i) => (
       <li class="work-preview fade-up" data-delay={String(80 + i * 90)}>
-        <a class="work-preview-link" href={workHref(item.id, 'en')}>
+        <a class="work-preview-link" href={workHref(item.id, lang)}>
           <figure class="work-preview-media" aria-hidden="true">
             <img
               src={item.image}
@@ -28,7 +35,7 @@ const cases = workCases.map((entry) => localizeWorkEntry(entry, 'en'));
           <p class="work-preview-sector">{item.sector}</p>
           <h3 class="work-preview-title">{item.title}</h3>
           <p class="work-preview-desc">{item.blurb}</p>
-          <span class="work-preview-more">Read the case</span>
+          <span class="work-preview-more">{t.work.readCase}</span>
         </a>
       </li>
     ))}

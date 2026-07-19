@@ -1,6 +1,7 @@
 ---
 import { notesFor } from '../data/notes';
 import DiagnoseIcon from './DiagnoseIcon.astro';
+import LocaleSwitch from './LocaleSwitch.astro';
 
 interface Props {
   lang?: 'en' | 'de';
@@ -12,6 +13,7 @@ const homeHref = lang === 'de' ? '/de/' : '/';
 const notesHref = lang === 'de' ? '/de/notizen/' : '/notes/';
 const notesLabel = lang === 'de' ? 'Notizen' : 'Notes';
 const year = new Date().getFullYear();
+const localeHref = lang === 'de' ? '/notes/' : '/de/notizen/';
 ---
 
 <footer class="notes-footer">
@@ -48,11 +50,7 @@ const year = new Date().getFullYear();
           <a href={lang === 'de' ? '/de/#kontakt' : '/#contact'}>
             {lang === 'de' ? 'Kontakt' : 'Contact'}
           </a>
-          {lang === 'de' ? (
-            <a href="/notes/" hreflang="en">English</a>
-          ) : (
-            <a href="/de/notizen/" hreflang="de">Deutsch</a>
-          )}
+          <LocaleSwitch lang={lang} href={localeHref} variant="footer" />
           <a href={lang === 'de' ? '/de/impressum/' : '/impressum/'}>Impressum</a>
         </nav>
       </div>

@@ -1,12 +1,14 @@
 ---
 import { activeNavKey, primaryNav, type NavKey } from '../lib/nav';
 import type { SiteLang } from '../lib/i18n';
+import LocaleSwitch from './LocaleSwitch.astro';
+import { landingCopy } from '../data/landing';
 
 interface Props {
   lang?: SiteLang;
   /** Visual surface: home lime bar vs content pages */
   variant?: 'home' | 'content';
-  localeSwitch?: { href: string; label: string };
+  localeSwitch?: { href: string; label?: string };
   /** Force active key; otherwise derived from the current URL */
   active?: NavKey | null;
 }
@@ -17,6 +19,7 @@ const current = active !== undefined ? active : activeNavKey(Astro.url.pathname)
 const homeHref = lang === 'de' ? '/de/' : '/';
 const brandLabel = lang === 'de' ? 'Zur Startseite' : 'Back to home';
 const navLabel = lang === 'de' ? 'Hauptnavigation' : 'Main navigation';
+const descriptor = landingCopy(lang).cover.descriptor;
 ---
 
 {
@@ -24,16 +27,14 @@ const navLabel = lang === 'de' ? 'Hauptnavigation' : 'Main navigation';
     <header class="site-nav">
       <a href={homeHref} class="nav-logo">
         LARS ULLRICH
-        <span class="nav-descriptor">Agent reliability · Full-Stack Engineer &amp; Fractional CTO</span>
+        <span class="nav-descriptor">{descriptor}</span>
       </a>
       <nav class="nav-links" id="nav-links" aria-label={navLabel}>
         {items.map((item) => (
           <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
         ))}
         {localeSwitch && (
-          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'} class="nav-locale">
-            {localeSwitch.label}
-          </a>
+          <LocaleSwitch lang={lang} href={localeSwitch.href} variant="lime" />
         )}
       </nav>
       <button
@@ -58,7 +59,7 @@ const navLabel = lang === 'de' ? 'Hauptnavigation' : 'Main navigation';
           <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
         ))}
         {localeSwitch && (
-          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'}>{localeSwitch.label}</a>
+          <LocaleSwitch lang={lang} href={localeSwitch.href} variant="content" />
         )}
       </nav>
     </header>

@@ -60,7 +60,7 @@ _Component: `Cover.astro`_
 | Element    | Copy                                                                     |
 | ---------- | ------------------------------------------------------------------------ |
 | Logo       | LARS ULLRICH                                                             |
-| Descriptor | Agent reliability · Full-Stack Engineer & Fractional CTO                  |
+| Descriptor | Full-Stack Engineer & Fractional CTO                                      |
 | Nav links  | What I Do · Method · Services · About (`/about/`) · Start (`#consult`) · Contact |
 
 ### Hero
@@ -74,12 +74,11 @@ _Component: `Cover.astro`_
 
 > Engineering leadership for growing companies — ship software that holds up in production, keep it running, and only put AI where it earns its place.
 
-**CTAs**
+**CTA**
 
-| Button    | Copy                 |
-| --------- | -------------------- |
-| Primary   | Request a scope call |
-| Secondary | See how I work       |
+| Button  | Copy                 |
+| ------- | -------------------- |
+| Primary | Request a scope call |
 
 ---
 

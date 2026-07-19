@@ -391,15 +391,20 @@
       display: flex;
     }
 
-    .nav-links a {
+    .nav-links > a {
       font-size: 0.78rem;
       letter-spacing: 0.06em;
       padding: 0.6rem 0;
       border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
     }
 
-    .nav-links a:last-child {
-      border-bottom: none;
+    .nav-links > a:last-of-type {
+      border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+    }
+
+    .nav-links :global(.locale-switch) {
+      margin: 0.65rem 0 0.2rem;
+      align-self: flex-start;
     }
 
     .hero-heading { font-size: clamp(1.4rem, 6.3vw, 2.1rem); }
@@ -763,6 +768,17 @@ void main(){
 
   let prevUnit = -1; /* track resize so we can reset springs */
   let rafId = 0;
+
+  /* ── Animation clock ──────────────────────────────────────────
+     Driven by an accumulated, delta-time-clamped clock rather than
+     raw rAF timestamps. A stalled main thread (GC, icon-swap layout,
+     scroll jank, tab background/foreground) makes the next rAF `ms`
+     jump forward; feeding that straight into the un-eased sine bloom
+     caused a one-frame brightness pop in a random cell. Clamping the
+     per-frame step absorbs the stall instead of jumping the clock. */
+  let clockTime = 0;
+  let lastMs = -1;
+  const MAX_DT = 1 / 30;
 
   /* ── Mouse interaction state ──────────────────────────────────── */
   let dragDriver = -1;               /* driver index being dragged, -1 = none   */

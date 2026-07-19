@@ -13,17 +13,17 @@ import { languageAlternates } from '../../lib/i18n';
 import { landingCopy } from '../../data/landing';
 
 const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
-const t = landingCopy('de');
+const t = landingCopy('es');
 const alternates = languageAlternates('/', '/de/', '/es/');
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  '@id': 'https://larsullrich.de/de/#webpage',
-  url: 'https://larsullrich.de/de/',
+  '@id': 'https://larsullrich.de/es/#webpage',
+  url: 'https://larsullrich.de/es/',
   name: t.meta.title,
   description: t.meta.description,
-  inLanguage: 'de',
+  inLanguage: 'es',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   about: { '@id': 'https://larsullrich.de/#person' },
 };
@@ -32,22 +32,22 @@ const jsonLd = {
 <Layout
   title={t.meta.title}
   description={t.meta.description}
-  canonical="/de/"
-  lang="de"
+  canonical="/es/"
+  lang="es"
   alternates={alternates}
 >
   {maintenance ? (
     <Maintenance />
   ) : (
     <>
-      <Cover lang="de" />
-      <WhatIDo lang="de" />
-      <Perspective lang="de" />
-      <Services lang="de" />
-      <Work lang="de" />
-      <Consult lang="de" />
-      <FAQ lang="de" />
-      <Contact lang="de" />
+      <Cover lang="es" />
+      <WhatIDo lang="es" />
+      <Perspective lang="es" />
+      <Services lang="es" />
+      <Work lang="es" />
+      <Consult lang="es" />
+      <FAQ lang="es" />
+      <Contact lang="es" />
     </>
   )}
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />

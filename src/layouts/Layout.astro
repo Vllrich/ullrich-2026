@@ -7,7 +7,7 @@ interface Props {
   title?: string;
   description?: string;
   canonical?: string;
-  lang?: 'en' | 'de';
+  lang?: 'en' | 'de' | 'es';
   alternates?: AlternateLink[];
 }
 
@@ -27,7 +27,13 @@ const canonicalURL = canonical
   : new URL(Astro.url.pathname, Astro.site);
 
 const ogImageURL = new URL('/graphics/logo-lars-ullrich-og.png', Astro.site);
-const ogLocale = lang === 'de' ? 'de_DE' : 'en_US';
+const ogLocale = lang === 'de' ? 'de_DE' : lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlternates =
+  lang === 'en'
+    ? (['de_DE', 'es_ES'] as const)
+    : lang === 'de'
+      ? (['en_US', 'es_ES'] as const)
+      : (['en_US', 'de_DE'] as const);
 
 const resolvedAlternates = alternates.map((a) => ({
   hreflang: a.hreflang,
@@ -164,8 +170,9 @@ const schema = {
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Lars Ullrich" />
   <meta property="og:locale" content={ogLocale} />
-  {lang === 'en' && <meta property="og:locale:alternate" content="de_DE" />}
-  {lang === 'de' && <meta property="og:locale:alternate" content="en_US" />}
+  {ogLocaleAlternates.map((locale) => (
+    <meta property="og:locale:alternate" content={locale} />
+  ))}
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />

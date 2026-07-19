@@ -3,13 +3,17 @@ import { activeNavKey, primaryNav, type NavKey } from '../lib/nav';
 import type { SiteLang } from '../lib/i18n';
 import LocaleSwitch from './LocaleSwitch.astro';
 import DiagnoseIcon from './DiagnoseIcon.astro';
-import { landingCopy } from '../data/landing';
+import { landingCopy, landingHomeHref } from '../data/landing';
 
 interface Props {
   lang?: SiteLang;
   /** Visual surface: home lime bar vs content pages */
   variant?: 'home' | 'content';
-  localeSwitch?: { href: string; label?: string };
+  localeSwitch?: {
+    href?: string;
+    label?: string;
+    hrefs?: Partial<Record<SiteLang, string>>;
+  };
   /** Force active key; otherwise derived from the current URL */
   active?: NavKey | null;
 }
@@ -17,10 +21,23 @@ interface Props {
 const { lang = 'en', variant = 'content', localeSwitch, active } = Astro.props;
 const items = primaryNav(lang);
 const current = active !== undefined ? active : activeNavKey(Astro.url.pathname);
-const homeHref = lang === 'de' ? '/de/' : '/';
-const brandLabel = lang === 'de' ? 'Zur Startseite' : 'Back to home';
-const navLabel = lang === 'de' ? 'Hauptnavigation' : 'Main navigation';
+const homeHref = landingHomeHref(lang);
+const brandLabel =
+  lang === 'de' ? 'Zur Startseite' : lang === 'es' ? 'Volver al inicio' : 'Back to home';
+const navLabel =
+  lang === 'de' ? 'Hauptnavigation' : lang === 'es' ? 'Navegación principal' : 'Main navigation';
+const menuOpenLabel =
+  lang === 'de' ? 'Menü öffnen' : lang === 'es' ? 'Abrir menú' : 'Open menu';
 const descriptor = landingCopy(lang).cover.descriptor;
+
+const switchHrefs: Partial<Record<SiteLang, string>> = {
+  ...(localeSwitch?.hrefs ?? {}),
+};
+if (localeSwitch?.href && !localeSwitch.hrefs) {
+  if (lang === 'de') switchHrefs.en = localeSwitch.href;
+  else if (lang === 'es') switchHrefs.en = localeSwitch.href;
+  else switchHrefs.de = localeSwitch.href;
+}
 ---
 
 {
@@ -38,13 +55,13 @@ const descriptor = landingCopy(lang).cover.descriptor;
           <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
         ))}
         {localeSwitch && (
-          <LocaleSwitch lang={lang} href={localeSwitch.href} variant="lime" />
+          <LocaleSwitch lang={lang} hrefs={switchHrefs} variant="lime" />
         )}
       </nav>
       <button
         class="nav-toggle"
         id="nav-toggle"
-        aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
+        aria-label={menuOpenLabel}
         aria-expanded="false"
         aria-controls="nav-links"
       >
@@ -64,7 +81,7 @@ const descriptor = landingCopy(lang).cover.descriptor;
           <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
         ))}
         {localeSwitch && (
-          <LocaleSwitch lang={lang} href={localeSwitch.href} variant="content" />
+          <LocaleSwitch lang={lang} hrefs={switchHrefs} variant="content" />
         )}
       </nav>
     </header>

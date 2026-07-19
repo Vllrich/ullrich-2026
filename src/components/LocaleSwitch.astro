@@ -1,69 +1,169 @@
 ---
-import type { SiteLang } from '../lib/i18n';
+import { LANG_CODE, SITE_LANGS, type SiteLang, landingLocaleHrefs } from '../lib/i18n';
 
 interface Props {
   lang: SiteLang;
-  /** Href of the other language version */
-  href: string;
+  /** Per-locale URLs. Defaults to landing homes. */
+  hrefs?: Partial<Record<SiteLang, string>>;
   /** Visual surface for contrast */
   variant?: 'lime' | 'content' | 'footer' | 'dark';
 }
 
-const { lang, href, variant = 'content' } = Astro.props;
-const label = lang === 'de' ? 'Sprache' : 'Language';
-const switchHint = lang === 'en' ? 'Switch to German' : 'Auf Englisch wechseln';
+const { lang, hrefs: hrefOverrides, variant = 'content' } = Astro.props;
+const defaults = landingLocaleHrefs();
+const hrefs: Record<SiteLang, string> = {
+  en: hrefOverrides?.en ?? defaults.en,
+  de: hrefOverrides?.de ?? defaults.de,
+  es: hrefOverrides?.es ?? defaults.es,
+};
+
+const ariaLabel =
+  lang === 'de' ? 'Sprache' : lang === 'es' ? 'Idioma' : 'Language';
+const code = LANG_CODE[lang];
 ---
 
-<nav class:list={['locale-switch', `locale-switch--${variant}`]} aria-label={label}>
-  <span class="locale-switch__globe" aria-hidden="true">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"></circle>
-      <path d="M3 12h18"></path>
-      <path d="M12 3a14 14 0 0 1 0 18"></path>
-      <path d="M12 3a14 14 0 0 0 0 18"></path>
-    </svg>
-  </span>
-  {lang === 'en' ? (
-    <span class="locale-switch__opt is-current" aria-current="true">EN</span>
-  ) : (
-    <a class="locale-switch__opt" href={href} hreflang="en" lang="en" title={switchHint}>EN</a>
-  )}
-  <span class="locale-switch__sep" aria-hidden="true"></span>
-  {lang === 'de' ? (
-    <span class="locale-switch__opt is-current" aria-current="true">DE</span>
-  ) : (
-    <a class="locale-switch__opt" href={href} hreflang="de" lang="de" title={switchHint}>DE</a>
-  )}
-</nav>
+<details class:list={['locale-switch', `locale-switch--${variant}`]}>
+  <summary class="locale-switch__trigger" aria-label={ariaLabel}>
+    <span class="locale-switch__globe" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"></circle>
+        <path d="M3 12h18"></path>
+        <path d="M12 3a14 14 0 0 1 0 18"></path>
+        <path d="M12 3a14 14 0 0 0 0 18"></path>
+      </svg>
+    </span>
+    <span class="locale-switch__code">{code}</span>
+  </summary>
+  <ul class="locale-switch__menu" role="listbox" aria-label={ariaLabel}>
+    {SITE_LANGS.map((codeLang) => {
+      const isCurrent = codeLang === lang;
+      const label = LANG_CODE[codeLang];
+      return (
+        <li role="option" aria-selected={isCurrent}>
+          {isCurrent ? (
+            <span class="locale-switch__opt is-current" aria-current="true">{label}</span>
+          ) : (
+            <a
+              class="locale-switch__opt"
+              href={hrefs[codeLang]}
+              hreflang={codeLang}
+              lang={codeLang}
+            >
+              {label}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ul>
+</details>
+
+<script>
+  function closeOtherLocaleSwitches(except: HTMLDetailsElement) {
+    document.querySelectorAll<HTMLDetailsElement>('details.locale-switch[open]').forEach((el) => {
+      if (el !== except) el.open = false;
+    });
+  }
+
+  document.querySelectorAll<HTMLDetailsElement>('details.locale-switch').forEach((details) => {
+    details.addEventListener('toggle', () => {
+      if (details.open) closeOtherLocaleSwitches(details);
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    const target = event.target as Node | null;
+    document.querySelectorAll<HTMLDetailsElement>('details.locale-switch[open]').forEach((el) => {
+      if (!el.contains(target)) el.open = false;
+    });
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll<HTMLDetailsElement>('details.locale-switch[open]').forEach((el) => {
+      el.open = false;
+    });
+  });
+</script>
 
 <style>
   .locale-switch {
+    position: relative;
     display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
-    padding: 0.18rem 0.28rem 0.18rem 0.35rem;
-    border: 1px solid color-mix(in oklch, var(--ink, #2c303c) 18%, transparent);
-    border-radius: 999px;
-    text-decoration: none;
-    line-height: 1;
     flex-shrink: 0;
     vertical-align: middle;
+    line-height: 1;
+  }
+
+  .locale-switch__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.15rem 0;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+    color: var(--ghost, oklch(50% 0.006 260));
+    font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.15s ease;
+  }
+
+  .locale-switch__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .locale-switch__trigger::marker {
+    content: "";
+  }
+
+  .locale-switch__trigger:hover,
+  .locale-switch[open] .locale-switch__trigger {
+    color: var(--ink, #2c303c);
+  }
+
+  .locale-switch__trigger:focus-visible {
+    outline: 2px solid var(--cobalt, #bbdd00);
+    outline-offset: 3px;
   }
 
   .locale-switch__globe {
     display: inline-flex;
-    color: var(--ghost, oklch(50% 0.006 260));
-    margin-right: 0.1rem;
+  }
+
+  .locale-switch__code {
+    line-height: 1;
+  }
+
+  .locale-switch__menu {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    right: 0;
+    z-index: 40;
+    min-width: 3.25rem;
+    margin: 0;
+    padding: 0.25rem;
+    list-style: none;
+    background: var(--paper, #f4f5f0);
+    border: 1px solid color-mix(in oklch, var(--ink, #2c303c) 16%, transparent);
+    box-shadow: 0 6px 18px color-mix(in oklch, var(--ink, #2c303c) 10%, transparent);
+  }
+
+  .locale-switch__menu li + li {
+    margin-top: 0.1rem;
   }
 
   .locale-switch__opt {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 1.55rem;
-    height: 1.35rem;
-    padding: 0 0.28rem;
-    border-radius: 999px;
+    width: 100%;
+    min-height: 1.55rem;
+    padding: 0.2rem 0.45rem;
+    border-radius: 0;
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     font-size: 0.68rem;
     font-weight: 700;
@@ -81,21 +181,21 @@ const switchHint = lang === 'en' ? 'Switch to German' : 'Auf Englisch wechseln';
 
   a.locale-switch__opt:hover {
     color: var(--ink, #2c303c);
+    background: color-mix(in oklch, var(--ink, #2c303c) 6%, transparent);
   }
 
   a.locale-switch__opt:focus-visible {
     outline: 2px solid var(--cobalt, #bbdd00);
-    outline-offset: 2px;
+    outline-offset: 1px;
   }
 
-  .locale-switch__sep {
-    width: 1px;
-    height: 0.7rem;
-    background: color-mix(in oklch, var(--ink, #2c303c) 16%, transparent);
+  .locale-switch--lime .locale-switch__trigger {
+    color: var(--dim, oklch(28% 0.010 258));
   }
 
-  .locale-switch--lime {
-    border-color: color-mix(in oklch, var(--ink, #2c303c) 22%, transparent);
+  .locale-switch--lime .locale-switch__trigger:hover,
+  .locale-switch--lime[open] .locale-switch__trigger {
+    color: var(--ink, #2c303c);
   }
 
   .locale-switch--lime .locale-switch__opt.is-current {
@@ -103,23 +203,28 @@ const switchHint = lang === 'en' ? 'Switch to German' : 'Auf Englisch wechseln';
     color: var(--lime, #bbdd00);
   }
 
-  .locale-switch--footer {
-    border-color: color-mix(in oklch, var(--ink, #2c303c) 20%, transparent);
-    padding: 0.14rem 0.24rem 0.14rem 0.3rem;
+  .locale-switch--footer .locale-switch__trigger {
+    font-size: 0.64rem;
   }
 
   .locale-switch--footer .locale-switch__opt {
     font-size: 0.64rem;
-    min-width: 1.4rem;
-    height: 1.2rem;
+    min-height: 1.4rem;
   }
 
-  .locale-switch--dark {
-    border-color: rgba(255, 255, 255, 0.22);
+  .locale-switch--dark .locale-switch__trigger {
+    color: rgba(255, 255, 255, 0.7);
   }
 
-  .locale-switch--dark .locale-switch__globe {
-    color: rgba(255, 255, 255, 0.45);
+  .locale-switch--dark .locale-switch__trigger:hover,
+  .locale-switch--dark[open] .locale-switch__trigger {
+    color: #ffffff;
+  }
+
+  .locale-switch--dark .locale-switch__menu {
+    background: #2c303c;
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
   }
 
   .locale-switch--dark .locale-switch__opt {
@@ -133,9 +238,13 @@ const switchHint = lang === 'en' ? 'Switch to German' : 'Auf Englisch wechseln';
 
   .locale-switch--dark a.locale-switch__opt:hover {
     color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  .locale-switch--dark .locale-switch__sep {
-    background: rgba(255, 255, 255, 0.22);
+  @media (prefers-reduced-motion: reduce) {
+    .locale-switch__trigger,
+    .locale-switch__opt {
+      transition: none;
+    }
   }
 </style>

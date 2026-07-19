@@ -5,7 +5,6 @@ import {
   landingAuditHref,
   landingCopy,
   landingImpressumHref,
-  landingLocaleSwitchHref,
   landingNotesHref,
   landingWorkIndexHref,
   type LandingLang,
@@ -139,7 +138,7 @@ const socials = [
       {socials.map(s => (
         <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
       ))}
-      <LocaleSwitch lang={lang} href={landingLocaleSwitchHref(lang)} variant="lime" />
+      <LocaleSwitch lang={lang} variant="lime" />
       <a href={landingWorkIndexHref(lang)}>{t.contact.footer.work}</a>
       <a href={landingNotesHref(lang)}>{t.contact.footer.notes}</a>
       <a href="/about/">{t.contact.footer.about}</a>

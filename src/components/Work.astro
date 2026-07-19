@@ -1,7 +1,7 @@
 ---
 import '../styles/work.css';
 import Clients from './Clients.astro';
-import { workCases, localizeWorkEntry, workHref } from '../data/work-patterns';
+import { workCases, localizeWorkEntry, workHref, type WorkLang } from '../data/work-patterns';
 import { landingCopy, type LandingLang } from '../data/landing';
 
 interface Props {
@@ -10,7 +10,8 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 const t = landingCopy(lang);
-const cases = workCases.map((entry) => localizeWorkEntry(entry, lang));
+const workLang: WorkLang = lang === 'de' ? 'de' : 'en';
+const cases = workCases.map((entry) => localizeWorkEntry(entry, workLang));
 ---
 
 <section id={t.ids.work} class="work-section" aria-labelledby="work-heading">
@@ -24,7 +25,7 @@ const cases = workCases.map((entry) => localizeWorkEntry(entry, lang));
   <ol class="work-previews">
     {cases.map((item, i) => (
       <li class="work-preview fade-up" data-delay={String(80 + i * 90)}>
-        <a class="work-preview-link" href={workHref(item.id, lang)}>
+        <a class="work-preview-link" href={workHref(item.id, workLang)}>
           <figure class="work-preview-media" aria-hidden="true">
             <img
               src={item.image}

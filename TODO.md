@@ -71,3 +71,10 @@ Ziel: Proof und Authority nachziehen. Technik/Copy sind schon stark; ohne Outcom
 - robots.txt: `ai-input=yes`, `ai-train=no`; search bots allowed
 - EN is primary (`x-default`); DE is mirror under `/de/`
 - `/de/` uses the same landing components as `/` via `src/data/landing.ts` (copy + section IDs only)
+- ES landing live under `/es/` (landing copy only; notes/work still fall back to EN)
+- Locale switcher is a globe + code dropdown (EN / DE / ES)
+
+### Developer: Spanish content depth
+
+- [ ] Optional: ES mirrors for notes / work / topic pages when demand justifies it
+- [ ] Optional: Spanish impressum or shared legal page strategy

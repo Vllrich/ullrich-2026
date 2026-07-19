@@ -1,4 +1,12 @@
-export type SiteLang = 'en' | 'de';
+export type SiteLang = 'en' | 'de' | 'es';
+
+export const SITE_LANGS: SiteLang[] = ['en', 'de', 'es'];
+
+export const LANG_CODE: Record<SiteLang, string> = {
+  en: 'EN',
+  de: 'DE',
+  es: 'ES',
+};
 
 export interface AlternateLink {
   hreflang: string;
@@ -12,11 +20,23 @@ export function absoluteUrl(path: string): string {
   return new URL(path, base).href;
 }
 
-/** Build en / de / x-default alternates. x-default always points to the English URL. */
-export function languageAlternates(enPath: string, dePath: string): AlternateLink[] {
-  return [
+/** Build en / de / optional es / x-default alternates. x-default always points to the English URL. */
+export function languageAlternates(
+  enPath: string,
+  dePath: string,
+  esPath?: string,
+): AlternateLink[] {
+  const links: AlternateLink[] = [
     { hreflang: 'en', href: absoluteUrl(enPath) },
     { hreflang: 'de', href: absoluteUrl(dePath) },
-    { hreflang: 'x-default', href: absoluteUrl(enPath) },
   ];
+  if (esPath) {
+    links.push({ hreflang: 'es', href: absoluteUrl(esPath) });
+  }
+  links.push({ hreflang: 'x-default', href: absoluteUrl(enPath) });
+  return links;
+}
+
+export function landingLocaleHrefs(): Record<SiteLang, string> {
+  return { en: '/', de: '/de/', es: '/es/' };
 }

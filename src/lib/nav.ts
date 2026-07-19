@@ -19,6 +19,16 @@ export function primaryNav(lang: SiteLang = 'en'): NavItem[] {
     ];
   }
 
+  if (lang === 'es') {
+    return [
+      { key: 'work', href: '/work/patterns/', label: 'Trabajo' },
+      { key: 'notes', href: '/notes/', label: 'Notas' },
+      { key: 'services', href: '/es/#servicios', label: 'Servicios' },
+      { key: 'about', href: '/about/', label: 'About' },
+      { key: 'contact', href: '/es/#contacto', label: 'Contacto' },
+    ];
+  }
+
   return [
     { key: 'work', href: '/work/patterns/', label: 'Work' },
     { key: 'notes', href: '/notes/', label: 'Notes' },

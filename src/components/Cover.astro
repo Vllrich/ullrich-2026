@@ -5,7 +5,6 @@ import { primaryNav } from '../lib/nav';
 import {
   landingCopy,
   landingHomeHref,
-  landingLocaleSwitchHref,
   type LandingLang,
 } from '../data/landing';
 
@@ -17,7 +16,6 @@ const { lang = 'en' } = Astro.props;
 const t = landingCopy(lang);
 const items = primaryNav(lang);
 const homeHref = landingHomeHref(lang);
-const localeHref = landingLocaleSwitchHref(lang);
 ---
 
 <div class="site-wrap">
@@ -34,7 +32,7 @@ const localeHref = landingLocaleSwitchHref(lang);
       {items.map((item) => (
         <a href={item.href}>{item.label}</a>
       ))}
-      <LocaleSwitch lang={lang} href={localeHref} variant="lime" />
+      <LocaleSwitch lang={lang} variant="lime" />
     </nav>
     <button
       class="nav-toggle"

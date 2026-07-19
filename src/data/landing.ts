@@ -425,7 +425,7 @@ const de: LandingCopy = {
     title:
       "Lars Ullrich - Production AI, Agenten-Zuverlässigkeit & Fractional CTO",
     description:
-      "Lars Ullrich, Berlin: Production AI, Agenten-Zuverlässigkeit und Fractional CTO / CAIO. Ich helfe wachsenden Unternehmen, KI in Produktion zu bringen und am Laufen zu halten.",
+      "Ich helfe wachsenden Unternehmen, KI in Produktion zu bringen und am Laufen zu halten. Oft Agenten. Oft offene Modelle, die ihr selbst hostet. Full-Stack Engineer und Fractional CTO/CAIO, mit zwei Jahrzehnten Engineering dahinter.",
   },
   ids: {
     whatIDo: "was-ich-tue",
@@ -442,9 +442,9 @@ const de: LandingCopy = {
     menuOpen: "Menü öffnen",
     menuClose: "Menü schließen",
     heroLabel: "Hero",
-    headline: "Klarheit statt Lärm.",
-    headlineAlt: "Bauen, was zählt.",
-    body: "Technische Führung für wachsende Unternehmen — Software, die in Produktion hält und läuft. KI nur dort, wo sie ihren Platz verdient.",
+    headline: "Cut through the noise",
+    headlineAlt: "Build what matters",
+    body: "Ich helfe euch, Software zu shippen, die in Produktion hält, und sie am Laufen zu halten. KI nur dort, wo sie ihren Platz verdient.",
     ctaPrimary: "Scope-Call anfragen",
   },
   whatIDo: {
@@ -461,21 +461,21 @@ const de: LandingCopy = {
     beats: [
       {
         title: "Den richtigen Use Case finden",
-        body: "Nicht jedes Problem braucht KI, und nicht jede KI braucht einen Agenten. Ich helfe euch, die wenigen Use Cases zu wählen, die sich rechnen, und den Rest auszusortieren.",
+        body: "Nicht jedes Problem braucht KI. Nicht jede KI braucht einen Agenten. Ich helfe euch, die wenigen Use Cases zu wählen, die sich rechnen, und den Rest auszusortieren.",
       },
       {
         title: "Das System bauen",
-        body: "Agenten, RAG, Automation und die Systeme darum herum. Gebaut für Zuverlässigkeit, Observability und Kosten, die ihr planen könnt. Hosted, oder auf offenen Modellen, die ihr kontrolliert.",
+        body: "Agenten, RAG, Automation und das System darum herum. Gebaut für Zuverlässigkeit, Observability und Kosten, die ihr planen könnt. Hosted, oder auf offenen Modellen, die ihr kontrolliert.",
       },
       {
         title: "Bauen und betreiben, nicht nur beraten",
-        body: "Code, Architecture Reviews, Production Debugging, und dabei bleiben, damit es läuft. Ich arbeite in eurem Repository, nicht von außen.",
+        body: "Code, Architecture Reviews, Production Debugging. Und dabei bleiben, damit es läuft. Ich arbeite in eurem Repo, nicht von außen.",
       },
     ],
   },
   method: {
     leadLine1: "Vom Signal",
-    leadLine2: "zum System.",
+    leadLine2: "zum System",
     sub: "Von einer Demo, die funktioniert, zu einem System, das ihr laufen lassen könnt.",
     steps: [
       {
@@ -484,7 +484,7 @@ const de: LandingCopy = {
       },
       {
         code: "Architektur setzen",
-        body: "Den richtigen Stack wählen und das System formen: Services, Daten, und wo KI wirklich ihren Platz verdient. Für Zuverlässigkeit, Kosten und das Team, das es erbt.",
+        body: "Den richtigen Stack wählen und das System formen: Services, Daten, und wo KI wirklich etwas bringt. Für Zuverlässigkeit, Kosten und das Team, das es erbt.",
       },
       {
         code: "Shippen und härten",
@@ -492,7 +492,7 @@ const de: LandingCopy = {
       },
       {
         code: "Verantwortlich übernehmen",
-        body: "Governance in eurer Größe: Security, Datenschutz, EU-AI-Act-Readiness wo nötig, Entscheidungen, die erklärbar sind.",
+        body: "Governance in eurer Größe: Security, Datenschutz, EU-AI-Act-Readiness wo nötig. Entscheidungen, die erklärbar sind.",
       },
     ],
     scorecardTitle: "Readiness-Scorecard",
@@ -516,7 +516,7 @@ const de: LandingCopy = {
         cat: "Strategie",
         format: "Fester Scope · 1-2 Wochen",
         icon: "/graphics/icon-ai-readiness-audit.svg",
-        desc: "Ein fokussierter Blick auf Produkt, Daten und Stack: wo KI passt, wo nicht, und was Produktion wirklich kostet. Ihr geht mit Use-Case-Shortlist, ehrlichem Build/Buy/Skip und einem Kostenmodell.",
+        desc: "Ein klarer Blick auf Produkt, Daten und Stack: wo KI passt, wo nicht, und was Produktion wirklich kostet. Ihr geht mit Use-Case-Shortlist, klarer Build/Buy/Skip-Entscheidung und einem Kostenmodell.",
         tags: [
           "Use-Case-Mapping",
           "Agenten-Feasibility",
@@ -545,7 +545,7 @@ const de: LandingCopy = {
         cat: "Plattform",
         format: "Projekt · 6-12 Wochen",
         icon: "/graphics/icon-corporate-llm.svg",
-        desc: "Ein Unternehmens-LLM-Stack, den ihr wirklich betreiben könnt: private oder offene Modelle, RAG über eure Daten, Zugriffskontrolle, Kostenlimits und Ops. Für internen Einsatz unter euren Regeln, kein Consumer-Chatbot drangeklatscht.",
+        desc: "Ein Unternehmens-LLM-Stack, den ihr wirklich betreiben könnt: private oder offene Modelle, RAG über eure Daten, Zugriff, Kostenlimits und Ops. Für internen Einsatz unter euren Regeln. Kein Consumer-Chatbot drangeklatscht.",
         tags: [
           "Private / offene Modelle",
           "RAG über Firmendaten",
@@ -560,7 +560,7 @@ const de: LandingCopy = {
         cat: "Betrieb",
         format: "Monatlich · laufend",
         icon: "/graphics/icon-reliability-retainer.svg",
-        desc: "Der Keep-it-running-Teil als laufendes Engagement: Evals, Monitoring, Guardrails, Drift-Checks, Incident Response und EU-AI-Act-Reassessment. Für Teams, die schon geshipped haben und das nicht allein betreiben sollten.",
+        desc: "Am Laufen halten, als laufendes Engagement: Evals, Monitoring, Guardrails, Drift-Checks, Incident Response und EU-AI-Act-Reassessment. Für Teams, die schon geshipped haben und das nicht allein betreiben sollten.",
         tags: [
           "Evals & Monitoring",
           "Guardrails",
@@ -587,7 +587,7 @@ const de: LandingCopy = {
   },
   work: {
     heading: "Arbeit",
-    sub: "Ausgewählte Projekte. Namen zurückgehalten.",
+    sub: "Ausgewählte Projekte. Namen weggelassen.",
     readCase: "Case lesen",
   },
   clients: {
@@ -596,10 +596,10 @@ const de: LandingCopy = {
   consult: {
     displayLine1: "Unklar,",
     displayLine2: "wo anfangen?",
-    lead: "Die meisten Teams starten mit einem Readiness & Production Audit. Fester Scope, 1-2 Wochen. Klare Empfehlung, bevor ihr einen Build finanziert.",
+    lead: "Die meisten starten mit einem Readiness & Production Audit. Fester Scope, 1-2 Wochen. Klare Empfehlung, bevor ihr einen Build finanziert.",
     points: [
-      "Use-Case-Shortlist und ehrlicher Build / Buy / Skip",
-      "Kostenmodell, das in eine Entscheidung geht",
+      "Use-Case-Shortlist und klare Build / Buy / Skip-Entscheidung",
+      "Kostenmodell, bereit für eine Entscheidung",
       "Agenten-Feasibility und EU-AI-Act-Check, wo relevant",
     ],
     ctaPrimary: "Scope-Call anfragen",
@@ -611,17 +611,17 @@ const de: LandingCopy = {
   },
   faq: {
     displayLine1: "Fragen,",
-    displayLine2: "beantwortet.",
+    displayLine2: "beantwortet",
     items: [
       {
         q: "Was macht ein Fractional CTO / CAIO konkret?",
-        a: "Senior technische Führung auf Teilzeit- oder Projektbasis: Architektur, Roadmap, Delivery Ownership, Team- und Vendor-Auswahl und AI-Strategie. Die Rolle bleibt technisch, nicht nur Advisory. In der Praxis: Code Reviews, Architekturentscheidungen und Production Debugging mit dem Team, ohne die Kosten eines Vollzeit-Hires.",
+        a: "Senior technische Führung auf Teilzeit- oder Projektbasis: Architektur, Roadmap, Delivery Ownership, Team, Vendor und AI-Strategie. Die Rolle bleibt technisch, nicht nur Advisory. In der Praxis: Code Reviews, Architekturentscheidungen und Production Debugging mit dem Team. Ohne die Kosten eines Vollzeit-Hires.",
         moreHref: "/de/fractional-cto-caio/",
         moreLabel: "Fractional CTO / CAIO",
       },
       {
         q: "Was meinst du mit „Agenten-Zuverlässigkeit“?",
-        a: "Ein Demo-Agent und ein Production-Agent sind unterschiedliche Probleme. In der Demo antwortet er einmal, unter Aufsicht. In Produktion handelt er allein, wiederholt, gegen sich ändernde Daten. Die Failure Modes: Loops, halluzinierte Aktionen, Kostenexplosion, stille Regressionen. Reliability ist die Arbeit, die das sicher macht: belastbare Evals, Guardrails, begrenzte Autonomie, Monitoring und ein klarer Rollback. Den Teil lassen die meisten Teams weg.",
+        a: "Ein Demo-Agent und ein Production-Agent sind unterschiedliche Probleme. In der Demo antwortet er einmal, unter Aufsicht. In Produktion handelt er allein, wiederholt, gegen sich ändernde Daten. Typische Failure Modes: Loops, halluzinierte Aktionen, Kostenexplosion, stille Regressionen. Reliability macht das sicher: belastbare Evals, Guardrails, begrenzte Autonomie, Monitoring und ein klarer Rollback. Den Teil lassen die meisten Teams weg.",
         moreHref: "/de/agenten-zuverlaessigkeit/",
         moreLabel: "Agenten-Zuverlässigkeit",
       },
@@ -633,42 +633,42 @@ const de: LandingCopy = {
       },
       {
         q: "Was ist ein „Corporate LLM“?",
-        a: "Ein Unternehmens-LLM-Stack unter euren Regeln: private oder offene Modelle, RAG über eure Daten, Zugriffskontrolle, Kostenlimits und Ops. Kein Consumer-Chatbot an Slack geklebt. Wenn ihr eine gemeinsame interne Plattform braucht statt eines Produktfeatures, ist das das Corporate-LLM-Engagement.",
+        a: "Ein Unternehmens-LLM-Stack unter euren Regeln: private oder offene Modelle, RAG über eure Daten, Zugriff, Kostenlimits und Ops. Kein Consumer-Chatbot an Slack geklebt. Wenn ihr eine gemeinsame interne Plattform braucht statt eines Produktfeatures, ist das das Corporate-LLM-Engagement.",
         moreHref: "/de/corporate-llm/",
         moreLabel: "Corporate LLM",
       },
       {
         q: "Berätst du nur, oder schreibst du auch Code?",
-        a: "Zum Engagement gehört Code. Ich arbeite in eurem Repository, nicht von außen, und bleibe dabei, um zu betreiben, was wir shippen. Je nach Engagement: Implementation, Architecture Reviews, Production Debugging und laufende Reliability.",
+        a: "Zum Engagement gehört Code. Ich arbeite in eurem Repo, nicht von außen, und bleibe dabei, um zu betreiben, was wir shippen. Je nach Fall: Implementation, Architecture Reviews, Production Debugging und laufende Reliability.",
       },
       {
         q: "Wie entscheidest du, ob ein Unternehmen wirklich KI braucht?",
-        a: "Nicht jedes Problem braucht KI, und nicht jede KI braucht einen Agenten. Ich starte beim Use Case: welches Problem löst ihr, und ändert KI das Ergebnis genug, um den Betrieb zu rechtfertigen? Die meisten KI-Fehler sind Framing-Fehler. Die Technik ist selten der harte Teil. Der Readiness & Production Audit beantwortet das, bevor Build-Arbeit startet.",
+        a: "Nicht jedes Problem braucht KI. Nicht jede KI braucht einen Agenten. Ich starte beim Use Case: welches Problem löst ihr, und ändert KI das Ergebnis genug, um den Betrieb zu rechtfertigen? Die meisten KI-Fehler sind Framing-Fehler. Die Technik ist selten der harte Teil. Der Readiness & Production Audit beantwortet das, bevor Build-Arbeit startet.",
       },
       {
         q: "Was ist der „EU-AI-Act-Check“ im Readiness Audit?",
-        a: "Er ist Teil des Readiness & Production Audits. Ich prüfe, ob ein geplantes KI-System unter den Act fällt, welche Risikokategorie gilt und welche Pflichten daraus folgen. Dazu Datenschutz und Governance, skaliert auf eure Größe und Nutzung. Bei Live-Systemen bewertet der Reliability Retainer das nach, wenn Regeln und Nutzung sich ändern.",
+        a: "Er ist Teil des Readiness & Production Audits. Ich prüfe, ob ein geplantes KI-System unter den Act fällt, welche Risikokategorie gilt und welche Pflichten daraus folgen. Dazu Datenschutz und Governance, skaliert auf eure Größe und Nutzung. Bei Live-Systemen bewertet der Reliability Retainer das nach, wenn Regeln oder Nutzung sich ändern.",
         moreHref: "/de/eu-ai-act-readiness/",
         moreLabel: "EU-AI-Act-Readiness",
       },
       {
         q: "Mit welchem Engagement sollte ich starten?",
-        a: "Unklar, ob KI der richtige Schritt ist? Start mit dem Readiness & Production Audit: fester Scope, Use-Case-Shortlist, ehrlicher Build/Buy/Skip und Kostenmodell. Braucht ihr eine unternehmensweite LLM-Plattform? Corporate LLM. Wisst ihr schon, was als Produkt gebaut wird? Build Sprint. Schon geshipped? Der Reliability Retainer hält es am Laufen.",
+        a: "Unklar, ob KI der richtige Schritt ist? Start mit dem Readiness & Production Audit: fester Scope, Use-Case-Shortlist, klare Build/Buy/Skip-Entscheidung und Kostenmodell. Braucht ihr eine unternehmensweite LLM-Plattform? Corporate LLM. Wisst ihr schon, was als Produkt gebaut wird? Build Sprint. Schon geshipped? Der Reliability Retainer hält es am Laufen.",
         moreHref: "/services/readiness-audit/",
         moreLabel: "Readiness & Production Audit",
       },
       {
         q: "Wo sitzt du, und arbeitest du remote?",
-        a: "Ich sitze in Berlin und lebe hier seit 2007. Ich arbeite mit Startups und wachsenden Unternehmen unabhängig vom Standort. Mail an contact@larsullrich.de. Ich lese jede Nachricht persönlich und antworte meist innerhalb eines Tages.",
+        a: "Ich sitze in Berlin und lebe hier seit 2007. Ich arbeite mit Startups und wachsenden Unternehmen, unabhängig vom Standort. Mail an contact@larsullrich.de. Ich lese jede Nachricht persönlich und antworte meist innerhalb eines Tages.",
       },
     ],
   },
   contact: {
     displayLine1: "Lass uns",
-    displayLine2: "reden.",
+    displayLine2: "reden",
     intro:
       "Schreib mir, was ihr baut und wo es hakt. Wenn ich der Richtige bin, sage ich das. Wenn nicht, auch.",
-    noteStart: "Bester Start für die meisten Teams:",
+    noteStart: "Bester Start für die meisten:",
     noteAudit: "Readiness & Production Audit",
     noteAuditSuffix: "(fester Scope, 1-2 Wochen).",
     availability:
@@ -699,8 +699,7 @@ const de: LandingCopy = {
       closesIn: "Schließt in",
     },
     footer: {
-      tagline:
-        "Production AI und Agenten. Gebaut zum Shippen, und zum Weiterlaufen.",
+      tagline: "Production AI und Agenten. Gebaut zum Shippen und zum Weiterlaufen.",
       work: "Arbeit",
       notes: "Notizen",
       about: "About",
@@ -710,14 +709,304 @@ const de: LandingCopy = {
   },
 };
 
-const byLang: Record<LandingLang, LandingCopy> = { en, de };
+const es: LandingCopy = {
+  meta: {
+    title: "Lars Ullrich - Production AI, fiabilidad de agentes y CTO fraccional",
+    description:
+      "Ayudo a empresas en crecimiento a llevar la IA a producción y a mantenerla en marcha. A menudo agentes. A menudo modelos abiertos que hospedáis vosotros. Ingeniero full-stack y CTO/CAIO fraccional, con dos décadas de ingeniería detrás.",
+  },
+  ids: {
+    whatIDo: "lo-que-hago",
+    method: "metodo",
+    services: "servicios",
+    work: "trabajo",
+    consult: "consulta",
+    faq: "faq",
+    contact: "contacto",
+  },
+  cover: {
+    descriptor: "Full-Stack Engineer & Fractional CTO",
+    navLabel: "Navegación principal",
+    menuOpen: "Abrir menú",
+    menuClose: "Cerrar menú",
+    heroLabel: "Hero",
+    headline: "Cut through the noise",
+    headlineAlt: "Build what matters",
+    body: "Ayudo a entregar software que aguanta en producción y a mantenerlo en marcha. IA solo donde merece la pena.",
+    ctaPrimary: "Pedir un scope call",
+  },
+  whatIDo: {
+    heading: "Qué hago",
+    statement:
+      "Tomo las decisiones técnicas del primer caso de uso a producción: qué construir, qué comprar, cuánto cuesta operarlo y quién lo lleva después. Estrategia si la necesitáis. Ingeniería si también.",
+    services: [
+      "Production AI",
+      "Corporate LLM",
+      "Fiabilidad de agentes",
+      "Ingeniería full-stack",
+      "CTO / CAIO fraccional",
+    ],
+    beats: [
+      {
+        title: "Encontrar el caso de uso correcto",
+        body: "No todo problema necesita IA. No toda IA necesita un agente. Os ayudo a elegir los pocos casos que se pagan solos y a descartar el resto.",
+      },
+      {
+        title: "Construir el sistema",
+        body: "Agentes, RAG, automatización y lo que hay alrededor. Pensado para fiabilidad, observabilidad y un coste previsible. Hospedado, o en modelos abiertos que controláis.",
+      },
+      {
+        title: "Construir y operar, no solo asesorar",
+        body: "Código, revisiones de arquitectura, depuración en producción. Y me quedo para que siga funcionando. Trabajo en vuestro repo, no desde fuera.",
+      },
+    ],
+  },
+  method: {
+    leadLine1: "De la señal",
+    leadLine2: "al sistema",
+    sub: "De una demo que funciona a un sistema que podéis dejar corriendo.",
+    steps: [
+      {
+        code: "Sintonizar",
+        body: "Entender el problema real, los datos y los límites antes de escribir código o elegir un modelo. La mayoría de fallos son de planteamiento, no de técnica.",
+      },
+      {
+        code: "Componer la arquitectura",
+        body: "Elegir el stack y dar forma al sistema: servicios, datos, y dónde la IA aporta de verdad. Diseñar para fiabilidad, coste y el equipo que lo hereda.",
+      },
+      {
+        code: "Entregar y endurecer",
+        body: "Sacarlo a producción y hacerlo fiable: tests, monitorización, guardrails, evals donde hay IA, y ownership claro.",
+      },
+      {
+        code: "Adoptar con responsabilidad",
+        body: "Gobernanza a vuestra medida: seguridad, datos, EU AI Act donde aplique. Decisiones que se puedan explicar.",
+      },
+    ],
+    scorecardTitle: "Scorecard de readiness",
+    scorecardContext:
+      "Un primer engagement típico, puntuado en las cuatro dimensiones donde suelen romperse los sistemas en producción. La mayoría llega fuerte en planteamiento y débil en readiness de producción.",
+    scorecard: [
+      { dim: "Planteamiento del problema", weight: "35%", score: 7 },
+      { dim: "Stack y arquitectura", weight: "30%", score: 6 },
+      { dim: "Readiness de producción", weight: "25%", score: 4 },
+      { dim: "Gobernanza", weight: "10%", score: 3 },
+    ],
+    stmtMid: "Los entornos cambian",
+    stmtStrong: "El listón para entregar, no",
+  },
+  services: {
+    displayLines: ["Diagnose", "Build", "Run", "Lead"],
+    sub: "Una auditoría concreta, un stack Corporate LLM, un sistema en producción, fiabilidad continua o liderazgo embebido. Elegid la profundidad que necesitáis.",
+    items: [
+      {
+        title: "Readiness & Production Audit",
+        cat: "Estrategia",
+        format: "Alcance fijo · 1-2 semanas",
+        icon: "/graphics/icon-ai-readiness-audit.svg",
+        desc: "Revisión concreta de producto, datos y stack: dónde encaja la IA, dónde no, y qué hace falta para operarla en producción. Salís con una shortlist de casos de uso, una decisión clara build/buy/skip y un modelo de costes.",
+        tags: [
+          "Mapeo de casos de uso",
+          "Viabilidad de agentes",
+          "Build vs buy",
+          "Riesgo y chequeo EU AI Act",
+          "Modelo de costes",
+        ],
+        href: "/services/readiness-audit/",
+      },
+      {
+        title: "Build Sprint",
+        cat: "Full-Stack",
+        format: "Proyecto · 6-10 semanas",
+        icon: "/graphics/icon-build-sprint.svg",
+        desc: "Un sistema en producción: la app, la infra y la IA dentro. Hospedado o en modelos abiertos que controláis. No un prototipo que se queda en la demo.",
+        tags: [
+          "Frontend a infra",
+          "Python y TypeScript",
+          "Agentes y RAG",
+          "Modelos abiertos o hospedados",
+          "Monitorización y guardrails",
+        ],
+      },
+      {
+        title: "Corporate LLM",
+        cat: "Plataforma",
+        format: "Proyecto · 6-12 semanas",
+        icon: "/graphics/icon-corporate-llm.svg",
+        desc: "Un stack LLM de empresa que podéis operar de verdad: modelos privados o abiertos, RAG sobre vuestros datos, acceso, límites de coste y ops. Para uso interno bajo vuestras reglas. No un chatbot de consumidor pegado encima.",
+        tags: [
+          "Modelos privados / abiertos",
+          "RAG sobre datos de empresa",
+          "Acceso y auditorías",
+          "Límites de coste y rate",
+          "Ops listas para la UE",
+        ],
+        href: "/corporate-llm/",
+      },
+      {
+        title: "Reliability Retainer",
+        cat: "Operaciones",
+        format: "Mensual · continuo",
+        icon: "/graphics/icon-reliability-retainer.svg",
+        desc: "Mantenerlo en marcha, como engagement fijo: evals, monitorización, guardrails, drift, incidentes y reevaluación de la EU AI Act. Para equipos que ya entregaron y no deberían operarlo solos.",
+        tags: [
+          "Evals y monitorización",
+          "Guardrails",
+          "Drift y control de coste",
+          "Respuesta a incidentes",
+        ],
+        href: "/agent-reliability/",
+      },
+      {
+        title: "Fractional CTO / CAIO",
+        cat: "Liderazgo",
+        format: "Retainer mensual",
+        icon: "/graphics/icon-fractional-cto.svg",
+        desc: "Liderazgo técnico senior sin contratar a tiempo completo: arquitectura, delivery, code review y estrategia de IA. Técnico, no solo advisory.",
+        tags: [
+          "Arquitectura y roadmap",
+          "Equipo y selección de vendors",
+          "Ownership de delivery",
+          "Reporting a board",
+        ],
+        href: "/fractional-cto-caio/",
+      },
+    ],
+  },
+  work: {
+    heading: "Trabajo",
+    sub: "Proyectos seleccionados. Nombres omitidos.",
+    readCase: "Leer el caso",
+  },
+  clients: {
+    label: "Clientes anteriores",
+  },
+  consult: {
+    displayLine1: "¿No sabéis",
+    displayLine2: "por dónde empezar?",
+    lead: "La mayoría empieza con un Readiness & Production Audit. Alcance fijo, 1-2 semanas. Recomendación clara antes de financiar un build.",
+    points: [
+      "Shortlist de casos de uso y una decisión clara build / buy / skip",
+      "Modelo de costes listo para una decisión",
+      "Viabilidad de agentes y chequeo EU AI Act, si aplica",
+    ],
+    ctaPrimary: "Pedir un scope call",
+    ctaSecondary: "Ver la auditoría",
+    moreContext: "Más contexto:",
+    workLink: "trabajo",
+    notesLink: "notas",
+    aboutLink: "about",
+  },
+  faq: {
+    displayLine1: "Preguntas,",
+    displayLine2: "respondidas",
+    items: [
+      {
+        q: "¿Qué hace realmente un CTO / CAIO fraccional?",
+        a: "Liderazgo técnico senior a tiempo parcial o por proyecto: arquitectura, roadmap, ownership de delivery, equipo, vendors y estrategia de IA. El rol sigue siendo técnico, no solo advisory. En la práctica: code reviews, decisiones de arquitectura y depuración en producción con el equipo. Sin el coste de una contratación a tiempo completo.",
+        moreHref: "/fractional-cto-caio/",
+        moreLabel: "Fractional CTO / CAIO",
+      },
+      {
+        q: '¿Qué quieres decir con "fiabilidad de agentes"?',
+        a: "Un agente de demo y un agente en producción son problemas distintos. En la demo responde una vez, con alguien mirando. En producción actúa solo, una y otra vez, contra datos que cambian. Fallos típicos: bucles, acciones alucinadas, costes desbocados, regresiones silenciosas. Fiabilidad es lo que lo hace seguro: evals en las que confiar, guardrails, autonomía acotada, monitorización y un rollback claro. Es la parte que la mayoría se salta.",
+        moreHref: "/agent-reliability/",
+        moreLabel: "Fiabilidad de agentes",
+      },
+      {
+        q: "¿Trabajas con modelos abiertos, o solo con APIs hospedadas como OpenAI?",
+        a: "Con ambos. Las APIs hospedadas suelen ser el arranque más rápido. Si los datos tienen que quedarse en vuestra infra, si el coste por token no escala, o si queréis evitar vendor lock-in, construyo sobre modelos abiertos como Llama, Mistral o Qwen, self-hosted en infra que controláis. Hoy opero modelos abiertos en producción. No es teórico.",
+        moreHref: "/corporate-llm/",
+        moreLabel: "Corporate LLM",
+      },
+      {
+        q: '¿Qué es un "Corporate LLM"?',
+        a: "Un stack LLM de empresa bajo vuestras reglas: modelos privados o abiertos, RAG sobre vuestros datos, acceso, límites de coste y ops. No un chatbot de consumidor pegado a Slack. Si necesitáis una plataforma interna compartida, y no solo una feature de producto, ese es el engagement Corporate LLM.",
+        moreHref: "/corporate-llm/",
+        moreLabel: "Corporate LLM",
+      },
+      {
+        q: "¿Solo asesoras, o también escribes el código?",
+        a: "El engagement incluye código. Trabajo en vuestro repo, no desde fuera, y me quedo para operar lo que entregamos. Según el caso: implementación, revisiones de arquitectura, depuración en producción y fiabilidad continua.",
+      },
+      {
+        q: "¿Cómo decides si una empresa realmente necesita IA?",
+        a: "No todo problema necesita IA. No toda IA necesita un agente. Empiezo por el caso de uso: qué problema resolvéis, y si la IA cambia el resultado lo bastante como para justificar operarla. La mayoría de fallos de IA son de planteamiento. La técnica rara vez es lo difícil. El Readiness & Production Audit responde esto antes de cualquier build.",
+      },
+      {
+        q: '¿Qué es el "chequeo EU AI Act" en la auditoría de readiness?',
+        a: "Forma parte del Readiness & Production Audit. Miro si el sistema propuesto cae bajo el Act, en qué categoría de riesgo queda y qué obligaciones crea. También datos y gobernanza, a vuestra escala. En sistemas en vivo, el Reliability Retainer lo vuelve a mirar cuando cambian las reglas o el uso.",
+        moreHref: "/eu-ai-act-readiness/",
+        moreLabel: "Preparación EU AI Act",
+      },
+      {
+        q: "¿Con qué engagement debería empezar?",
+        a: "¿No estáis seguros de si la IA es el paso correcto? Empezad con el Readiness & Production Audit: alcance fijo, shortlist de casos de uso, decisión clara build/buy/skip y modelo de costes. ¿Plataforma LLM para toda la empresa? Corporate LLM. ¿Ya sabéis qué construir como producto? Build Sprint. ¿Ya lo entregasteis? El Reliability Retainer lo mantiene en marcha.",
+        moreHref: "/services/readiness-audit/",
+        moreLabel: "Readiness & Production Audit",
+      },
+      {
+        q: "¿Dónde estás, y trabajas en remoto?",
+        a: "Estoy en Berlín desde 2007. Trabajo con startups y empresas en crecimiento, da igual dónde. Escríbeme a contact@larsullrich.de. Leo cada mensaje personalmente y suelo responder el mismo día.",
+      },
+    ],
+  },
+  contact: {
+    displayLine1: "Hablemos",
+    displayLine2: "ya",
+    intro:
+      "Cuéntame qué estáis construyendo y dónde se atasca. Si soy la persona adecuada, lo digo. Si no, también.",
+    noteStart: "Mejor punto de partida para la mayoría:",
+    noteAudit: "Readiness & Production Audit",
+    noteAuditSuffix: "(alcance fijo, 1-2 semanas).",
+    availability:
+      "Abierto a auditorías de readiness, builds Corporate LLM, builds de agentes y producción, retainers de fiabilidad y engagements de CTO/CAIO fraccional.",
+    form: {
+      name: "Nombre",
+      namePh: "Tu nombre completo",
+      email: "Email",
+      emailPh: "tu@email.com",
+      subject: "Asunto",
+      subjectPh: "¿De qué se trata?",
+      message: "Mensaje",
+      messagePh: "¿Qué estáis construyendo, y dónde se atasca?",
+      submit: "Pedir un scope call",
+      sending: "Enviando...",
+      tryAgain: "Reintentar",
+      error: "Algo salió mal. Prueba de nuevo en un momento.",
+      errName: "El nombre es obligatorio",
+      errEmail: "El email es obligatorio",
+      errEmailInvalid: "Introduce un email válido",
+      errSubject: "El asunto es obligatorio",
+      errMessage: "El mensaje es obligatorio",
+      errMessageShort: "Al menos 10 caracteres",
+      successTitle: "Mensaje enviado",
+      successBody:
+        "Gracias. Leo cada mensaje personalmente y suelo responder el mismo día.",
+      close: "Cerrar",
+      closesIn: "Se cierra en",
+    },
+    footer: {
+      tagline: "Production AI y agentes. Hechos para entregar y seguir en marcha.",
+      work: "Trabajo",
+      notes: "Notas",
+      about: "About",
+      copyright: "Todos los derechos reservados.",
+      navLabel: "Navegación del pie",
+    },
+  },
+};
+
+const byLang: Record<LandingLang, LandingCopy> = { en, de, es };
 
 export function landingCopy(lang: LandingLang = "en"): LandingCopy {
   return byLang[lang];
 }
 
 export function landingHomeHref(lang: LandingLang): string {
-  return lang === "de" ? "/de/" : "/";
+  if (lang === "de") return "/de/";
+  if (lang === "es") return "/es/";
+  return "/";
 }
 
 export function landingNotesHref(lang: LandingLang): string {
@@ -730,10 +1019,6 @@ export function landingWorkIndexHref(lang: LandingLang): string {
 
 export function landingImpressumHref(lang: LandingLang): string {
   return lang === "de" ? "/de/impressum/" : "/impressum/";
-}
-
-export function landingLocaleSwitchHref(lang: LandingLang): string {
-  return lang === "de" ? "/" : "/de/";
 }
 
 /** Audit product page is EN-only for now; both locales link here. */

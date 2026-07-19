@@ -302,7 +302,7 @@ const en: LandingCopy = {
     readCase: "Read the case",
   },
   clients: {
-    label: "Who I've worked with",
+    label: "Past clients",
   },
   consult: {
     displayLine1: "Not sure",
@@ -591,7 +591,7 @@ const de: LandingCopy = {
     readCase: "Case lesen",
   },
   clients: {
-    label: "Mit wem ich gearbeitet habe",
+    label: "Bisherige Kunden",
   },
   consult: {
     displayLine1: "Unklar,",

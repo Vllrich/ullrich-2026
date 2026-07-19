@@ -8,7 +8,7 @@
 }
 
 .work-header {
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  margin-bottom: 0.65rem;
   max-width: 40rem;
 }
 

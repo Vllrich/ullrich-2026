@@ -233,11 +233,11 @@ _Component: `Services.astro` · Section ID: `#services`_
 
 ## 5. Clients
 
-_Component: `Clients.astro`_
+_Component: `Clients.astro` · nested in `Work.astro` directly under the Work subtitle_
 
 **Section label**
 
-> Who I've worked with
+> Past clients
 
 **Brand names (marquee)**
 

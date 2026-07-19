@@ -3,14 +3,16 @@ import { landingCopy, type LandingLang } from '../data/landing';
 
 interface Props {
   lang?: LandingLang;
+  /** Nest under the Work title; drop outer section padding. */
+  embedded?: boolean;
 }
 
-const { lang = 'en' } = Astro.props;
+const { lang = 'en', embedded = false } = Astro.props;
 const t = landingCopy(lang);
 const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUSTRIES', 'CORPUS.MUSIC', 'THEATER DORTMUND', 'OPER DORTMUND', 'ECM RECORDS', 'AMP SOUND BRANDING', 'BERLINER FESTSPIELE', 'SILEX INVESTMENT'];
 ---
 
-<div class="clients-wrap">
+<div class:list={['clients-wrap', embedded && 'clients-wrap--embedded']}>
   <h2 class="clients-label">{t.clients.label}</h2>
   <div class="clients-strip" aria-hidden="true">
     <div class="clients-track">
@@ -32,6 +34,11 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
     position: relative;
   }
 
+  .clients-wrap--embedded {
+    padding: 0.35rem 0 1.75rem;
+    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+  }
+
   .clients-wrap::after {
     content: '';
     position: absolute;
@@ -39,6 +46,11 @@ const brands = ['SONY', 'PORSCHE', 'BMW', 'ARRI MEDIA', 'KORG', 'MICROPSI INDUST
     left: clamp(1.5rem, 4vw, 3.5rem);
     right: clamp(1.5rem, 4vw, 3.5rem);
     border-bottom: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .clients-wrap--embedded::after {
+    left: 0;
+    right: 0;
   }
 
   .clients-label {

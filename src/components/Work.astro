@@ -1,5 +1,6 @@
 ---
 import '../styles/work.css';
+import Clients from './Clients.astro';
 import { workCases, localizeWorkEntry, workHref } from '../data/work-patterns';
 import { landingCopy, type LandingLang } from '../data/landing';
 
@@ -17,6 +18,8 @@ const cases = workCases.map((entry) => localizeWorkEntry(entry, lang));
     <h2 class="work-display" id="work-heading">{t.work.heading}</h2>
     <p class="work-sub">{t.work.sub}</p>
   </div>
+
+  <Clients lang={lang} embedded />
 
   <ol class="work-previews">
     {cases.map((item, i) => (

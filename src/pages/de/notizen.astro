@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ContentFooter from '../../components/ContentFooter.astro';
+import SiteNav from '../../components/SiteNav.astro';
 import { notesDe } from '../../data/notes';
 import { languageAlternates } from '../../lib/i18n';
 import '../../styles/content-page.css';
@@ -19,21 +20,15 @@ const alternates = languageAlternates('/notes/', '/de/notizen/');
   alternates={alternates}
 >
   <div class="cp-shell">
-    <header class="cp-bar">
-      <a href="/de/" class="cp-brand" aria-label="Zur Startseite">
-        <span class="cp-brand-text">Lars Ullrich</span>
-      </a>
-      <nav class="cp-bar-nav" aria-label="Bereich">
-        <a href="/de/notizen/" class="is-active">Notizen</a>
-        <a href="/about/">About</a>
-        <a href="/notes/" hreflang="en">English</a>
-        <a href="/de/">Startseite</a>
-      </nav>
-    </header>
+    <SiteNav lang="de" variant="content" localeSwitch={{ href: '/notes/', label: 'English' }} />
 
     <header class="cp-index-head">
       <h1>Notizen</h1>
-      <p>Kurze Texte zur Arbeit. Audits, Agenten, Corporate LLM, Reliability, Leadership.</p>
+      <p>
+        Kurze Texte zur Arbeit. Audits, Agenten, Corporate LLM, Reliability, Leadership.
+        Anonymisierte Cases stehen unter
+        <a href="/de/arbeit/muster/">Arbeit</a>.
+      </p>
     </header>
 
     <ol class="notes-index">

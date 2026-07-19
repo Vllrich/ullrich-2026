@@ -1,7 +1,10 @@
 ---
 import Layout from './Layout.astro';
 import ContentFooter from '../components/ContentFooter.astro';
+import SiteNav from '../components/SiteNav.astro';
 import { continueReading, neighbors, notesFor, type Note } from '../data/notes';
+import { workIndexHref } from '../data/work-patterns';
+import { activeNavKey } from '../lib/nav';
 import '../styles/content-page.css';
 import type { AlternateLink } from '../lib/i18n';
 
@@ -36,14 +39,19 @@ const {
   lead,
   icon,
   contactHref = lang === 'de' ? '/de/#kontakt' : '/#contact',
-  ctaLabel = lang === 'de' ? 'Gespräch starten' : 'Start a conversation',
+  ctaLabel = lang === 'de' ? 'Scope-Call anfragen' : 'Request a scope call',
   localeSwitch,
   layout = 'prose',
 } = Astro.props;
 
-const homeHref = lang === 'de' ? '/de/' : '/';
 const notesHref = lang === 'de' ? '/de/notizen/' : '/notes/';
 const notesLabel = lang === 'de' ? 'Notizen' : 'Notes';
+const workHrefRoot = workIndexHref(lang);
+const workLabel = lang === 'de' ? 'Arbeit' : 'Work';
+const crumbRoot =
+  activeNavKey(canonical) === 'work'
+    ? { href: workHrefRoot, label: workLabel }
+    : { href: notesHref, label: notesLabel };
 
 const { prev, next } = noteId ? neighbors(noteId, lang) : {};
 const more: Note[] = noteId ? continueReading(noteId, lang, 3) : [];
@@ -52,25 +60,13 @@ const railNotes = notesFor(lang).filter((n) => n.id !== noteId);
 
 <Layout title={title} description={description} canonical={canonical} lang={lang} alternates={alternates}>
   <div class="cp-shell">
-    <header class="cp-bar">
-      <a href={homeHref} class="cp-brand" aria-label={lang === 'de' ? 'Zur Startseite' : 'Back to home'}>
-        <span class="cp-brand-text">Lars Ullrich</span>
-      </a>
-      <nav class="cp-bar-nav" aria-label={lang === 'de' ? 'Bereich' : 'Section'}>
-        <a href={notesHref} class="is-active">{notesLabel}</a>
-        <a href="/about/">About</a>
-        {localeSwitch && (
-          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'}>{localeSwitch.label}</a>
-        )}
-        <a href={homeHref}>{lang === 'de' ? 'Startseite' : 'Home'}</a>
-      </nav>
-    </header>
+    <SiteNav lang={lang} variant="content" localeSwitch={localeSwitch} />
 
     <div class:list={['cp-layout', layout === 'wide' && 'is-wide']}>
       <header class="cp-article-head">
         <div class="cp-article-head-copy">
           <p class="cp-crumb">
-            <a href={notesHref}>{notesLabel}</a>
+            <a href={crumbRoot.href}>{crumbRoot.label}</a>
             <span aria-hidden="true"> / </span>
             <span>{heading}</span>
           </p>

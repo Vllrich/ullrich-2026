@@ -1,14 +1,15 @@
 ---
-import Layout      from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import Maintenance from '../components/Maintenance.astro';
-import Cover       from '../components/Cover.astro';
-import WhatIDo     from '../components/WhatIDo.astro';
+import Cover from '../components/Cover.astro';
+import WhatIDo from '../components/WhatIDo.astro';
 import Perspective from '../components/Perspective.astro';
-import Services    from '../components/Services.astro';
-import Clients     from '../components/Clients.astro';
-import Consult     from '../components/Consult.astro';
-import FAQ         from '../components/FAQ.astro';
-import Contact     from '../components/Contact.astro';
+import Services from '../components/Services.astro';
+import Work from '../components/Work.astro';
+import Clients from '../components/Clients.astro';
+import Consult from '../components/Consult.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
 import { languageAlternates } from '../lib/i18n';
 
 const maintenance = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
@@ -28,6 +29,7 @@ const alternates = languageAlternates('/', '/de/');
       <WhatIDo />
       <Perspective />
       <Services />
+      <Work />
       <Clients />
       <Consult />
       <FAQ />

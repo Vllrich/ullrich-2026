@@ -39,7 +39,10 @@ Shared chrome (blog-leaning): animated diagnose mark, Notes section link, breadc
 | `/corporate-llm/` | Corporate LLM platform engagement | `icon-model-orbits.svg` |
 | `/de/corporate-llm/` | German mirror | same |
 | `/eu-ai-act-readiness/` | EU AI Act readiness (audit scope) | `icon-compliance-frame.svg` |
-| `/work/patterns/` | Anonymized engagement patterns (cases later) | `icon-pattern-steps.svg` |
+| `/work/patterns/` | Case + pattern index | `work-cases-mark.svg` |
+| `/work/{id}/` | Individual case or pattern page | per entry |
+| `/de/arbeit/muster/` | German index | same |
+| `/de/arbeit/{id}/` | German detail pages | same |
 | `/services/readiness-audit/` | Top-of-funnel audit product page | `icon-signal-nodes.svg` |
 | `/de/` … | German mirror for DACH intent | (per page) |
 | `/llms.txt` | Short machine-readable summary | |
@@ -74,7 +77,7 @@ _Component: `Cover.astro`_
 
 | Button    | Copy                 |
 | --------- | -------------------- |
-| Primary   | Start a conversation |
+| Primary   | Request a scope call |
 | Secondary | See how I work       |
 
 ---
@@ -267,7 +270,7 @@ Replaces the old landing About block. Full bio, stack, and meta live on [`/about
 
 | Element   | Copy                 | Target                         |
 | --------- | -------------------- | ------------------------------ |
-| Primary   | Start a conversation | `#contact`                     |
+| Primary   | Request a scope call | `#contact`                     |
 | Secondary | Readiness Audit      | `/services/readiness-audit/`   |
 | Tertiary  | About                | `/about/`                      |
 

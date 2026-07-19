@@ -1,0 +1,447 @@
+---
+import { workEntriesFor, workHref, type WorkLang } from '../data/work-patterns';
+
+interface Props {
+  lang?: WorkLang;
+}
+
+const { lang = 'en' } = Astro.props;
+const entries = workEntriesFor(lang);
+const cases = entries.filter((e) => e.caseStudyReady);
+const patterns = entries.filter((e) => !e.caseStudyReady);
+const de = lang === 'de';
+
+const copy = de
+  ? {
+      intro:
+        'Echte Aufträge, ohne Kundennamen. Kurz und sachlich geschrieben. Keine erfundenen Kennzahlen.',
+      casesLabel: 'Case Studies',
+      patternsLabel: 'So sieht die Arbeit oft aus',
+      patternsLead: 'Kurze Skizzen. Auch ohne freigegebenen Case.',
+      caseTag: 'Case Study',
+      patternTag: 'Muster',
+      openCase: 'Weiterlesen',
+      openPattern: 'Weiterlesen',
+      startHeading: 'Wo anfangen',
+      startBody: 'Die meisten starten mit dem',
+      startLink: 'Readiness & Production Audit',
+      startTail: 'Fester Rahmen. Meist ein bis zwei Wochen.',
+    }
+  : {
+      intro:
+        'Real engagements, names held back. Written plainly. No made-up numbers.',
+      casesLabel: 'Case studies',
+      patternsLabel: 'How the work often looks',
+      patternsLead: "Short sketches. Even when we don't have a cleared case yet.",
+      caseTag: 'Case study',
+      patternTag: 'Pattern',
+      openCase: 'Read more',
+      openPattern: 'Read more',
+      startHeading: 'Where to start',
+      startBody: 'Most teams begin with the',
+      startLink: 'Readiness & Production Audit',
+      startTail: 'Fixed scope. Usually one to two weeks.',
+    };
+---
+
+<p class="wc-intro">{copy.intro}</p>
+
+{cases.length > 0 && (
+  <section class="wc-cases" aria-labelledby="wc-cases-heading">
+    <div class="wc-section-head">
+      <p class="wc-kicker" id="wc-cases-heading">{copy.casesLabel}</p>
+      <span class="wc-kicker-rule" aria-hidden="true" />
+    </div>
+
+    {cases.map((item, i) => (
+      <article
+        class:list={['wc-case', i % 2 === 1 && 'is-flip']}
+        id={item.id}
+        style={`--wc-i: ${i}`}
+      >
+        <a class="wc-case-visual" href={workHref(item.id, lang)} aria-hidden="true" tabindex="-1">
+          <div class="wc-case-visual-frame">
+            <span class="wc-case-index">{String(i + 1).padStart(2, '0')}</span>
+            <img src={item.image} alt="" width="280" height="280" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+          </div>
+        </a>
+
+        <div class="wc-case-copy">
+          <p class="wc-case-meta">
+            <span class="wc-pill">{copy.caseTag}</span>
+            <span class="wc-sector">{item.sector}</span>
+          </p>
+          <h2 class="wc-case-title">
+            <a href={workHref(item.id, lang)}>{item.title}</a>
+          </h2>
+          {item.clientLabel && <p class="wc-client">{item.clientLabel}</p>}
+          <p class="wc-blurb">{item.blurb}</p>
+          <p class="wc-open">
+            <a href={workHref(item.id, lang)}>{copy.openCase}</a>
+          </p>
+        </div>
+      </article>
+    ))}
+  </section>
+)}
+
+{patterns.length > 0 && (
+  <section class="wc-patterns" aria-labelledby="wc-patterns-heading">
+    <div class="wc-section-head">
+      <p class="wc-kicker" id="wc-patterns-heading">{copy.patternsLabel}</p>
+      <span class="wc-kicker-rule" aria-hidden="true" />
+    </div>
+    <p class="wc-patterns-lead">{copy.patternsLead}</p>
+
+    <div class="wc-pattern-grid">
+      {patterns.map((item, i) => (
+        <article class="wc-pattern" id={item.id} style={`--wc-i: ${i}`}>
+          <a class="wc-pattern-top" href={workHref(item.id, lang)}>
+            <img class="wc-pattern-icon" src={item.image} alt="" width="56" height="56" loading="lazy" decoding="async" />
+            <p class="wc-pattern-meta">
+              <span class="wc-pill is-quiet">{copy.patternTag}</span>
+              <span class="wc-sector">{item.sector}</span>
+            </p>
+          </a>
+          <h2 class="wc-pattern-title">
+            <a href={workHref(item.id, lang)}>{item.title}</a>
+          </h2>
+          <p class="wc-blurb is-pattern">{item.blurb}</p>
+          <p class="wc-open is-pattern">
+            <a href={workHref(item.id, lang)}>{copy.openPattern}</a>
+          </p>
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+<section class="wc-start" aria-labelledby="wc-start-heading">
+  <h2 class="wc-start-heading" id="wc-start-heading">{copy.startHeading}</h2>
+  <p>
+    {copy.startBody}
+    {' '}
+    <a href="/services/readiness-audit/">{copy.startLink}</a>.
+    {' '}
+    {copy.startTail}
+  </p>
+</section>
+
+<style>
+  .wc-intro {
+    max-width: 52ch;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--dim, oklch(28% 0.01 258));
+    margin: 0 0 2.75rem;
+    text-wrap: pretty;
+  }
+
+  .wc-section-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.75rem;
+  }
+
+  .wc-kicker {
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink, #2c303c);
+  }
+
+  .wc-kicker-rule {
+    display: block;
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--cobalt, #bbdd00), transparent 85%);
+  }
+
+  /* ── Cases ── */
+  .wc-cases {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 6vw, 4.5rem);
+    margin-bottom: clamp(3.5rem, 7vw, 5rem);
+  }
+
+  .wc-case {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.9fr) minmax(0, 1.55fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+    animation: wc-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--wc-i, 0) * 90ms);
+  }
+
+  .wc-case.is-flip {
+    grid-template-columns: minmax(0, 1.55fr) minmax(11rem, 0.9fr);
+  }
+
+  .wc-case.is-flip .wc-case-visual {
+    order: 2;
+  }
+
+  .wc-case.is-flip .wc-case-copy {
+    order: 1;
+  }
+
+  .wc-case-visual-frame {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 18rem;
+    margin-inline: auto;
+    background:
+      radial-gradient(circle at 30% 25%, color-mix(in oklab, var(--cobalt, #bbdd00) 22%, transparent), transparent 55%),
+      var(--surface, oklch(96.5% 0.003 260));
+    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    overflow: hidden;
+  }
+
+  .wc-case-visual-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: var(--cobalt, #bbdd00);
+  }
+
+  .wc-case-index {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.95rem;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--ink, #2c303c);
+  }
+
+  .wc-case-visual-frame img {
+    display: block;
+    width: 78%;
+    height: auto;
+    margin: 12% auto 8%;
+    object-fit: contain;
+  }
+
+  .wc-case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.85rem;
+    margin: 0 0 0.65rem;
+  }
+
+  .wc-pill {
+    display: inline-block;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #2c303c);
+    background: color-mix(in oklab, var(--cobalt, #bbdd00) 55%, white);
+    padding: 0.28em 0.55em;
+    line-height: 1.2;
+  }
+
+  .wc-pill.is-quiet {
+    background: var(--surface, oklch(96.5% 0.003 260));
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  .wc-sector {
+    font-size: 0.82rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  .wc-case-title {
+    font-family: var(--font-display) !important;
+    font-size: clamp(1.45rem, 2.8vw, 1.95rem) !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.03em !important;
+    text-transform: none !important;
+    color: var(--ink, #2c303c) !important;
+    margin: 0 0 0.45rem !important;
+    text-wrap: balance;
+  }
+
+  .wc-case-title a,
+  .wc-pattern-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wc-case-title a:hover,
+  .wc-pattern-title a:hover {
+    color: var(--cobalt-dim, #8aaa00);
+  }
+
+  .wc-case-visual {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .wc-open {
+    margin: 1.15rem 0 0 !important;
+    font-size: 0.88rem !important;
+  }
+
+  .wc-open a {
+    font-weight: 700;
+    color: var(--ink, #2c303c);
+    text-decoration: none;
+    border-bottom: 1px solid var(--cobalt, #bbdd00);
+  }
+
+  .wc-open a:hover {
+    color: var(--cobalt-dim, #8aaa00);
+  }
+
+  .wc-open.is-pattern {
+    margin-top: 0.85rem !important;
+  }
+
+  .wc-client {
+    margin: 0 0 0.85rem !important;
+    font-size: 0.88rem !important;
+    color: var(--ghost, oklch(50% 0.006 260)) !important;
+  }
+
+  .wc-blurb {
+    margin: 0 !important;
+    max-width: 58ch;
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+    color: var(--dim, oklch(28% 0.01 258)) !important;
+    text-wrap: pretty;
+  }
+
+  .wc-blurb.is-pattern {
+    font-size: 0.92rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* ── Patterns ── */
+  .wc-patterns {
+    margin-bottom: clamp(3rem, 6vw, 4rem);
+  }
+
+  .wc-patterns-lead {
+    max-width: 48ch;
+    margin: -0.5rem 0 1.75rem !important;
+    font-size: 0.95rem !important;
+    color: var(--ghost, oklch(50% 0.006 260)) !important;
+  }
+
+  .wc-pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+    gap: 1.5rem 1.75rem;
+  }
+
+  .wc-pattern {
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--rule, oklch(87% 0.005 260));
+    animation: wc-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(0.15s + var(--wc-i, 0) * 55ms);
+  }
+
+  .wc-pattern-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .wc-pattern-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .wc-pattern-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
+    margin: 0;
+    text-align: right;
+  }
+
+  .wc-pattern-title {
+    font-family: var(--font-display) !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: none !important;
+    color: var(--ink, #2c303c) !important;
+    margin: 0 0 0.65rem !important;
+    text-wrap: balance;
+  }
+
+  /* ── Start ── */
+  .wc-start {
+    padding: 1.5rem 0 0;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .wc-start-heading {
+    font-family: var(--font-display) !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    margin: 0 0 0.5rem !important;
+  }
+
+  .wc-start p {
+    max-width: 48ch;
+  }
+
+  @keyframes wc-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.85rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wc-case,
+    .wc-pattern {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .wc-case,
+    .wc-case.is-flip {
+      grid-template-columns: 1fr;
+    }
+
+    .wc-case.is-flip .wc-case-visual,
+    .wc-case.is-flip .wc-case-copy {
+      order: initial;
+    }
+
+    .wc-case-visual-frame {
+      max-width: 14rem;
+      margin-inline: 0;
+    }
+  }
+</style>

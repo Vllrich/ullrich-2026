@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ContentFooter from '../components/ContentFooter.astro';
+import SiteNav from '../components/SiteNav.astro';
 import { notesEn } from '../data/notes';
 import { languageAlternates } from '../lib/i18n';
 import '../styles/content-page.css';
@@ -18,21 +19,15 @@ const alternates = languageAlternates('/notes/', '/de/notizen/');
   alternates={alternates}
 >
   <div class="cp-shell">
-    <header class="cp-bar">
-      <a href="/" class="cp-brand" aria-label="Back to home">
-        <span class="cp-brand-text">Lars Ullrich</span>
-      </a>
-      <nav class="cp-bar-nav" aria-label="Section">
-        <a href="/notes/" class="is-active">Notes</a>
-        <a href="/about/">About</a>
-        <a href="/de/notizen/" hreflang="de">Deutsch</a>
-        <a href="/">Home</a>
-      </nav>
-    </header>
+    <SiteNav lang="en" variant="content" localeSwitch={{ href: '/de/notizen/', label: 'Deutsch' }} />
 
     <header class="cp-index-head">
       <h1>Notes</h1>
-      <p>Short reads on the work. Audits, agents, corporate LLM, reliability, leadership.</p>
+      <p>
+        Short reads on the work. Audits, agents, corporate LLM, reliability, leadership.
+        For anonymized cases, see
+        <a href="/work/patterns/">Work</a>.
+      </p>
     </header>
 
     <ol class="notes-index">

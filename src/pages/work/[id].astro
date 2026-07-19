@@ -1,0 +1,51 @@
+---
+import ContentPage from '../../layouts/ContentPage.astro';
+import WorkEntryDetail from '../../components/WorkEntryDetail.astro';
+import { languageAlternates } from '../../lib/i18n';
+import { allWorkEntries, localizeWorkEntry, workHref } from '../../data/work-patterns';
+
+export function getStaticPaths() {
+  return allWorkEntries().map((entry) => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const item = localizeWorkEntry(entry, 'en');
+const canonical = workHref(entry.id, 'en');
+const deHref = workHref(entry.id, 'de');
+const alternates = languageAlternates(canonical, deHref);
+const kind = item.caseStudyReady ? 'Case study' : 'Engagement pattern';
+const description = `${kind}: ${item.title}. ${item.blurb.slice(0, 140)}…`;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  '@id': `https://larsullrich.de${canonical}#work`,
+  url: `https://larsullrich.de${canonical}`,
+  name: item.title,
+  description: item.blurb,
+  inLanguage: 'en',
+  author: { '@id': 'https://larsullrich.de/#person' },
+  isPartOf: { '@id': 'https://larsullrich.de/work/patterns/#webpage' },
+  about: item.sector,
+};
+---
+
+<ContentPage
+  title={`${item.title} - Lars Ullrich`}
+  description={description}
+  canonical={canonical}
+  noteId="patterns"
+  heading={item.title}
+  eyebrow={kind}
+  lead={item.clientLabel ?? item.sector}
+  icon={item.image}
+  alternates={alternates}
+  jsonLd={jsonLd}
+  localeSwitch={{ href: deHref, label: 'Deutsch' }}
+  layout="wide"
+>
+  <WorkEntryDetail entry={entry} lang="en" />
+</ContentPage>

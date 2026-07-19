@@ -20,6 +20,12 @@
   padding-bottom: 1.75rem;
 }
 
+.notes-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .notes-footer-logo {
   display: inline-block;
   font-family: var(--font-sans);
@@ -29,11 +35,18 @@
   text-transform: uppercase;
   color: #2c303c;
   text-decoration: none;
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.65rem;
 }
 
 .notes-footer-logo:hover {
   color: #8aaa00;
+}
+
+.notes-footer-mark {
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+  max-width: none !important;
+  margin: 0 0 0.75rem;
 }
 
 .notes-footer-tagline {
@@ -119,6 +132,8 @@ a.notes-footer-label:hover {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 clamp(1.25rem, 3vw, 2rem);
+  /* Space before ContentFooter on notes, work, and other content pages */
+  padding-bottom: 320px;
 }
 
 .cp-bar {
@@ -184,7 +199,6 @@ a.notes-footer-label:hover {
     'main rail';
   gap: 1.5rem 2.5rem;
   align-items: start;
-  padding-bottom: 3rem;
 }
 
 .cp-layout.is-wide {

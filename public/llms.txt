@@ -41,7 +41,9 @@ I help growing companies get AI into production and keep it running. Often agent
 - [Agent reliability](https://larsullrich.de/agent-reliability/)
 - [Fractional CTO / CAIO](https://larsullrich.de/fractional-cto-caio/)
 - [EU AI Act readiness](https://larsullrich.de/eu-ai-act-readiness/)
-- [Engagement patterns](https://larsullrich.de/work/patterns/)
+- [Work patterns & case studies](https://larsullrich.de/work/patterns/)
+  - [Company knowledge agent](https://larsullrich.de/work/company-knowledge-agent/)
+  - [EU AI platform](https://larsullrich.de/work/eu-ai-platform/)
 - [Readiness Audit](https://larsullrich.de/services/readiness-audit/)
 
 ## Pages (German)
@@ -51,6 +53,9 @@ I help growing companies get AI into production and keep it running. Often agent
 - [Agenten-Zuverlässigkeit](https://larsullrich.de/de/agenten-zuverlaessigkeit/)
 - [Fractional CTO / CAIO](https://larsullrich.de/de/fractional-cto-caio/)
 - [EU-AI-Act-Readiness](https://larsullrich.de/de/eu-ai-act-readiness/)
+- [Arbeitsmuster & Case Studies](https://larsullrich.de/de/arbeit/muster/)
+  - [Firmen-Wissensagent](https://larsullrich.de/de/arbeit/company-knowledge-agent/)
+  - [EU-AI-Plattform](https://larsullrich.de/de/arbeit/eu-ai-platform/)
 
 ## Contact
 

@@ -59,9 +59,10 @@ export const notesEn: Note[] = [
     id: 'patterns',
     lang: 'en',
     href: '/work/patterns/',
-    title: 'Engagement patterns',
+    title: 'Work patterns & case studies',
     eyebrow: 'Work',
-    summary: 'How the work usually shows up. No invented case metrics.',
+    summary: 'Real cases and common shapes of the work, written plainly.',
+    twinId: 'patterns-de',
   },
   {
     id: 'about',
@@ -109,6 +110,15 @@ export const notesDe: Note[] = [
     eyebrow: 'Leadership',
     summary: 'Senior-Urteil und Delivery in Teilzeit, mit Händen im Repo.',
     twinId: 'fractional-cto',
+  },
+  {
+    id: 'patterns-de',
+    lang: 'de',
+    href: '/de/arbeit/muster/',
+    title: 'Arbeitsmuster & Case Studies',
+    eyebrow: 'Arbeit',
+    summary: 'Echte Cases und typische Arbeitsformen, klar geschrieben.',
+    twinId: 'patterns',
   },
 ];
 

@@ -1,0 +1,36 @@
+---
+import '../styles/work.css';
+import { workCases, localizeWorkEntry, workHref } from '../data/work-patterns';
+
+const cases = workCases.map((entry) => localizeWorkEntry(entry, 'en'));
+---
+
+<section id="work" class="work-section" aria-labelledby="work-heading">
+  <div class="work-header fade-up" data-delay="0">
+    <h2 class="work-display" id="work-heading">Work</h2>
+    <p class="work-sub">Selected projects. Names held back.</p>
+  </div>
+
+  <ol class="work-previews">
+    {cases.map((item, i) => (
+      <li class="work-preview fade-up" data-delay={String(80 + i * 90)}>
+        <a class="work-preview-link" href={workHref(item.id, 'en')}>
+          <figure class="work-preview-media" aria-hidden="true">
+            <img
+              src={item.image}
+              alt=""
+              width="240"
+              height="240"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <p class="work-preview-sector">{item.sector}</p>
+          <h3 class="work-preview-title">{item.title}</h3>
+          <p class="work-preview-desc">{item.blurb}</p>
+          <span class="work-preview-more">Read the case</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</section>

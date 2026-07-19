@@ -66,6 +66,22 @@ Unsure whether AI is the right move? Start with the Readiness & Production Audit
 
 https://larsullrich.de/about/
 
+## Work patterns & case studies
+
+Anonymized case studies and engagement patterns, written as short narratives. No invented metrics.
+
+- Index (EN): https://larsullrich.de/work/patterns/
+- Index (DE): https://larsullrich.de/de/arbeit/muster/
+- Case: Company knowledge agent: https://larsullrich.de/work/company-knowledge-agent/
+- Case: EU AI platform: https://larsullrich.de/work/eu-ai-platform/
+- Pattern: Agent ops: https://larsullrich.de/work/agent-ops/
+- Pattern: Open models: https://larsullrich.de/work/open-models/
+- Pattern: Corporate LLM: https://larsullrich.de/work/corporate-llm/
+- Pattern: Readiness audit: https://larsullrich.de/work/readiness-audit/
+- Pattern: Reliability retainer: https://larsullrich.de/work/reliability-retainer/
+
+German mirrors live under https://larsullrich.de/de/arbeit/{id}/
+
 ## FAQ (selected)
 
 Q: Do you only advise, or do you also write the code?

@@ -1,4 +1,6 @@
 ---
+import DiagnoseIcon from './DiagnoseIcon.astro';
+
 const EMAILJS_PUBLIC_KEY = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY;
 const EMAILJS_SERVICE_ID = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -64,7 +66,7 @@ const socials = [
             <span class="form-error" id="err-message"></span>
           </div>
           <button type="submit" id="cf-submit" class="cf-btn">
-            <span class="btn-label">Send Message</span>
+            <span class="btn-label">Request a scope call</span>
             <svg class="btn-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" opacity="0.25"/>
               <path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
@@ -100,6 +102,7 @@ const socials = [
   <footer class="site-footer">
     <div class="footer-brand">
       <span class="footer-logo">LARS ULLRICH</span>
+      <DiagnoseIcon size="sm" class="footer-mark" />
       <p class="footer-desc">Production AI and agents. Built to ship, and to keep running.</p>
     </div>
 
@@ -108,8 +111,9 @@ const socials = [
         <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label}</a>
       ))}
       <a href="/de/" hreflang="de">Deutsch</a>
-      <a href="/about/">About</a>
+      <a href="/work/patterns/">Work</a>
       <a href="/notes/">Notes</a>
+      <a href="/about/">About</a>
       <a href="/impressum/">Impressum</a>
     </nav>
 
@@ -391,7 +395,8 @@ const socials = [
   .footer-brand {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    align-items: flex-start;
+    gap: 0.45rem;
   }
 
   .footer-logo {
@@ -399,6 +404,17 @@ const socials = [
     font-size: 0.68rem;
     letter-spacing: 0.2em;
     color: var(--ink, #2C303C);
+  }
+
+  .footer-mark {
+    width: 3.25rem !important;
+    height: 3.25rem !important;
+    max-width: none !important;
+  }
+
+  /* Lime faces vanish on the lime footer bar; use ink for lit faces. */
+  .footer-mark :global(.tri:not(.is-off)) {
+    fill: var(--ink, #2c303c);
   }
 
   .footer-desc {
@@ -501,7 +517,7 @@ const socials = [
     form.removeAttribute('aria-hidden');
     slot.style.minHeight = '';
     submitBtn.classList.remove('is-success', 'is-loading');
-    btnLabel.textContent = 'Send Message';
+    btnLabel.textContent = 'Request a scope call';
     submitBtn.disabled = false;
     submitBtn.focus();
   }
@@ -576,7 +592,7 @@ const socials = [
       submitBtn.disabled = false;
       setTimeout(() => {
         submitBtn.classList.remove('is-error');
-        btnLabel.textContent = 'Send Message';
+        btnLabel.textContent = 'Request a scope call';
       }, 5000);
     }
   });

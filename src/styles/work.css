@@ -1,0 +1,159 @@
+/* Landing Work section. Kept as a plain stylesheet so Vite HMR
+   does not desync Astro scoped <style> from the HTML (common during
+   rapid component edits). */
+
+.work-section {
+  background: var(--white, oklch(99% 0 0));
+  padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.work-header {
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 40rem;
+}
+
+.work-display {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink, #2c303c);
+  text-transform: uppercase;
+}
+
+.work-sub {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--dim, oklch(28% 0.01 258));
+}
+
+.work-previews {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.2vw, 2rem);
+  width: min(92%, 68rem);
+  max-width: 100%;
+}
+
+.work-preview-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.work-preview-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 0 0.8rem;
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(
+      circle at 30% 28%,
+      color-mix(in oklab, var(--cobalt, #bbdd00) 26%, transparent),
+      transparent 55%
+    ),
+    var(--surface, oklch(96.5% 0.003 260));
+  border-bottom: 2px solid var(--cobalt, #bbdd00);
+  overflow: hidden;
+}
+
+.work-preview-media img {
+  display: block;
+  width: min(48%, 6.45rem);
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-preview-link:hover .work-preview-media img,
+.work-preview-link:focus-visible .work-preview-media img {
+  transform: scale(1.05);
+}
+
+.work-preview-sector {
+  margin: 0 0 0.25rem;
+  font-size: 0.52rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ghost, oklch(50% 0.006 260));
+}
+
+.work-preview-title {
+  margin: 0 0 0.35rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.08rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink, #2c303c);
+  line-height: 1.3;
+  text-wrap: balance;
+  transition: color 0.15s ease;
+}
+
+.work-preview-link:hover .work-preview-title,
+.work-preview-link:focus-visible .work-preview-title {
+  color: var(--cobalt-dim, #8aaa00);
+}
+
+.work-preview-desc {
+  margin: 0 0 0.65rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--dim, oklch(28% 0.01 258));
+  text-wrap: pretty;
+}
+
+.work-preview-more {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--ink, #2c303c);
+  border-bottom: 1px solid var(--cobalt, #bbdd00);
+}
+
+.work-preview-link:hover .work-preview-more,
+.work-preview-link:focus-visible .work-preview-more {
+  color: var(--cobalt-dim, #8aaa00);
+}
+
+.work-preview-link:focus-visible {
+  outline: 2px solid var(--cobalt, #bbdd00);
+  outline-offset: 4px;
+}
+
+@media (max-width: 960px) {
+  .work-previews {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: min(92%, 52rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .work-previews {
+    grid-template-columns: 1fr;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .work-preview + .work-preview {
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-preview-media img {
+    transition: none;
+  }
+
+  .work-preview-link:hover .work-preview-media img,
+  .work-preview-link:focus-visible .work-preview-media img {
+    transform: none;
+  }
+}

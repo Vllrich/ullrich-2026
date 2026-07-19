@@ -8,13 +8,15 @@
     <p class="wid-statement">
       <img src="/graphics/intro-line.svg" alt="" class="wid-rule" aria-hidden="true" loading="lazy" decoding="async" />I own the technical decisions from first use case to production: what to build, what to buy, what it costs to run, and who operates it after launch. Strategy when you need it, engineering when you need that too.
     </p>
-    <ul class="wid-services">
-      <li>Production AI</li>
-      <li>Corporate LLM</li>
-      <li>Agent reliability</li>
-      <li>Full-stack engineering</li>
-      <li>Fractional CTO / CAIO</li>
-    </ul>
+    <div class="wid-aside">
+      <ul class="wid-services">
+        <li>Production AI</li>
+        <li>Corporate LLM</li>
+        <li>Agent reliability</li>
+        <li>Full-stack engineering</li>
+        <li>Fractional CTO / CAIO</li>
+      </ul>
+    </div>
   </div>
 
   <div class="wid-beats">
@@ -74,13 +76,18 @@
     flex-shrink: 0;
   }
 
+  .wid-aside {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
+
   .wid-services {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    align-self: center;
   }
 
   .wid-services li {

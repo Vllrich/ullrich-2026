@@ -26,9 +26,11 @@ Site-side work is done. Remaining items are operator-only.
   - Erfolg: korrekter Name, Rolle, URL
 - [ ] LinkedIn: 1 Post zu Agent Reliability + 1 Post zu EU AI Act, jeweils mit Link auf die Canonical-Seite
 
-### Später (wenn Case Studies freigegeben)
+### Später (Case Studies)
 
-- [ ] Echte Cases in `src/data/work-patterns.ts` eintragen bzw. unter `/work/` erweitern
+- [x] 2 anonymisierte Cases in `src/data/work-patterns.ts` + EN/DE Seiten (`/work/patterns/`, `/de/arbeit/muster/`)
+- [x] Soft Outcomes nachziehen, sobald freigeben (z. B. live mit Ops-Team / B2B-Pfad end-to-end), ohne Fake-Metriken
+- [ ] Optional: Clients um Freigabe für leicht konkretere Labels bitten (Branche ok, Name nur mit OK)
 
 ## Site verbessern: von „gute Praxis-Site“ zu Top-Site
 
@@ -36,7 +38,7 @@ Ziel: Proof und Authority nachziehen. Technik/Copy sind schon stark; ohne Outcom
 
 ### Proof (höchster Hebel)
 
-- [ ] 2–3 Case Studies freigeben (anonym ok): Problem → Ansatz → Outcome-Typ. In `/work/` bzw. `src/data/work-patterns.ts` einhängen
+- [x] 2 Case Studies (anonym): Problem → Ansatz → Outcome-Typ. In `/work/patterns/` und `/de/arbeit/muster/`
 - [ ] Clients-Marquee entschärfen: Logos mit Kontext (was gemacht wurde) oder durch right-sized Proof ersetzen. Kein reines Name-Dropping
 - [ ] Pedigree an Reliability/Corporate-LLM-Claim koppeln (ein klarer Satz: warum Real-time/Production-Hintergrund die Zuverlässigkeit stützt)
 

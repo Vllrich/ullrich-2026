@@ -1,0 +1,66 @@
+---
+import { activeNavKey, primaryNav, type NavKey } from '../lib/nav';
+import type { SiteLang } from '../lib/i18n';
+
+interface Props {
+  lang?: SiteLang;
+  /** Visual surface: home lime bar vs content pages */
+  variant?: 'home' | 'content';
+  localeSwitch?: { href: string; label: string };
+  /** Force active key; otherwise derived from the current URL */
+  active?: NavKey | null;
+}
+
+const { lang = 'en', variant = 'content', localeSwitch, active } = Astro.props;
+const items = primaryNav(lang);
+const current = active !== undefined ? active : activeNavKey(Astro.url.pathname);
+const homeHref = lang === 'de' ? '/de/' : '/';
+const brandLabel = lang === 'de' ? 'Zur Startseite' : 'Back to home';
+const navLabel = lang === 'de' ? 'Hauptnavigation' : 'Main navigation';
+---
+
+{
+  variant === 'home' ? (
+    <header class="site-nav">
+      <a href={homeHref} class="nav-logo">
+        LARS ULLRICH
+        <span class="nav-descriptor">Agent reliability · Full-Stack Engineer &amp; Fractional CTO</span>
+      </a>
+      <nav class="nav-links" id="nav-links" aria-label={navLabel}>
+        {items.map((item) => (
+          <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
+        ))}
+        {localeSwitch && (
+          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'} class="nav-locale">
+            {localeSwitch.label}
+          </a>
+        )}
+      </nav>
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label={lang === 'de' ? 'Menü öffnen' : 'Open menu'}
+        aria-expanded="false"
+        aria-controls="nav-links"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </header>
+  ) : (
+    <header class="cp-bar">
+      <a href={homeHref} class="cp-brand" aria-label={brandLabel}>
+        <span class="cp-brand-text">Lars Ullrich</span>
+      </a>
+      <nav class="cp-bar-nav" aria-label={navLabel}>
+        {items.map((item) => (
+          <a href={item.href} class:list={[current === item.key && 'is-active']}>{item.label}</a>
+        ))}
+        {localeSwitch && (
+          <a href={localeSwitch.href} hreflang={lang === 'en' ? 'de' : 'en'}>{localeSwitch.label}</a>
+        )}
+      </nav>
+    </header>
+  )
+}

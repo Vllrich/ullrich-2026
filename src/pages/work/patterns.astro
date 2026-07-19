@@ -1,94 +1,47 @@
 ---
 import ContentPage from '../../layouts/ContentPage.astro';
-import { workPatterns } from '../../data/work-patterns';
+import WorkCatalog from '../../components/WorkCatalog.astro';
+import { languageAlternates } from '../../lib/i18n';
+import { workEntriesFor } from '../../data/work-patterns';
 
 const description =
-  'How production AI and agent work usually shows up: problem, approach, outcome type. Named case studies land here when cleared.';
+  'Real AI work, written plainly: case studies and common engagement shapes, without made-up numbers.';
+
+const alternates = languageAlternates('/work/patterns/', '/de/arbeit/muster/');
+const entries = workEntriesFor('en');
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   '@id': 'https://larsullrich.de/work/patterns/#webpage',
   url: 'https://larsullrich.de/work/patterns/',
-  name: 'Engagement patterns',
+  name: 'Work patterns & case studies',
   description,
   inLanguage: 'en',
   isPartOf: { '@id': 'https://larsullrich.de/#website' },
   author: { '@id': 'https://larsullrich.de/#person' },
-  hasPart: workPatterns.map((p) => ({
+  hasPart: entries.map((p) => ({
     '@type': 'CreativeWork',
     name: p.title,
-    description: p.problem,
+    description: p.blurb,
     identifier: p.id,
   })),
 };
 ---
 
 <ContentPage
-  title="Engagement patterns - Lars Ullrich"
+  title="Work patterns & case studies - Lars Ullrich"
   description={description}
   canonical="/work/patterns/"
   noteId="patterns"
-  heading="Engagement patterns"
+  heading="Work patterns & case studies"
   eyebrow="Work"
-  lead="How the work usually shows up. No invented metrics, no named clients until they clear it. Case studies plug in here when ready."
-  icon="/graphics/icon-pattern-steps.svg"
+  lead="Real work first. Then the usual shapes of an engagement. No invented numbers. Names only when clients clear them."
+  icon="/graphics/work-cases-mark.svg"
+  alternates={alternates}
   jsonLd={jsonLd}
+  localeSwitch={{ href: '/de/arbeit/muster/', label: 'Deutsch' }}
+  layout="wide"
 >
-  <p>
-    Until cleared case studies land under <code>/work/</code>, these patterns are the honest stand-in.
-  </p>
-
-  {workPatterns.map((p) => (
-    <article class="pattern" id={p.id}>
-      <h2>{p.title}</h2>
-      <p class="meta">
-        <span>{p.sector}</span>
-        {p.caseStudyReady && p.clientLabel ? (
-          <span> · {p.clientLabel}</span>
-        ) : (
-          <span> · Pattern (case study pending)</span>
-        )}
-      </p>
-      <h3>Problem</h3>
-      <p>{p.problem}</p>
-      <h3>Approach</h3>
-      <p>{p.approach}</p>
-      <h3>Outcome type</h3>
-      <p>{p.outcome}</p>
-    </article>
-  ))}
-
-  <h2>Start here</h2>
-  <p>
-    Most companies should begin with the
-    <a href="/services/readiness-audit/">Readiness &amp; Production Audit</a>.
-    Fixed scope. Usually one to two weeks.
-  </p>
+  <WorkCatalog lang="en" />
 </ContentPage>
-
-<style>
-  .pattern {
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
-  }
-
-  .pattern:first-of-type {
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .meta {
-    color: var(--ghost, oklch(50% 0.006 260)) !important;
-    font-size: 0.9rem !important;
-    margin-top: -0.5rem !important;
-  }
-
-  code {
-    font-size: 0.9em;
-    background: var(--surface, oklch(96.5% 0.003 260));
-    padding: 0.1em 0.35em;
-    border-radius: 3px;
-  }
-</style>

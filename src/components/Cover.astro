@@ -4,17 +4,17 @@
 <div class="site-wrap">
 
   <header class="site-nav">
-    <a href="#" class="nav-logo">
+    <a href="/" class="nav-logo">
       LARS ULLRICH
       <span class="nav-descriptor">Agent reliability &middot; Full-Stack Engineer &amp; Fractional CTO</span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Main navigation">
-      <a href="#what-i-do">What I Do</a>
-      <a href="#method">Method</a>
+      <a href="/work/patterns/">Work</a>
+      <a href="/notes/">Notes</a>
       <a href="#services">Services</a>
       <a href="/about/">About</a>
-      <a href="#consult">Start</a>
       <a href="#contact">Contact</a>
+      <a href="/de/" hreflang="de" class="nav-locale">Deutsch</a>
     </nav>
     <button
       class="nav-toggle"
@@ -46,7 +46,7 @@
         AI included, when it earns its place
       </p>
       <div class="hero-ctas">
-        <a href="#contact" class="hero-cta-primary">Start a conversation</a>
+        <a href="#contact" class="hero-cta-primary">Request a scope call</a>
         <a href="#method" class="hero-cta-secondary">See how I work</a>
       </div>
     </div>
@@ -112,7 +112,7 @@
 
   .nav-links {
     display: flex;
-    gap: 2.5rem;
+    gap: clamp(1rem, 2vw, 1.75rem);
     align-items: center;
   }
 
@@ -127,6 +127,11 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--ink, #2C303C); }
+
+  .nav-links a.nav-locale {
+    color: var(--ink, #2C303C);
+    font-weight: 700;
+  }
 
   /* ── Hero: text left, skyline graphic full-bleed at bottom ── */
   .hero {
@@ -695,6 +700,15 @@ void main(){
     '/graphics/icon-signal-nodes.svg',
     '/graphics/icon-structure-frame.svg',
     '/graphics/icon-system-grid.svg',
+    '/graphics/work-cases-mark.svg',
+    '/graphics/case-knowledge-agent.svg',
+    '/graphics/case-eu-ai-platform.svg',
+    '/graphics/case-robot-vision-tooling.svg',
+    '/graphics/pattern-agent-ops.svg',
+    '/graphics/pattern-open-models.svg',
+    '/graphics/pattern-corporate-llm.svg',
+    '/graphics/pattern-readiness.svg',
+    '/graphics/pattern-retainer.svg',
   ];
 
   /* Pick a random icon, preferring ones not currently shown by other drivers. */

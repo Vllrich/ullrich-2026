@@ -1,0 +1,320 @@
+---
+import {
+  localizeWorkEntry,
+  workHref,
+  workIndexHref,
+  workNeighbors,
+  type WorkEntry,
+  type WorkLang,
+} from '../data/work-patterns';
+
+interface Props {
+  entry: WorkEntry;
+  lang?: WorkLang;
+}
+
+const { entry, lang = 'en' } = Astro.props;
+const item = localizeWorkEntry(entry, lang);
+const de = lang === 'de';
+const indexHref = workIndexHref(lang);
+const { prev, next } = workNeighbors(entry.id, lang);
+const paragraphs = item.story.split(/\n\n+/).map((p) => p.trim()).filter(Boolean);
+
+const copy = de
+  ? {
+      caseTag: 'Case Study',
+      patternTag: 'Muster',
+      back: 'Alle Cases & Muster',
+      prev: 'Zurück',
+      next: 'Weiter',
+      related: 'Weiter im Katalog',
+      startHeading: 'Wo anfangen',
+      startBody: 'Die meisten starten mit dem',
+      startLink: 'Readiness & Production Audit',
+      startTail: 'Fester Rahmen. Meist ein bis zwei Wochen.',
+    }
+  : {
+      caseTag: 'Case study',
+      patternTag: 'Pattern',
+      back: 'All cases & patterns',
+      prev: 'Previous',
+      next: 'Next',
+      related: 'More in the catalog',
+      startHeading: 'Where to start',
+      startBody: 'Most teams begin with the',
+      startLink: 'Readiness & Production Audit',
+      startTail: 'Fixed scope. Usually one to two weeks.',
+    };
+
+const tag = item.caseStudyReady ? copy.caseTag : copy.patternTag;
+---
+
+<article class="wd">
+  <p class="wd-back">
+    <a href={indexHref}>{copy.back}</a>
+  </p>
+
+  <div class="wd-hero">
+    <div class="wd-visual" aria-hidden="true">
+      <div class="wd-visual-frame">
+        <img src={item.image} alt="" width="320" height="320" loading="eager" decoding="async" />
+      </div>
+    </div>
+
+    <div class="wd-intro">
+      <p class="wd-meta">
+        <span class="wd-pill">{tag}</span>
+        <span class="wd-sector">{item.sector}</span>
+      </p>
+      {item.clientLabel && <p class="wd-client">{item.clientLabel}</p>}
+    </div>
+  </div>
+
+  <div class="wd-story">
+    {paragraphs.map((p) => <p>{p}</p>)}
+  </div>
+
+  <nav class="wd-pager" aria-label={copy.related}>
+    {prev ? (
+      <a class="wd-pager-link is-prev" href={workHref(prev.id, lang)}>
+        <span>{copy.prev}</span>
+        {prev.title}
+      </a>
+    ) : (
+      <span />
+    )}
+    {next ? (
+      <a class="wd-pager-link is-next" href={workHref(next.id, lang)}>
+        <span>{copy.next}</span>
+        {next.title}
+      </a>
+    ) : (
+      <span />
+    )}
+  </nav>
+
+  <section class="wd-start" aria-labelledby="wd-start-heading">
+    <h2 class="wd-start-heading" id="wd-start-heading">{copy.startHeading}</h2>
+    <p>
+      {copy.startBody}
+      {' '}
+      <a href="/services/readiness-audit/">{copy.startLink}</a>.
+      {' '}
+      {copy.startTail}
+    </p>
+  </section>
+</article>
+
+<style>
+  .wd-back {
+    margin: 0 0 1.75rem;
+    font-size: 0.82rem;
+  }
+
+  .wd-back a {
+    color: var(--ghost, oklch(50% 0.006 260));
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .wd-back a:hover {
+    color: var(--ink, #2c303c);
+  }
+
+  .wd-back a::before {
+    content: '← ';
+  }
+
+  .wd-hero {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.85fr) minmax(0, 1.4fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: end;
+    margin-bottom: clamp(2rem, 4vw, 2.75rem);
+    animation: wd-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .wd-visual-frame {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 20rem;
+    background:
+      radial-gradient(circle at 28% 22%, color-mix(in oklab, var(--cobalt, #bbdd00) 24%, transparent), transparent 58%),
+      var(--surface, oklch(96.5% 0.003 260));
+    border: 1px solid var(--rule, oklch(87% 0.005 260));
+    overflow: hidden;
+  }
+
+  .wd-visual-frame::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 3px;
+    background: var(--cobalt, #bbdd00);
+  }
+
+  .wd-visual-frame img {
+    display: block;
+    width: 78%;
+    height: auto;
+    margin: 12% auto 8%;
+    object-fit: contain;
+  }
+
+  .wd-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.85rem;
+    margin: 0 0 0.55rem;
+  }
+
+  .wd-pill {
+    display: inline-block;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink, #2c303c);
+    background: color-mix(in oklab, var(--cobalt, #bbdd00) 55%, white);
+    padding: 0.28em 0.55em;
+    line-height: 1.2;
+  }
+
+  .wd-sector {
+    font-size: 0.88rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  .wd-client {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  .wd-intro {
+    padding-bottom: 0.35rem;
+  }
+
+  .wd-story {
+    max-width: 62ch;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+    padding-top: 1.5rem;
+    animation: wd-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 80ms both;
+  }
+
+  .wd-story p {
+    margin: 0 0 1.15rem;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    color: var(--dim, oklch(28% 0.01 258));
+    text-wrap: pretty;
+  }
+
+  .wd-story p:last-child {
+    margin-bottom: 0;
+  }
+
+  .wd-pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+  }
+
+  .wd-pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-decoration: none;
+    color: var(--ink, #2c303c);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .wd-pager-link span {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ghost, oklch(50% 0.006 260));
+  }
+
+  .wd-pager-link.is-next {
+    text-align: right;
+    justify-self: end;
+  }
+
+  .wd-pager-link:hover {
+    color: var(--cobalt-dim, #8aaa00);
+  }
+
+  .wd-start {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px dotted var(--rule, oklch(87% 0.005 260));
+    max-width: 52ch;
+  }
+
+  .wd-start-heading {
+    font-family: var(--font-display) !important;
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: none !important;
+    color: var(--ink, #2c303c) !important;
+    margin: 0 0 0.55rem !important;
+  }
+
+  .wd-start p {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--dim, oklch(28% 0.01 258));
+  }
+
+  .wd-start a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid var(--cobalt, #bbdd00);
+  }
+
+  .wd-start a:hover {
+    color: var(--cobalt-dim, #8aaa00);
+  }
+
+  @keyframes wd-rise {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .wd-hero {
+      grid-template-columns: 1fr;
+    }
+
+    .wd-visual-frame {
+      max-width: 14rem;
+    }
+
+    .wd-pager {
+      grid-template-columns: 1fr;
+    }
+
+    .wd-pager-link.is-next {
+      text-align: left;
+      justify-self: start;
+    }
+  }
+</style>

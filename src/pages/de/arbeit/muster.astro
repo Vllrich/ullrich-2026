@@ -1,0 +1,48 @@
+---
+import ContentPage from '../../../layouts/ContentPage.astro';
+import WorkCatalog from '../../../components/WorkCatalog.astro';
+import { languageAlternates } from '../../../lib/i18n';
+import { workEntriesFor } from '../../../data/work-patterns';
+
+const description =
+  'Echte KI-Arbeit, klar geschrieben: Case Studies und typische Einsatzformen, ohne erfundene Kennzahlen.';
+
+const alternates = languageAlternates('/work/patterns/', '/de/arbeit/muster/');
+const entries = workEntriesFor('de');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': 'https://larsullrich.de/de/arbeit/muster/#webpage',
+  url: 'https://larsullrich.de/de/arbeit/muster/',
+  name: 'Arbeitsmuster & Case Studies',
+  description,
+  inLanguage: 'de',
+  isPartOf: { '@id': 'https://larsullrich.de/#website' },
+  author: { '@id': 'https://larsullrich.de/#person' },
+  hasPart: entries.map((p) => ({
+    '@type': 'CreativeWork',
+    name: p.title,
+    description: p.blurb,
+    identifier: p.id,
+  })),
+};
+---
+
+<ContentPage
+  title="Arbeitsmuster & Case Studies - Lars Ullrich"
+  description={description}
+  canonical="/de/arbeit/muster/"
+  noteId="patterns-de"
+  lang="de"
+  heading="Arbeitsmuster & Case Studies"
+  eyebrow="Arbeit"
+  lead="Zuerst echte Arbeit. Dann die typischen Formen eines Engagements. Keine erfundenen Zahlen. Namen nur, wenn Kunden freigeben."
+  icon="/graphics/work-cases-mark.svg"
+  alternates={alternates}
+  jsonLd={jsonLd}
+  localeSwitch={{ href: '/work/patterns/', label: 'English' }}
+  layout="wide"
+>
+  <WorkCatalog lang="de" />
+</ContentPage>

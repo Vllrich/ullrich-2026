@@ -14,3 +14,6 @@ cf-origin-key.pem
 *.pem
 *.key
 cloudflare-token.txt
+
+# Source pool for graphics; only renamed picks under public/graphics/ are tracked
+public/alt-img/

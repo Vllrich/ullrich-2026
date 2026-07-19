@@ -67,12 +67,12 @@ _Component: `Cover.astro`_
 
 **Headline**
 
-> Anyone can build a demo  
-> Running it is the job
+> Cut through the noise.  
+> Build what matters.
 
 **Body**
 
-> I help growing companies ship software that holds up in production, and keep it running. AI included, when it earns its place
+> Engineering leadership for growing companies — ship software that holds up in production, keep it running, and only put AI where it earns its place.
 
 **CTAs**
 

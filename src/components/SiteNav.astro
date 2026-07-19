@@ -2,6 +2,7 @@
 import { activeNavKey, primaryNav, type NavKey } from '../lib/nav';
 import type { SiteLang } from '../lib/i18n';
 import LocaleSwitch from './LocaleSwitch.astro';
+import DiagnoseIcon from './DiagnoseIcon.astro';
 import { landingCopy } from '../data/landing';
 
 interface Props {
@@ -26,8 +27,11 @@ const descriptor = landingCopy(lang).cover.descriptor;
   variant === 'home' ? (
     <header class="site-nav">
       <a href={homeHref} class="nav-logo">
-        LARS ULLRICH
-        <span class="nav-descriptor">{descriptor}</span>
+        <DiagnoseIcon size="sm" class="nav-mark" />
+        <span class="nav-logo-text">
+          LARS ULLRICH
+          <span class="nav-descriptor">{descriptor}</span>
+        </span>
       </a>
       <nav class="nav-links" id="nav-links" aria-label={navLabel}>
         {items.map((item) => (
@@ -52,6 +56,7 @@ const descriptor = landingCopy(lang).cover.descriptor;
   ) : (
     <header class="cp-bar">
       <a href={homeHref} class="cp-brand" aria-label={brandLabel}>
+        <DiagnoseIcon size="sm" class="cp-brand-mark" />
         <span class="cp-brand-text">Lars Ullrich</span>
       </a>
       <nav class="cp-bar-nav" aria-label={navLabel}>

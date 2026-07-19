@@ -1,5 +1,6 @@
 ---
 import LocaleSwitch from './LocaleSwitch.astro';
+import DiagnoseIcon from './DiagnoseIcon.astro';
 import { primaryNav } from '../lib/nav';
 import {
   landingCopy,
@@ -23,8 +24,11 @@ const localeHref = landingLocaleSwitchHref(lang);
 
   <header class="site-nav">
     <a href={homeHref} class="nav-logo">
-      LARS ULLRICH
-      <span class="nav-descriptor">{t.cover.descriptor}</span>
+      <DiagnoseIcon size="sm" class="nav-mark" />
+      <span class="nav-logo-text">
+        LARS ULLRICH
+        <span class="nav-descriptor">{t.cover.descriptor}</span>
+      </span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label={t.cover.navLabel}>
       {items.map((item) => (
@@ -103,8 +107,8 @@ const localeHref = landingLocaleSwitchHref(lang);
 
   .nav-logo {
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
+    align-items: center;
+    gap: 0.65rem;
     text-decoration: none;
     font-weight: 800;
     font-size: 0.72rem;
@@ -113,6 +117,27 @@ const localeHref = landingLocaleSwitchHref(lang);
     color: var(--ink, #2C303C);
     font-family: var(--font-sans, "Darker Grotesque", system-ui, sans-serif);
     line-height: 1.1;
+  }
+
+  .nav-mark {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    max-width: none !important;
+    flex-shrink: 0;
+  }
+
+  /* Lime faces vanish on the lime nav bar; use ink. Restored when scrolled. */
+  .nav-mark :global(.tri:not(.is-off)) {
+    fill: var(--ink, #2c303c);
+  }
+  .site-nav.is-scrolled .nav-mark :global(.tri:not(.is-off)) {
+    fill: #caf200;
+  }
+
+  .nav-logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .nav-descriptor {

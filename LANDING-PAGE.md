@@ -59,7 +59,7 @@ _Component: `Cover.astro`_
 
 | Element    | Copy                                                                     |
 | ---------- | ------------------------------------------------------------------------ |
-| Logo       | LARS ULLRICH                                                             |
+| Logo       | Diagnose mark + LARS ULLRICH                                             |
 | Descriptor | Full-Stack Engineer & Fractional CTO                                      |
 | Nav links  | What I Do · Method · Services · About (`/about/`) · Start (`#consult`) · Contact |
 
